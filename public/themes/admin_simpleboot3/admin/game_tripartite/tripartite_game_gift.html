@@ -1,0 +1,111 @@
+<include file="public@header"/>
+<body>
+<style>
+    .table-box{
+        overflow-x:scroll;
+    }
+    #table{
+        min-width: 100%;
+    }
+    #table tr th{
+        white-space:nowrap;
+    }
+</style>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:void(0);">{:lang("游戏礼物奖池")}</a></li>
+        <li><a href='{:url("GameTripartite/tripartite_game_gift_add")}'>{:lang("添加礼物")}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('GameTripartite/tripartite_game_gift')}">
+        {:lang('ADMIN_GIFT')}ID:
+        <input type="text" class="form-control" name="gift_id" style="width: 120px;"
+               value="{$data.gift_id|default=''}" placeholder="{:lang('ADMIN_GIFT')}">
+        {:lang("幸运礼物")}：
+        <select class="form-control" name="is_lucky" style="width: 140px;">
+            <option value=""> {:lang("全部")}</option>
+            <option value="0" <if condition="$data.is_lucky eq '0'"> selected='selected' </if>> {:lang("否")}</option>
+            <option value="1" <if condition="$data.is_lucky eq 1"> selected='selected' </if>> {:lang("是")}</option>
+        </select>
+        {:lang("类型")}：
+        <select class="form-control" name="type" style="width: 140px;">
+            <option value=""> {:lang("全部")}</option>
+            <foreach name="$game_type_list" item="g">
+                <option value="{$g.value}" <if condition="$data.type eq $g.value"> selected='selected' </if>>{$g.label}</option>
+            </foreach>
+        </select>
+        <input type="submit" class="btn btn-primary" value="{:lang('搜索')}"/>
+        <a class="btn btn-danger" href="{:url('GameTripartite/tripartite_game_gift')}">{:lang("清空")}</a>
+        <foreach name="gift_coin" id="vc">
+            <div style="margin-top:15px;">
+                <span style="margin-left: 10px;">{$vc['type_name']}: </span>
+                <span style="margin-left: 10px;">{:lang('奖池每轮需消费总数')}：{$vc['count_coin']}</span>
+                <span style="margin-left: 10px;">{:lang('奖池每轮总价值')}：{$vc['gift_coin']}</span>
+            </div>
+        </foreach>
+    </form>
+
+    <div class="table-box">
+        <table class="table table-hover table-bordered" id="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang("游戏名称")}</th>
+                <th>{:lang("礼物名称")}(ID)</th>
+                <th>{:lang("礼物金额")}</th>
+                <th>{:lang("奖励数")}</th>
+                <th>{:lang("中奖概率")}</th>
+                <th>{:lang("幸运礼物")}</th>
+                <th>{:lang("时间")}</th>
+                <th width="250">{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.game_title}</td>
+                    <td>{$vo.title}({$vo.gift_id})</td>
+                    <td>{$vo.coin}</td>
+                    <td>{$vo.number}</td>
+                    <td>{$vo.probability}</td>
+                    <td>{$vo.is_lucky ? lang("是") : lang("否")}</td>
+                    <td>{:date('Y-m-d H:i:s', $vo['create_time'])}</td>
+                    <td>
+                        <a href='{:url("GameTripartite/tripartite_game_gift_add",array("id"=>$vo["id"]))}'>{:lang("编辑")}</a> |
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('GameTripartite/del_game_gift')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+</script>
+</body>

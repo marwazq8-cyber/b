@@ -1,0 +1,48 @@
+<include file="public@header"/>
+<style>
+
+    .gift-img img{width:100%;height:100%;}
+    .gift-in input{width:25px;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_GUARDIAN_LIST')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('Guardian/lists')}">
+        {:lang('ADMIN_ANCHOR_ID')}:
+        <input type="text" class="form-control" name="hostid" style="width: 140px;" value="{$requery.hostid|default=''}" placeholder="{:lang('请输入主播ID')}">
+        {:lang('ADMIN_GUARDIAN_USER_ID')}:
+        <input type="text" class="form-control" name="uid" style="width: 140px;" value="{$requery.uid|default=''}" placeholder="{:lang('请输入守护ID')}">
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('Guardian/lists')}">{:lang('EMPTY')}</a>
+
+    </form>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>{:lang('ADMIN_ANCHOR')}(ID)</th>
+            <th>{:lang('ADMIN_GUARDIAN_USER_ID')}</th>
+            <th>{:lang('ADMIN_GUARDIAN_START_TIME')}</th>
+            <th>{:lang('ADMIN_GUARDIAN_END_TIME')}</th>
+            <th>{:lang('ADMIN_GUARDIAN_ADD_TIME')}</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <foreach name="data" id="vo">
+            <tr>
+                <td>{$vo.hname}({$vo.hostid})</td>
+                <td>{$vo.user_nickname}({$vo.uid})</td>
+                <td>{$vo.starttime|date="Y-m-d H:i",###}</td>
+                <td>{$vo.endtime|date="Y-m-d H:i",###}</td>
+                <td>{$vo.addtime|date="Y-m-d H:i",###}</td>
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+</body>
+</html>

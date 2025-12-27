@@ -1,0 +1,188 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+    .title-img{
+        width: 15px;
+    }
+    .title-content{
+        position: absolute;
+        background: rgba(1,1,1,0.1);
+        padding: 2px 8px;
+        font-size: 12px;
+        color: #999999;
+        border-radius: 10px;
+        display: none;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('guild_manage/index')}">{:lang('ADMIN_GUILD_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_GUILD_ADD')}</a></li>
+    </ul>
+    <form action="{:url('guild_manage/addPost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_GUILD_LOGIN_ACCOUNT')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[login]"
+                                   id="title" required value="{$list.login |default=''}" placeholder="{:lang('请输入公会登录账号')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_GUILD_LOGIN_PASSWORD')}<span class="form-required">*({:lang('6位以上的密码')})</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="psd" id="psd" placeholder="{:lang('请输入密码6位以上的密码')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_GUILD_LOGIN_NICKNAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[name]"
+                                   id="title" required value="{$list.name |default=''}" placeholder="{:lang('请输入公会登录昵称')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('公会长ID')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[user_id]"
+                                   id="user_id" required value="{$list.user_id |default=''}" placeholder="{:lang('请输入绑定的用户ID')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_IMG')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[logo]" id="thumbnail" value="{$list['logo'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <if condition="$list['logo']">
+                                        <img src="{$list['logo']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_PHONE_NUMBER')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[tel]"
+                                   id="tel" required value="{$list.tel |default=''}" placeholder="{:lang('请输入公会手机号')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_GUILD_INFO')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[introduce]" id="source"
+                                   value="{$list.introduce |default=''}"
+                                   placeholder="{:lang('请输入公会介绍')}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[status]" id="gift">
+                                <option value="1">{:lang('OPEN')}</option>
+                                <option value="0" <if condition="$list['status'] eq '0'"> selected="selected" </if> >{:lang('CLOSE')}</option>
+
+                            </select>
+                        </td>
+                    </tr>
+
+<!--                    <tr>-->
+<!--                        <th>{:lang('ADMIN_GUILD_TYPE')}<span class="form-required">*</span>-->
+<!--                            <img class="title-img" src="__STATIC__/image/ww.png" alt="">-->
+<!--                            <div class="title-content">{:lang('平台:消费数计算，主播:实际收益计算')}</div>-->
+<!--                        </th>-->
+<!--                        <td>-->
+<!--                            <select name="post[type]" id="gift">-->
+<!--                                <option value="1">{:lang('平台')}</option>-->
+<!--                                <option value="2" <if condition="$list['type'] eq '2'"> selected="selected" </if> >{:lang('主播')}</option>-->
+<!--                            </select>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+                    <tr>
+                        <th>{:lang('ADMIN_GUILD_COMMISSION_RATIO')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[commission]" id="commission"
+                                   value="{$list.commission |default=''}"
+                                   placeholder="{:lang('请输入0-1的数值')}"></td>
+                    </tr>
+
+
+
+                    <!--<tr>
+                       <th>{:lang('权限')}<span class="form-required">*</span></th>
+                       <td>
+                           <foreach name="rule" item="v">
+                               <label>
+                                   <input type="checkbox" name="rule[]" value="{$v.id}" <if condition="$v['type'] eq 1"> checked="checked" </if>>  {$v['name']}
+                               </label>&nbsp;&nbsp;
+                          </foreach>
+                       </td>
+                   </tr>-->
+
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('guild_manage/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>
+<script>
+    var title_status = 1;
+    $('.title-img').click(function(){
+        //var title = $(this).attr('title');
+        if(title_status==1){
+            $('.title-content').show(500);
+            title_status = 2;
+            setTimeout(function(){
+                if(title_status==2){
+                    $('.title-content').hide(500);
+                    title_status = 1;
+                }
+            },6000);
+        }/*else{
+            $('.title-content').hide(500);
+            title_status = 1;
+        }*/
+
+    })
+    $('#psd').on("blur",function(){
+        var qty_data = $(this).val();
+        if (qty_data.length < 6) {
+            layer.msg("{:lang('密码必须大于6位数')}", {time: 2000, icon: 2});
+        }
+    })
+</script>

@@ -1,0 +1,276 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('admin_index/index')}">{:lang('ADMIN_USER_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang("编辑信息")}</a></li>
+    </ul>
+    <form action="{:url('admin_index/edit_post')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('USER_NICKNAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="user_nickname"
+                                   id="user_nickname" required value="{$data.user_nickname |default=''}"
+                                   placeholder="{:lang('请输入用户昵称')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('区号')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="number" name="mobile_area_code"
+                                   id="mobile_area_code" value="{$data.mobile_area_code |default=''}"
+                                   placeholder="{:lang('区号')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_PHONE_NUMBER')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="mobile"
+                                   id="mobile" value="{$data.mobile |default=''}"
+                                   placeholder="{:lang('ADMIN_PHONE_NUMBER')}"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('GENDER')}</th>
+                        <td>
+
+                            <select class="form-control" name="sex">
+                                <option value="1">{:lang('MALE')}</option>
+                                <option value="2"<if condition="$data['sex'] eq 2 "> selected="selected"</if>>{:lang('FEMALE')}</option>
+                            </select>
+                        </td>
+                    </tr>
+<!--                    <tr>-->
+<!--                        <th>{:lang("自定义价格（视频通话） ")}<span class="form-required">*</span></th>-->
+<!--                        <td>-->
+<!--                            <select name="custom_video_charging_coin" class="select">-->
+<!--                                <option value="0">{:lang("无")}</option>-->
+<!--                                <foreach name="fee" item="v">-->
+<!--                                    <option value="{$v['coin']}"-->
+<!--                                    <if condition="$data['custom_video_charging_coin'] eq $v['coin'] ">-->
+<!--                                        selected="selected"-->
+<!--                                    </if>-->
+<!--                                    >{$v['coin']} 积分</option>-->
+<!--                                </foreach>-->
+<!--                            </select>-->
+
+<!--                        </td>-->
+<!--                    </tr>-->
+                    <tr>
+                        <th>{:lang('USER_AVATAR')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="avatar" id="thumbnail" value="{$data['avatar'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <if condition="$data['avatar']">
+                                        <img src="{$data['avatar']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                     <tr>
+                        <th>{:lang('ADMIN_INVITE_USER_ID')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="invite_id"
+                                   id="invite_id" required value="{$data.invite_id |default=''}"
+                                   placeholder="{:lang('Please_enter_invitee_ID')}"/>
+                        </td>
+                    </tr>
+<!--                    <tr>-->
+<!--                        <th>{:lang("视频通话比例 ")}<span class="form-required">*</span></th>-->
+<!--                        <td>-->
+<!--                            <input class="form-control" type="number" name="host_one_video_proportion" step="0.01"-->
+<!--                                   min="0" max="1"-->
+<!--                                   id="host_one_video_proportion" required-->
+<!--                                   value="{$data.host_one_video_proportion |default='0'}"-->
+<!--                                   placeholder="{:lang('请输入一对一视频通话比例(例如：0.1)0是后台通用比例')}"/>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>{:lang("购买视频分成比例 ")}<span class="form-required">*</span></th>-->
+<!--                        <td>-->
+<!--                            <input class="form-control" type="number" name="host_bay_video_proportion" step="0.01"-->
+<!--                                   min="0" max="1"-->
+<!--                                   id="host_bay_video_proportion" required-->
+<!--                                   value="{$data.host_bay_video_proportion |default='0'}"-->
+<!--                                   placeholder="{:lang('请输入购买视频分成比例(例如：0.1)0是后台通用比例')}"/>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>{:lang("赠送礼物分成比例 ")}<span class="form-required">*</span></th>-->
+<!--                        <td>-->
+<!--                            <input class="form-control" type="number" name="host_bay_gift_proportion" step="0.01"-->
+<!--                                   min="0" max="1"-->
+<!--                                   id="host_bay_gift_proportion" required-->
+<!--                                   value="{$data.host_bay_gift_proportion |default='0'}"-->
+<!--                                   placeholder="{:lang('请输入赠送礼物分成比例(例如：0.1)0是后台通用比例')}"/>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>{:lang("购买私照分成比例 ")}<span class="form-required">*</span></th>-->
+<!--                        <td>-->
+<!--                            <input class="form-control" type="number" name="host_bay_phone_proportion" step="0.01"-->
+<!--                                   min="0" max="1"-->
+<!--                                   id="host_bay_phone_proportion" required-->
+<!--                                   value="{$data.host_bay_phone_proportion |default='0'}"-->
+<!--                                   placeholder="{:lang('请输入购买私照分成比例(例如：0.1)0是后台通用比例')}"/>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>{:lang("私信消息分成比例 ")}<span class="form-required">*</span></th>-->
+<!--                        <td>-->
+<!--                            <input class="form-control" type="number" name="host_direct_messages" step="0.01" min="0"-->
+<!--                                   max="1"-->
+<!--                                   id="host_direct_messages" required value="{$data.host_direct_messages |default='0'}"-->
+<!--                                   placeholder="{:lang('请输入私信消息分成比例(例如：0.1)0是后台通用比例')}"/>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>{:lang("开通守护分成比例 ")}<span class="form-required">*</span></th>-->
+<!--                        <td>-->
+<!--                            <input class="form-control" type="text" name="host_guardian_proportion" step="0.01" min="0"-->
+<!--                                   max="1"-->
+<!--                                   id="host_guardian_proportion" required-->
+<!--                                   value="{$data.host_guardian_proportion |default='0'}"-->
+<!--                                   placeholder="{:lang('请输入守护分成比例(例如：0.1)0是后台通用比例')}"/>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+                  <!--   <tr>
+                        <th>{:lang("邀请扣量概率% ")}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="invite_buckle_probability"
+                                   id="invite_buckle_probability" required
+                                   value="{$data.invite_buckle_probability |default='0'}"
+                                   placeholder="{:lang('请输入1-100的整数(例如：50代表百分之50的几率)')}"/>
+                        </td>
+                    </tr> -->
+                    <tr>
+                        <th>{:lang('STATUS')} <span class="form-required">*</span></th>
+                        <td>
+                            <select class="form-control" name="is_online">
+                                <option value="0">{:lang("下线")}</option>
+                                <option value="1"
+                                <if condition="$data['is_online'] eq 1"> selected="selected"</if>
+                                >{:lang("上线")}</option>
+
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('Is_it_certified')} <span class="form-required">*</span></th>
+                        <td>
+                            <select class="form-control" name="is_auth">
+                                <option value="0">{:lang('NO')}</option>
+                                <option value="1"
+                                <if condition="$data['is_auth'] eq 1"> selected="selected"</if>
+                                >{:lang('YES')}</option>
+
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('is_robot')} </th>
+                        <td>
+                            <select class="form-control" name="is_robot">
+                                <option value="0">{:lang('NO')}</option>
+                                <option value="1"
+                                <if condition="$data['is_robot'] eq 1"> selected="selected"</if>
+                                >{:lang('YES')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang("音频上传")}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" readonly name="audio_file"  id="files" value="{$data['audio_file']|default=''}" style="width:70%;">
+                            <a href="javascript:uploadOne('音频上传','#files','audio');"
+                               class="btn btn-sm btn-default">{:lang("音频上传")}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang("音频时长 ")}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="audio_time"
+                                   id="title" required value="{$data['audio_time']|default=''}" placeholder="{:lang('请输入音频时长 秒')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang("country")}<span class="form-required">*</span></th>
+                        <td>
+
+                            <select class="form-control" name="country_code">
+                                <foreach name="countries" item="vo">
+                                    <option value="{$vo['num_code']}" <if condition="$data['country_code'] eq $vo['num_code']"> selected="selected"</if>>{$vo['en_short_name']}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('用户状态')} <span class="form-required">*</span></th>
+                        <td>
+                            <select class="form-control" name="user_type">
+                                <option value="2" <if condition="$data['user_type'] eq 2"> selected="selected"</if>>{:lang('普通会员')}</option>
+                                <option value="1"
+                                <if condition="$data['user_type'] eq 1"> selected="selected"</if> disabled
+                                >{:lang('后台账户')}</option>
+                                <option value="3"
+                                <if condition="$data['user_type'] eq 3"> selected="selected"</if>
+                                >{:lang('注销用户')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$data.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('admin_index/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+</body>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+        var is_auth = "{$data['is_auth']}";
+        if (is_auth == 1) {
+            $(".sex").attr("disabled", "disabled").css("background-color", "#EEEEEE;");
+        }
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+
+    });
+</script>
+</html>

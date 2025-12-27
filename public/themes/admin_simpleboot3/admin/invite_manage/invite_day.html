@@ -1,0 +1,46 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_INVITE_LOG')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" name="form" method="post" action="">
+        
+       <!--  <div style="margin-top:20px;">
+            {:lang('TIME')}:
+            <input type="text" class="form-control js-bootstrap-datetime" name="start_time"
+                   value="{//$request.start_time|default=''}" style="width: 140px;" autocomplete="off">-
+            <input type="text" class="form-control js-bootstrap-datetime" name="end_time"
+                   value="{//$request.end_time|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+            <input type="submit" class="btn btn-primary" value="{:lang('搜索')}" onclick='form.action="{:url('InviteManage/invite_reg_deduction_log')}";form.submit();'/>
+
+        </div> -->
+    </form>
+
+    <form class="js-ajax-form" action="" method="post">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>{:lang('ADMIN_USER_NUMBER')}</th>
+                <th>{:lang('ADMIN_RECHARGE_MONEY')}</th>
+                <th>{:lang('TIME')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.value}</td>
+                    <td>{$vo.coin}</td>
+                    <td>{$vo.name}</td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_INVITE_LOG')}</a></li>
+    </ul>
+    <form id="form" class="well form-inline margin-top-20" method="post" action="">
+        {:lang('ADMIN_INVITE_USER_ID')}:
+        <input type="text" class="form-control" name="user_id" style="width: 200px;"
+               value="{$request.user_id|default=''}" placeholder="{:lang('Please_enter_invitee_ID')}">
+        {:lang('ADMIN_INVITE_NICKNAME')}:
+        <input type="text" class="form-control" name="nickname" style="width: 200px;"
+               value="{$request.nickname|default=''}" placeholder="{:lang('请输入被邀请人昵称...')}">
+        {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time"
+               value="{$request.start_time|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time"
+               value="{$request.end_time|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" onclick='form.action="{:url('invitation/invite_list')}";form.submit();'/>
+    </form>
+    <form class="js-ajax-form" action="" method="post">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>{:lang('USER_ID')}</th>
+                <th>{:lang('USER_NAME')}</th>
+                <th>{:lang('ADMIN_RECHARGE_INCOME')}</th>
+                <th>{:lang('ADMIN_ANCHOR_INCOME')}({:lang('元')})</th>
+                <th>{:lang('ADMIN_INVITE_TWO_INCOME')}（{:lang('元')}）</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.user_id}</td>
+                    <td>{$vo.user_nickname}</td>
+                    <td>
+                        {$vo.money}
+                    </td>
+                    <td>{$vo.auth_money}</td>
+                    <td>{$vo.er_money}</td>
+                    
+                    <td>
+                        <if condition="$vo.user_status eq 0">
+                            <a href="{:url('invitation/edit_black',array('id'=>$vo.user_id))}">{:lang('CANCEL_BLOCK_USER')}</a>
+                        <else/>
+                            <a href="{:url('invitation/edit_black',array('id'=>$vo.user_id))}">{:lang('BLOCK_USER')}</a>
+                        </if>
+                        
+                    </td>
+
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+
+</body>
+</html>

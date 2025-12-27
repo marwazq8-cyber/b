@@ -1,0 +1,326 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('noble/index')}">{:lang('ADMIN_NOBLE_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_NOBLE_ADD')}</a></li>
+
+    </ul>
+    <form action="{:url('noble/addPost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_NOBLE_NAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <foreach name="$data.lang_name" item="v">
+                                {$v['name']} :
+                                <input class="form-control" type="text" name="lang_name[{$v['name']}]"
+                                       value="{$v['value'] |default=''}" placeholder="{:lang('请输入贵族名称')}"/>
+                            </foreach>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_MEAL')}<span class="form-required">*360*360</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[noble_img]" id="thumbnail" value="{$data['noble_img'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <empty name="$data['noble_img']">
+
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+
+                                        <img src="{$data['noble_img']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </empty>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Profile Icon<span class="form-required">*360*360</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[profile_icon]" id="profile-icon" value="{$data['profile_icon'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#profile-icon');">
+                                    <empty name="$data['profile_icon']">
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="profile-icon-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="{$data['profile_icon']}"
+                                             id="profile-icon-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </empty>
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Room Image<span class="form-required">*360*360</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[room_image]" id="room-image" value="{$data['room_image'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#room-image');">
+                                    <empty name="$data['room_image']">
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="room-image-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="{$data['room_image']}"
+                                             id="room-image-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </empty>
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[orderno]" style="width:100px;"
+                                   required value="{$data.orderno |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[status]" id="gift">
+                                <option value="1">{:lang('OPEN')}</option>
+                                <option value="0">{:lang('CLOSE')}</option>
+
+                            </select>
+                        </td>
+                    </tr>
+                    <!--<tr>
+                        <th>{:lang('通知方式')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[type]" id="types">
+                                <option value="1">{:lang('房间内')}</option>
+                                <option value="2">{:lang('全房间')}</option>
+                                <option value="3">{:lang('系统通知')}</option>
+
+                            </select>
+                        </td>
+                    </tr>-->
+                    <tr>
+                        <th>{:lang('ADMIN_PRICE')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[coin]" id="source"
+                                   value="{$data.coin |default=''}"
+                                   placeholder="{:lang('请输入心币数')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_RENEWAL_PRICE')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[renew_coin]" id="renew_coin"
+                                   value="{$data.renew_coin |default=''}"
+                                   placeholder="{:lang('请输入心币数')}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('续费')}{:lang('ADMIN_SEND')}<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[return_coin]" id="source"
+                                   value="{$data.return_coin |default=''}"
+                                   placeholder="{:lang('请输入赠送心币数')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_TIMES_DAY')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[noble_time]" id="noble_time"
+                                   value="{$data.noble_time |default=''}"
+                                   placeholder="{:lang('时长/天')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_PRIVILEGE')} <span class="form-required">*</span></th>
+                        <td>
+                            <foreach name="privilege" id="val">
+                                <label>
+                                    <input class="privilege{$val.id}" name="privilege_id[]" value="{$val.id}" type="checkbox" > {$val.name}{$val.privilege_info} &nbsp;
+                                </label>
+                            </foreach>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('ADMIN_MEAL')} <span class="form-required">*</span></th>
+                        <td>
+                            <foreach name="medal" id="val">
+                            <label>
+                                 <input class="other{$val.id}" name="medal_id[]" value="{$val.id}" type="checkbox" > {$val.name}
+                            </label>
+                            </foreach>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_HOME_PAGE')} <span class="form-required">*</span></th>
+                        <td>
+                            <foreach name="home_page" id="val">
+                                <label>
+                                    <input class="other{$val.id}" name="home_page_id[]" value="{$val.id}" type="checkbox" > {$val.name}
+                                </label>
+                            </foreach>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_AVATAR_FRAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <foreach name="avatar_frame" id="val">
+                                <label>
+                                    <input class="other{$val.id}" name="avatar_frame_id[]" value="{$val.id}" type="checkbox" > {$val.name}
+                                </label>
+                            </foreach>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_CHAT_BUBBLE')} <span class="form-required">*</span></th>
+                        <td>
+                            <foreach name="chat_bubble" id="val">
+                                <label>
+                                    <input class="other{$val.id}" name="chat_bubble_id[]" value="{$val.id}" type="checkbox" > {$val.name}
+                                </label>
+                            </foreach>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_CHAT_BG')} <span class="form-required">*</span></th>
+                        <td>
+                            <foreach name="chat_bg" id="val">
+                                <label>
+                                    <input class="other{$val.id}" name="chat_bg_id[]" value="{$val.id}" type="checkbox" > {$val.name} &nbsp;
+                                </label>
+                            </foreach>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('进场动画 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <foreach name="car" id="val">
+                                <label>
+                                    <input class="other{$val.id}" name="car_id[]" value="{$val.id}" type="checkbox" > {$val.name} &nbsp;
+                                </label>
+                            </foreach>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('ADMIN_NICKNAME_COLORS')}</th>
+                        <td>
+                            <input class="form-control" type="text" name="post[colors]" id="colors" style="width:100px;"
+                                   required value="{$data.colors |default='#000000'}" placeholder="{:lang('颜色值默认#000000')}"/>
+                            <input type="color" id="colorGet" onchange="ColorGetFn(this)">&nbsp;&nbsp;
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('ADMIN_ENTRY_REMINDER')}<span class="form-required">*668*168</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[entry_effects]" id="entryEffects" value="{$data['entry_effects'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#entryEffects');">
+                                    <empty name="$data['entry_effects']">
+
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="entryEffects-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+
+                                        <img src="{$data['entry_effects']}"
+                                             id="entryEffects-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </empty>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-entryEffects" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$data.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('noble/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    function ColorGetFn(dom){
+        document.getElementById('colors').value = dom.value;
+    }
+    var status = {$data['noble_status'] | default = 1};
+    var types = {$data['type'] | default = 1};
+    $('#gift').val(status);
+    $('#types').val(types);
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+         $('.btn-cancel-svga').click(function () {
+            $('#svga-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#svga').val('');
+        });
+
+    });
+    var checkcount = {$checkcount};
+    var check = [];
+    var strs = '{$check}';
+
+    check = strs.split(',');
+    if(checkcount>0){
+        for(var i=0;i<checkcount;i++){
+            $('.privilege'+check[i]).attr('checked', 'checked');
+        }
+    }
+
+    var checkcount_other = {$checkcount_other};
+    var other = '{$other}';
+    var check_other = other.split(',');
+    if(checkcount_other>0){
+        for(var i=0;i<checkcount_other;i++){
+            $('.other'+check_other[i]).attr('checked', 'checked');
+        }
+    }
+</script>
+
+</body>
+</html>

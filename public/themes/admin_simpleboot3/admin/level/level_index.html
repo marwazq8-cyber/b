@@ -1,0 +1,109 @@
+<include file="public@header"/>
+<style>
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .gift-img{width:120px;height:40px;}
+     .gift-img img{height:100%};
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_LEVEL_LIST')}</a></li>
+        <li><a href="{:url('level/add')}">{:lang('ADMIN_LEVEL_ADD')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('level/level_index')}">
+       {:lang('等级级别')}:
+        <input type="text" class="form-control" name="level_name" style="width: 120px;" value="{$data.level_name|default=''}" placeholder="{:lang('请输入等级级别')}">
+
+         {:lang('类型')}:
+        <select class="form-control" name="type" style="width: 140px;">
+            <option value="1" <if condition="$data.type eq 1"> selected='selected' </if>>{:lang('财富')}</option>
+            <option value="2" <if condition="$data.type eq 2"> selected='selected' </if>>{:lang('魅力')}</option>
+        </select>
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('level/level_index')}">{:lang('EMPTY')}</a>
+    </form>
+  
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('ADMIN_LEVEL_GRADE')}</th>
+                <th>{:lang('ADMIN_LEVEL_COMMISSION')}</th>
+                <!--<th>{:lang('等级大图标')}</th>(收益)-->
+                <th>{:lang('ADMIN_LEVEL_ICON')}</th>
+                <th>{:lang('ADMIN_LEVEL_TYPE')}</th>
+               <!-- <th>{:lang('颜色值')}</th>-->
+                <th>{:lang('聊天背景图')}</th>
+                <th>{:lang('SORT')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+                <php> 
+                    $type=array('1'=> lang('财富'),'2'=>lang('魅力'));
+                </php>
+            <foreach name="level" id="vo">
+                <tr>
+                    <td>{$vo.levelid}</td>
+                    <td>{$vo.level_name}</td>
+                    <td>{$vo.level_up}</td>
+                    <!--<td class="gift-img">
+                        <if condition="$vo['level_icon']">
+                            <img src="{$vo.level_icon}" alt="">
+                        </if>
+                    </td>-->
+                    <td class="gift-img">
+                        <if condition="$vo['chat_icon']">
+                            <img src="{$vo.chat_icon}" alt="">
+                        </if>
+                    </td>
+                    <td>{$type[$vo.type]}</td>
+                    <!--<td>{$vo.colors}</td>-->
+                    <td class="gift-img">
+                        <if condition="$vo['ticon']">
+                            <img src="{$vo.ticon}" alt="">
+                        </if>
+                    </td>
+                    <td>{$vo.sort}</td>
+                    <td>
+                        <a href="{:url('level/add',array('id'=>$vo.levelid))}">{:lang('EDIT')}</a> |
+                        <a href="javescript:;" class="del" data-id="{$vo.levelid}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('level/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+</script>
+</body>
+</html>

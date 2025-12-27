@@ -1,0 +1,71 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('Voice/voice_label')}">{:lang('房间标签列表')}</a></li>
+			<li><a href="{:url('Voice/add_voice_label')}">{:lang('增加房间标签')}</a></li>
+		</ul>
+       <form class="well form-inline margin-top-20" method="post" action="{:url('Voice/voice_label')}">
+	        {:lang('房间类型')}:
+	        <select name="type" class="form-control">
+	            <option value="-1">{:lang('ALL')}</option>
+	            <option value="1" <if condition="input('request.type/s','') eq '1'"> selected='selected' </if> >{:lang('单人直播')}</option>
+	            <option value="2" <if condition="input('request.type/s','') eq '2'"> selected='selected' </if> >{:lang('多人直播')}</option>
+	        </select> 
+	         {:lang('语音频道类型')}:
+	        <select name="voice_type" class="form-control">
+	            <option value="0">{:lang('ALL')}</option>
+	            <foreach name="voice_type" item="v">
+	            	<option value="{$v['id']}" <if condition="$v['id'] eq input('request.voice_type/s','')"> selected='selected' </if> >{$v['name']}</option>
+	        	</foreach>
+	        </select> 
+            <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+            <a class="btn btn-danger" href="{:url('Voice/voice_label')}">{:lang('EMPTY')}</a>
+        </form>
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th width="50">ID</th>
+					<th>{:lang('房间标签名称')}</th>
+					<th>{:lang('房间分类名称')}</th>
+					<th>{:lang('直播类型')}</th>
+					<th>{:lang('STATUS')}</th>
+					<th>{:lang('SORT')}</th>
+					<th>{:lang('ACTIONS')}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<foreach name="list" item="vo">
+				<tr>
+					<td>{$vo.id}</td>
+					<td>{$vo.name}</td>
+					<td>{$vo.tname}</td>
+					<td>
+						<if condition="$vo['type'] eq 1">
+							单人直播
+							<else />
+							多人直播
+						</if>
+					</td>
+					<td>
+						<if condition="$vo['status'] eq 1">
+							{:lang('OPEN')}
+							<else />
+							{:lang('CLOSE')}
+						</if>
+					</td>
+					<td>{$vo['sort']}</td>
+					<td>
+						<a href="{:url('Voice/add_voice_label',array('id'=>$vo['id']))}">{:lang('EDIT')}</a>
+						<a href="{:url('Voice/del_voice_label',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>
+					</td>
+						
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+
+	</div>
+
+</html>

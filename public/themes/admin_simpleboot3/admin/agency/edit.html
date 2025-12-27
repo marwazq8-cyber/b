@@ -1,0 +1,65 @@
+<include file="public@header" />
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('agency/index')}">{:lang('充值后台账号')}</a></li>
+			<li class="active"><a >{:lang('添加账号')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('agency/editPost')}">
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('登录账号')}</label>
+				<div class="col-sm-3">
+					<if condition="$list['id']">
+						<input type="text" class="form-control" name="login" value="{$list['login']|default=''}" readonly="true">
+						<else/>
+						<input type="text" class="form-control" name="login" value="{$list['login']|default=''}">
+					</if>
+				</div>
+				<div class="col-sm-7">{:lang('账号1')}</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('昵称')}</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" name="name" value="{$list['name']|default=''}">
+				</div>
+				<div class="col-sm-7">{:lang('账号昵称2')}</div>
+			</div>
+			<div class="form-group">
+				<label for="input-user_pass" class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('PASSWORD')}</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" id="input-user_pass" name="psd" value="" placeholder="******">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">{:lang('联系方式')}</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" name="tel" value="{$list['tel']|default=''}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('状态')}</label>
+				<div class="col-md-6 col-sm-10">
+					<label class="checkbox-inline">
+						<input value="1" type="radio" name="status"
+						<if condition="$list['status'] eq 1">checked</if>
+						>{:lang('正常')}
+					</label>
+					<label class="checkbox-inline">
+						<input value="2" type="radio" name="status"
+						<if condition="$list['status'] eq 2"> checked</if>
+						>{:lang('关闭')}
+					</label>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="hidden" name="id" value="{$list['id']|default=''}" />
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>

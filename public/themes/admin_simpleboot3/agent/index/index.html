@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh_CN" style="overflow: hidden;">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <title> {$config_log.system_name}</title>
+
+    <meta name="description" content="This is page-header (.page-header &gt; h1)">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="__TMPL__/public/assets/themes/{:cmf_get_admin_style()}/bootstrap.min.css" rel="stylesheet">
+    <link href="__TMPL__/public/assets/simpleboot3/css/simplebootadmin.css" rel="stylesheet">
+    <link href="__STATIC__/font-awesome/css/font-awesome.min.css?page=index" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="__TMPL__/public/assets/themes/{:cmf_get_admin_style()}/simplebootadminindex.min.css">
+    <style>
+        /*-----------------导航hack--------------------*/
+        .nav-list > li.open {
+            position: relative;
+        }
+
+        .nav-list > li.open .back {
+            display: none;
+        }
+
+        .nav-list > li.open .normal {
+            display: inline-block !important;
+        }
+
+        .nav-list > li.open a {
+            padding-left: 7px;
+        }
+
+        .nav-list > li .submenu > li > a {
+            background: #fff;
+        }
+
+        .nav-list > li .submenu > li a > [class*="fa-"]:first-child {
+            left: 20px;
+        }
+
+        .nav-list > li ul.submenu ul.submenu > li a > [class*="fa-"]:first-child {
+            left: 30px;
+        }
+
+        /*----------------导航hack--------------------*/
+    </style>
+
+    <script>
+        //全局变量
+        var GV = {
+            HOST: "{$_SERVER['HTTP_HOST']}",
+            ROOT: "__ROOT__/",
+            WEB_ROOT: "__WEB_ROOT__/",
+            JS_ROOT: "static/js/"
+        };
+    </script>
+    <php>$submenus=$menus;</php>
+
+    <php>function getsubmenu($submenus){</php>
+    <notempty name="submenus">
+        <php>foreach($submenus as $menu){</php>
+        <li>
+            <php>
+                $menu_name=lang($menu['lang']);
+                $menu_name=$menu['lang']==$menu_name?$menu['name']:$menu_name;
+            </php>
+            <php>if(empty($menu['items'])){</php>
+            <a href="javascript:openapp('{$menu.url}','{$menu.id}','{$menu_name}',true);">
+                <i class="fa fa-{$menu.icon|default='desktop'}"></i>
+                <span class="menu-text"> {$menu_name} </span>
+            </a>
+            <php>}else{</php>
+            <a href="#" class="dropdown-toggle">
+                <i class="fa fa-{$menu.icon|default='desktop'} normal"></i>
+                <span class="menu-text normal"> {$menu_name} </span>
+                <b class="arrow fa fa-angle-right normal"></b>
+                <i class="fa fa-reply back"></i>
+                <span class="menu-text back">返回</span>
+
+            </a>
+
+            <ul class="submenu">
+                <php>getsubmenu1($menu['items'])</php>
+            </ul>
+            <php>}</php>
+
+        </li>
+
+        <php>}</php>
+    </notempty>
+    <php>}</php>
+
+    <php>function getsubmenu1($submenus){</php>
+    <php>foreach($submenus as $menu){</php>
+    <li>
+        <php>
+            $menu_name=lang($menu['lang']);
+            $menu_name=$menu['lang']==$menu_name?$menu['name']:$menu_name;
+        </php>
+        <php>if(empty($menu['items'])){</php>
+        <a href="javascript:openapp('{$menu.url}','{$menu.id}','{$menu_name}',true);">
+            <i class="fa fa-caret-right"></i>
+            <span class="menu-text">
+									{$menu_name}
+								</span>
+        </a>
+        <php>}else{</php>
+        <a href="#" class="dropdown-toggle">
+            <i class="fa fa-caret-right"></i>
+            <span class="menu-text">
+									{$menu_name}
+								</span>
+            <b class="arrow fa fa-angle-right"></b>
+        </a>
+        <ul class="submenu">
+            <php>getsubmenu2($menu['items'])</php>
+        </ul>
+        <php>}</php>
+
+    </li>
+
+    <php>}</php>
+    <php>}</php>
+
+    <php>function getsubmenu2($submenus){</php>
+    <php>foreach($submenus as $menu){</php>
+    <li>
+        <php>
+            $menu_name=lang($menu['lang']);
+            $menu_name=$menu['lang']==$menu_name?$menu['name']:$menu_name;
+        </php>
+
+        <a href="javascript:openapp('{$menu.url}','{$menu.id}','{$menu_name}',true);">
+            &nbsp;<i class="fa fa-angle-double-right"></i>
+            <span class="menu-text">
+								{$menu_name}
+							</span>
+        </a>
+    </li>
+
+    <php>}</php>
+    <php>}</php>
+
+
+    <if condition="APP_DEBUG">
+        <style>
+            #think_page_trace_open {
+                left: 0 !important;
+                right: initial !important;
+            }
+            .sidebar-shortcuts{background: #537dcb;font-weight: bold;color:#fff;}
+        </style>
+    </if>
+
+</head>
+
+<body style="min-width:900px;overflow: hidden;">
+<div id="loading"><i class="loadingicon"></i><span>{:lang('LOADING')}</span></div>
+<div id="right-tools-wrapper">
+</div>
+<div class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a href="{:url('agent/index/index')}" class="navbar-brand" style="min-width: 200px;text-align: center;">{$config_log.system_name}</a>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+
+
+        <div class="navbar-collapse collapse" id="navbar-main">
+            <div class="pull-left" style="position: relative;">
+                <a id="task-pre" class="task-changebt"><i class="fa fa-chevron-left"></i></a>
+                <div id="task-content">
+                    <ul class="nav navbar-nav cmf-component-tab" id="task-content-inner">
+                        <li class="cmf-component-tabitem noclose" app-id="0" app-url="{:url('agent/index/statistical')}"
+                            app-name="首页">
+                            <a class="cmf-tabs-item-text">{:lang('HOME')}</a>
+                        </li>
+                    </ul>
+                    <div style="clear:both;"></div>
+                </div>
+                <a id="task-next" class="task-changebt"><i class="fa fa-chevron-right"></i></a>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right simplewind-nav">
+                <li class="light-blue" style="border-left:none;">
+                    <a id="refresh-wrapper" href="javacript:void(0);" title="{:lang('REFRESH_CURRENT_PAGE')}" style="color:#fff;font-size: 16px">
+                        <i class="fa fa-refresh right_tool_icon"></i>
+                    </a>
+                </li>
+                <li class="light-blue dropdown" style="border-left:none;">
+                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                        <if condition="isset($admin['avatar']) && $admin['avatar']">
+                            <img class="nav-user-photo" width="30" height="30"
+                                 src="{:cmf_get_user_avatar_url($admin['avatar'])}" alt="{$admin.agent_login}">
+                            <else/>
+                            <img class="nav-user-photo" width="30" height="30"
+                                 src="__TMPL__/public/assets/images/logo-18.png" alt="{$admin.agent_login|default=''}">
+                        </if>
+                        <span class="user-info">
+								{:lang('WELCOME_USER',array('user_nickname' => empty($admin['login_name'] )? $admin['agent_login'] : $admin['login_name']))}
+						</span>
+                        <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
+                        <li><a href="{:url('Public/logout')}"><i class="fa fa-sign-out"></i> {:lang('LOGOUT')}</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="main-container container-fluid">
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-shortcuts" id="sidebar-shortcuts">cps 后 台 </div>
+        <div id="nav-wrapper" style="height: 222px; overflow: auto;">
+            <ul class="nav nav-list">
+                <li>
+                    <a href="javascript:openapp('{:url('agent/user/announcement')}','announcement','公告列表');" class="dropdown-toggle">
+                        <i class="fa fa-calendar normal"></i>
+                        <span class="menu-text normal"> 公告列表 </span>
+                        <b class="arrow fa fa-angle-right normal"></b>
+                    </a>
+                </li>
+                <li >
+                    <a href="javascript:openapp('{:url('agent/user/index')}','index','个人中心');" class="dropdown-toggle">
+                        <i class="fa fa-group normal"></i>
+                        <span class="menu-text normal"> 个人中心 </span>
+                        <b class="arrow fa fa-angle-right normal"></b>
+                    </a>
+                </li>
+                <if condition="$admin['agent_level'] == 1">
+                    <li>
+                        <a href="javascript:openapp('{:url('agent/agent/voice')}','voice','房间管理');" class="dropdown-toggle">
+                            <i class="fa fa-bullhorn normal"></i>
+                            <span class="menu-text normal"> 房间管理 </span>
+                            <b class="arrow fa fa-angle-right normal"></b>
+                        </a>
+                    </li>
+                </if>
+                <if condition="$admin['agent_level'] == 1">
+                    <li>
+                        <a href="javascript:openapp('{:url('agent/agent/host')}','host','主播管理');" class="dropdown-toggle">
+                            <i class="fa fa-handshake-o normal"></i>
+                            <span class="menu-text normal"> 主播管理 </span>
+                            <b class="arrow fa fa-angle-right normal"></b>
+                        </a>
+                    </li>
+                </if>
+                <if condition="$admin['agent_level'] < 3">
+                    <li>
+                        <a href="javascript:openapp('{:url('agent/agent/index')}','agent','渠道管理');" class="dropdown-toggle">
+                            <i class="fa fa-tasks normal"></i>
+                            <span class="menu-text normal"> 渠道管理 </span>
+                            <b class="arrow fa fa-angle-right normal"></b>
+                        </a>
+                    </li>
+                </if>
+                <if condition="$admin['agent_level'] == 1">
+                    <li>
+                        <a href="javascript:openapp('{:url('agent/Settlement/index')}','Settlementindex','结算记录');" class="dropdown-toggle">
+                            <i class="fa fa-yen normal"></i>
+                            <span class="menu-text normal"> 账号提现 </span>
+                            <b class="arrow fa fa-angle-right normal"></b>
+                        </a>
+                    </li>
+                </if>
+                <if condition="$admin['agent_level'] == 1">
+                <li>
+                    <a href="javascript:openapp('{:url('agent/Settlement/conversion')}','conversion','{:lang('agent_level1')}统计');" class="dropdown-toggle">
+                        <i class="fa fa-sign-out normal"></i>
+                        <span class="menu-text normal"> {:lang('agent_level1')}统计 </span> <!--公司-->
+                        <b class="arrow fa fa-angle-right normal"></b>
+                    </a>
+                </li>
+                </if>
+                <if condition="$admin['agent_level'] < 3">
+                <li>
+                    <a href="javascript:openapp('{:url('agent/Settlement/statistics')}','statistics','{:lang('agent_level2')}统计');" class="dropdown-toggle">
+                        <i class="fa fa-sign-out normal"></i>
+                        <span class="menu-text normal"> {:lang('agent_level2')}统计 </span> <!--员工-->
+                        <b class="arrow fa fa-angle-right normal"></b>
+                    </a>
+                </li>
+                </if>
+                <li>
+                    <a href="javascript:openapp('{:url('agent/Settlement/subordinate')}','subordinate','{:lang('agent_level3')}统计');" class="dropdown-toggle">
+                        <i class="fa fa-sign-out normal"></i>
+                        <span class="menu-text normal"> {:lang('agent_level3')}统计 </span> <!--推广员-->
+                        <b class="arrow fa fa-angle-right normal"></b>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="javascript:openapp('{:url('agent/agent/userlist')}','agentuserlist','注册明细');" class="dropdown-toggle">
+                        <i class="fa fa-address-card-o normal"></i>
+                        <span class="menu-text normal"> 注册明细 </span>
+                        <b class="arrow fa fa-angle-right normal"></b>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:openapp('{:url('agent/agent/userindex')}','userindex','充值明细');" class="dropdown-toggle">
+                        <i class="fa fa-shield normal"></i>
+                        <span class="menu-text normal"> 充值明细 </span>
+                        <b class="arrow fa fa-angle-right normal"></b>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:openapp('{:url('agent/agent/consumption')}','consumption','消费明细');" class="dropdown-toggle">
+                        <i class="fa fa-gift"></i>
+                        <span class="menu-text normal"> 消费明细 </span>
+                        <b class="arrow fa fa-angle-right normal"></b>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:openapp('{:url('agent/Settlement/link')}','link','渠道推广');" class="dropdown-toggle">
+                        <i class="fa fa-link normal"></i>
+                        <span class="menu-text normal"> 渠道推广 </span>
+                        <b class="arrow fa fa-angle-right normal"></b>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="main-content">
+        <div class="page-content" id="content">
+            <iframe src="{:url('agent/index/statistical')}" style="width:100%;height: 100%;" frameborder="0" id="appiframe-0"
+                    class="appiframe"></iframe>
+        </div>
+    </div>
+</div>
+
+<script src="__TMPL__/public/assets/js/jquery-1.10.2.min.js"></script>
+<script src="__STATIC__/js/wind.js"></script>
+<script src="__TMPL__/public/assets/js/bootstrap.min.js"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__TMPL__/public/assets/simpleboot3/js/adminindex.js"></script>
+<script>
+    $(function () {
+        $("[data-toggle='tooltip']").tooltip();
+        $("li.dropdown").hover(function () {
+            $(this).addClass("open");
+        }, function () {
+            $(this).removeClass("open");
+        });
+    });
+</script>
+</body>
+</html>

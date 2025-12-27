@@ -1,0 +1,259 @@
+<include file="public@header"/>
+<style>
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .gift-img{width:120px;height:40px;}
+     .gift-img img{height:100%};
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('陪聊列表')}</a></li>
+       <!-- <li><a href="{:url('level/add')}">{:lang('添加等级分类')}</a></li>-->
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('user/talker')}">
+        {:lang('USER_ID')}:
+        <input type="text" class="form-control" name="id" style="width: 120px;" value="{$data.id|default=''}" placeholder="{:lang('USER_ID')}">
+        {:lang('USERNAME')}:
+        <input type="text" class="form-control" name="name" style="width: 120px;" value="{$data.name|default=''}" placeholder="{:lang('请输入用户名')}">
+        {:lang('推荐状态')}:
+        <select class="form-control" name="reference" style="width: 140px;">
+            <option value="0">{:lang('ALL')}</option>
+
+            <option value="1" <if condition="$data.reference eq 1"> selected='selected' </if>>{:lang('推荐')}</option>
+            <option value="2" <if condition="$data.reference eq 2"> selected='selected' </if>>{:lang('不推荐')}</option>
+
+        </select>
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('user/talker')}">{:lang('EMPTY')}</a>
+    </form>
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('账号')}</th>
+                <th>{:lang('GENDER')}</th>
+                <th>{:lang('ADMIN_PHONE_NUMBER')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('认证标签')}</th>
+                <th>{:lang('在线状态')}</th>
+                <!--<th>{:lang('接单时间')}</th>
+                <th>{:lang('价格')}</th>-->
+                <!--<th>{:lang('是否推荐')}</th>-->
+                <th>{$config['currency_name']}</th>
+                <th>{$config['virtual_currency_earnings_name']}</th>
+                <th>{:lang('总收入')}</th>
+                <th>{:lang('付费用户数量')}</th>
+                <!--<th>{:lang('音遇')}</th>-->
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+                <php>
+                    $type=array('1'=>lang('YES'),'0'=>lang('NO'));
+                    $sex=array('0'=>'保密','1'=>'男','2'=>'女');
+                </php>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.user_nickname}</td>
+                    <td>{$sex[$vo.sex]}</td>
+                    <td>{$vo.mobile}</td>
+                    <td>
+                        <if condition="$vo['user_status'] !='0'">
+                            {:lang('USER_STATUS_ACTIVATED')}
+                            <else/>
+                            {:lang('USER_STATUS_BLOCKED')}
+                        </if>
+                    </td>
+                    <td>{$vo.label_name}</td>
+                    <td>
+                        <if condition="$vo['is_online'] eq 1">
+                            <span style="color:#18BC9C;">{:lang('在线')}</span>
+                            <else/>
+                            <span style="color:#f84444;">{:lang('离线')}</span>
+                        </if>
+                    </td>
+                    <!--<td>{$type[$vo.reference]}</td>-->
+                    <td>{$vo.coin}</td>
+                    <td>{$vo.friend_coin}</td>
+                    <td>{$vo.income_talker_total}</td>
+                    <td>{$vo.count_user}</td>
+                    <td>
+                        <a class="label_set"  data-id="{$vo.id}" data-type="{$vo.type_id}">{:lang('修改认证标签')}</a>
+                    </td>
+
+                    <!-- <td>
+                        -<if condition="$vo.reference eq 1">
+                             <a class="out_details"  data-id="{$vo.id}">{:lang('取消推荐')}</a>
+                             <else/>
+                         <a url="{:url('player/start_recommend',array('id'=>$vo.id))}" class="details" data-id="{$vo.id}">{:lang('推荐')}</a>
+                         </if>-->
+                        <!--|
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>-->
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('level/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+
+    $(".out_details").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm('确定取消推荐？', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('user/start_recommend')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id,type:2},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('Recommendation_cancelled_successfully')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('取消推荐失败')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+
+    $(".details").click(function () {
+        var id = $(this).attr('data-id');
+        var lists = {$label};
+
+        var html = '';
+        for(var i=0;i<lists.length;i++){
+
+            html += "<option value='"+lists[i].id+"'>"+lists[i].label_name+"</option>";
+        }
+        //自定页
+        layer.open({
+            title: '选择推荐标签',
+            type: 1,
+            skin: 'layui-layer-demo', //样式类名
+            closeBtn: 0, //不显示关闭按钮
+            btn: ["{:lang('OK')}", '关闭'],
+            area: '250px;',
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: "<select style='width:80%;margin-left: 10%;margin-top: 30px;' class='sel' name=''>"+html+"<select/>",
+            success: function(layero){
+                var btn = layero.find('.layui-layer-btn');
+
+                btn.find('.layui-layer-btn0').click(function () {
+                    var a = $(".sel").val();
+                    $.ajax({
+                        url: "{:url('user/start_recommend')}",
+                        type: 'post',
+                        dataType: 'json',
+                        data: {id: id,recommend_label:a,type:1},
+                        success: function (data) {
+                            if (data == '1') {
+                                layer.msg("{:lang('Recommended_successfully')}", {time: 2000, icon: 1}, function () {
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg("{:lang('推荐失败')}", {time: 2000, icon: 2});
+                            }
+                        }
+                    });
+                });
+
+            }
+        });
+    })
+    $('.label_set').click(function(){
+        var id = $(this).attr('data-id');
+        var type = $(this).attr('data-type');
+        label_set(id,type);
+    })
+    function label_set(id,type) {
+        var lists = {$label_type};
+
+        var html = '';
+        for(var i=0;i<lists.length;i++){
+            if(lists[i].id == type){
+                html += "<option selected value='"+lists[i].id+"'>"+lists[i].label_name+"</option>";
+            }else{
+                html += "<option value='"+lists[i].id+"'>"+lists[i].label_name+"</option>";
+            }
+
+        }
+        //html = '<foreach name="$label_type" item="v"><option value="$v.id">{$v.label_name}</option></foreach>';
+        layer.open({
+            type: 0,
+            title: "{:lang('标签设置')}",
+            area: ['300px', '200px'],   //宽高
+            shade: 0.4,   //遮罩透明度
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"], //按钮组,
+            content: '<div class="layui-form"><label class="layui-form-label">{:lang('标签')}</label><select style="width:50%;margin-left: 10%;margin-top: 30px;" id="sel" name="">'+html+'<select/></div>',
+            success:function(){
+                Wind.css('bootstrapDatetimePicker');
+                Wind.use('bootstrapDatetimePicker', function () {
+                    $("#vip_end_time").datetimepicker({
+                        language: 'zh-CN',
+                        format: 'yyyy-mm-dd hh:ii',
+                        todayBtn: 1,
+                        autoclose: true
+                    });
+                });
+            },
+            yes:function(index){   //点击确定回调
+                //alert($('#vip_end_time').val());
+                layer.close(index);
+                $.ajax({
+                    url: "{:url('user/talkerSetLabel')}",
+                    type: 'get',
+                    dataType: 'json',
+                    data: {id: id,type:$('#sel').val()},
+                    success: function (data) {
+                        if(data['code'] == 1){
+                            layer.msg(data['msg'],{time: 2000, icon:1},function(){
+                                window.location.reload();
+                            });
+                        }else{
+                            layer.msg(data['msg'],{time: 2000, icon:2});
+                        }
+                    }
+                });
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+  .eggs_name{
+    width: 100%;height: 30px;line-height: 30px;color:#fb7373;margin-left: 20px;  }
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .select{width: 150px;height:30px;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_EXTRA_BONUS_LIST')}</a></li>
+        <li><a href="{:url('GameBox/add_bubble_bonus')}">{:lang('ADMIN_EXTRA_BONUS_ADD')}</a></li>
+    </ul>
+     <form class="well form-inline margin-top-20" method="post" action="{:url('bubble/bubble_bonus')}">
+         {:lang('USER_ID')}:
+            <input type="text" class="form-control" name="uid" style="width: 140px;" value="{$request['uid'] | default=''}" placeholder="{:lang('USER_ID')}">
+         {:lang('ADMIN_GIFT')}:
+            <select class="select" name="gift_id">
+                <option val="0">{:lang('ALL')}</option>
+                 <foreach name="gift" item="vo">
+                    <option value="{$vo['id']}" <if condition="$request['gift_id'] eq $vo['id']"> selected = "selected" </if>>{$vo['name']}</option>
+                </foreach>
+            </select>
+            <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+            <a class="btn btn-danger" href="{:url('bubble/bubble_bonus')}">{:lang('EMPTY')}</a>
+        </form>
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('USERNAME')}(ID)</th>
+                <th>{:lang('泡泡列表ID')}</th>
+                <th>{:lang('ADMIN_GIFT_NAME')}</th>
+                <th>{:lang('ADMIN_GIFT_PRICE')}</th>
+                <th>{:lang('奖励数量')}</th>
+                <th>{:lang('ADMIN_WHETHER_THE_SYSTEM_PUSH')}</th>
+                <th>{:lang('ADMIN_WHETHER_TO_PUSH_IN_FULL_SCREEN')}</th>
+                <th>{:lang('ADMIN_FLOATING_SCREEN')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('ADD_TIME')}</th>
+                <th>{:lang('RECEIVE_TIME')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+                <php>
+                    $status=array('1'=>lang('YES'),'2'=>lang('NO'));
+                    $is_status=array('1'=>'已领取','0'=>'未领取');
+                </php>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo['user_nickname']}({$vo.uid})</td>
+                    <td>{$vo.bubble_id}</td>
+                    <td>{$vo.gift}</td>
+                    <td>{$vo.coin}</td>
+                    <td>{$vo.sum}</td>
+
+                    <td>{$status[$vo.is_system_push]}</td>
+                    <td>{$status[$vo.is_male_screen]}</td>
+                    <td>{$status[$vo.is_all_notify]}</td>
+                    <td>{$is_status[$vo.status]}</td>
+                    <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <if condition="$vo['endtime']">
+                        {$vo.endtime | date="Y-m-d H:i:s",###}
+                        </if>
+                    </td>
+                    <td>
+                        <if condition="$vo['status'] eq 0">
+                            <a href="{:url('bubble/add_bubble_bonus',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                            <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                        </if>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('bubble/del_bubble_bonus')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function () {
+        $(".js-ajax-form").submit();
+    })
+</script>
+</body>
+</html>

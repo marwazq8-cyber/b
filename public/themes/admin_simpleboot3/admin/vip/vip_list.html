@@ -1,0 +1,113 @@
+
+<include file="public@header"/>
+<style>
+    .js-ajax-form{margin-top:30px;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('vip_level')}</a></li>
+        <li><a href="{:url('vip/vip_list_add')}">{:lang('ADD')}</a></li>
+    </ul>
+
+    <form class="js-ajax-form" action="" method="post">
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>vip{:lang('ADMIN_NAME')}</th>
+                <th>vip{:lang('ADMIN_PRICE')}</th>
+                <th>vip{:lang('ADMIN_ICON')}</th>
+                <th>{:lang('ADMIN_IMG')}</th>
+                <th>{:lang('ADMIN_MEAL')}</th>
+                <th>{:lang('ADMIN_AVATAR_FRAME')}</th>
+                <th>{:lang('ADMIN_ENTRY_REMINDER')}</th>
+<!--                <th>{:lang('Sound_wave')}</th>-->
+<!--                <th>{:lang('ADMIN_CHAT_BUBBLE')}</th>-->
+                <th>{:lang('Business_card')}</th>
+                <th>{:lang('ADMIN_PRIVILEGE')}</th>
+
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('SORT')}</th>
+
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <php>
+                $status = array('1'=>lang('OPEN'),'0'=>lang('CLOSE'));
+                $isOpen = array('1'=>lang('OPEN'),'0'=>lang('CLOSE'));
+            </php>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.title}</td>
+                    <td>{$vo.coin}/{$vo.days} {:lang('ADMIN_DAY')}</td>
+                    <td><img src="{$vo.icon}" style="width:50px;"/></td>
+                    <td><img src="{$vo.interval_icon}" style="width:50px;"/></td>
+                    <td><img src="{$vo.identity_url}" style="width:50px;"/></td>
+                    <td><img src="{$vo.headwear_web}" style="width:50px;"/></td>
+                    <td><img src="{$vo.approach_web}" style="width:50px;"/></td>
+<!--                    <td><img src="{$vo.sound_wave_url}" style="width:50px;"/></td>-->
+<!--                    <td><img src="{$vo.bubble_web}" style="width:50px;"/></td>-->
+                    <td><img src="{$vo.room_card_url}" style="width:50px;"/></td>
+                    <td>
+                        <div>{:lang('Exclusive_nickname')} : {$isOpen[$vo.is_nickname]}</div>
+<!--                        <div>{:lang('sign_in')} : {$vo.sign_in_coin}</div>-->
+<!--                        <div>{:lang('top_ranking')} : {$isOpen[$vo.is_rank]}</div>-->
+                        <div>{:lang('visitors_log')} : {$isOpen[$vo.is_visitors]}</div>
+<!--                        <div>{:lang('Casual_chat')} : {$vo.is_private_chat}</div>-->
+
+<!--                        <div>{:lang('Mall_discount')} : {$vo.shop_coin}</div>-->
+<!--                        <div>{:lang('Hierarchical_acceleration')} : {$vo.level_acceleration}</div>-->
+                        <div>{:lang('maximum_fans')} : {$vo.maximum_fans}</div>
+<!--                        <div>{:lang('Casual_chat')} : {$vo.maximum_attention}</div>-->
+
+<!--                        <div>{:lang('Turn_stealth')} : {$isOpen[$vo.is_stealth]}</div>-->
+                        <div>{:lang('ban_attention')} : {$isOpen[$vo.is_ban_attention]}</div>
+                        <div>{:lang('voice_kick')} : {$isOpen[$vo.is_kick]}</div>
+                    </td>
+                    <td>{$status[$vo.status]}</td>
+                    <td>{$vo.sort}</td>
+                    <td>{$vo.create_time | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <a href="{:url('vip/vip_list_add',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('vip/vip_list_del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("{:lang('DELETE_SUCCESS')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('DELETE_FAILED')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+</script>
+</body>
+</html>

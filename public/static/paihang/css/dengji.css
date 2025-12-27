@@ -1,0 +1,57 @@
+/*排行榜*/
+body div {margin: 0; padding: 0}
+body {
+	padding:0px;
+	margin: 0 auto;
+	min-width: 280px;
+	max-width: 620px;
+	font-size:12px;
+}
+.dengji {
+	position: relative;
+	background: url("../img/dengji_bg.png") no-repeat;
+	width:100%;min-height:12.5rem;
+    background-size:100% 100%;  
+}
+.dengji_my{padding: 20px 0 0 20px;width: 60px;}
+.dengji_my img{width:100%;height:100%;}
+    /*头像*/
+.dengji_tu{float: left;width:65px;height:65%;margin: 4% 0 0 3%;border-radius: 50%;border: 5px solid #ffc865; }
+.dengji_tu .dengji_tuimg{width:84%;height:84%;border-radius: 50%;border: 5px solid #fce5b6;}
+.dengji_toux{height:100px;}
+.dengji_tujb{width:80%;position: relative;bottom: 22px;left: 3px;}
+.dengji_tujb img{width:100%;height:100%;}
+.dengji_lv{position: relative;bottom: 18px;left: 23px;color:#fff;text-shadow:1px 1px 1px #000;}
+
+/*级别图*/
+.dengji_jib{float: right;width:calc(100% - 10% - 65px);margin-right: 3%;}
+.dengji_jib1{width:100%;margin-top:35px;height: 18px;}
+.dengji_jib .dengji_jib1 img{width:100%;height:100%;}
+.dengji_yx{float:left;width:19%;height:100%;}
+.dengji_yxz{float:left;width:60%;height:35%;background:#f1bfb6;margin-top: 6px;}
+.dengji_yxy{float:left;width:40%;height:100%;border-radius: 50%;background:#f1bfb6;}
+
+.dengji_bgcolor .dengji_yxz,.dengji_bgcolor .dengji_yxy{background:#fff!important;}
+.dengji_bgcolor .dengji_lv1,.dengji_bgcolor .dengji_lv2{color:#fff!important;text-shadow:0.5px 1px 1px #000;}
+.dengji_lv1{margin-left:55%;color:#ececec;font-size:12px;}
+.dengji_lv2{margin-left:55%;color:#ececec;font-size:12px;margin-top:22px;width: 95%;}
+
+/*经验值*/
+.dengji_zhi{width:90%;margin:1em auto 0;}
+.dengji_zhi1{float:left;width:26%;text-align:center;font-size:8px;color:#fff;margin-left:1%;}
+.dengji_zhi2{width:45%;float:left;text-align:center;font-size:8px;color:#fff;margin-left:1%;}
+.dengji_tiao{width:90%;margin:2.5em auto;border:0.3em solid #fff;border-radius:1.2em;}
+.dengji_tiao2{width:90%;margin:-3.07em auto;}
+.dengji_tiao3{width:50%;border:0.34em solid #febd3d;border-radius:1.2em;margin-left: -0.3em;}
+/*三角*/
+.denji_jiao{clear:both;width:45%;height:1em;position: absolute;bottom:0px;left:48%;}
+.denji_jiao img{width:15%;height:100%;}
+/*等级特权*/
+.dengji_tq{width:90%;margin:7em auto 0;height:1.2em;}
+.dengji_tq img{width:100%;height:100%;}
+/*等级图标*/
+.dengji_tb{width:25%;margin:2em auto 1em;}
+.dengji_tb img{width:80%;height:100%;border: 1em solid #e2e2e2;border-radius: 50%;background:#e2e2e2; }
+.dengji_tb2{  width: 25%;text-align:center;margin:0 auto;}
+.dengji_tb3{height:2.5em;line-height:2.5em;font-size:14px;}
+.dengji_tb4{height:2.5em;line-height:2.5em;font-size:14px;background:#ffce35;color:#fff;border-radius: 5%;}

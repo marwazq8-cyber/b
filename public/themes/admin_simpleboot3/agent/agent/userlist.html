@@ -1,0 +1,102 @@
+<include file="public@header" />
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('agent/userlist')}">注册明细</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" name="form1" method="post" action="{:url('agent/userlist')}">
+        用户ID:
+        <input type="text" class="form-control" name="uid" style="width: 90px;"
+               value="{:input('request.uid/s','')}" placeholder="用户ID">
+        用户昵称:
+        <input type="text" class="form-control" name="user_nickname" style="width: 120px;"
+               value="{:input('request.user_nickname/s','')}" placeholder="用户昵称">
+        <if condition="$agent['agent_level'] < 3">
+            渠道ID:
+            <input type="text" class="form-control" name="agent_id" style="width: 90px;"
+               value="{$data.agent_id |default=''}" placeholder="渠道id">
+            账号:
+            <input type="text" class="form-control" name="agent_login" style="width: 120px;"
+                   value="{:input('request.agent_login/s','')}" placeholder="账号或昵称">
+        </if>
+
+        <if condition="$agent['agent_level'] eq 1">
+            推荐人ID:
+            <input type="text" class="form-control" name="subordinate_id" style="width: 90px;"
+                   value="{:input('request.subordinate_id/s','')}" placeholder="推荐人id">
+            账号类型：
+            <select class="form-control" name="agent_level" >
+                <option value="0">全部</option>
+                <if condition="$agent['agent_level'] eq 1">
+                    <option value="2"
+                    <if condition="$data['agent_level'] eq 2"> selected="selected"</if>
+                    >{:lang('agent_level2')}</option>
+                </if>
+                <option value="3"
+                <if condition="$data['agent_level'] eq 3"> selected="selected"</if>
+                >{:lang('agent_level3')}</option>
+            </select>
+        </if>
+        日期范围:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time"
+               value="{$data['start_time']|default=''}"
+               style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time"
+               value="{$data['end_time']|default=''}"
+               style="width: 140px;" autocomplete="off"> &nbsp;
+        <input type="submit" class="btn btn-primary" value="搜索" onclick='form1.action="{:url('agent/userlist')}";form1.submit();'/>
+        <a class="btn btn-danger" href="{:url('agent/userlist')}">清空</a>
+        <input type="submit" class="btn btn-info" style="background-color: #1dccaa;" value="导出" onclick='form1.action="{:url('agent/export_userlist')}";form1.submit();'>
+        <span>总注册数: {$number}</span>
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+
+            <th>注册用户(id)</th>
+            <if condition="$agent['agent_level'] < 3">
+                <th>邀请渠道(id)</th>
+            </if>
+            <if condition="$agent['agent_level'] eq 1">
+            <th>渠道推荐人id</th>
+            </if>
+            <th>账号类型</th>
+            <th>手机厂商</th>
+            <th>注册机型</th>
+            <th>注册IP(终端ip)</th>
+            <th>注册IP(公网)</th>
+            <th>注册设备号</th>
+            <th>注册时间</th>
+            <th>最后登录时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <php>
+            $agent_level = array('1'=> lang('agent_level1'),'2'=> lang('agent_level2'),'3'=> lang('agent_level3'));
+        </php>
+        <foreach name="users" item="vo">
+            <tr>
+
+                <td>{$vo.user_nickname}({$vo.uid})</td>
+                <if condition="$agent['agent_level'] < 3">
+                    <td>{$vo.login_name}({$vo.id})</td>
+                </if>
+                <if condition="$agent['agent_level'] eq 1">
+                    <td>{$vo.agent_staff ?$vo.agent_staff: $vo.agent_company}</td>
+                </if>
+                <td>{$agent_level[$vo.agent_level]}</td>
+                <td>{$vo.brand}</td>
+                <td>{$vo.model}</td>
+                <td>{$vo.intranet_ip}</td>
+                <td>{$vo.public_ip}</td>
+                <td>{$vo.register_device}</td>
+                <td>{:date('Y-m-d H:i',$vo['create_time'])}</td>
+                <td>{:date('Y-m-d H:i',$vo['last_login_time'])}</td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>

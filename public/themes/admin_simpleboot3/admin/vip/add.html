@@ -1,0 +1,77 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+       #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:url('vip/index')}" >vip规则列表</a></li>
+        <li class="active"><a href="javascript:;">{:lang('添加vip规则')}</a></li>
+    </ul>
+    <form action="{:url('vip/add_post')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('消费价格(元) ')}<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[money]" id="money" value="{$data.money |default=''}"
+                                   placeholder="{:lang('请输入金额')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('会员时间(月) ')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="number" name="post[month]"
+                                   required value="{$data.month |default=''}" placeholder="{:lang('请输入会员时间')}"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('正常价格(元/月 计算优惠使用) ')}<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[normal_money]" value="{$data.normal_money |default=''}"
+                                   placeholder="{:lang('请输入正常每月价格')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[status]" id="gift">
+                                <option value="1">{:lang('OPEN')}</option>
+                                <option value="0" <if condition="$data['status'] eq '0'"> selected="selected" </if> >{:lang('CLOSE')}</option>
+
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                   required value="{$data.sort |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$data.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('vip/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+
+
+</body>
+</html>

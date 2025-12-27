@@ -1,0 +1,838 @@
+<include file="public@header"/>
+<style>
+
+    #sex,#is_online,#reference,.user_status,#order,#is_exchange{
+        width: 80px;
+        height: 32px;
+        border-color: #dce4ec;
+        color: #aeb5bb;}
+
+    .gift-in input{width:25px;}
+    .user_details_type{float:left;width:50%;text-align: left;}
+
+    .btn-info:hover,.btn-info:click{
+        outline:0!important;
+        color:#2a6496!important;
+        background: #ecf0f1!important;
+        border-color: #ecf0f1!important;
+
+    }
+    .btn-info:focus{
+        outline:0!important;
+        box-shadow:none;
+    }
+
+    tr:hover .btn-info{
+        color:#2a6496!important;
+        background: #ecf0f1!important;
+        border-color: #ecf0f1!important;
+    }
+
+    .btn-info{
+        color:#2a6496!important;
+        background: #fff!important;
+        border-color: #fff!important;
+    }
+    #ul{
+        font-size: 12px;
+        list-style:none;
+        min-width:120px;
+        border:1px solid #c1c1c1;
+        display:none;
+        padding-left:0px;
+        position: absolute;
+        right:60px;
+        background-color: #ffffff
+    }
+    .ipt{
+        /*margin:1px 0 0 0px;*/
+        /*border:0px solid;*/
+    }
+   #ul li a{
+        display:inline-block;
+        float:left;
+        width:100%;
+        height:30px;
+        line-height: 30px;
+        text-decoration:none;
+
+        color: #333;
+    }
+   #ul li{
+        margin-left: 0;
+        padding-right: 15px;
+        width:100%;height: 30px;
+         padding-left:15px;
+
+    }
+
+   #ul li:hover{
+        background-color:#f5f5f5;
+    }
+    #ul li a:hover{
+        color:#333;
+    }
+    .ipt::-ms-input-placeholder {
+        text-align: center;
+    }
+
+    .ipt::-webkit-input-placeholder {
+        text-align: center;
+
+    }
+
+
+</style>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a>{:lang('USER_INDEXADMIN_INDEX')}</a></li>
+        <li ><a href="{:url('user/AdminIndex/add_user')}">{:lang("添加用户")}</a></li>
+    </ul>
+
+    <form class="well form-inline margin-top-20" name="form1" method="post">
+        {:lang('USER_ID')}：
+        <input class="form-control" type="text" name="uid" style="width: 100px;" value="{:input('request.uid')}"
+               placeholder="{:lang('USER_ID')}">
+        {:lang('ADMIN_KEYWORDS')}：
+        <input class="form-control" type="text" name="keyword" style="width: 120px;" value="{:input('request.keyword')}"
+               placeholder="{:lang('用户名/昵称/邮箱/手机号')}">
+        {:lang('用户状态')}：
+        <select name="user_type" class="user_status">
+            <option value="0">{:lang('ALL')}</option>
+            <option value="1" <if condition="$request.user_type == 1"> selected="selected" </if>>{:lang('后台账户')}</option>
+            <option value="2" <if condition="$request.user_type == 2"> selected="selected" </if>>{:lang('普通会员')}</option>
+            <option value="3" <if condition="$request.user_type == 3"> selected="selected" </if>>{:lang('注销用户')}</option>
+        </select>
+        {:lang('ADMIN_ACCOUNT_STATUS')}：
+        <select name="user_status" class="user_status">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="0" <if condition="$request.user_status == '0'"> selected="selected" </if>>{:lang("禁用")}</option>
+            <option value="1" <if condition="$request.user_status == 1"> selected="selected" </if>>{:lang("正常")}</option>
+        </select>
+        {:lang('ADMIN_ONLINE_STATUS')}：
+        <select name="is_online" id="is_online">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="1" <if condition="$request.is_online == '1'"> selected="selected" </if>>{:lang("在线")}</option>
+            <option value="0" <if condition="$request.is_online == '0'"> selected="selected" </if>>{:lang("离线")}</option>
+        </select>
+        {:lang('GENDER')}：
+        <select name="sex" id="sex">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="1" <if condition="$request.sex == 1"> selected="selected" </if>>{:lang('MALE')}</option>
+            <option value="2" <if condition="$request.sex == 2"> selected="selected" </if>>{:lang('FEMALE')}</option>
+        </select>
+
+        {:lang('SORT')}：
+        <select name="order" id="order">
+            <option value="-1">{:lang("默认")}</option>
+            <option value="1" <if condition="$request.order == 1"> selected="selected" </if>>{:lang('ADMIN_INCOME')}</option>
+            <option value="2" <if condition="$request.order == 2"> selected="selected" </if>>{:lang("余额")}</option>
+            <option value="3" <if condition="$request.order == 3"> selected="selected" </if>>{:lang("级别")}</option>
+        </select>
+
+        {:lang('ADMIN_RECOMMEND_STATUS')}：
+        <select name="reference" id="reference" style="margin-top:10px;">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="1" <if condition="$request.reference eq 1"> selected="selected" </if>>{:lang("推荐")}</option>
+            <option value="0" <if condition="$request.reference eq '0'"> selected="selected" </if>>{:lang("未推荐")}</option>
+        </select>
+        {:lang('好友兑换')}：
+        <select name="is_exchange" id="is_exchange" style="margin-top:10px;">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="1" <if condition="$request.is_exchange eq 1"> selected="selected" </if>>{:lang("开启")}</option>
+            <option value="0" <if condition="$request.is_exchange eq '0'"> selected="selected" </if>>{:lang("关闭")}</option>
+        </select>
+        <br/>
+        {:lang('ADMIN_AUTH_STATUS')}：
+        <select name="is_auth" id="is_auth" style="margin-top:10px;width: 100px;height: 32px;border-color: #dce4ec;color: #aeb5bb;">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="0" <if condition="$request.is_auth == '0'"> selected="selected" </if>>{:lang("未认证")}</option>
+            <option value="1" <if condition="$request.is_auth == 1"> selected="selected" </if>>{:lang("已认证")}</option>
+        </select>
+        {:lang('country')}：
+        <select name="country_code" class="user_status">
+            <option value="0">{:lang('ALL')}</option>
+            <foreach name="countries" item="c">
+                <option value="{$c['num_code']}" <if condition="$request.country_code eq $c['num_code']"> selected="selected" </if>>{$c['en_short_name']}</option>
+            </foreach>
+        </select>
+        {:lang('REGISTRATION_TIME')}:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time" value="{:input('request.start_time')}" style="width: 130px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time" value="{:input('request.end_time')}" style="width: 130px;" autocomplete="off"> &nbsp; &nbsp;
+        {:lang('LOGIN_TIME')}:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time2" value="{:input('request.start_time2')}" style="width: 130px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time2" value="{:input('request.end_time2')}" style="width: 130px;" autocomplete="off"> &nbsp; &nbsp;
+        {:lang('Registered_equipment_number')}：
+        <input class="form-control" type="text" name="device_uuid" style="width: 200px;" value="{:input('request.device_uuid')}"
+               placeholder="{:lang('Registered_equipment_number')}">
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" onclick='form1.action="{:url('user/adminIndex/index')}";form1.submit();'/>
+        <a class="btn btn-danger" href="{:url('user/adminIndex/index')}">{:lang('EMPTY')}</a>
+        <input type="button" class="btn btn-primary from_export" style="background-color: #1dccaa;" value="{:lang('导出')}" onclick='form1.action="{:url('user/adminIndex/export')}";form1.submit();'>
+
+
+    </form>
+    <form method="post" action="{:url('adminIndex/upd')}" class="js-ajax-form1">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('ADMIN_LUCK')}</th>
+                <th>{:lang('ADMIN_ACCOUNT')}</th>
+                <th>{:lang('NICENAME')}</th>
+                <th>{:lang('GENDER')}</th>
+                <th>{:lang('Grade')}</th>
+                <th>{:lang('AVATAR')}</th>
+                <th>{:lang('MOBILE')}</th>
+                <th>{:lang('country')}</th>
+
+                <th>{:lang('email')}</th>
+              <!--   <th>{:lang("设备号")}</th> -->
+                <th>{:lang('STATUS')}</th>
+<!--                <th>{:lang("是否推荐")}</th>-->
+                <th>{:lang('ADMIN_ONLINE_STATUS')}</th>
+<!--                <th>{:lang('ADMIN_AUTH')}</th>-->
+                <th>{:lang("邀请人")}</th>
+<!--                <th>VIP</th>-->
+                <th>{:lang('贵族')}</th>
+
+                <if condition="IS_AGENT eq 1">
+                    <th>{:lang('ADMIN_CHANNEL_ID')}</th>
+                </if>
+<!--                <th>{:lang('ADMIN_PAY_RATE')}</th>-->
+                <th>{$currency_name}</th>
+                <th>{$system_currency_name}</th>
+                <th>{:lang('ADMIN_INCOME')}</th>
+                <th>{:lang('ADMIN_LOGIN_TYPE')}</th>
+<!--                <th>{:lang('REGISTRATION_TIME')}</th>-->
+<!--                <th>{:lang('LAST_LOGIN_TIME')}</th>-->
+                <th>{:lang('LAST_LOGIN_IP')}</th>
+                <th>{:lang('用户状态')}</th>
+                <th align="center">{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <php>
+
+                $is_online=array("0"=>'lang("ADMIN_LINE")',"1"=>lang('在线'));
+                $is_auth=array('0'=>lang('未认证'),"1"=>lang('认证'));
+                $reference=array('0'=>lang('否'),"1"=>lang('是'));
+            </php>
+            <foreach name="list" item="vo">
+<!--                    <td class="gift-in"><input type="text" name="listorders[{$vo.id}]" value="{$vo.sort}"></td>-->
+                    <td>{$vo.id}</td>
+                    <td>{$vo.luck ? $vo.luck : ''}</td>
+                    <if condition="IS_TEST eq 1"><td>{:lang("测试模式，敏感数据不予显示！")}</td><else/><td>{$vo['user_login']?$vo['user_login']:($vo['mobile']?$vo['mobile']:lang('THIRD_PARTY_USER'))}</td></if>
+
+                    <td>{$vo['user_nickname']?$vo['user_nickname']:lang('NOT_FILLED')}</td>
+                    <td>{$vo['sex'] == 2 ? lang('女') : lang('男') }</td>
+                    <td>{$vo['level'] |default="1"}</td>
+
+                    <td class="head_img" data-img='<img  src="{:url('user/public/avatar',array('id'=>$vo['id']))}" style="max-width:100%;max-height:700px;"/>'><img width="25" height="25" src="{:url('user/public/avatar',array('id'=>$vo['id']))}"/></td>
+                 <!--    <td><a href="{:url('admin/audit/index')}?uid={$vo['id']}">{:lang("详情")}</a></td>
+ -->
+
+                    <if condition="IS_TEST eq 1"><td>{:lang("测试模式，敏感数据不予显示！")}</td><else/><td>({$vo['mobile_area_code'] |default=""}){$vo.mobile}</td></if>
+                    <td>{$vo['country_name'] |default=""}</td>
+                    <td>{$vo['user_email'] |default=""}</td>
+                 <!--    <if condition="IS_TEST eq 1"><td>{:lang("测试模式，敏感数据不予显示！")}</td><else/><td>{$vo.device_uuid}</td></if> -->
+
+                    <td>
+                        <if condition="$vo['user_status'] !='0'">
+                            {:lang('USER_STATUS_ACTIVATED')}
+                        <else/>
+                            {:lang('BLOCK_USER')}
+                        </if>
+                    </td>
+<!--                    <td>-->
+<!--                        {$reference[$vo['reference']]}-->
+<!--                    </td>-->
+                    <td>
+                        <if condition="$vo['is_online'] eq 1">
+                            <span style="color:#18BC9C;">{:lang("ADMIN_ONLINE")}</span>
+                            <else/>
+                            <span style="color:#f84444;">{:lang("ADMIN_LINE")}</span>
+                        </if>
+                    </td>
+<!--                    <td>{$is_auth[$vo['is_auth']]}</td>-->
+
+                    <td>
+                        <if condition="$vo.invite_user_id">
+                                {$vo.invite_user_name}({$vo.invite_user_id})
+                            <else/>
+                            {:lang("无")}
+                        </if>
+                    </td>
+<!--                    <td>-->
+<!--                        <if condition="$vo['vip_name']">-->
+<!--                            {$vo['vip_name']}:{$vo['vip_end_time']}-->
+<!--                            <else/>-->
+<!--                            {:lang("无")}-->
+<!--                        </if>-->
+<!--                    </td>-->
+
+                    <td>
+                        <if condition="$vo['noble_end_time']">
+                            {$vo['noble_name']}:{$vo['noble_end_time']}
+                            <div onclick="nobleSet({$vo['id']})" style="cursor: pointer;color: #4885cd;">取消</div>
+                            <else/>
+                            {:lang("无")}
+                        </if>
+                    </td>
+
+                    <if condition="IS_AGENT eq 1">
+                        <td>
+                            <a style="text-decoration:none;"  href="javascript:void(0);"  onclick="link_set({$vo['id']},'{$vo['link_id']}')">
+                                <if condition="$vo.link_id">
+                                    {$vo.link_id}
+                                    <else/>
+                                    {:lang("无")}
+                                </if>
+                            </a>
+                        </td>
+                    </if>
+<!--                    <td>{$vo['recharge_probability']}%</td>-->
+                    <td>{$vo['coin']}</td>
+                    <td>{$vo['friend_coin']}</td>
+                    <td>{$vo['income']|default=0}</td>
+
+
+                    <td>
+                        <if condition="$vo['login_way'] eq 1">
+                            {:lang('手机')}
+                            <elseif condition="$vo['login_way'] eq 2"/>
+                            QQ
+                            <elseif condition="$vo['login_way'] eq 4"/>
+                            Emai Login
+                            <elseif condition="$vo['login_way'] eq 5"/>
+                            Google Login
+                            <elseif condition="$vo['login_way'] eq 6"/>
+                            Facebook Login
+                            <else/>
+                            {:lang('WECHAT')}
+                        </if>
+                    </td>
+<!--                    <td>{:date('Y-m-d H:i:s',$vo['create_time'])}</td>-->
+<!--                    <td>{:date('Y-m-d H:i:s',$vo['last_login_time'])}</td>-->
+                    <td>{$vo.last_login_ip}</td>
+                <td>
+                    <if condition="$vo['user_type'] eq 3">
+                        {:lang('注销用户')}
+                        <else/>
+                        {$vo.user_type == 1 ? lang('后台账户') : lang('普通会员')}
+                    </if>
+                </td>
+                    <td>
+                        <button class="ipt btn btn-info" type="button">{:lang('ACTIONS')} <strong>+</strong></button>
+                        <!--<input class="ipt" type="button"  placeholder="{:lang('操作')}"/>-->
+                        <ul id="ul">
+                            <li><a style="text-decoration:none;"  href="{:url('admin_index/edit',array('id'=>$vo['id']))}">{:lang("编辑资料")}</a></li>
+                            <if condition="$vo.is_test eq 1">
+                                <li><a style="text-decoration:none;" href="javascript:void(0);" onclick="set_test('{$vo.id}',2)">{:lang("取消测试号")}</a></li>
+                                <else/>
+                                <li><a style="text-decoration:none;" href="javascript:void(0);"  onclick="set_test('{$vo.id}',1)">{:lang("设为测试号")}</a></li>
+                            </if>
+
+                            <if condition="$vo.is_exchange eq 1">
+                                <li><a style="text-decoration:none;" href="javascript:void(0);" onclick="set_exchange('{$vo.id}',0)">{:lang("关闭好友兑换")}</a></li>
+                                <else/>
+                                <li><a style="text-decoration:none;" href="javascript:void(0);" onclick="set_exchange('{$vo.id}',1)">{:lang("开启好友兑换")}</a></li>
+                            </if>
+
+                            <neq name="vo.id" value="1">
+                                <empty name="vo.user_status">
+                                    <li>
+                                        <a  style="text-decoration:none;" class="js-ajax-dialog-btn" href="{:url('adminIndex/cancelban',array('id'=>$vo['id']))}" data-msg="{:lang('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:lang('ACTIVATE_USER')}</a>
+                                    </li>
+                                    <else/>
+                                    <li>
+                                        <a style="text-decoration:none;" href="javascript:void(0);"  class="ban_type_btn" data-uid="{$vo['id']}">{:lang('BLOCK_USER')}</a>
+                                    </li>
+                                </empty>
+                                <else/>
+                                <li>
+                                    <a style="color: #ccc;text-decoration:none;">{:lang('BLOCK_USER')}</a>
+                                </li>
+                            </neq>
+
+                            <if condition="$vo['id'] neq 1">
+                                <if condition="$vo['reference'] eq 0">
+
+                                    <li>
+                                        <a style="text-decoration:none;"  href="{:url('adminIndex/reference',array('id'=>$vo['id'],'type'=>1))}">{:lang("推荐")}</a>
+                                    </li>
+
+                                    <else/>
+
+                                    <li>
+                                        <a style="text-decoration:none;"  data-value="{:url('adminIndex/reference',array('id'=>$vo['id'],'type'=>0))}" href="{:url('adminIndex/reference',array('id'=>$vo['id'],'type'=>0))}">{:lang("取消推荐")}</a>
+                                    </li>
+                                </if>
+                            </if>
+                            <if condition="$vo['is_auth'] eq 1">
+                                <li>
+                                    <a style="text-decoration:none;"  href="javascript:void(0);"  onclick="cancel_auth({$vo['id']})">{:lang('ADMIN_AUTH_CANCEL')}</a>
+                                </li>
+                            </if>
+                            <!--<li><a style="text-decoration:none;"  href="javascript:void(0);"  onclick="vipset({$vo['id']},'{$vo['vip_end_time']}')">VIP设置</a></li>-->
+                            <li><a style="text-decoration:none;"  href="javascript:void(0);"  onclick="addCoin({$vo['id']})">{:lang('ADMIN_ACCOUNT_MANAGE')}</a></li>
+                            <!--<li><a style="text-decoration:none;"  href="{:url('admin_index/invitation',array('id'=>$vo['id']))}">{:lang("邀请信息")}</a></li> -->
+
+                            <li><a style="text-decoration:none;"  href="javascript:void(0);"  onclick="sel_consumption_records({$vo['id']})">{:lang('钻石记录')}</a></li>
+                            <li><a style="text-decoration:none;"  href="javascript:void(0);"  onclick="sel_revenue_records({$vo['id']})">{:lang('收入记录')}</a></li>
+
+                            <li><a style="text-decoration:none;"  href="{:url('/admin/user/receive_gift_log',array('id'=>$vo['id']))}">{:lang('ADMIN_GIFT_LOG')}</a></li>
+                            <li><a style="text-decoration:none;"  href="{:url('admin_index/edit_img',array('id'=>$vo['id']))}">{:lang('ADMIN_BAN_AVATAR')}</a></li>
+
+                            <li><a style="text-decoration:none;"  href="javascript:void(0);"  class="device_info" data-id="{$vo['id']}" data-os="{$vo.device_info.os|default=''}" data-sdk_version="{$vo.device_info.sdk_version|default=''}" data-app_version="{$vo.device_info.app_version|default=''}" data-brand="{$vo.device_info.brand|default=''}" data-model="{$vo.device_info.model|default=''}"  data-addtime="<?php echo empty($vo['device_info']['addtime'])?'':date('Y-m-d H:i:s',$vo['device_info']['addtime'])?>" data-device="{$vo['device_uuid']|default=''}">{:lang('ADMIN_DEVICE_INFO')}</a></li>
+
+                            <li><a style="text-decoration:none;"  href="{:url('admin_index/add_closures',array('uid'=>$vo['id'],'device_uuid'=>$vo['device_uuid']))}"> <if condition="$vo['is_device'] eq 1">{:lang('ADMIN_BAN_DEVICE')}<else/>{:lang('ADMIN_BAN_DEVICE_CANCEL')}</if></a></li>
+                            <li><a style="text-decoration:none;" href="javascript:void(0);"  onclick="clearCoin({$vo['id']})">{:lang('账户一键清空')}</a></li>
+                             <li><a style="text-decoration:none;"  href="javascript:void(0);"  class="user_details"
+                                    data-create_time="{:date('Y-m-d H:i:s',$vo['create_time'])}" data-last_login_time="{:date('Y-m-d H:i:s',$vo['last_login_time'])}"  data-last_login_ip="{$vo['last_login_ip']}" data-id="{$vo['id']}" data-coin="{$vo.coin}" data-custom="{$vo['custom_video_charging_coin']}" data-invite-withdrawal="{$vo.invite_withdrawal}" data-invite="{$vo.invitation_coin}" data-total="{$vo.income_total}" data-income="{$vo.income}" data-perfect="{$vo.is_reg_perfect}" data-attention="{$vo.attention}" data-fans="{$vo.fans}" data-money="{$vo.money}"  data-vip="{$vo.vip_end_time}" data-longitude="{$vo.longitude}" data-latitude="{$vo.latitude}">{:lang('ADMIN_INFO')}</a></li>
+                        </ul>
+
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<style>
+    .ban_type{width:calc(100% - 40px);height:40px;margin:20px 20px 10px;}
+    .ban_time{width:40px;height:30px;line-height: 30px;}
+    .btn_click{float:left;width:30%;height:40px;line-height: 40px;background-color: #000;color:#fff;text-align: center;margin:0 10%;}
+</style>
+<script type="text/javascript">
+    function sel_revenue_records(uid) {
+        layer.open({
+            type: 2,
+            title:   "{:lang('收入记录')}",
+            shadeClose: true,
+            area: ['80%', '90%'],   //宽高
+            shade: 0.4,   //遮罩透明度
+            content:  "{:url('user/adminIndex/revenue_records')}?uid=" + uid
+        });
+    }
+    function sel_consumption_records(uid) {
+        layer.open({
+            type: 2,
+            title:   "{:lang('钻石记录')}",
+            shadeClose: true,
+            area: ['80%', '90%'],   //宽高
+            shade: 0.4,   //遮罩透明度
+            content:  "{:url('user/adminIndex/consumption_records')}?uid=" + uid
+        });
+    }
+    function link_set(id,link_id){
+        const link_num = link_id > 0 ? link_id : '';
+        layer.open({
+            type: 0,
+            title:   "{:lang('设置渠道绑定')}",
+            area: ['300px', '200px'],   //宽高
+            shade: 0.4,   //遮罩透明度
+            btn: ["{:lang('确定')}","{:lang('取消')}"], //按钮组,
+            content: '<div class="layui-form"><label class="layui-form-label">{:lang(\'ADMIN_CHANNEL_ID\')}</label><input  type="text" id="link_id" class="form-control" name="vip_end_time" value="'+link_num+'" style="width: 100%;"></div>',
+            yes:function(index){   //点击确定回调
+                //alert($('#vip_end_time').val());
+                layer.close(index);
+                $.ajax({
+                    url: "{:url('admin_index/linkSet')}",
+                    type: 'get',
+                    dataType: 'json',
+                    data: {id: id,link_id:$('#link_id').val()},
+                    success: function (data) {
+                        if(data['code'] == 1){
+                            layer.msg(data['msg'],{time: 2000, icon:1},function(){
+                                window.location.reload();
+                            });
+                        }else{
+                            layer.msg(data['msg'],{time: 2000, icon:2});
+                        }
+                    }
+                });
+            }
+        });
+    }
+      //l拉黑
+    $(".ban_type_btn").click(function(){
+
+        var  uid=$(this).attr("data-uid");
+         layer.open({
+            type: 0,
+            title:   "{:lang('拉黑的时间')}",
+            area: ['380px', '250px'],   //宽高
+            shade: 0.4,   //遮罩透明度
+            btn: ["{:lang('确定')}","{:lang('取消')}"], //按钮组,
+           content: '<div style="width:330px;height:100px;"><table class="table table-hover table-bordered"><tbody><tr><td><div class="ban_type"><input type="text" id="day" class="ban_time"/> {:lang("ADMIN_DAY")} <input type="text" id="hours" class="ban_time"/> {:lang("ADMIN_HOUR")} <input type="text" id="minutes" class="ban_time"/> {:lang("ADMIN_MINUTE")} <input type="text" id="seconds" class="ban_time"/> {:lang("ADMIN_SECOND")}</div></td></tr></tbody></table></div>',
+            yes:function(index){   //点击确定回调
+                var day=$("#day").val();
+                var hours=$("#hours").val();
+                var minutes=$("#minutes").val();
+                var seconds=$("#seconds").val();
+
+                layer.close(index);
+                $.ajax({
+                    url: "{:url('adminIndex/ban_type')}",
+                    type: 'get',
+                    dataType: 'json',
+                    data: {id: uid,day:day,hours:hours,minutes:minutes,seconds:seconds},
+                    success: function (data) {
+                        if(data['code'] == 1){
+                            layer.msg(data['msg'],{time: 2000, icon:1},function(){
+                                window.location.reload();
+                            });
+                        }else{
+                            layer.msg(data['msg'],{time: 2000, icon:2});
+                        }
+                    }
+                });
+            }
+        });
+
+
+    })
+    $(".device_info").click(function(){
+        var id=$(this).attr("data-id");
+        var os=$(this).attr("data-os");
+        var sdk_version=$(this).attr("data-sdk_version");
+        var app_version=$(this).attr("data-app_version");
+        var brand=$(this).attr("data-brand");
+        var model=$(this).attr("data-model");
+        var addtime=$(this).attr("data-addtime");
+        var device=$(this).attr("data-device");
+
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            shadeClose: true,
+            skin: 'yourclass',
+            content: '<div style="width:330px;height:350px;"><table class="table table-hover table-bordered"><thead><tr><th style="text-align: center;background: #f7f7f7;">{:lang("ADMIN_DEVICE_CONTENT")}</th></tr></thead><tbody><tr><td><div  class="user_details_type">{:lang("ADMIN_OPERATING_SYSTEM")}</div><div class="user_details_type">'+os+'</div></td></tr><tr><td><div  class="user_details_type">sdk {:lang("ADMIN_VERSION")}</div><div class="user_details_type">'+sdk_version+'</div></td></tr><tr><tr><td><div  class="user_details_type">app{:lang("ADMIN_VERSION")}</div><div class="user_details_type">'+app_version+'</div></td></tr><tr><td><div  class="user_details_type">{:lang("ADMIN_PHONE_BRAND")}</div><div class="user_details_type">'+brand+'</div></td></tr><tr><td><div  class="user_details_type">{:lang("ADMIN_PHONE_MODEL")}</div><div class="user_details_type">'+model+'</div></td></tr><tr><td><div  class="user_details_type">{:lang("ADMIN_DEVICE_NUMBER")}</div><div class="user_details_type">'+device+'</div></td></tr><tr><td><div  class="user_details_type">{:lang("ADD_TIME")}</div><div class="user_details_type">'+addtime+'</div></td></tr></tbody></table></div>'
+        });
+
+    });
+
+    flag = true;
+    $(".ipt").click(function(){
+
+        if(flag){
+            $(this).children('strong').html(' -');
+            $(this).next('ul').css('display','block');
+            flag = false;
+        }else{
+            flag = true;
+            var self = $(this);
+            setTimeout(function(){
+                self.children('strong').html(' +');
+                self.next('ul').css('display','none');
+            },200)
+        }
+
+
+    });
+
+    $(".ipt").blur(function(){
+        flag = true;
+        var self = $(this);
+        setTimeout(function(){
+            self.children('strong').html('+');
+            self.next('ul').css('display','none');
+        },200)
+    });
+    // $('li').onclick(function(){
+    //     var selfli = $(this);
+    //     alert(selfli.val());
+    //     selfli.sibling('.ipt').text(selfli.val());
+    //
+    // });
+
+
+    $(".user_details").click(function(){
+        var id=$(this).attr("data-id");
+        var custom=$(this).attr("data-custom");
+        var invite=$(this).attr("data-invite");
+        var total=$(this).attr("data-total");
+        var fans=$(this).attr("data-fans");
+        var attention=$(this).attr("data-attention");
+        var income=$(this).attr("data-income");
+        var perfect=$(this).attr("data-perfect");
+        var coin=$(this).attr("data-coin");
+        var money=$(this).attr("data-money");
+        var vip=$(this).attr("data-vip");
+        var invite_withdrawal=$(this).attr("data-invite-withdrawal");
+        var create_time=$(this).attr("data-create_time");
+        var last_login_time=$(this).attr("data-last_login_time");
+        var last_login_ip=$(this).attr("data-last_login_ip");
+        var longitude=$(this).attr("data-longitude");
+        var latitude=$(this).attr("data-latitude");
+
+        if(perfect =='1'){
+            var reg_perfect='<a href="{:url(\'admin/consume/index\')}?touid='+id+'">'+income+'</a>';
+        }else{
+            var reg_perfect=income;
+        }
+
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            shadeClose: true,
+            content: '<div style="width:330px;height:470px;"><table class="table table-hover table-bordered"><thead>' +
+                '<tr><th style="text-align: center;background: #f7f7f7;">{:lang("ADMIN_INFO")}</th></tr>' +
+                '</thead>' +
+                '<tbody>' +
+                '<tr><td><div  class="user_details_type">{:lang("ADMIN_DIAMOND_BALANCE")}</div><div class="user_details_type">'+coin+'</div></td></tr>' +
+/*                '<tr><td><div  class="user_details_type">{:lang("邀请收益余额")}</div><div class="user_details_type"><a href="{:url(\'admin/InviteManage/income_index\')}?user_id='+id+'">'+invite+'</a></div></td></tr>' +
+                '<tr><td><div  class="user_details_type">{:lang("邀请提现")}</div><div class="user_details_type">'+invite_withdrawal+'</div></td></tr>' +*/
+                '<tr><td><div  class="user_details_type">{:lang("ADMIN_INCOME_BALANCE")}</div><div class="user_details_type">'+reg_perfect+'</div></td></tr>' +
+                '<tr><td><div  class="user_details_type">{:lang("ADMIN_TOTAL_INCOME")}</div><div class="user_details_type">'+total+'</div></td></tr>' +
+                '<tr><td><div  class="user_details_type">{:lang("ADMIN_WITHDRAW_BALANCE")}</div><div class="user_details_type">'+money+'</div></td></tr>' +
+                '<tr><td><div  class="user_details_type">{:lang("ADMIN_WITHDRAW_INCOME")}</div><div class="user_details_type">'+income+'</div></td></tr>' +
+                '<tr><td><div  class="user_details_type">{:lang("ADMIN_ATT_NUMBER")}</div><div class="user_details_type " data-type="1"><a href="javascript:void(0);" class="attention" data-type="2" data-id="'+id+'">'+attention+'</a></div></td></tr>' +
+                '<tr><td><div  class="user_details_type">{:lang("ADMIN_FANS_NUMBER")}</div><div class="user_details_type" ><a href="javascript:void(0);" class="attention" data-type="1" data-id="'+id+'">'+fans+'</a></div></td></tr>' +
+                '<tr><td><div  class="user_details_type">{:lang("LAST_CREATE_TIME")}</div><div class="user_details_type" >'+create_time+'</div></td></tr>' +
+                '<tr><td><div  class="user_details_type">{:lang("LAST_LOGIN_TIME")}</div><div class="user_details_type" >'+last_login_time+'</div></td></tr>' +
+                '<tr><td><div  class="user_details_type">{:lang("封禁设备列表")}</div><div class="user_details_type" ><a style="text-decoration:none;"  href="javascript:void(0);" onclick="clearEquipmentClosures('+id+')">{:lang("查看")}</a></div></td></tr>' +
+                '<tr><td><div  class="user_details_type">{:lang("LAST_LOGIN_IP")}</div><div class="user_details_type" >'+last_login_ip+'</div></td></tr><tr><td><div  class="user_details_type">{:lang("ADMIN_LONGITUDE")}</div><div class="user_details_type">'+longitude+'</div></td></tr><tr><td><div  class="user_details_type">{:lang("ADMIN_LATITUDE")}</div><div class="user_details_type">'+latitude+'</div></td></tr></tbody></table></div>'
+        });
+    })
+
+
+    function cancel_auth(id) {
+        $.ajax({
+            url: "{:url('admin_index/cancel_auth')}",
+            type: 'get',
+            dataType: 'json',
+            data: {id: id},
+            success: function (data) {
+                if(data['status'] == 1){
+                    layer.msg(lang('Operation_successful'),{time: 2000, icon:2});
+                }else{
+                    layer.msg(data['msg'],{time: 2000, icon:2});
+                }
+            }
+        });
+    }
+
+    function account(id) {
+        layer.prompt({title:"{:lang('请输入充值金额')}", formType: 0}, function(coin, index){
+            $.ajax({
+                url: "{:url('admin_index/account')}",
+                type: 'get',
+                dataType: 'json',
+                data: {id: id,coin:coin},
+                success: function (data) {
+                    if(data['code'] == 1){
+                        layer.msg("{:lang('Operation_successful')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('operation_failed')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+            layer.close(index);
+        });
+    }
+
+    function addCoin(id) {
+        layer.open({
+            type: 2,
+            title:   "{:lang('手动充值')}",
+            shadeClose: true,
+            area: ['80%', '80%'],   //宽高
+            shade: 0.4,   //遮罩透明度
+            content:  "{:url('admin/refill/add_recharge')}?id=" + id
+        });
+      }
+    function nobleSet(id) {
+        layer.confirm("{:lang('cancel_nobility')}", {
+            btn: ["{:lang('确定')}","{:lang('取消')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('admin_index/clear_noble')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data.status === 1){
+                        layer.msg(data.msg,{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg(data.msg,{time: 2000, icon:2});
+                    }
+                }
+            });
+        });
+    }
+
+    function vipset(id,time_end) {
+        if(time_end.length<=1){
+            var time_end = '';
+        }
+        layer.open({
+            type: 0,
+            title: "VIP设置",
+            area: ['300px', '200px'],   //宽高
+            shade: 0.4,   //遮罩透明度
+            btn: ["{:lang('确定')}","{:lang('取消')}"], //按钮组,
+            content: '<div class="layui-form"><label class="layui-form-label">VIP结束时间</label><input  type="text" id="vip_end_time" class="form-control" name="vip_end_time" value="'+time_end+'" style="width: 140px;" autocomplete="off" oninput = "value=value.replace(/[^\\d]/g,\'\')"></div>',
+            success:function(){
+                Wind.css('bootstrapDatetimePicker');
+                Wind.use('bootstrapDatetimePicker', function () {
+                    $("#vip_end_time").datetimepicker({
+                        language: 'zh-CN',
+                        format: 'yyyy-mm-dd hh:ii',
+                        todayBtn: 1,
+                        autoclose: true
+                    });
+                });
+            },
+            yes:function(index){   //点击确定回调
+                //alert($('#vip_end_time').val());
+                layer.close(index);
+                $.ajax({
+                    url: "{:url('admin_index/vipSet')}",
+                    type: 'get',
+                    dataType: 'json',
+                    data: {id: id,vip_end_time:$('#vip_end_time').val()},
+                    success: function (data) {
+                        if(data['code'] == 1){
+                            layer.msg(data['msg'],{time: 2000, icon:1},function(){
+                                window.location.reload();
+                            });
+                        }else{
+                            layer.msg(data['msg'],{time: 2000, icon:2});
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    $(".head_img").click(function(){
+        var img=$(this).attr("data-img");
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            area: ['auto', 'auto'],
+            skin: 'layui-layer-nobg', //没有背景色
+            shadeClose: true,
+            content:img
+        });
+    })
+    $(".get_sort").click(function(){
+        $(".js-ajax-form1").submit();
+    })
+    $(".from_export").click(function(){
+
+    })
+    $("body").on("click",".attention",function(){
+
+        var id=$(this).attr("data-id");
+        var type=$(this).attr("data-type");
+
+        $.ajax({
+            url: "{:url('admin_index/attention')}",
+            type: 'get',
+            dataType: 'json',
+            data: {id: id,type:type},
+            success: function (data) {
+                if(data['status'] == 1){
+                    var name=data['data'];
+                    layer.open({
+                        type: 1,
+                        title: false,
+                        closeBtn: 0,
+                        shadeClose: true,
+                        skin: 'yourclass',
+                        content: '<div style="width:360px;height:300px;"><table class="table table-hover table-bordered"><thead><tr><th>{:lang(\'USER_ID\')}</th><th>{:lang('NICENAME')}</th><th>{:lang("关注时间")}</th></tr></thead><tbody>'+name+'</tbody></table></div>'
+                    });
+                }else{
+                    layer.msg(data['msg'],{time: 2000, icon:2});
+                }
+            }
+        });
+    })
+    function set_exchange(id,type) {
+        $.ajax({
+            url: "{:url('admin_index/set_exchange')}",
+            type: 'get',
+            dataType: 'json',
+            data: {id: id,type:type},
+            success: function (data) {
+                if(data['status'] == 1){
+                    layer.msg("{:lang('Operation_successful')}",{time: 2000, icon:1},function(){
+                        window.location.reload();
+                    });
+                }else{
+                    layer.msg("{:lang('operation_failed')}",{time: 2000, icon:2});
+                }
+            }
+        });
+    }
+      function set_test(id,type) {
+          //layer.prompt({title:"{:lang('请输入充值金额')}", formType: 0}, function(coin, index){
+              $.ajax({
+                  url: "{:url('admin_index/set_test')}",
+                  type: 'get',
+                  dataType: 'json',
+                  data: {id: id,type:type},
+                  success: function (data) {
+                      if(data['status'] == 1){
+                          layer.msg("{:lang('Operation_successful')}",{time: 2000, icon:1},function(){
+                              window.location.reload();
+                          });
+                      }else{
+                          layer.msg("{:lang('operation_failed')}",{time: 2000, icon:2});
+                      }
+                  }
+              });
+              //layer.close(index);
+          //});
+      }
+
+      function clearCoin(id){
+          layer.confirm('确定清零 余额、收益、邀请收益等账户？', {
+              btn: ["{:lang('确定')}","{:lang('取消')}"] //按钮
+          }, function(){
+              $.ajax({
+                  url: "{:url('admin_index/clear_coin')}",
+                  type: 'post',
+                  dataType: 'json',
+                  data: {id: id},
+                  success: function (data) {
+                      if(data =='1'){
+                          layer.msg("{:lang('清空成功')}",{time: 2000, icon:1},function(){
+                              window.location.reload();
+                          });
+                      }else{
+                          layer.msg("{:lang('清空失败')}",{time: 2000, icon:2});
+                      }
+                  }
+              });
+
+          });
+      }
+    function clearEquipmentClosures(uid) {
+        layer.open({
+            type: 2,
+            title:   "{:lang('禁封设备表')}",
+            shadeClose: true,
+            area: ['80%', '80%'],   //宽高
+            shade: 0.4,   //遮罩透明度
+            content:  "{:url('admin/Anchor/equipment_closures')}?uid=" + uid
+        });
+    }
+</script>
+</body>
+</html>

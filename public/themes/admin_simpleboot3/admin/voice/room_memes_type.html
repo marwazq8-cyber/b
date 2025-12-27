@@ -1,0 +1,58 @@
+<include file="public@header" />
+</head>
+<style>
+    .gift-img {
+        width: 60px;
+        height: 60px
+    }
+
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+
+</style>
+
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('Voice/room_memes')}">{:lang('语音房间表情包列表')}</a></li>
+        <li class="active"><a href="{:url('Voice/room_memes_type')}">{:lang('语音房间表情包分类列表')}</a></li>
+        <li><a href="{:url('Voice/add_room_memes_type')}">{:lang('增加表情分类')}</a></li>
+    </ul>
+
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th width="50">ID</th>
+            <th>{:lang('表情分类名称')}</th>
+            <th>{:lang('表情包分类图片')}</th>
+            <th>{:lang('SORT')}</th>
+            <th>{:lang('STATUS')}</th>
+            <th>{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="list" item="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.name}</td>
+                <td class="gift-img"><img src="{$vo.img}" alt=""></td>
+                <td>{$vo['sort']}</td>
+                <td>
+                    <if condition="$vo['status'] eq 1">
+                        {:lang('OPEN')}
+                        <else />
+                        {:lang('CLOSE')}
+                    </if>
+                </td>
+                <td>
+                    <a href="{:url('Voice/add_room_memes_type',array('id'=>$vo['id']))}">{:lang('EDIT')}</a>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+
+</div>
+
+</html>

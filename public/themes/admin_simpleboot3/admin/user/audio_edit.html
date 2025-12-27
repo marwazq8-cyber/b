@@ -1,0 +1,35 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('user/audio')}">{:lang('音遇列表')}</a></li>
+        <li class="active"><a href="{:url('user/audio_edit')}">{:lang('修改音遇')}</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('user/audio_edit_post')}">
+        <div class="form-group">
+            <label for="input-user_login" class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('音频上传')}</label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" readonly name="audio_file"  id="files" value="{$data['audio_file']|default=''}" style="width:70%;">
+                <a href="javascript:uploadOne('音频上传','#files','audio');"
+                   class="btn btn-sm btn-default">{:lang('音频上传')}</a>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_login" class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('音频时长')}</label>
+            <div class="col-md-6 col-sm-10">
+                <input class="form-control" type="text" name="audio_time"
+                       id="title" required value="{$data['audio_time']|default=''}" placeholder="{:lang('请输入音频时长 秒')}"/>
+            </div>
+        </div>
+        <input type="hidden" name="id" id="" value="{$data['id']}">
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

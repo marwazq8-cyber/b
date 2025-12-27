@@ -1,0 +1,76 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+    select{width: 150px;height: 30px;}
+
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('tree_game/tree_coin')}">{:lang('ADMIN_OPEN_GAME_BOX_NUM_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_CONTINUOUS_FREQUENCY_UPD')}</a></li>
+    </ul>
+    <form action="{:url('tree_game/add_tree_coin_post')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_NAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sum_name]"
+                                    required value="{$list.sum_name |default=''}" placeholder="{:lang('ADMIN_NAME')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_CONTINUOUS_FREQUENCY')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sum]"
+                                    required value="{$list.sum |default=''}" placeholder="{:lang('ADMIN_CONTINUOUS_FREQUENCY')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_PRICE')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[coin]"
+                                   required value="{$list.coin |default=''}" placeholder="{:lang('ADMIN_PRICE')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_CONSUME_CONTENT')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[coin_name]"
+                                   required value="{$list.coin_name |default=''}" placeholder="{:lang('ADMIN_CONSUME_CONTENT')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                   required value="{$list.sort |default='0'}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('tree_game/tree_coin')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+
+</body>
+</html>

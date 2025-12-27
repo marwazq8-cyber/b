@@ -1,0 +1,112 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('VersionLog/index')}">{:lang('版本列表')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('添加版本')}</a></li>
+    </ul>
+    <form action="{:url('VersionLog/addPost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('平台')}<span class="form-required">*</span></th>
+                        <td>
+                            <select class="form-control" name="post[type]" id="gift">
+                                <option value="1" <if condition="$data['type'] eq '1'"> selected = "selected" </if>>IOS</option>
+                                <option value="2" <if condition="$data['type'] eq '2'"> selected = "selected" </if>>Android</option>
+
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('版本号 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[version_number]"
+                                   id="title" required value="{$data.version_number |default=''}" placeholder="{:lang('请输入版本号')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang("包名")}</th>
+                        <td>
+                            <input class="form-control" type="text" name="post[package_name]" value="{$data.package_name |default=''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('是否强制更新')}<span class="form-required">*</span></th>
+                        <td>
+                            <select class="form-control" name="post[is_update]" id="is_update">
+                                <option value="0" <if condition="$data['is_update'] eq '0'"> selected = "selected" </if>>{:lang('否')}</option>
+                                <option value="1" <if condition="$data['is_update'] eq '1'"> selected = "selected" </if>>{:lang('是')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('是否发布')}<span class="form-required">*</span></th>
+                        <td>
+                            <select class="form-control" name="post[is_release]" id="is_release">
+                                <option value="0" <if condition="$data['is_release'] eq '0'"> selected = "selected" </if>>{:lang('否')}</option>
+                                <option value="1" <if condition="$data['is_release'] eq '1'"> selected = "selected" </if>>{:lang('是')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('更新说明')}<span class="form-required">*</span></th>
+                        <td>
+                            <textarea class="form-control" name="post[content]" id="" cols="30" rows="10">{$data.content |default=''}</textarea>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('下载地址')}<span class="form-required">* {:lang('IOS直接填写网络地址即可')}</span></th>
+                        <td>
+                            <div style="text-align: left;">
+                                <input class="form-control"  type="text"  name="post[url]" id="thumbnail" value="{$data['url'] |default=''}">
+<!--                                <a href="javascript:uploadOne('下载地址上传','#thumbnail','video');" class="btn btn-sm btn-default">
+                                    apk上传
+                                </a>-->
+                                <a href="{:url('qiniu/cloud')}" class="btn btn-sm btn-default">
+                                    apk {:lang('上传')}
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$data.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('gift/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+
+    });
+</script>
+
+</body>
+</html>

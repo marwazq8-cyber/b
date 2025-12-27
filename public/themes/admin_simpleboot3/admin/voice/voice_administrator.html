@@ -1,0 +1,112 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('voice/index')}">{:lang('语音直播列表')}</a></li>
+        <li class="active"><a href="#">{:lang('管理员列表')}</a></li>
+        <li><a href="#" class="ban_type_btn" voice-id="{$voice_id}">{:lang('添加管理员')}</a></li>
+    </ul>
+
+    <form class="js-ajax-form" action="#" method="post">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>{:lang('USER_ID')}</th>
+                <th>{:lang('头像')}</th>
+                <th>{:lang('用户昵称')}</th>
+                <th>{:lang('添加时间')}</th>
+                <th>{:lang('操作')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>
+                        <img src="{$vo.avatar}" style="width: 50px;height: 50px;object-fit: cover;" alt="">
+                    </td>
+                    <td>{$vo['user_nickname']}</td>
+
+                    <td>{:date('Y-m-d H:i:s',$vo['addtime'])}</td>
+
+                    <td>
+                        <a href="#" class="del" data-id="{$vo.id}" voice-id="{$voice_id}">{:lang('删除')}</a>
+                    </td>
+
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+
+    </form>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        var voice_id = $(this).attr('voice-id');
+        layer.confirm('确定删除？', {
+            btn: ["{:lang('确定')}","{:lang('取消')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('voice/del_voice_administrator')}",
+                type: 'post',
+                dataType: 'json',
+                data: {to_user_id: id,voice_id:voice_id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('删除成功')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('删除失败')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function () {
+        $(".js-ajax-form").submit();
+    })
+
+    $(".ban_type_btn").click(function(){
+
+        var  voice_id=$(this).attr("voice-id");
+        layer.open({
+            type: 0,
+            title: "{:lang('添加管理员')}",
+            area: ['380px', '250px'],   //宽高
+            shade: 0.4,   //遮罩透明度
+            btn: ["{:lang('确定')}","{:lang('取消')}"], //按钮组,
+            content: '<div style="width:330px;height:100px;">{:lang('管理员ID：')}<input type="text" id="to_user_id" value=""></div>',
+            yes:function(index){   //点击确定回调
+                var to_user_id=$("#to_user_id").val();
+
+                layer.close(index);
+                $.ajax({
+                    url: "{:url('voice/add_voice_administrator')}",
+                    type: 'get',
+                    dataType: 'json',
+                    data: {voice_id: voice_id,to_user_id:to_user_id},
+                    success: function (data) {
+                        if(data['code'] == 1){
+                            layer.msg(data['msg'],{time: 2000, icon:1},function(){
+                                window.location.reload();
+                            });
+                        }else{
+                            layer.msg(data['msg'],{time: 2000, icon:2});
+                        }
+                    }
+                });
+            }
+        });
+
+
+    })
+</script>
+</body>
+</html>
+

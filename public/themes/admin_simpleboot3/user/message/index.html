@@ -1,0 +1,55 @@
+<include file="public@header"/>
+<style>
+    .gift-img{width:50px;height:50px}
+    .gift-img img{height:100%;}
+    .gift-in input{width:25px;}
+    .js-ajax-form{margin-top:30px;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang("个人消息列表")}</a></li>
+        <li><a href="{:url('Message/add')}">{:lang("添加个人消息分类")}</a></li>
+    </ul>
+
+    <form class="js-ajax-form" action="{:url('Message/upd')}" method="post">
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang("个人消息类型")}</th>
+                <th>{:lang("个人消息标题")}</th>
+                <th>{:lang("个人消息内容")}</th>
+                <th>{:lang('ADD_TIME')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="gift" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$type[$vo.type]}</td>
+                    <td>{$vo.title}</td>
+                    <td>{$vo.centent}</td>
+                    <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <a href="{:url('Message/add',array('id'=>$vo.id))}">{:lang('EDIT')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+    </form>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+
+    $(".btn-primary").click(function(){
+        $(".js-ajax-form").submit();
+    })
+</script>
+</body>
+</html>

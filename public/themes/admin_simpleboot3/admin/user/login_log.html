@@ -1,0 +1,64 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('user/index')}">{:lang('ADMIN_USER_INDEX')}</a></li>
+        <li class="active"><a href="javascript:void(0)">{:lang('登录记录')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('User/login_log')}">
+       {:lang('用户ID')}:
+        <input type="text" class="form-control" name="uid" style="width: 120px;" value="{$data.uid | default =''}" placeholder="{:lang('请输入ID')}">
+        {:lang('USERNAME')}:
+        <input type="text" class="form-control" name="name" style="width: 120px;" value="{$data.name | default =''}" placeholder="{:lang('请输入用户名称')}">
+        IP:
+        <input type="text" class="form-control" name="ip" style="width: 120px;" value="{$data.ip | default =''}" placeholder="{:lang('请输入IP')}">
+        {:lang('类型')}:
+        <select class="form-control" name="type" id="input-gender">
+            <option value="0" >{:lang('全部')}</option>
+            <option value="1">{:lang('后台登录')}</option>
+            <option value="2">app登录</option>
+        </select>
+        {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time"
+               value="{$data['start_time']|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$data['end_time']|default=''}"
+               style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('User/login_log')}">{:lang('EMPTY')}</a>
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th width="50">ID</th>
+            <th>{:lang('用户ID')}</th>
+            <th>{:lang('USERNAME')}</th>
+            <th>{:lang('LAST_LOGIN_IP')}</th>
+            <th>{:lang('类型')}</th>
+            <th>{:lang('LAST_LOGIN_TIME')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="list" item="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.uid}</td>
+                <td>{$vo.user_login}</td>
+                <td>{$vo.ip}</td>
+                <td>{$vo.type == 1 ? '后台登录' : 'app登录'}</td>
+                <td>
+                    <if condition="$vo['addtime'] eq 0">
+                        {:lang('USER_HAVE_NOT_LOGIN')}
+                        <else />
+                        {:date('Y-m-d H:i:s',$vo['addtime'])}
+                    </if>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

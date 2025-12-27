@@ -1,0 +1,266 @@
+<include file="public@header"/>
+<style>
+    .guild-img {
+        width: 50px;
+        height: 50px
+    }
+
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .btn-info:hover,.btn-info:click{
+        outline:0!important;
+        color:#2a6496!important;
+        background: #ecf0f1!important;
+        border-color: #ecf0f1!important;
+
+    }
+    .btn-info:focus{
+        outline:0!important;
+        box-shadow:none;
+    }
+
+    .btn-info:hover{
+        color:#2a6496!important;
+        background: #ecf0f1!important;
+        border-color: #ecf0f1!important;
+    }
+
+    .btn-info{
+        color:#2a6496!important;
+        background: #fff!important;
+        border-color: #fff!important;
+    }
+    #ul{
+        font-size: 12px;
+        list-style:none;
+        min-width:120px;
+        border:1px solid #c1c1c1;
+        display:none;
+        padding-left:0px;
+        position: absolute;
+        right:60px;
+        background-color: #ffffff
+    }
+    .ipt{
+        /*margin:1px 0 0 0px;*/
+        /*border:0px solid;*/
+    }
+    #ul li a{
+        display:inline-block;
+        float:left;
+        width:100%;
+        height:30px;
+        line-height: 30px;
+        text-decoration:none;
+
+        color: #333;
+    }
+    #ul li{
+        margin-left: 0;
+        padding-left: 0;
+        width:100%;height: 30px;
+        padding-left:15px;
+
+    }
+
+    #ul li:hover{
+        background-color:#f5f5f5;
+    }
+    #ul li a:hover{
+        color:#333;
+    }
+    .ipt::-ms-input-placeholder {
+        text-align: center;
+    }
+
+    .ipt::-webkit-input-placeholder {
+        text-align: center;
+
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_GUILD_LIST')}</a></li>
+        <li><a href="{:url('guild_manage/add')}">{:lang('ADMIN_GUILD_ADD')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" name="form1" method="post" action="{:url('guild_manage/index')}">
+        {:lang('公会长ID')}:
+        <input type="text" class="form-control" name="guild_uid" style="width: 120px;" value="{$data.guild_uid|default=''}" placeholder="{:lang('请输入公会长ID')}">
+        {:lang('ADMIN_GUILD_NAME')}:
+        <input type="text" class="form-control" name="name" style="width: 120px;" value="{$data.name|default=''}" placeholder="{:lang('ADMIN_GUILD_NAME')}">
+        {:lang('USER_ID')}:
+        <input type="text" class="form-control" name="uid" style="width: 120px;" value="{$data.uid|default=''}" placeholder="{:lang('USER_ID')}">
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('guild_manage/index')}">{:lang('EMPTY')}</a>
+    </form>
+    <div style="width: 100%;height:30px;line-height: 30px;color:#f45e5e;padding-left: 20px;margin:15px 0;">
+        <span>*{:lang('ADMIN_GUILD_COMMISSION_INCOME')}</span><span style="margin-left: 20px">*{:lang('ADMIN_GUILD_ADMIN_URL')}：{$union}</span></div>
+    <form class="js-ajax-form" action="{:url('guild_manage/upd')}" method="post" style="margin-top: 0px;">
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('ADMIN_GUILD_NAME')}</th>
+                <th>{:lang('公会长')}</th>
+                <th>{:lang('ADMIN_GUILD_INFO')}</th>
+                <th>{:lang('ADMIN_GUILD_LOGO')}</th>
+<!--                <th>{:lang('ADMIN_GUILD_COMMISSION_TYPE')}</th>-->
+                <th>{:lang('ADMIN_GUILD_ALL_USER_NUM')}</th>
+                <th>{:lang('ADMIN_GUILD_COMMISSION_RATIO')}</th>
+                <th>{:lang('ADMIN_GUILD_INCOME')}</th>
+                <th>{:lang('ADMIN_GUILD_TOTAL_INCOME')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('LAST_CREATE_TIME')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.user_nickname}({$vo.user_id})</td>
+                    <td>{$vo.introduce}</td>
+                    <td><img class="guild-img" src="{$vo.logo}" alt=""></td>
+<!--                    <td>-->
+<!--                        <if condition="$vo['type'] eq '1'">-->
+<!--                            平台-->
+<!--                            <else/>-->
+<!--                            {:lang('ADMIN_ANCHOR')}-->
+<!--                        </if>-->
+<!--                    </td>-->
+                    <td>{$vo.number}</td>
+                    <td>{$vo.commission}</td>
+                    <td>{$vo.earnings}</td>
+                    <td>{$vo.total_earnings}</td>
+                    <td>
+                        <if condition="$vo['status'] eq '0'">
+                            {:lang('CHECK_LOADING')}
+                            <elseif condition="$vo['status'] eq '1'"/>
+                            {:lang('AUDIT_BY')}
+                            <else/>
+                            {:lang('AUDIT_NO')}
+                        </if>
+                    </td>
+
+                    <td>{$vo.create_time | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <button class="ipt btn btn-info" type="button">{:lang('ACTIONS')} <strong>+</strong></button>
+                        <ul id="ul">
+                            <li>
+                                <!--<a href="#" onclick="select_join_list({$vo.id})">{:lang('查看主播列表')}</a>-->
+                                <a href="{:url('guild_manage/user_list',array('id'=>$vo.id))}">{:lang('ADMIN_CHECK_ANCHOR')}</a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="sel_room_flow({$vo.id})">{:lang('ADMIN_VOICE_VOICE_DETAILS')}</a>
+<!--                                <a href="{:url('guild_manage/room_flow',array('guild_uid'=>$vo.user_id))}">{:lang('ADMIN_VOICE_VOICE_DETAILS')}</a>-->
+                            </li>
+                            <li>
+                                <a href="{:url('guild_manage/add',array('id'=>$vo.id))}">{:lang('EDIT')}</a>
+                            </li>
+                            <li>
+                                <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                            </li>
+                        </ul>
+
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    function sel_room_flow(uid) {
+        layer.open({
+            type: 2,
+            title:   "{:lang('ADMIN_VOICE_VOICE_DETAILS')}",
+            shadeClose: true,
+            area: ['80%', '90%'],   //宽高
+            shade: 0.4,   //遮罩透明度
+            content:  "{:url('guild_manage/room_flow')}?guild_uid=" + uid
+        });
+    }
+    function select_info(id) {
+        layer.open({
+            type: 2,
+            title: '公会信息',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['50%', '60%'],
+            content: "{:url('guild_manage/select_guild_info')}?id=" + id //iframe的url
+        });
+    }
+
+    function select_join_list(id) {
+        layer.open({
+            type: 2,
+            title: '主播列表',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['65%', '70%'],
+            content: "{:url('guild_manage/join_list')}?id=" + id //iframe的url
+        });
+    }
+     $(".del").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm('工会下主播自动解散,确定删除？', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('guild_manage/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("{:lang('DELETE_SUCCESS')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('DELETE_FAILED')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+
+    flag = true;
+    $(".ipt").click(function(){
+
+        if(flag){
+            $(this).children('strong').html(' -');
+            $(this).next('ul').css('display','block');
+            flag = false;
+        }else{
+            flag = true;
+            var self = $(this);
+            setTimeout(function(){
+                self.children('strong').html(' +');
+                self.next('ul').css('display','none');
+            },200)
+        }
+
+
+    });
+
+    $(".ipt").blur(function(){
+        flag = true;
+        var self = $(this);
+        setTimeout(function(){
+            self.children('strong').html('+');
+            self.next('ul').css('display','none');
+        },200)
+    });
+</script>
+</body>
+</html>

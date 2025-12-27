@@ -1,0 +1,74 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+       <li><a href="{:url('music/music_type')}">{:lang('ADMIN_MUSIC_TYPE_LIST')}</a></li>
+        <li class="active"><a href="{:url('music/add_music_type')}">{:lang('ADMIN_MUSIC_TYPE_ADD')}</a></li>
+    </ul>
+    <form action="{:url('music/addtype_Post')}" class="js-ajax-form" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_MUSIC_TYPE_NAME')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[name]"
+                                   id="title" required value="{$list['name']|default=''}" placeholder="{:lang('Please_enter_music_category_name')}"/>
+                        </td>
+                    </tr>
+                     <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <label>
+                                <input type="radio" name="post[status]" value="1" id="radio1" <if condition="$list['status'] eq 1"> checked="checked" </if> >{:lang('OPEN')}
+                            </label>&nbsp;&nbsp;
+                            <label>
+                                <input type="radio" name="post[status]" value="0" id="radio1" <if condition="$list['status'] eq '0'"> checked="checked" </if>>{:lang('CLOSE')}
+                            </label>&nbsp;&nbsp;
+                        </td>
+                    </tr>
+
+                     <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                           <input class="form-control" type="text" name="post[sort]"
+                                   id="sort" required value="{$list['sort']|default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                </table>
+                
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type="hidden" name="id" value="{$list['id']|default=''}">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('music/music_type')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    
+</script>

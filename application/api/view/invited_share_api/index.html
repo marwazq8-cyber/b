@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>分享赚钱</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="__STATIC__/css/invited_share.css" rel="stylesheet">
+
+
+    <script src="__STATIC__/js/jquery-1.10.2.min.js"></script>
+
+</head>
+<body class="invite_share_bg">
+  <div class="invite_share_img">
+    <img src="__STATIC__/image/yaoqingzhuanqian_bac.png">
+    <div class="invite_share_rules">活动规则</div>
+  </div>
+  <div class="invite_share_earnings">
+      <div class="invite_share_earnings_cumulative_title">邀请收益 </div>
+      <div class="invite_share_earnings_cumulative">累计收益 </div>
+      <div class="invite_share_earnings_coin"><span>{$data.invitation_coin}</span> 元 </div>
+      <a class="invite_share_earnings_user" href="/api/invited_share_api/user/uid/{$data.uid}">已成功邀请{$data.count}个用户 ></a>
+  </div>
+   <div class="invite_share_way">
+      <div class="invite_share_earnings_cumulative_title">邀请方式 </div>
+    <!--   <div class="invite_share_way_type">
+          <div class="invite_share_way_img"><img src="__STATIC__/image/erweima_1.png"></div>
+          <div class="invite_share_way_name">生成二维码图片</div>
+      </div> -->
+       <div class="invite_share_way_type" style="margin-left: 11%;">
+          <div class="invite_share_way_img"><img src="__STATIC__/image/yaoqingye.png"></div>
+          <div class="invite_share_way_name">分享我的邀请页</div>
+      </div>
+
+       <div class="invite_share_way_type" style="margin-left: 11%;">
+          <div class="invite_share_way_img"><img src="__STATIC__/image/lianjie.png"></div>
+          <div class="invite_share_way_name">复制下载链接</div>
+      </div>
+  </div>
+  <div class="invite_share_activity_rules">
+      <div class="invite_share_activity_rules_center">
+          <div class="invite_share_activity_rules_center_name">
+           {$rules}
+         </div>
+      </div>
+  </div>
+<script>
+    $(".invite_share_way_type").click(function(){
+       window.location.href = "cuckoo://invite_share";
+    })
+    $(".href").click(function(){
+        var url=$(this).attr("data-href");
+        window.location.href=url;
+    })
+    //活动规则
+    $(".invite_share_rules").click(function(){
+        $(".invite_share_activity_rules").show();
+    })
+    $(".invite_share_activity_rules").click(function(){
+      $(".invite_share_activity_rules").hide();
+    })
+    $(".invite_share_activity_rules_center").click(function(e){
+          e.stopPropagation();
+    })
+</script>
+</body>
+</html>

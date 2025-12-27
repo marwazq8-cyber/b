@@ -1,0 +1,141 @@
+<include file="public@header"/>
+<style>
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .gift-img{width:120px;height:40px;}
+     .gift-img img{height:100%};
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_LUCK_LIST')}</a></li>
+        <li><a href="{:url('luck/add')}">{:lang('ADMIN_LUCK_ADD')}</a></li>
+    </ul>
+
+    <form class="js-ajax-form" action="" method="post">
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>{:lang('ADMIN_LUCK')}</th>
+                <th>{:lang('ADMIN_PRICE')}({$currency_name})</th>
+                <th>{:lang('USER')}(ID)</th>
+             <!--    <th>{:lang('时间(天)')}</th> -->
+                <th>{:lang('ADMIN_WHETHER_BUY')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="luck" id="vo">
+                <tr>
+                    <td>{$vo.nubmer}</td>
+                    <td>{$vo.coin}</td>
+                    <td>
+                        <if condition="$vo['status'] neq 0">
+                            {$vo.user_nickname}({$vo.uid})
+                        </if>
+                     </td>
+                 <!--    <td>{$vo.time}</td> -->
+                    <td>
+                        <if condition="$vo['status'] eq 0">
+                            {:lang('NO')}
+                            <else/>
+                            {:lang('YES')}
+                        </if>
+                    </td>
+                    <td>
+                        <if condition="$vo['status'] eq 0">
+                            <a href="javescript:;" class="luck_sell"  data-id="{$vo.id}">{:lang('ADMIN_SELL')}</a> |
+                          <else/>
+                            <a href="javescript:;" class="luck_back" data-id="{$vo.id}">{:lang('ADMIN_WITHDRAW')}</a> |
+                        </if>
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".luck_sell").click(function(){
+         var id = $(this).attr('data-id');
+         //prompt层
+        layer.prompt({title: "{:lang('请输入卖出用户id')}", formType: 3, btn: ["{:lang('OK')}", "{:lang('OFF')}"]}, function(uid, index){
+            if(!uid){
+                layer.msg("{:lang('Please_enter_user_ID')}");
+            }else{
+                $.ajax({
+                    url: "{:url('luck/luck_sell')}",
+                    type: 'post',
+                    dataType: 'json',
+                    data: {id: id,uid:uid},
+                    success: function (data) {
+                        if (data == '1') {
+                            layer.msg("{:lang('Operation_successful')}", {time: 2000, icon: 1}, function () {
+                                window.location.reload();
+                            });
+                        } else {
+                            layer.msg("{:lang('operation_failed')}", {time: 2000, icon: 2});
+                        }
+                    }
+                });
+            }
+            layer.close(index);
+        });
+    })
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+            , title: ''
+        }, function () {
+            $.ajax({
+                url: "{:url('luck/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+      $(".luck_back").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('确定收回？')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+            , title: ''
+        }, function () {
+            $.ajax({
+                url: "{:url('luck/back')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('Operation_successful')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('operation_failed')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<include file="public@header"/>
+</head>
+<style type="text/css">
+    select{width:130px;height:35px;line-height: 35px;border: 1px solid #dce4ec;}
+</style>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('国家列表')}</a></li>
+        <li><a href="{:url('Country/country_add')}"> {:lang('ADD')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" name="form1" method="post">
+       {:lang('名称')}:
+        <input class="form-control" type="text" name="name" style="width: 200px;" value="{:input('request.name')}" >
+        {:lang('STATUS')}:
+        <select name="status" id="status">
+            <option value="0">{:lang('ALL')}</option>
+            <option value="1"<if condition="$request.status eq 1"> selected="selected"</if>>{:lang('OPEN')}</option>
+            <option value="2"<if condition="$request.status eq 2"> selected="selected"</if>>{:lang('CLOSE')}</option>
+        </select>
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" onclick='form1.action="{:url('Country/index')}";form1.submit();'/>
+        <a class="btn btn-danger" href="{:url('Country/index')}">{:lang('EMPTY')}</a>
+    </form>
+    <php>
+        $status = array(1 => lang('OPEN'),2 => lang('CLOSE'))
+    </php>
+    <form class="js-ajax-form">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('名称')}</th>
+                <th>{:lang('图标')}</th>
+                <th>{:lang('国家编码')}</th>
+                <th>{:lang('国家编号')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('SORT')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="data" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td><img src="{$vo.img}" style="width:50px;"/></td>
+                    <td>{$vo.alpha_2_code}</td>
+                    <td>{$vo.num_code}</td>
+                    <th>{$status[$vo.status]}</th>
+                    <td>{$vo.sort}</td>
+                    <th>
+                        <a href="{:url('Country/country_add',array('id'=>$vo.id))}">{:lang('EDIT')}</a>
+                    </th>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <ul class="pagination">{$page}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

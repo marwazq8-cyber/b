@@ -1,0 +1,32 @@
+----------------------------------------
+2025-02-16 21:14:09-log
+{"ActionStatus":"OK","ErrorCode":0,"ErrorInfo":"","MsgSeq":8697,"MsgTime":1739711649}
+
+[REQUEST]:GiftApi/gift_type_giving
+[URL_PARAM]:{"os":"Android","sdk_version":"34","app_version":"2024103001","app_name":"1.1","uid":"2609932","token":"8fa99876efffeba8c3bed6c46edccee6","voice_id":"2609932","call_id":"","gid":"229","to_user_id":"2609932","count":"1","flag":"1739711647631588"}
+[CONTENT]:""
+[DEVICE_INFO]:{"cf-connecting-ip":"2a02:3030:a61:5536:7821:f4a3:3f8f:258","connection":"Keep-Alive","cdn-loop":"cloudflare; loops=1","cf-visitor":"{\"scheme\":\"http\"}","user-agent":"Mozilla\/5.0 (Linux; U; Android 14; ar; SM-A145F Build\/UP1A.231005.007) AppleWebKit\/533.1 (KHTML, like Gecko) Version\/5.0 Mobile Safari\/533.1","lang":"ar","x-forwarded-proto":"http","accept-language":"ar","accept-encoding":"gzip","cf-ipcountry":"DE","host":"admin.xivolive.com","x-forwarded-for":"2a02:3030:a61:5536:7821:f4a3:3f8f:258","cf-ray":"912dcc82e8ba414b-HAM","content-length":"","content-type":""}
+----------------------------------------
+2025-02-16 21:19:10-log
+{"ActionStatus":"OK","ErrorCode":0,"ErrorInfo":"","MsgSeq":8704,"MsgTime":1739711950}
+
+[REQUEST]:GiftApi/gift_type_giving
+[URL_PARAM]:{"os":"Android","sdk_version":"34","app_version":"2024103001","app_name":"1.1","uid":"2609932","token":"8fa99876efffeba8c3bed6c46edccee6","voice_id":"2609932","call_id":"","gid":"229","to_user_id":"2609932","count":"1","flag":"1739711948096897"}
+[CONTENT]:""
+[DEVICE_INFO]:{"cf-connecting-ip":"2a02:3030:a61:5536:7821:f4a3:3f8f:258","connection":"Keep-Alive","cdn-loop":"cloudflare; loops=1","cf-visitor":"{\"scheme\":\"http\"}","user-agent":"Mozilla\/5.0 (Linux; U; Android 14; ar; SM-A145F Build\/UP1A.231005.007) AppleWebKit\/533.1 (KHTML, like Gecko) Version\/5.0 Mobile Safari\/533.1","lang":"ar","x-forwarded-proto":"http","accept-language":"ar","accept-encoding":"gzip","cf-ipcountry":"DE","host":"admin.xivolive.com","x-forwarded-for":"2a02:3030:a61:5536:7821:f4a3:3f8f:258","cf-ray":"912dd3d8dd82414b-HAM","content-length":"","content-type":""}
+----------------------------------------
+2025-02-16 21:25:07-log
+{"ActionStatus":"OK","ErrorCode":0,"ErrorInfo":"","MsgSeq":8711,"MsgTime":1739712307}
+
+[REQUEST]:GiftApi/gift_type_giving
+[URL_PARAM]:{"os":"Android","sdk_version":"34","app_version":"2024103001","app_name":"1.1","uid":"2609932","token":"8fa99876efffeba8c3bed6c46edccee6","voice_id":"2609932","call_id":"","gid":"229","to_user_id":"2609932","count":"1","flag":"1739712305736619"}
+[CONTENT]:""
+[DEVICE_INFO]:{"cf-connecting-ip":"2a02:3030:a61:5536:7821:f4a3:3f8f:258","connection":"Keep-Alive","cdn-loop":"cloudflare; loops=1","cf-visitor":"{\"scheme\":\"http\"}","user-agent":"Mozilla\/5.0 (Linux; U; Android 14; ar; SM-A145F Build\/UP1A.231005.007) AppleWebKit\/533.1 (KHTML, like Gecko) Version\/5.0 Mobile Safari\/533.1","lang":"ar","x-forwarded-proto":"http","accept-language":"ar","accept-encoding":"gzip","cf-ipcountry":"DE","host":"admin.xivolive.com","x-forwarded-for":"2a02:3030:a61:5536:7821:f4a3:3f8f:258","cf-ray":"912ddc942aef414b-HAM","content-length":"","content-type":""}
+----------------------------------------
+2025-02-16 21:35:26-log
+{"ActionStatus":"OK","ErrorCode":0,"ErrorInfo":"","MsgSeq":40,"MsgTime":1739712926}
+
+[REQUEST]:GiftApi/gift_type_giving
+[URL_PARAM]:{"os":"Android","sdk_version":"34","app_version":"2024103001","app_name":"1.1","uid":"2609991","token":"7e43d07895eb0a902ac50c6ea375ce18","voice_id":"2609942","call_id":"","gid":"229","to_user_id":"2609991","count":"1","flag":"1739712923412833"}
+[CONTENT]:""
+[DEVICE_INFO]:{"cf-connecting-ip":"2a02:3030:a61:5536:7821:f4a3:3f8f:258","connection":"Keep-Alive","cdn-loop":"cloudflare; loops=1","cf-visitor":"{\"scheme\":\"http\"}","user-agent":"Mozilla\/5.0 (Linux; U; Android 14; ar; SM-A145F Build\/UP1A.231005.007) AppleWebKit\/533.1 (KHTML, like Gecko) Version\/5.0 Mobile Safari\/533.1","lang":"ar","x-forwarded-proto":"http","accept-language":"ar","accept-encoding":"gzip","cf-ipcountry":"DE","host":"admin.xivolive.com","x-forwarded-for":"2a02:3030:a61:5536:7821:f4a3:3f8f:258","cf-ray":"912deba88c56414b-HAM","content-length":"","content-type":""}

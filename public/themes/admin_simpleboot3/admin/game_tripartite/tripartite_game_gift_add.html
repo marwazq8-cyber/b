@@ -1,0 +1,98 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift,.status {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href='{:url("GameTripartite/tripartite_game_gift")}'>{:lang("游戏礼物奖池")}</a></li>
+        <li class="active"><a href="javascript:;">{:lang("添加礼物")}</a></li>
+    </ul>
+    <form action="{:url('GameTripartite/tripartite_game_gift_addPost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('游戏名称')} <span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[type]" id="gift">
+                                <foreach name="game_type_list" item="v">
+                                    <option value="{$v['value']}" <if condition="$game_gift['type'] eq $v['value']">selected</if> >{$v['label']}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('GIFT')} <span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[gift_id]" class="form-control">
+                                <foreach name="gift" item="v">
+                                    <option value="{$v.id}" <if condition="$game_gift.gift_id == $v.id"> selected="selected" </if>>{$v.name}({$v.id}-{$v.coin})</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('幸运礼物')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[is_lucky]" id="gift">
+                                <option value="1">{:lang("是")}</option>
+                                <option value="0" <if condition="$game_gift['is_lucky'] eq '0'"> selected = "selected" </if>>{:lang('否')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_PROBABILITY_OF_WINNING')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[probability]"
+                                   id="title" required value="{$game_gift.probability |default=''}" placeholder="{:lang('概率总和自定')}"/>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <th>{:lang('奖励数量')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[number]" id="source"
+                                   value="{$game_gift.number |default='1'}"
+                                   placeholder="{:lang('奖励数量')}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                   required value="{$game_gift.sort |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$game_gift.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('GameTripartite/tripartite_game_gift')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+
+</body>
+</html>

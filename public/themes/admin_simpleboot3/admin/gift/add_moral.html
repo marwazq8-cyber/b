@@ -1,0 +1,70 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('gift/index')}">{:lang('ADMIN_GIFT_LIST')}</a></li>
+        <li><a href="{:url('gift/add')}">{:lang('ADMIN_GIFT_ADD')}</a></li>
+        <li><a href="{:url('gift/moral')}">{:lang('ADMIN_GIFT_IMPLICATION')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_GIFT_IMPLICATION_ADD')}</a></li>
+<!--        <li><a href="{:url('gift/gift_animation')}">{:lang('ADMIN_SVGA')}</a></li>-->
+<!--        <li><a href="{:url('gift/add_gift_animation')}">{:lang('ADMIN_HOME_PAGE_ADD')}</a></li>-->
+        <li><a href="{:url('gift/gift_type')}">{:lang('ADMIN_GIFT_TYPE')}</a></li>
+    </ul>
+    <form action="{:url('gift/addPost_moral')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_GIFT_IMPLICATION_NAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[name]"
+                                   id="title" required value="{$gift.name |default=''}" placeholder="{:lang('请输入礼物寓意名称')}" required/>
+                        </td>
+                    </tr>
+                     <tr>
+                        <th>{:lang('ADMIN_NUMBER')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[sum]" id="source"
+                                   value="{$gift.sum |default=''}"
+                                   placeholder="{:lang('请输入数量')}" required></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                   required value="{$gift.sort |default=''}" placeholder="{:lang('SORT')}" required/>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$gift.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('gift/moral')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

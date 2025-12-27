@@ -1,0 +1,78 @@
+<include file="public@header" />
+<style>
+    .btn_class{
+        padding:5px 25px;border-radius: 20px;margin-right:5px;
+    }
+</style>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a>会员统计</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" name="form1" method="post" action="{:url('settlement/statistics')}">
+        日期类型：
+        <select class="form-control" name="date" id="input-target">
+            <option value="day" <if condition="$conversion['date'] eq 'day'"> selected  </if>> 按日统计</option>
+            <option value="month" <if condition="$conversion['date'] eq 'month'"> selected  </if>>按月统计</option>
+        </select>
+        <if condition="$agent['agent_level'] == 1">
+            {:lang('agent_level2')}ID:
+            <input type="text" class="form-control" name="agent_staff" style="width: 120px;" value="{$conversion.agent_staff |default=''}" placeholder="{:lang('agent_level2')}ID">
+        </if>
+        日期范围:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time"
+               value="{$conversion['start_time']|default=''}"
+               style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time"
+               value="{$conversion['end_time']|default=''}"
+               style="width: 140px;" autocomplete="off"> &nbsp;
+        <input type="submit" class="btn btn-info" value="搜索" onclick='form1.action="{:url('settlement/statistics')}";form1.submit();'/>
+        <input type="submit" class="btn btn-info" style="background-color: #1dccaa;" value="导出" onclick='form1.action="{:url('settlement/export_statistics')}";form1.submit();'>
+        <span style="margin-left: 25px;">报表计算以当日凌晨系统入账时间为准。当日消费不在统计范围内</span>
+        <div style="margin-top: 25px;">
+            <span>本次注册总数:{$agent_money['register_sum']}</span>
+            <span style="margin-left: 10px">虚拟币充值数:{:floatval($agent_money['money'])}</span>
+            <span style="margin-left: 10px">消费总数:{:floatval($agent_money['consumption'])}</span>
+            <if condition="$agent['agent_level'] == 1">
+                <span style="margin-left: 10px">虚拟币收益:{:floatval($agent_money['agent_money'])}</span>
+            </if>
+        </div>
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>日期</th>
+            <th>{:lang('agent_level2')}(ID)</th>
+            <th>当前渠道注册新增</th>
+            <th>当前渠道充值数</th>
+            <th>下级渠道注册新增</th>
+            <th>下级渠道充值数</th>
+            <th>消费总数</th>
+            <if condition="$agent['agent_level'] == 1">
+                <th>总收益</th>
+            </if>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="users" item="vo">
+            <tr>
+                <td>{$conversion['date'] == 'month' ? $vo.month_time : $vo.date_time}</td>
+                <td>{$vo.login_name}({$vo.uid})</td>
+                <td>{$vo.register_sum| default='0'}</td>
+                <td>{:floatval($vo.money)}</td>
+
+                <td>{$vo.invitation_register_sum| default='0'}</td>
+                <td>{:floatval($vo.invitation_money)}</td>
+                <td>{$vo.consumption}</td>
+                <if condition="$agent['agent_level'] == 1">
+                    <td>{:floatval($vo.agent_money)}</td>
+                </if>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="/agent/public/static/js/layer/layer.js" rel="stylesheet"></script>
+</body>

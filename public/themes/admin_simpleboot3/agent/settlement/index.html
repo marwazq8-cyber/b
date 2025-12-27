@@ -1,0 +1,152 @@
+<include file="public@header" />
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a>账号提现</a></li>
+    </ul>
+    <div style="margin: 10px;">
+       <div style="font-size: 30px;height: 50px;line-height: 50px;text-align: center;margin-top: 40px;margin-bottom: 40px;">
+           账号余额: {$agent['income']} 元
+           <a class="btn Withdrawal" href="javascript:void(0)" style="margin-left:10px;color: #fff;
+    background-color: #49d16a;">申请提现</a>
+       </div>
+
+    </div>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('settlement/index')}">
+        日期:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time"
+               value="{$data.start_time|default=''}"
+               style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time"
+               value="{$data.end_time|default=''}"
+               style="width: 140px;" autocomplete="off">
+        状态：
+        <select class="form-control" name="status" style="width: 140px;">
+            <option value="-1">全部</option>
+            <option value="0" <if condition="$data['status'] eq '0'"> selected  </if> >审核中</option>
+            <option value="1" <if condition="$data['status'] eq 1"> selected  </if> >成功</option>
+            <option value="2" <if condition="$data['status'] eq 2"> selected  </if> >失败</option>
+        </select>
+        <input type="submit" class="btn btn-primary" value="搜索" />
+        <a class="btn btn-danger" href="{:url('settlement/index')}">清空</a>
+        <span style="margin-left:30px;">总申请金额数 ： {$data['count']|default='0'} 元</span>
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>申请日期</th>
+            <th>扣除金额(元)</th>
+            <th>到账金额(元)</th>
+            <th>账号类型</th>
+            <th>账号卡号</th>
+            <th>账号名称</th>
+            <th>状态</th>
+            <th>备注</th>
+            <th>审核时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="users" item="vo">
+            <tr>
+                <td>{:date('Y-m-d',$vo['addtime'])}</td>
+                <td>{$vo.income}</td>
+                <td>{$vo.money}</td>
+                <td>{$vo.pay_type}</td>
+                <td>{$vo.pay}</td>
+                <td>{$vo.pay_name}</td>
+                <td>
+                    <if condition="$vo['status'] eq 1">
+                        成功
+                    <elseif condition="$vo['status'] eq 2"/>
+                        失败
+                    <else/>
+                        审核中
+                    </if>
+                </td>
+                <td>{$vo.remarks}</td>
+                <td>
+                    <if condition="$vo['status'] neq 0">
+                        {:date('Y-m-d',$vo['updatetime'])}
+                    </if>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    const income = "{$agent['income']}";
+    const text = "{$text}";
+    const channel_withdrawal = "{$channel_withdrawal}";
+    function Account_get(){
+        const val = $("#first").val();
+        let money = 0
+        if (val || channel_withdrawal) {
+            money = Math.floor(val / channel_withdrawal * 100) / 100
+        }
+        $("#Account").html(money);
+    }
+    $(".Withdrawal").click(function () {
+        var id = $(this).attr('data-id');
+
+        //自定页
+        layer.open({
+            title: '提现申请',
+            type: 1,
+            skin: 'layui-layer-demo', //样式类名
+            closeBtn: 0, //不显示关闭按钮
+            btn: ["提现", '取消'],
+            area: '500px;',
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: ' <div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">'
+                +'<div class="col-sm-12">'
+                +'<div style="height: 50px;line-height: 50px;text-align: center;font-size: 20px;text-align: center;">可提现金额:' + income
+                +'元</div>'
+                +'<div class="col-sm-12">'
+                +'<div class="input-group">'
+                +'<span class="input-group-addon"> 提现金额  :</span>'
+                +'<input id="first" type="text" class="form-control" placeholder="请输入提现金额" oninput="Account_get()">'
+                +'</div>'
+                +'</div>'
+                +'<div class="col-sm-12" style="margin-top: 10px;">'
+                +'<div >到账金额:<span id="Account">0</span>元'
+                +'</div>'
+                +'</div>'
+                +'<div class="col-sm-12" style="margin-top: 10px;">'
+                +'<div ><span style="white-space: pre-line;">\n'
+                + text
+                +'</span>'
+                +'</div>'
+                +'</div>'
+                +'</div>'
+            ,
+            success: function(layero){
+                var btn = layero.find('.layui-layer-btn');
+
+                btn.find('.layui-layer-btn0').click(function () {
+                    var a = $("#first").val();
+                    $.ajax({
+                        url: "{:url('Settlement/addwithdrawal')}",
+                        type: 'post',
+                        dataType: 'json',
+                        data: { income:a },
+                        success: function (data) {
+                            if (data.code == '1') {
+                                layer.msg(data.msg, {time: 2000, icon: 1}, function () {
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg(data.msg, {time: 2000, icon: 2});
+                            }
+                        }
+                    });
+                });
+
+            }
+        });
+    })
+</script>
+</body>

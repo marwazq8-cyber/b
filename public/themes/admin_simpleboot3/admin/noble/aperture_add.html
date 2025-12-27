@@ -1,0 +1,106 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:url('noble/aperture')}">{:lang('发言光圈列表')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('添加发言光圈')}</a></li>
+
+    </ul>
+    <form action="{:url('noble/aperture_addPost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('光圈名称 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[name]"
+                                   id="title" required value="{$data.name |default=''}" placeholder="{:lang('Please_enter_name')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_NOBLE')} <span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[nid]" id="" class="form-control">
+                                <foreach name="noble" id="val">
+                                <option value="{$val.id}" <if condition="$data.nid eq $val.id">selected</if>>{$val.name}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('光圈特效')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[aperture_svga]" id="thumbnail" value="{$data['aperture_svga'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <empty name="$data['aperture_svga']">
+
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+
+                                        <img src="{$data['aperture_svga']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </empty>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$data.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('noble/aperture')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    var status = {$data['noble_status'] | default = 1};
+    var types = {$data['type'] | default = 1};
+    $('#gift').val(status);
+    $('#types').val(types);
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+         $('.btn-cancel-svga').click(function () {
+            $('#svga-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#svga').val('');
+        });
+
+    });
+</script>
+
+</body>
+</html>

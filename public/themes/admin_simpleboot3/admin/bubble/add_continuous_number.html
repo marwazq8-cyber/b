@@ -1,0 +1,77 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+    .select{width: 150px;height: 30px;}
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('bubble/continuous_number')}">{:lang('连续打泡泡的次数列表')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('修改连续打泡泡的次数')}</a></li>
+    </ul>
+    <form action="{:url('bubble/add_continuous_number_post')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('连续打泡泡次数 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sum]"
+                                   id="title" required value="{$list.sum |default=''}" placeholder="{:lang('Please_enter_number_hits')}"/>
+                        </td>
+                    </tr>
+                     <tr>
+                        <th>{:lang('泡泡类型')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[type]" class="select">
+                               <option value="1" <if condition="$list['type'] eq 1"> selected = "selected" </if>>{:lang('普通泡泡')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('是否开启')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[status]" class="select">
+                               <option value="1" <if condition="$list['status'] eq 1"> selected = "selected" </if>>{:lang('OPEN')}</option>
+                                <option value="0" <if condition="$list['status'] eq 0"> selected = "selected" </if>>{:lang('CLOSE')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[orderno]" style="width:100px;"
+                                   required value="{$list.orderno |default='0'}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('bubble/continuous_number')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+
+</body>
+</html>

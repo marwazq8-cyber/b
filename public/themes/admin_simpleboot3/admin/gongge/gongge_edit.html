@@ -1,0 +1,140 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('Gongge/index')}">{:lang('宫格列表')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('EDIT')}</a></li>
+    </ul>
+    <form action="{:url('Gongge/gongge_post')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('标题')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[title]"
+                                   id="title" required value="{$gongge.title |default=''}" placeholder="{:lang('Please_enter_title')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('单次消费价格({$currency_name})')}<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[coin]" id="source"
+                                   value="{$gongge.coin |default=''}"
+                                   placeholder="{:lang('请输入价格数')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('宫格背景色(颜色值 例如：#000000)')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[bg_color]"
+                                   id="bg_color" required value="{$gongge.bg_color |default=''}" placeholder="{:lang('请输入颜色值')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('礼物背景色(颜色值 例如：#000000)')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[gift_bg_color]" required value="{$gongge.gift_bg_color |default=''}" placeholder="{:lang('请输入礼物背景颜色值')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('抽奖次数(多个用英文逗号隔开;最多显示3个)')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[frequency]"
+                                   id="frequency" required value="{$gongge.frequency |default=''}" placeholder="{:lang('Please_enter_number_sweepstakes')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('幸运时刻条件(幸运值)')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[double]" value="{$gongge.double |default=''}" placeholder="{:lang('请输入幸运值')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('幸运时刻倒计时(秒)')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[count_down]" value="{$gongge.count_down |default=''}" placeholder="{:lang('请输入时间秒')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('幸运时刻说明')}<span class="form-required">*</span></th>
+                        <td>
+                            <textarea class="form-control" id="input-remark" name="post[explain]" placeholder="{:lang('Please_enter_content')}">{$gongge.explain |default=''}</textarea>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('宫格数量')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[gift_count]">
+                                <option value="10" <if condition="$gongge['gift_count'] eq '10'"> selected = "selected" </if>>10个宫格</option>
+                                <option value="14" <if condition="$gongge['gift_count'] eq '14'"> selected = "selected" </if>>14个宫格</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('限制等级')}<span class="form-required">（必须大于或等于选择的等级才能抽奖）</span></th>
+                        <td>
+                            <select name="post[level]">
+                                <option value="0" <if condition="$gongge['level'] eq '0'"> selected = "selected" </if>>{:lang('不限制')}</option>
+                                <foreach name="level" item="v">
+                                    <option value="{$v['level_name']}" <if condition="$gongge['level'] == $v['level_name']"> selected="selected"</if> >{$v['level_name']}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('限制等级说明')}<span class="form-required">(移动端弹框)</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[level_explain]" value="{$gongge.level_explain |default=''}" placeholder="{:lang('请输入限制等级说明')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[status]" id="status">
+                                <option value="0" <if condition="$gongge['status'] eq '0'"> selected = "selected" </if>>{:lang('CLOSE')}</option>
+                                <option value="1" <if condition="$gongge['status'] eq '1'"> selected = "selected" </if>>{:lang('OPEN')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                   required value="{$gongge.sort |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$gongge.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('Gongge/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+
+</body>
+</html>

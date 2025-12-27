@@ -1,0 +1,78 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+    .select{width: 150px;height: 30px;}
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('Voice/voice_label')}">{:lang('房间标签列表')}</a></li>
+        <li class="active"><a href="{:url('Voice/add_voice_label')}">{:lang('增加房间标签')}</a></li>
+    </ul>
+    <form action="{:url('voice/addPost_voice_label')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('房间标签名称')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[name]" 
+                                   required  placeholder="{:lang('Please_enter_room_label_name')}" value="{$list['name']|default=''}" />
+                        </td>
+                    </tr>
+                     <tr>
+                        <th>{:lang('房间分类')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[voice_type_id]" class="select">
+                                <foreach name="voice_type" item="v">
+                                    <option value="{$v.id}" <if condition="$v['id'] eq $list['voice_type_id']"> selected = "selected" </if>>{$v.name}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[sort]" placeholder="{:lang('SORT')}" value="{$list['sort']|default='0'}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[status]" class="select">
+                                <option value="1" <if condition="$list['status'] eq '1'"> selected = "selected" </if>>{:lang('OPEN')}</option>
+                                <option value="2" <if condition="$list['status'] eq '2'"> selected = "selected" </if>>{:lang('CLOSE')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                     <input class="form-control" type="hidden" name="id"  value="{$list['id']|default=''}" />
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('voice/voice_label')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+
+
+</body>
+</html>

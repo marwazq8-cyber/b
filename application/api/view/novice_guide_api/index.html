@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>关于我们</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="__STATIC__/css/index.css" rel="stylesheet">
+    <link href="__STATIC__/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="novice_about_log"><img src="{$log}"></div>
+
+<div class="novice_about_type">
+    <ul>
+        {volist name="category" id="vo" key="i"}
+        <li>
+            <a href="/admin/public/portal/article/index/id/{$vo['id']}.html">
+            <div class="novice_about_type_name">{$vo['name']}</div>
+            <div class="novice_about_type_jiant"><i class="glyphicon glyphicon-chevron-right"></i></div>
+            </a>
+        </li>
+        {/volist}
+    </ul>
+</div>
+</body>
+</html>

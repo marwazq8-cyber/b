@@ -1,0 +1,90 @@
+<include file="public@header"/>
+<style>
+    .gift-img{width:50px;height:50px}
+    .gift-img img{width:100%;height:100%;}
+    .gift-in input{width:25px;}
+    .js-ajax-form{margin-top:30px;}
+    .select{height:35px;line-height: 35px;width:100px;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_GAME_LIST')}</a></li>
+<!--        <li ><a href="{:url('game/add')}">{:lang('添加游戏')}</a></li>-->
+    </ul>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{:lang('ADMIN_GAME_NAME')}</th>
+            <th>{:lang('ADMIN_GAME_ICON')}</th>
+<!--            <th>{:lang('ADMIN_ICON')}</th>-->
+            <th>{:lang('STATUS')}</th>
+            <th>{:lang('SORT')}</th>
+            <th>{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <foreach name="list" id="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.name}</td>
+                <td class="gift-img"><img src="{$vo.img}" alt=""></td>
+<!--                <td class="gift-img">-->
+<!--                    <if condition="$vo['game_coin_picture']">-->
+<!--                        <img src="{$vo.game_coin_picture}" alt="">-->
+<!--                    </if>-->
+<!--                </td>-->
+                <td>
+                    <if condition="$vo['status'] eq 1">
+                        {:lang('USER_STATUS_ACTIVATED')}
+                        <else/>
+                        {:lang('CLOSE')}
+                    </if>
+                </td>
+                <td>{$vo.sort}</td>
+                <td>
+                   <a href="{:url('game/add',array('id'=>$vo['id']))}" >{:lang('EDIT')}</a>
+<!--                    <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>|-->
+                    <if condition="$vo['type'] eq 2 || $vo['type'] eq 1">
+                        |
+                        <a href="{:url('game/statistical',array('id'=>$vo['id']))}" >{:lang('ADMIN_DATA')}</a>
+                    </if>
+                </td>
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $(".del").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('game/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("{:lang('DELETE_SUCCESS')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('DELETE_FAILED')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+
+</script>
+</body>
+</html>

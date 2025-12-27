@@ -1,0 +1,37 @@
+<include file="public@header"/>
+</head>
+<body>
+
+<table class="table table-hover table-bordered table-list">
+    <thead>
+    <tr>
+        <th>{:lang('ADMIN_GUILD_TOTAL_INCOME')}</th>
+        <th>{:lang('ADMIN_LAST_INCOME')}</th>
+        <th>{:lang('ADMIN_GUILD_DAY_INCOME')}</th>
+        <th>{:lang('ADMIN_GUILD_ALL_USER_NUM')}</th>
+        <th>{:lang('ADMIN_AUDIT_USER_NUM')}</th>
+        <th>{:lang('ADMIN_ACCOUNT_TYPE')}</th>
+        <th>{:lang('ADMIN_ACCOUNT_USER')}</th>
+        <th>{:lang('ADMIN_ACCOUNT_NAME')}</th>
+        
+    </tr>
+    </thead>
+    <tfoot>
+    <td>{$data.total_earnings}</td>
+    <td>{$data.earnings}</td>
+    <td>{$data.day_income}</td>
+    <td>{$data.num}</td>
+    <td>{$data.auditing_num}</td>
+    <td>
+         <if condition="$data['account_type'] eq '1'">
+             {:lang('ALIPAY')}
+            <else/>
+             {:lang('WECHAT')}
+        </if>
+    </td>
+    <td>{$data.cash_account}</td>
+    <td>{$data.account_name}</td>
+    </tfoot>
+</table>
+</body>
+</html>

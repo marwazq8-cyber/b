@@ -1,0 +1,528 @@
+----------------------------------------
+2025-02-16 14:02:36-log
+{"CallbackCommand":"Profile.CallbackPortraitSet","Operator_Account":"administrator","From_Account":"2609937","EventTime":1739685755791,"ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https://zonechat-1320893901.cos.accelerate.myqcloud.com/img/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"Profile.CallbackPortraitSet","ClientIP":"188.40.194.152","OptPlatform":"RESTAPI","RequestId":"946b173e-f7a2-44fd-848a-ec9ddafbd5a3","SdkAppid":"20011848","contenttype":"json","Operator_Account":"administrator","From_Account":"2609937","EventTime":"1739685755791","ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+[CONTENT]:"{\"CallbackCommand\":\"Profile.CallbackPortraitSet\",\"Operator_Account\":\"administrator\",\"From_Account\":\"2609937\",\"EventTime\":1739685755791,\"ProfileItem\":[{\"Tag\":\"Tag_Profile_IM_Nick\",\"Value\":\"man\"},{\"Tag\":\"Tag_Profile_IM_Image\",\"Value\":\"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg\"}]}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"422","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.51","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.51","cf-ray":"912b5465ef893e65-SIN"}
+----------------------------------------
+2025-02-16 14:04:10-log
+{"CallbackCommand":"State.StateChange","Info":{"To_Account":"2609937","Action":"Login","Reason":"Register"},"EventTime":1739685850394}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"State.StateChange","ClientIP":"188.160.234.110","OptPlatform":"Android","RequestId":"cuonvmir8lcc8qbbsd8g-144115266635485385-Login-Register","SdkAppid":"20011848","contenttype":"json","Info":{"To_Account":"2609937","Action":"Login","Reason":"Register"},"EventTime":"1739685850394"}
+[CONTENT]:"{\"CallbackCommand\":\"State.StateChange\",\"Info\":{\"To_Account\":\"2609937\",\"Action\":\"Login\",\"Reason\":\"Register\"},\"EventTime\":1739685850394}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"134","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.244.5","host":"admin.xivolive.com","x-forwarded-for":"43.153.244.5","cf-ray":"912b56b51c26797b-SIN"}
+----------------------------------------
+2025-02-16 14:04:11-log
+{"CallbackCommand":"Profile.CallbackPortraitSet","Operator_Account":"2609937","From_Account":"2609937","EventTime":1739685850893,"ProfileItem":[{"Tag":"Tag_Profile_IM_AllowType","Value":"AllowType_Type_AllowAny"}]}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"Profile.CallbackPortraitSet","ClientIP":"188.160.234.110","OptPlatform":"Android","RequestId":"5850d009-8dd8-4d08-af6a-2bcd2b2ce4ca","SdkAppid":"20011848","contenttype":"json","Operator_Account":"2609937","From_Account":"2609937","EventTime":"1739685850893","ProfileItem":[{"Tag":"Tag_Profile_IM_AllowType","Value":"AllowType_Type_AllowAny"}]}
+[CONTENT]:"{\"CallbackCommand\":\"Profile.CallbackPortraitSet\",\"Operator_Account\":\"2609937\",\"From_Account\":\"2609937\",\"EventTime\":1739685850893,\"ProfileItem\":[{\"Tag\":\"Tag_Profile_IM_AllowType\",\"Value\":\"AllowType_Type_AllowAny\"}]}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"214","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.244.34","host":"admin.xivolive.com","x-forwarded-for":"43.153.244.34","cf-ray":"912b56b85fc2cde9-SIN"}
+----------------------------------------
+2025-02-16 14:04:11-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739685851,"UnreadMsgNum":0,"EventTime":1739685851471}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"188.160.234.110","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739685851","UnreadMsgNum":"0","EventTime":"1739685851471"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739685851,\"UnreadMsgNum\":0,\"EventTime\":1739685851471}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"129.226.197.194","host":"admin.xivolive.com","x-forwarded-for":"129.226.197.194","cf-ray":"912b56bbd91ba077-SIN"}
+----------------------------------------
+2025-02-16 14:04:12-log
+{"CallbackCommand":"State.StateChange","Info":{"To_Account":"2609937","Action":"Logout","Reason":"Unregister"},"EventTime":1739685852487}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"State.StateChange","ClientIP":"188.160.234.110","OptPlatform":"Android","RequestId":"cuonvn2r8lcc8qbbt3sg-144115266635485385-Logout-Unregister","SdkAppid":"20011848","contenttype":"json","Info":{"To_Account":"2609937","Action":"Logout","Reason":"Unregister"},"EventTime":"1739685852487"}
+[CONTENT]:"{\"CallbackCommand\":\"State.StateChange\",\"Info\":{\"To_Account\":\"2609937\",\"Action\":\"Logout\",\"Reason\":\"Unregister\"},\"EventTime\":1739685852487}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"137","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.51","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.51","cf-ray":"912b56c23ec64715-SIN"}
+----------------------------------------
+2025-02-16 14:04:22-log
+{"CallbackCommand":"Profile.CallbackPortraitSet","Operator_Account":"administrator","From_Account":"2609937","EventTime":1739685861898,"ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https://zonechat-1320893901.cos.accelerate.myqcloud.com/img/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"Profile.CallbackPortraitSet","ClientIP":"188.40.194.152","OptPlatform":"RESTAPI","RequestId":"0c3e9280-e9e6-41ef-beb6-0e0d20f6aaf7","SdkAppid":"20011848","contenttype":"json","Operator_Account":"administrator","From_Account":"2609937","EventTime":"1739685861898","ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+[CONTENT]:"{\"CallbackCommand\":\"Profile.CallbackPortraitSet\",\"Operator_Account\":\"administrator\",\"From_Account\":\"2609937\",\"EventTime\":1739685861898,\"ProfileItem\":[{\"Tag\":\"Tag_Profile_IM_Nick\",\"Value\":\"man\"},{\"Tag\":\"Tag_Profile_IM_Image\",\"Value\":\"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg\"}]}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"422","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"101.32.242.117","host":"admin.xivolive.com","x-forwarded-for":"101.32.242.117","cf-ray":"912b56fcfdd74027-SIN"}
+----------------------------------------
+2025-02-16 14:05:16-log
+{"CallbackCommand":"Profile.CallbackPortraitSet","Operator_Account":"administrator","From_Account":"2609937","EventTime":1739685915654,"ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https://zonechat-1320893901.cos.accelerate.myqcloud.com/img/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"Profile.CallbackPortraitSet","ClientIP":"188.40.194.152","OptPlatform":"RESTAPI","RequestId":"ee5ecb8d-29f5-458a-8eef-40b5a481834c","SdkAppid":"20011848","contenttype":"json","Operator_Account":"administrator","From_Account":"2609937","EventTime":"1739685915654","ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+[CONTENT]:"{\"CallbackCommand\":\"Profile.CallbackPortraitSet\",\"Operator_Account\":\"administrator\",\"From_Account\":\"2609937\",\"EventTime\":1739685915654,\"ProfileItem\":[{\"Tag\":\"Tag_Profile_IM_Nick\",\"Value\":\"man\"},{\"Tag\":\"Tag_Profile_IM_Image\",\"Value\":\"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg\"}]}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"422","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"150.109.12.53","host":"admin.xivolive.com","x-forwarded-for":"150.109.12.53","cf-ray":"912b584cff2eff85-SIN"}
+----------------------------------------
+2025-02-16 14:06:51-log
+{"CallbackCommand":"Profile.CallbackPortraitSet","Operator_Account":"administrator","From_Account":"2609937","EventTime":1739686010642,"ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https://zonechat-1320893901.cos.accelerate.myqcloud.com/img/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"Profile.CallbackPortraitSet","ClientIP":"188.40.194.152","OptPlatform":"RESTAPI","RequestId":"150f13c6-fe8a-4bf8-8e81-2153579f70a2","SdkAppid":"20011848","contenttype":"json","Operator_Account":"administrator","From_Account":"2609937","EventTime":"1739686010642","ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+[CONTENT]:"{\"CallbackCommand\":\"Profile.CallbackPortraitSet\",\"Operator_Account\":\"administrator\",\"From_Account\":\"2609937\",\"EventTime\":1739686010642,\"ProfileItem\":[{\"Tag\":\"Tag_Profile_IM_Nick\",\"Value\":\"man\"},{\"Tag\":\"Tag_Profile_IM_Image\",\"Value\":\"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg\"}]}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"422","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.241.239","host":"admin.xivolive.com","x-forwarded-for":"43.153.241.239","cf-ray":"912b5a9eb85ef8d2-SIN"}
+----------------------------------------
+2025-02-16 14:08:54-log
+{"CallbackCommand":"Profile.CallbackPortraitSet","Operator_Account":"administrator","From_Account":"2609937","EventTime":1739686134033,"ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https://zonechat-1320893901.cos.accelerate.myqcloud.com/img/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"Profile.CallbackPortraitSet","ClientIP":"188.40.194.152","OptPlatform":"RESTAPI","RequestId":"6753127f-59f1-4c1b-a85c-c37a1434e7b1","SdkAppid":"20011848","contenttype":"json","Operator_Account":"administrator","From_Account":"2609937","EventTime":"1739686134033","ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+[CONTENT]:"{\"CallbackCommand\":\"Profile.CallbackPortraitSet\",\"Operator_Account\":\"administrator\",\"From_Account\":\"2609937\",\"EventTime\":1739686134033,\"ProfileItem\":[{\"Tag\":\"Tag_Profile_IM_Nick\",\"Value\":\"man\"},{\"Tag\":\"Tag_Profile_IM_Image\",\"Value\":\"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg\"}]}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"422","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.51","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.51","cf-ray":"912b5da20be0408b-SIN"}
+----------------------------------------
+2025-02-16 14:12:19-log
+{"CallbackCommand":"Profile.CallbackPortraitSet","Operator_Account":"administrator","From_Account":"2609937","EventTime":1739686339455,"ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https://zonechat-1320893901.cos.accelerate.myqcloud.com/img/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"Profile.CallbackPortraitSet","ClientIP":"188.40.194.152","OptPlatform":"RESTAPI","RequestId":"c26063d8-2315-4dad-842e-117d0fbdc1e2","SdkAppid":"20011848","contenttype":"json","Operator_Account":"administrator","From_Account":"2609937","EventTime":"1739686339455","ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+[CONTENT]:"{\"CallbackCommand\":\"Profile.CallbackPortraitSet\",\"Operator_Account\":\"administrator\",\"From_Account\":\"2609937\",\"EventTime\":1739686339455,\"ProfileItem\":[{\"Tag\":\"Tag_Profile_IM_Nick\",\"Value\":\"man\"},{\"Tag\":\"Tag_Profile_IM_Image\",\"Value\":\"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg\"}]}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"422","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.45","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.45","cf-ray":"912b62a5af1afe8f-SIN"}
+----------------------------------------
+2025-02-16 14:13:58-log
+{"CallbackCommand":"Profile.CallbackPortraitSet","Operator_Account":"administrator","From_Account":"2609937","EventTime":1739686438133,"ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https://zonechat-1320893901.cos.accelerate.myqcloud.com/img/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"Profile.CallbackPortraitSet","ClientIP":"188.40.194.152","OptPlatform":"RESTAPI","RequestId":"9df51e33-311c-409b-842a-74be9bd69986","SdkAppid":"20011848","contenttype":"json","Operator_Account":"administrator","From_Account":"2609937","EventTime":"1739686438133","ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+[CONTENT]:"{\"CallbackCommand\":\"Profile.CallbackPortraitSet\",\"Operator_Account\":\"administrator\",\"From_Account\":\"2609937\",\"EventTime\":1739686438133,\"ProfileItem\":[{\"Tag\":\"Tag_Profile_IM_Nick\",\"Value\":\"man\"},{\"Tag\":\"Tag_Profile_IM_Image\",\"Value\":\"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg\"}]}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"422","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.45","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.45","cf-ray":"912b650e8d0791cb-SIN"}
+----------------------------------------
+2025-02-16 14:13:58-log
+{"CallbackCommand":"State.StateChange","Info":{"To_Account":"2609937","Action":"Login","Reason":"Register"},"EventTime":1739686438491}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"State.StateChange","ClientIP":"159.100.20.38","OptPlatform":"Android","RequestId":"cuoo49ir8lcc8qbicef0-144115266635485385-Login-Register","SdkAppid":"20011848","contenttype":"json","Info":{"To_Account":"2609937","Action":"Login","Reason":"Register"},"EventTime":"1739686438491"}
+[CONTENT]:"{\"CallbackCommand\":\"State.StateChange\",\"Info\":{\"To_Account\":\"2609937\",\"Action\":\"Login\",\"Reason\":\"Register\"},\"EventTime\":1739686438491}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"134","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.45","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.45","cf-ray":"912b6510eaaca110-SIN"}
+----------------------------------------
+2025-02-16 14:14:00-log
+{"CallbackCommand":"Profile.CallbackPortraitSet","Operator_Account":"2609937","From_Account":"2609937","EventTime":1739686439387,"ProfileItem":[{"Tag":"Tag_Profile_IM_AllowType","Value":"AllowType_Type_AllowAny"}]}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"Profile.CallbackPortraitSet","ClientIP":"159.100.20.38","OptPlatform":"Android","RequestId":"f0a88a7f-4f03-4af0-bfec-9ddb453d225c","SdkAppid":"20011848","contenttype":"json","Operator_Account":"2609937","From_Account":"2609937","EventTime":"1739686439387","ProfileItem":[{"Tag":"Tag_Profile_IM_AllowType","Value":"AllowType_Type_AllowAny"}]}
+[CONTENT]:"{\"CallbackCommand\":\"Profile.CallbackPortraitSet\",\"Operator_Account\":\"2609937\",\"From_Account\":\"2609937\",\"EventTime\":1739686439387,\"ProfileItem\":[{\"Tag\":\"Tag_Profile_IM_AllowType\",\"Value\":\"AllowType_Type_AllowAny\"}]}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"214","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.244.5","host":"admin.xivolive.com","x-forwarded-for":"43.153.244.5","cf-ray":"912b65164d42a06f-SIN"}
+----------------------------------------
+2025-02-16 14:14:01-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686440,"UnreadMsgNum":0,"EventTime":1739686440527}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686440","UnreadMsgNum":"0","EventTime":"1739686440527"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686440,\"UnreadMsgNum\":0,\"EventTime\":1739686440527}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.51","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.51","cf-ray":"912b651d6d655e5e-SIN"}
+----------------------------------------
+2025-02-16 14:14:04-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686443,"UnreadMsgNum":0,"EventTime":1739686443628}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686443","UnreadMsgNum":"0","EventTime":"1739686443628"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686443,\"UnreadMsgNum\":0,\"EventTime\":1739686443628}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.244.5","host":"admin.xivolive.com","x-forwarded-for":"43.153.244.5","cf-ray":"912b6530ef8cce73-SIN"}
+----------------------------------------
+2025-02-16 14:14:05-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686444,"UnreadMsgNum":0,"EventTime":1739686444745}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686444","UnreadMsgNum":"0","EventTime":"1739686444745"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686444,\"UnreadMsgNum\":0,\"EventTime\":1739686444745}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.241.239","host":"admin.xivolive.com","x-forwarded-for":"43.153.241.239","cf-ray":"912b6537cac9fe0d-SIN"}
+----------------------------------------
+2025-02-16 14:14:10-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686448,"UnreadMsgNum":0,"EventTime":1739686449956}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686448","UnreadMsgNum":"0","EventTime":"1739686449956"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686448,\"UnreadMsgNum\":0,\"EventTime\":1739686449956}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.241.150","host":"admin.xivolive.com","x-forwarded-for":"43.153.241.150","cf-ray":"912b65587951fd1e-SIN"}
+----------------------------------------
+2025-02-16 14:14:10-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686449,"UnreadMsgNum":0,"EventTime":1739686450084}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686449","UnreadMsgNum":"0","EventTime":"1739686450084"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686449,\"UnreadMsgNum\":0,\"EventTime\":1739686450084}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"101.32.242.117","host":"admin.xivolive.com","x-forwarded-for":"101.32.242.117","cf-ray":"912b65594d3ace1d-SIN"}
+----------------------------------------
+2025-02-16 14:14:14-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686453,"UnreadMsgNum":0,"EventTime":1739686453724}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686453","UnreadMsgNum":"0","EventTime":"1739686453724"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686453,\"UnreadMsgNum\":0,\"EventTime\":1739686453724}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.45","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.45","cf-ray":"912b656fec62fd7d-SIN"}
+----------------------------------------
+2025-02-16 14:14:15-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686454,"UnreadMsgNum":0,"EventTime":1739686454756}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686454","UnreadMsgNum":"0","EventTime":"1739686454756"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686454,\"UnreadMsgNum\":0,\"EventTime\":1739686454756}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"150.109.12.53","host":"admin.xivolive.com","x-forwarded-for":"150.109.12.53","cf-ray":"912b65765f4591c0-SIN"}
+----------------------------------------
+2025-02-16 14:14:19-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686458,"UnreadMsgNum":0,"EventTime":1739686459161}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686458","UnreadMsgNum":"0","EventTime":"1739686459161"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686458,\"UnreadMsgNum\":0,\"EventTime\":1739686459161}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"150.109.12.53","host":"admin.xivolive.com","x-forwarded-for":"150.109.12.53","cf-ray":"912b6591d977cdd5-SIN"}
+----------------------------------------
+2025-02-16 14:14:20-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686459,"UnreadMsgNum":0,"EventTime":1739686459805}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686459","UnreadMsgNum":"0","EventTime":"1739686459805"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686459,\"UnreadMsgNum\":0,\"EventTime\":1739686459805}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"101.32.242.117","host":"admin.xivolive.com","x-forwarded-for":"101.32.242.117","cf-ray":"912b6595dcd4f930-SIN"}
+----------------------------------------
+2025-02-16 14:14:24-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686463,"UnreadMsgNum":0,"EventTime":1739686463608}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686463","UnreadMsgNum":"0","EventTime":"1739686463608"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686463,\"UnreadMsgNum\":0,\"EventTime\":1739686463608}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.241.245","host":"admin.xivolive.com","x-forwarded-for":"43.153.241.245","cf-ray":"912b65adbfee3d93-SIN"}
+----------------------------------------
+2025-02-16 14:14:25-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686464,"UnreadMsgNum":0,"EventTime":1739686465103}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686464","UnreadMsgNum":"0","EventTime":"1739686465103"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686464,\"UnreadMsgNum\":0,\"EventTime\":1739686465103}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"150.109.12.53","host":"admin.xivolive.com","x-forwarded-for":"150.109.12.53","cf-ray":"912b65b6f9ee81fe-SIN"}
+----------------------------------------
+2025-02-16 14:14:29-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686468,"UnreadMsgNum":0,"EventTime":1739686468674}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686468","UnreadMsgNum":"0","EventTime":"1739686468674"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686468,\"UnreadMsgNum\":0,\"EventTime\":1739686468674}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.244.5","host":"admin.xivolive.com","x-forwarded-for":"43.153.244.5","cf-ray":"912b65cd5fb03e1a-SIN"}
+----------------------------------------
+2025-02-16 14:14:31-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686469,"UnreadMsgNum":0,"EventTime":1739686470727}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686469","UnreadMsgNum":"0","EventTime":"1739686470727"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686469,\"UnreadMsgNum\":0,\"EventTime\":1739686470727}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"150.109.12.53","host":"admin.xivolive.com","x-forwarded-for":"150.109.12.53","cf-ray":"912b65da2e1481cc-SIN"}
+----------------------------------------
+2025-02-16 14:14:34-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686473,"UnreadMsgNum":0,"EventTime":1739686473680}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686473","UnreadMsgNum":"0","EventTime":"1739686473680"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686473,\"UnreadMsgNum\":0,\"EventTime\":1739686473680}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.51","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.51","cf-ray":"912b65ecabca3f61-SIN"}
+----------------------------------------
+2025-02-16 14:14:35-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686474,"UnreadMsgNum":0,"EventTime":1739686474799}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686474","UnreadMsgNum":"0","EventTime":"1739686474799"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686474,\"UnreadMsgNum\":0,\"EventTime\":1739686474799}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"129.226.197.194","host":"admin.xivolive.com","x-forwarded-for":"129.226.197.194","cf-ray":"912b65f39a248808-SIN"}
+----------------------------------------
+2025-02-16 14:14:39-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686478,"UnreadMsgNum":0,"EventTime":1739686478877}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686478","UnreadMsgNum":"0","EventTime":"1739686478877"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686478,\"UnreadMsgNum\":0,\"EventTime\":1739686478877}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.45","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.45","cf-ray":"912b660d4bd1fd7d-SIN"}
+----------------------------------------
+2025-02-16 14:14:41-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686479,"UnreadMsgNum":0,"EventTime":1739686479957}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686479","UnreadMsgNum":"0","EventTime":"1739686479957"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686479,\"UnreadMsgNum\":0,\"EventTime\":1739686479957}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.241.150","host":"admin.xivolive.com","x-forwarded-for":"43.153.241.150","cf-ray":"912b6613e9785f37-SIN"}
+----------------------------------------
+2025-02-16 14:14:44-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686483,"UnreadMsgNum":0,"EventTime":1739686484228}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686483","UnreadMsgNum":"0","EventTime":"1739686484228"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686483,\"UnreadMsgNum\":0,\"EventTime\":1739686484228}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.241.54","host":"admin.xivolive.com","x-forwarded-for":"43.153.241.54","cf-ray":"912b662e8beef8d4-SIN"}
+----------------------------------------
+2025-02-16 14:14:45-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686484,"UnreadMsgNum":0,"EventTime":1739686484810}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686484","UnreadMsgNum":"0","EventTime":"1739686484810"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686484,\"UnreadMsgNum\":0,\"EventTime\":1739686484810}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.241.55","host":"admin.xivolive.com","x-forwarded-for":"43.153.241.55","cf-ray":"912b66323cfcd4a5-SIN"}
+----------------------------------------
+2025-02-16 14:14:49-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686488,"UnreadMsgNum":0,"EventTime":1739686489244}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686488","UnreadMsgNum":"0","EventTime":"1739686489244"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686488,\"UnreadMsgNum\":0,\"EventTime\":1739686489244}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.45","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.45","cf-ray":"912b664deee2405f-SIN"}
+----------------------------------------
+2025-02-16 14:14:50-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686489,"UnreadMsgNum":0,"EventTime":1739686489788}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686489","UnreadMsgNum":"0","EventTime":"1739686489788"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686489,\"UnreadMsgNum\":0,\"EventTime\":1739686489788}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.51","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.51","cf-ray":"912b66514d1a8bc6-SIN"}
+----------------------------------------
+2025-02-16 14:14:54-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686493,"UnreadMsgNum":0,"EventTime":1739686493774}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686493","UnreadMsgNum":"0","EventTime":"1739686493774"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686493,\"UnreadMsgNum\":0,\"EventTime\":1739686493774}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.241.55","host":"admin.xivolive.com","x-forwarded-for":"43.153.241.55","cf-ray":"912b666a2d16fd3f-SIN"}
+----------------------------------------
+2025-02-16 14:14:55-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686494,"UnreadMsgNum":0,"EventTime":1739686494885}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686494","UnreadMsgNum":"0","EventTime":"1739686494885"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686494,\"UnreadMsgNum\":0,\"EventTime\":1739686494885}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.244.195","host":"admin.xivolive.com","x-forwarded-for":"43.153.244.195","cf-ray":"912b66715ef19e3b-SIN"}
+----------------------------------------
+2025-02-16 14:15:00-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686499,"UnreadMsgNum":0,"EventTime":1739686500342}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686499","UnreadMsgNum":"0","EventTime":"1739686500342"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686499,\"UnreadMsgNum\":0,\"EventTime\":1739686500342}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.51","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.51","cf-ray":"912b66934b24a093-SIN"}
+----------------------------------------
+2025-02-16 14:15:00-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686498,"UnreadMsgNum":0,"EventTime":1739686500201}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686498","UnreadMsgNum":"0","EventTime":"1739686500201"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686498,\"UnreadMsgNum\":0,\"EventTime\":1739686500201}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.51","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.51","cf-ray":"912b66926fc1fd2f-SIN"}
+----------------------------------------
+2025-02-16 14:15:04-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686503,"UnreadMsgNum":0,"EventTime":1739686503903}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686503","UnreadMsgNum":"0","EventTime":"1739686503903"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686503,\"UnreadMsgNum\":0,\"EventTime\":1739686503903}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.244.5","host":"admin.xivolive.com","x-forwarded-for":"43.153.244.5","cf-ray":"912b66a9780afe19-SIN"}
+----------------------------------------
+2025-02-16 14:15:05-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686504,"UnreadMsgNum":0,"EventTime":1739686504900}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686504","UnreadMsgNum":"0","EventTime":"1739686504900"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686504,\"UnreadMsgNum\":0,\"EventTime\":1739686504900}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.45","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.45","cf-ray":"912b66afccc391cb-SIN"}
+----------------------------------------
+2025-02-16 14:15:09-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686508,"UnreadMsgNum":0,"EventTime":1739686508842}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686508","UnreadMsgNum":"0","EventTime":"1739686508842"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686508,\"UnreadMsgNum\":0,\"EventTime\":1739686508842}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.51","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.51","cf-ray":"912b66c85ad63da7-SIN"}
+----------------------------------------
+2025-02-16 14:15:10-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686509,"UnreadMsgNum":0,"EventTime":1739686510078}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686509","UnreadMsgNum":"0","EventTime":"1739686510078"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686509,\"UnreadMsgNum\":0,\"EventTime\":1739686510078}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.45","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.45","cf-ray":"912b66d01cc5fd1e-SIN"}
+----------------------------------------
+2025-02-16 14:15:14-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686513,"UnreadMsgNum":0,"EventTime":1739686514121}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686513","UnreadMsgNum":"0","EventTime":"1739686514121"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686513,\"UnreadMsgNum\":0,\"EventTime\":1739686514121}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.45","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.45","cf-ray":"912b66e95cc16bca-SIN"}
+----------------------------------------
+2025-02-16 14:15:15-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686514,"UnreadMsgNum":0,"EventTime":1739686514996}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686514","UnreadMsgNum":"0","EventTime":"1739686514996"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686514,\"UnreadMsgNum\":0,\"EventTime\":1739686514996}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"150.109.12.53","host":"admin.xivolive.com","x-forwarded-for":"150.109.12.53","cf-ray":"912b66eee9a84b98-SIN"}
+----------------------------------------
+2025-02-16 14:15:19-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686518,"UnreadMsgNum":0,"EventTime":1739686518897}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686518","UnreadMsgNum":"0","EventTime":"1739686518897"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686518,\"UnreadMsgNum\":0,\"EventTime\":1739686518897}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.45","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.45","cf-ray":"912b67072e9a3f66-SIN"}
+----------------------------------------
+2025-02-16 14:15:20-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686519,"UnreadMsgNum":0,"EventTime":1739686519932}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686519","UnreadMsgNum":"0","EventTime":"1739686519932"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686519,\"UnreadMsgNum\":0,\"EventTime\":1739686519932}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.244.34","host":"admin.xivolive.com","x-forwarded-for":"43.153.244.34","cf-ray":"912b670dbca0ce51-SIN"}
+----------------------------------------
+2025-02-16 14:15:24-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686523,"UnreadMsgNum":0,"EventTime":1739686524331}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686523","UnreadMsgNum":"0","EventTime":"1739686524331"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686523,\"UnreadMsgNum\":0,\"EventTime\":1739686524331}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.244.34","host":"admin.xivolive.com","x-forwarded-for":"43.153.244.34","cf-ray":"912b67294852831f-SIN"}
+----------------------------------------
+2025-02-16 14:15:26-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686524,"UnreadMsgNum":0,"EventTime":1739686525957}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686524","UnreadMsgNum":"0","EventTime":"1739686525957"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686524,\"UnreadMsgNum\":0,\"EventTime\":1739686525957}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.241.245","host":"admin.xivolive.com","x-forwarded-for":"43.153.241.245","cf-ray":"912b673358a93f70-SIN"}
+----------------------------------------
+2025-02-16 14:15:29-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686528,"UnreadMsgNum":0,"EventTime":1739686529076}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686528","UnreadMsgNum":"0","EventTime":"1739686529076"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686528,\"UnreadMsgNum\":0,\"EventTime\":1739686529076}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.241.55","host":"admin.xivolive.com","x-forwarded-for":"43.153.241.55","cf-ray":"912b6746ca7bd4a5-SIN"}
+----------------------------------------
+2025-02-16 14:15:30-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686529,"UnreadMsgNum":0,"EventTime":1739686529917}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686529","UnreadMsgNum":"0","EventTime":"1739686529917"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686529,\"UnreadMsgNum\":0,\"EventTime\":1739686529917}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"101.32.239.31","host":"admin.xivolive.com","x-forwarded-for":"101.32.239.31","cf-ray":"912b674c0bc8f8fb-SIN"}
+----------------------------------------
+2025-02-16 14:15:34-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686533,"UnreadMsgNum":0,"EventTime":1739686534019}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686533","UnreadMsgNum":"0","EventTime":"1739686534019"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686533,\"UnreadMsgNum\":0,\"EventTime\":1739686534019}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"119.28.101.51","host":"admin.xivolive.com","x-forwarded-for":"119.28.101.51","cf-ray":"912b6765bee5408b-SIN"}
+----------------------------------------
+2025-02-16 14:15:35-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686534,"UnreadMsgNum":0,"EventTime":1739686535144}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686534","UnreadMsgNum":"0","EventTime":"1739686535144"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686534,\"UnreadMsgNum\":0,\"EventTime\":1739686535144}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"101.32.242.117","host":"admin.xivolive.com","x-forwarded-for":"101.32.242.117","cf-ray":"912b676cca7ff930-SIN"}
+----------------------------------------
+2025-02-16 14:15:39-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686538,"UnreadMsgNum":0,"EventTime":1739686538887}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686538","UnreadMsgNum":"0","EventTime":"1739686538887"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686538,\"UnreadMsgNum\":0,\"EventTime\":1739686538887}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"150.109.12.53","host":"admin.xivolive.com","x-forwarded-for":"150.109.12.53","cf-ray":"912b67843d3491c0-SIN"}
+----------------------------------------
+2025-02-16 14:15:40-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686539,"UnreadMsgNum":0,"EventTime":1739686539939}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686539","UnreadMsgNum":"0","EventTime":"1739686539939"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686539,\"UnreadMsgNum\":0,\"EventTime\":1739686539939}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"101.32.239.31","host":"admin.xivolive.com","x-forwarded-for":"101.32.239.31","cf-ray":"912b678abc07f8fb-SIN"}
+----------------------------------------
+2025-02-16 14:15:44-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686543,"UnreadMsgNum":0,"EventTime":1739686543955}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686543","UnreadMsgNum":"0","EventTime":"1739686543955"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686543,\"UnreadMsgNum\":0,\"EventTime\":1739686543955}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"101.32.242.117","host":"admin.xivolive.com","x-forwarded-for":"101.32.242.117","cf-ray":"912b67a3cc7bfdf4-SIN"}
+----------------------------------------
+2025-02-16 14:15:45-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686544,"UnreadMsgNum":0,"EventTime":1739686545185}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686544","UnreadMsgNum":"0","EventTime":"1739686545185"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686544,\"UnreadMsgNum\":0,\"EventTime\":1739686545185}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.241.239","host":"admin.xivolive.com","x-forwarded-for":"43.153.241.239","cf-ray":"912b67abbe754059-SIN"}
+----------------------------------------
+2025-02-16 14:15:49-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686548,"UnreadMsgNum":0,"EventTime":1739686549564}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686548","UnreadMsgNum":"0","EventTime":"1739686549564"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686548,\"UnreadMsgNum\":0,\"EventTime\":1739686549564}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"150.109.12.53","host":"admin.xivolive.com","x-forwarded-for":"150.109.12.53","cf-ray":"912b67c6edd181fe-SIN"}
+----------------------------------------
+2025-02-16 14:15:50-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686549,"UnreadMsgNum":0,"EventTime":1739686549970}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686549","UnreadMsgNum":"0","EventTime":"1739686549970"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686549,\"UnreadMsgNum\":0,\"EventTime\":1739686549970}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"150.109.12.53","host":"admin.xivolive.com","x-forwarded-for":"150.109.12.53","cf-ray":"912b67c96c3dfdba-SIN"}
+----------------------------------------
+2025-02-16 14:15:54-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686553,"UnreadMsgNum":0,"EventTime":1739686554188}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686553","UnreadMsgNum":"0","EventTime":"1739686554188"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686553,\"UnreadMsgNum\":0,\"EventTime\":1739686554188}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"150.109.12.53","host":"admin.xivolive.com","x-forwarded-for":"150.109.12.53","cf-ray":"912b67e3cc619c38-SIN"}
+----------------------------------------
+2025-02-16 14:15:55-log
+{"CallbackCommand":"C2C.CallbackAfterMsgReport","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":1739686554,"UnreadMsgNum":0,"EventTime":1739686555233}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"C2C.CallbackAfterMsgReport","ClientIP":"159.100.20.38","OptPlatform":"Android","SdkAppid":"20011848","contenttype":"json","Report_Account":"2609937","Peer_Account":"administrator","LastReadTime":"1739686554","UnreadMsgNum":"0","EventTime":"1739686555233"}
+[CONTENT]:"{\"CallbackCommand\":\"C2C.CallbackAfterMsgReport\",\"Report_Account\":\"2609937\",\"Peer_Account\":\"administrator\",\"LastReadTime\":1739686554,\"UnreadMsgNum\":0,\"EventTime\":1739686555233}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"175","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.241.55","host":"admin.xivolive.com","x-forwarded-for":"43.153.241.55","cf-ray":"912b67ea5c025c2f-SIN"}
+----------------------------------------
+2025-02-16 14:15:58-log
+{"CallbackCommand":"State.StateChange","Info":{"To_Account":"2609937","Action":"Logout","Reason":"Unregister"},"EventTime":1739686557890}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"State.StateChange","ClientIP":"159.100.20.38","OptPlatform":"Android","RequestId":"cuoo57ar8lcc8qbjmmig-144115266635485385-Logout-Unregister","SdkAppid":"20011848","contenttype":"json","Info":{"To_Account":"2609937","Action":"Logout","Reason":"Unregister"},"EventTime":"1739686557890"}
+[CONTENT]:"{\"CallbackCommand\":\"State.StateChange\",\"Info\":{\"To_Account\":\"2609937\",\"Action\":\"Logout\",\"Reason\":\"Unregister\"},\"EventTime\":1739686557890}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"137","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.241.54","host":"admin.xivolive.com","x-forwarded-for":"43.153.241.54","cf-ray":"912b67fb1bbe9cb1-SIN"}
+----------------------------------------
+2025-02-16 14:16:04-log
+{"CallbackCommand":"Profile.CallbackPortraitSet","Operator_Account":"administrator","From_Account":"2609937","EventTime":1739686563883,"ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https://zonechat-1320893901.cos.accelerate.myqcloud.com/img/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"Profile.CallbackPortraitSet","ClientIP":"188.40.194.152","OptPlatform":"RESTAPI","RequestId":"d5975c56-d2dc-47b1-b8d5-6db30232ea0a","SdkAppid":"20011848","contenttype":"json","Operator_Account":"administrator","From_Account":"2609937","EventTime":"1739686563883","ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+[CONTENT]:"{\"CallbackCommand\":\"Profile.CallbackPortraitSet\",\"Operator_Account\":\"administrator\",\"From_Account\":\"2609937\",\"EventTime\":1739686563883,\"ProfileItem\":[{\"Tag\":\"Tag_Profile_IM_Nick\",\"Value\":\"man\"},{\"Tag\":\"Tag_Profile_IM_Image\",\"Value\":\"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg\"}]}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"422","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"150.109.12.53","host":"admin.xivolive.com","x-forwarded-for":"150.109.12.53","cf-ray":"912b68206b7b5647-SIN"}
+----------------------------------------
+2025-02-16 14:19:55-log
+{"CallbackCommand":"State.StateChange","Info":{"To_Account":"2609942","Action":"Login","Reason":"Register"},"EventTime":1739686794619}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"State.StateChange","ClientIP":"176.4.129.163","OptPlatform":"Android","RequestId":"cuoo72ir8lcc8qbmc5lg-144115266545751837-Login-Register","SdkAppid":"20011848","contenttype":"json","Info":{"To_Account":"2609942","Action":"Login","Reason":"Register"},"EventTime":"1739686794619"}
+[CONTENT]:"{\"CallbackCommand\":\"State.StateChange\",\"Info\":{\"To_Account\":\"2609942\",\"Action\":\"Login\",\"Reason\":\"Register\"},\"EventTime\":1739686794619}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"134","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"101.32.242.117","host":"admin.xivolive.com","x-forwarded-for":"101.32.242.117","cf-ray":"912b6dc27abcfce0-SIN"}
+----------------------------------------
+2025-02-16 14:20:23-log
+{"CallbackCommand":"State.StateChange","Info":{"To_Account":"2609942","Action":"Disconnect","Reason":"LinkClose"},"EventTime":1739686822681}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"State.StateChange","ClientIP":"176.4.129.163","OptPlatform":"Android","RequestId":"cuoo79ir8lcc8qbmm3ag-144115266545751837-Disconnect-LinkClose","SdkAppid":"20011848","contenttype":"json","Info":{"To_Account":"2609942","Action":"Disconnect","Reason":"LinkClose"},"EventTime":"1739686822681"}
+[CONTENT]:"{\"CallbackCommand\":\"State.StateChange\",\"Info\":{\"To_Account\":\"2609942\",\"Action\":\"Disconnect\",\"Reason\":\"LinkClose\"},\"EventTime\":1739686822681}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"140","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.241.239","host":"admin.xivolive.com","x-forwarded-for":"43.153.241.239","cf-ray":"912b6e71e9511f6e-SIN"}
+----------------------------------------
+2025-02-16 14:21:43-log
+{"CallbackCommand":"Profile.CallbackPortraitSet","Operator_Account":"administrator","From_Account":"2609937","EventTime":1739686903223,"ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https://zonechat-1320893901.cos.accelerate.myqcloud.com/img/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"Profile.CallbackPortraitSet","ClientIP":"188.40.194.152","OptPlatform":"RESTAPI","RequestId":"e41e697e-6be5-4e01-937d-a40e4a3a65c1","SdkAppid":"20011848","contenttype":"json","Operator_Account":"administrator","From_Account":"2609937","EventTime":"1739686903223","ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+[CONTENT]:"{\"CallbackCommand\":\"Profile.CallbackPortraitSet\",\"Operator_Account\":\"administrator\",\"From_Account\":\"2609937\",\"EventTime\":1739686903223,\"ProfileItem\":[{\"Tag\":\"Tag_Profile_IM_Nick\",\"Value\":\"man\"},{\"Tag\":\"Tag_Profile_IM_Image\",\"Value\":\"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg\"}]}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"422","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.241.55","host":"admin.xivolive.com","x-forwarded-for":"43.153.241.55","cf-ray":"912b70693a4bfd22-SIN"}
+----------------------------------------
+2025-02-16 14:22:14-log
+{"CallbackCommand":"Profile.CallbackPortraitSet","Operator_Account":"administrator","From_Account":"2609937","EventTime":1739686933636,"ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https://zonechat-1320893901.cos.accelerate.myqcloud.com/img/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+
+[REQUEST]:ImCallbackApi/callback
+[URL_PARAM]:{"CallbackCommand":"Profile.CallbackPortraitSet","ClientIP":"188.40.194.152","OptPlatform":"RESTAPI","RequestId":"8eb968ab-205b-4762-9703-6324a73a97a3","SdkAppid":"20011848","contenttype":"json","Operator_Account":"administrator","From_Account":"2609937","EventTime":"1739686933636","ProfileItem":[{"Tag":"Tag_Profile_IM_Nick","Value":"man"},{"Tag":"Tag_Profile_IM_Image","Value":"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg"}]}
+[CONTENT]:"{\"CallbackCommand\":\"Profile.CallbackPortraitSet\",\"Operator_Account\":\"administrator\",\"From_Account\":\"2609937\",\"EventTime\":1739686933636,\"ProfileItem\":[{\"Tag\":\"Tag_Profile_IM_Nick\",\"Value\":\"man\"},{\"Tag\":\"Tag_Profile_IM_Image\",\"Value\":\"https:\/\/zonechat-1320893901.cos.accelerate.myqcloud.com\/img\/1738834744468_IMG_%D9%A2%D9%A0%D9%A2%D9%A5%D9%A0%D9%A2%D9%A0%D9%A6%D9%A1%D9%A2%D9%A3%D9%A9%D9%A0%D9%A4%D9%A3%D9%A2%D9%A2.jpeg\"}]}"
+[DEVICE_INFO]:{"cdn-loop":"cloudflare; loops=1","content-length":"422","cf-ipcountry":"SG","cf-visitor":"{\"scheme\":\"https\"}","connection":"Keep-Alive","content-type":"application\/json","x-forwarded-proto":"https","accept-encoding":"gzip, br","cf-connecting-ip":"43.153.241.150","host":"admin.xivolive.com","x-forwarded-for":"43.153.241.150","cf-ray":"912b71277f2b3e4e-SIN"}

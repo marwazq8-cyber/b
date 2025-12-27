@@ -1,0 +1,102 @@
+<include file="public@header"/>
+<style>
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .gift-img{width:120px;height:40px;}
+    .gift-img img{height:100%};
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_LEVEL_LIST')}</a></li>
+        <li><a href="{:url('userlevel/add_talker_level')}">{:lang('ADMIN_LEVEL_ADD')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('userlevel/talker_level')}">
+       {:lang('等级级别')}:
+        <input type="text" class="form-control" name="name" style="width: 120px;" value="{$data.name|default=''}" placeholder="{:lang('请输入等级级别')}">
+        {:lang('ADMIN_COLORS')}:
+        <input type="text" class="form-control" name="colors" style="width: 120px;" value="{$data.colors|default=''}" placeholder="{:lang('请输入颜色值')}">
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('userlevel/talker_level')}">{:lang('EMPTY')}</a>
+    </form>
+
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{:lang('等级级别')}</th>
+            <th>{:lang('消费(收益)总数限制')}</th>
+            <!--<th>{:lang('最高收费金额')}</th>-->
+            <!--<th>{:lang('等级大图标')}</th>-->
+            <th>{:lang('等级图标')}</th>
+            <!--<th>{:lang('等级类型')}</th>-->
+            <th>{:lang('ADMIN_COLORS')}</th>
+            <th>{:lang('SORT')}</th>
+            <th>{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <php>
+            $type=array('1'=>'财富','2'=>'明星');
+        </php>
+        <foreach name="list" id="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.name}</td>
+                <td>{$vo.level_up}</td>
+
+                <!--<td class="gift-img">
+                    <if condition="$vo['level_icon']">
+                        <img src="{$vo.level_icon}" alt="">
+                    </if>
+                </td>-->
+                <td class="gift-img">
+                    <if condition="$vo['chat_icon']">
+                        <img src="{$vo.chat_icon}" alt="">
+                    </if>
+                </td>
+
+                <td>{$vo.colors}</td>
+                <td>{$vo.sort}</td>
+                <td>
+                    <a href="{:url('userlevel/add_talker_level',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                    <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                </td>
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('userlevel/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id,type:2},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+</script>
+</body>
+</html>

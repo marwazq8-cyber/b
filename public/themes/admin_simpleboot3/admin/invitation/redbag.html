@@ -1,0 +1,100 @@
+<include file="public@header"/>
+<style>
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .gift-img{width:120px;height:40px;}
+     .gift-img img{height:100%};
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_RED_BAG_LIST')}</a></li>
+        <li><a href="{:url('invitation/redbag_add')}">{:lang('ADMIN_RED_BAG_ADD')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('invitation/redbag')}">
+
+        {:lang('TYPE')}：
+        <select class="form-control" name="type" style="width: 140px;">
+            <option value="0">{:lang('ALL')}</option>
+
+            <option value="1" <if condition="$data.type eq 1"> selected='selected' </if>>{:lang('ADMIN_INVITE_AWARD_ONE')}</option>
+            <option value="2" <if condition="$data.type eq 2"> selected='selected' </if>>{:lang('ADMIN_INVITE_AWARD_TWO')}</option>
+
+        </select>
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('invitation/redbag')}">{:lang('EMPTY')}</a>
+    </form>
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{$currency_name}</th>
+                <th>{:lang('ADMIN_USER_NUMBER')}</th>
+                <th>{:lang('TYPE')}</th>
+               <!-- <th>{:lang('价格')}</th>
+                <th>{:lang('是否推荐')}</th>-->
+                <!--<th>{:lang('颜色值')}</th>-->
+                <th>{:lang('SORT')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+                <php>
+                    $type=array('1'=>lang('ADMIN_INVITE_AWARD_ONE'),'2'=>lang('ADMIN_INVITE_AWARD_TWO'));
+                </php>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.coin}</td>
+                    <td>{$vo.num}</td>
+
+                    <td>{$type[$vo.type]}</td>
+                    <td>{$vo.orderno}</td>
+
+                    <td>
+
+                        <a href="{:url('invitation/redbag_add',array('id'=>$vo.id))}" class="details" data-id="{$vo.id}">{:lang('EDIT')}</a>
+
+                        |
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('invitation/redbag_del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+
+
+</script>
+</body>
+</html>

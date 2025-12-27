@@ -1,0 +1,105 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('bubble/make_up')}">{:lang('奖励补偿列表')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('添加奖励补偿')}</a></li>
+
+    </ul>
+    <form action="{:url('bubble/makeAddPost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('USER_ID')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[uid]"
+                                   id="title" required value="{$data.uid |default=''}" placeholder="{:lang('USER_ID')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_GIFT')} <span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[gift_id]" id="" class="form-control">
+                                <foreach name="list" id="vo">
+                                    <option <if condition="$data.gift_id eq $vo.id">selected</if>  value="{$vo.id}">{$vo.name}</option>
+                                </foreach>
+                            </select>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('礼物数')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[num]"
+                                   id="num" required value="{$data.num |default=''}" placeholder="{:lang('请输入礼物数')}"/>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('TYPE')} <span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[type]" id="" class="form-control">
+                                <option value="1" <if condition="$data.type eq 1">selected</if> >{:lang('奖池内')}</option>
+                                <option value="2" <if condition="$data.type eq 2">selected</if> >{:lang('奖池外')}</option>
+                            </select>
+
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$data.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('bubble_new/pool_index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    var status = {$data['noble_status'] | default = 1};
+    var types = {$data['type'] | default = 1};
+    $('#gift').val(status);
+    $('#types').val(types);
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+        $('.btn-cancel-svga').click(function () {
+            $('#svga-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#svga').val('');
+        });
+
+    });
+
+
+</script>
+
+</body>
+</html>

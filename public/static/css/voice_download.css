@@ -1,0 +1,71 @@
+body,html{font-size:14px;height:100%;margin:0; overflow:hidden;width: 100%;}
+.voice_download{width: 100%;height: 100%;background:url('../image/share_bac1.png');background-size: 100% 100%;position: relative;}
+.voice_download_img{float:left;width: 36%;height: 20%;margin:43% 32% 0;background: #fff;padding:5px;border-radius: 50%;}
+.voice_download_img img{width: 100%;height: 100%;border-radius: 50%;}
+.voice_download_name{float:left;width: 100%;height: 3em;line-height: 3em;text-align: center;color:#fff;margin-top:2%;font-size: 2em;font-weight: bold;overflow: hidden;}
+.voice_download_type{float: left;width: 100%;height: 2.5em;line-height: 2.5em;text-align: center;color: #fff;margin-top: 1em;font-size: 1.2em;font-weight: bold;overflow: hidden;}
+.voice_download_id{float: left;width: 100%;height: 2.5em;line-height: 2.5em;text-align: center;color: #fff;font-size: 16px;overflow: hidden;}
+.voice_download_btn{float: left;width: 70%;height: 3em;line-height: 3em;font-size:1.2em;text-align: center;margin:11% 15% 0;background: linear-gradient(to right, #ff98a6 0%, #fb89e1 50%, #a883ec 100%);color:#fff;border-radius: 3em;cursor: pointer;-webkit-tap-highlight-color: transparent;}
+.voice_download_href{position: absolute;bottom:0;left: 0;width: 100%;height: 4em;background:#fff;}
+.voice_download_href_img{float:left;width: 50%;height: 2.5em;margin:0.7em 2em;}
+.voice_download_href_img img{height: 100%;}
+.href{cursor: pointer;-webkit-tap-highlight-color: transparent;}
+.voice_download_href_btn{float:right;width: 6em;height: 2.5em;line-height: 2.5em;margin-top: 0.7em;text-align: center;color:#fff;background:#000;margin-right:2em;border-radius: 3em;
+	 background:linear-gradient(to right,#7300ff,#c416d5);}
+
+/* 音乐下载 */
+.music_download{width: 100%;height: 100%;}
+.music_download_top{width:calc(100% - 2em);padding:0 1em;height:5em;box-shadow:0px 0px 6px rgba(163, 163, 163, 0.9);}
+.music_download_img{float:left;width: 3em;height:3em;margin-top: 1em;}
+.music_download_img img{max-width:100%;max-height: 100%;}
+.music_download_name{float:left;margin:0 0.5em;width: calc(100% - 9em);color: #3a3a3a;height: 4em;line-height: 4em;font-weight: bold;font-size: 1.2em;}
+.music_download_btn{float:right;width:6em;font-size:0.9em;height: 2.5em;line-height: 2.5em;text-align: center;background: linear-gradient(to right, #ff98a6 0%, #fb89e1 50%, #a883ec 100%);color:#fff;margin-top:1.3em;border-radius:1em;}
+.music_play_null{width:calc(100% - 2em);padding:0 1em;height:15em;line-height: 15em;text-align: center;font-weight: bold;color: #c2c2c2;}
+.music_play{width:calc(100% - 2em);padding:0 1em;}
+.music_play_img{width: 15em;height:15em;position: relative;}
+.music_play_img img{max-height: 100%;min-width: 100%;border-radius: 0.5em;}
+.music_play_name{width: 100%;height: 3em;line-height: 3em;text-align: center;font-weight: bold;margin-top:1em;font-size: 1.1em;}
+
+.audio-left {position: absolute;width: 5em; height: 5em;top:calc(50% - 2.5em);left:calc(50% - 2.5em);}
+.audio-left img{width:100%;height: 100%;display: initial;cursor: pointer;-webkit-tap-highlight-color: transparent;}
+.audio-left_time,.audio-right_time{float:left;width:4em;height:3em;}
+.audio-left_time span,.audio-right_time span{float: left;text-align: center;width:100%;height:3em;line-height: 3em;color: #7d7a7a;font-size: 0.8em;margin-top:0.5em;}
+
+.audio-wrapper { margin: 0 auto; width: 90%;height: 70px;}
+.audio-right { margin:1.5em 0.5em 0; float: left; width: calc(100% - 9em); height: 100%;}
+
+.audio-right p { font-size: 15px; height: 35%; margin: 8px 0;
+    /* 歌曲名称只显示在一行，超出部分显示为省略号 */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 243px;   /* 要适配小屏幕手机，所以最大宽度先设小一点，后面js根据屏幕大小重新设置 */    
+}
+
+.progress-bar-bg { background-color: #e7e7e7;position: relative; height: 3px; cursor: pointer;-webkit-tap-highlight-color: transparent;}
+.progress-bar { background-color: #976AEAFF;width: 0; height: 2px;}
+.progress-bar-bg span { content: " "; width: 15px; height: 15px; border-radius: 50%; -moz-border-radius: 50%;-webkit-border-radius: 50%; background-color: #976AEAFF;position: absolute; left: 0; top: 50%; margin-top: -7px; margin-left: -5px; cursor: pointer;-webkit-tap-highlight-color: transparent;}
+.audio-time { overflow: hidden;margin-top: -1px;}
+.audio-length-current { float: left; font-size: 12px;}
+.music_play_btn{width: 80%;margin:2em auto 0;height:3em;line-height: 3em;text-align: center;background:linear-gradient(to right, #ff98a6 0%, #fb89e1 50%, #a883ec 100%);color:#fff;border-radius: 0.5em; }
+
+@media screen and (min-width: 400px)  {
+	.music_download{font-size: 16px}
+  	.music_play_img{ margin: 6em auto 0;}
+}
+@media screen and (max-width:400px) and (min-width:340px) {
+	.music_download{font-size: 14px}
+	.music_play_img{ margin: 5em auto 0;}
+}
+@media screen and (max-width:340px) {
+	.music_download{font-size: 12px}
+	.music_play_img{ margin: 3em auto 0;}
+}
+
+
+
+
+
+
+
+

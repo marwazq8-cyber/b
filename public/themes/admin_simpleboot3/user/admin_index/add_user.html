@@ -1,0 +1,156 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+          <li><a href="{:url('user/AdminIndex/index')}">{:lang('USER_INDEXADMIN_INDEX')}</a></li>
+         <li  class="active"><a>{:lang("添加用户")}</a></li>
+    </ul>
+    <form action="{:url('AdminIndex/addUserPost')}" class="js-ajax-form" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('USERNAME')}（登录账号）<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="user_login"
+                                  required value="" placeholder="{:lang('请输入用户名称')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang("USER_NICKNAME")}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="user_nickname"
+                                    required value="" placeholder="{:lang('请输入昵称')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('区号')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="number" name="mobile_area_code"
+                                   id="mobile_area_code" value="" placeholder="{:lang('区号')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_PHONE_NUMBER')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="mobile"
+                                   id="mobile" value=""  placeholder="{:lang('ADMIN_PHONE_NUMBER')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('GENDER')}</th>
+                        <td>
+                            <select class="form-control" name="sex">
+                                <option value="1">{:lang('MALE')}</option>
+                                <option value="2">{:lang('FEMALE')}</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('AVATAR')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="avatar" id="thumbnail">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')} <span class="form-required">*</span></th>
+                        <td>
+                            <select class="form-control" name="is_online">
+                                <option value="0">{:lang("下线")}</option>
+                                <option value="1">{:lang("上线")}</option>
+
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('Is_it_certified')} <span class="form-required">*</span></th>
+                        <td>
+                            <select class="form-control" name="is_auth">
+                                <option value="0">{:lang('NO')}</option>
+                                <option value="1">{:lang('YES')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang("音频上传")}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" readonly name="audio_file"  id="files" value="" style="width:70%;">
+                            <a href="javascript:uploadOne('音频上传','#files','audio');"
+                               class="btn btn-sm btn-default">{:lang("音频上传")}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang("音频时长 ")}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="audio_time"
+                                    value="" placeholder="{:lang('请输入音频时长 秒')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang("country")}<span class="form-required">*</span></th>
+                        <td>
+
+                            <select class="form-control" name="num_code">
+                                <foreach name="countries" item="vo">
+                                    <option value="{$vo['num_code']}">{$vo['en_short_name']}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('gift/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+
+    });
+</script>
+
+</body>
+</html>
+<script type="text/javascript">
+
+</script>

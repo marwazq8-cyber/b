@@ -1,0 +1,76 @@
+/*靓号商城*/
+body{margin: 0; padding: 0;    font-size: 14px;}
+.page.actionsheet, .page.dialog,.page, body{}
+.luck_top{padding: 20px 15px!important;margin-top:1em;height:1em;line-height: 1em;background:#fff;}
+.luck_top2{position: relative;margin-right: 10px;font-size: 20px;font-weight: 600;}
+.luck_top3{text-align:center;color: #f5ab1f; font-size: 16px;     margin-right: 4em; }
+.page.dialog .page__bd{padding:0px!important;}
+.luck_wei{margin-top:1em;}
+.luck_wei2{background-color: #fff!important;}
+.weui-navbar__item{font-weight: 500;font-size: 16px!important;}
+.weui-cells__title{margin-top: 1.5em!important; margin-bottom: 1em!important;}
+.weui-bar__item_on{background-color: #fff!important;border-bottom:2px solid #4b00ff;}
+.weui-navbar__item a{color:#7b7777;}
+.weui-bar__item_on a{color:#4b00ff!important;}
+.luck_img{width:50px;height:3em;float:left; border-radius: 5px;}
+.weui-cell__bd{float:left; margin-left: 30px;}
+.luck_ghd{width: 100%;}
+.luck_cell{border-bottom:1px solid #ececec;}
+.luck_img img{width:100%;}
+/*.luck_gou{float:right;height:2.5em;font-size: 14px;line-height:2.5em;border:1px solid #7d4cef;color:#7d4cef;margin-top: 0.5em;padding: 0 20px; border-radius: 25px;}*/
+
+.my-luck-title{height:13em;width:100%;padding-top:1em;position: relative;}
+.my-luck-title-img{width:90%;margin:0 auto;background: url('../img/luck_bg.png')no-repeat;background-size:100% 100%;height:calc(100% - 1em);padding-top:1em;}
+.my-luck-title-tou{width:3.5em;height:3.5em;border-radius: 50%;    margin-left: calc(50% - 1.7em);}
+.my-luck-title-tou img{width:100%;height:100%;border-radius: 50%;}
+/*.my-luck-title-img-name-cen{float:left;}*/
+.my-luck-title-img-name{width:100%;height:2.5em;line-height: 2.5em;text-align: center;color:#FFFFFF;}
+.my-luck-title-img-name-pay{width:100%;height:2em;line-height: 1em;text-align: center;color:#fff;font-size: 14px;}
+.my-luck-title-img-name-ta{width:100%;height:30px;line-height: 30px;text-align: center;color:#0f0f0f;font-size: 12px;}
+.luck-my-nickname{min-width:60%;text-align: right;height:30px;line-height: 30px;color:#0f0f0f;   overflow: hidden;max-width:82%;}
+.luck-my-sex{width:calc(18% - 10px);height:20px;padding-left: 10px;}
+.luck-my-sex img{height:60%;margin-top:5px;}
+.my-luck-title-coin{width:80%;height:2.5em;    margin: 1em auto 0;}
+.my-luck-title-coin-name{float:left;width:50%;height:3em;font-size: 12px;color:#CC45FF;line-height: 3.2em;text-align: left;}
+.my-luck-title-coin-name1{float:left;width:50%;height:3em;font-size: 12px;color:#CC45FF;line-height: 3.2em;text-align: left;}
+.my-luck-title-coin-sele{float:left;width:25%;height:30px;background: #fca83e;color:#f1f1f1;font-size: 12px;text-align: center;line-height: 30px;margin-top:5px;border-radius: 10px;}
+.buying_process{width:100%;padding:1em 0;}
+.buying_process-name{width:100%;height:30px;}
+.buying_process-name-img{height:20px;margin-top:5px;width:20px;float:left;margin-left:5%;}
+.buying_process-name-img img{width:100%;}
+.buying_process-name-title{width:100px;float:left;height:30px;line-height: 30px;margin-left:10px;color:#6c6c6c;}
+.buying_process-img{width:calc(100% - 20%);padding:15px 10%;}
+.buying_process-img img{width:100%;}
+
+ @media (max-width: 370px) { 
+.vehicle_car_btn_bg{ width: 20em!important;}
+.vehicle_car_btn_bg_btn{margin-left: 4em!important;}
+}
+
+.buying_process-type-coin{width:calc(100% - 30px);padding:15px;overflow: hidden;}
+.buying_process-type-coin-left{float:left;width:30%;margin:15px 0 0 3.3%;background: url('../../images/luck_bg_coin.png')no-repeat;height:5em;font-size: 12px;border-radius: 10px;background-size: 100% 100%;}
+.buying_process-type-coin-left-name,.buying_process-type-coin-left-money{width:100%;height:2.5em;line-height:2.5em;text-align: center;color:#fff;}
+.my-luck-title-coin-name_img{background: url('../img/luck_xiaofei.png');width: 1.5em;height: 1.5em;margin:0.8em 0.3em 0 15%;float: left;background-size: 100% 100%;}
+.my-luck-title-coin-name1_img{background: url('../img/luck_yue.png');width: 1.5em;height: 1.5em;margin:0.8em 0.3em 0 5%;float: left;background-size: 100% 100%;}
+
+.vehicle_car_btn{position: fixed;width: 100%;height: 100%;background: rgba(3, 3, 3, 0.29); z-index: 2;top:0;left: 0;display: none;}
+.vehicle_car_btn_bg{width: 23em;height: 17em;background: url("../../images/bogo_car_bg.png");background-size: 100% 100%;margin:55% auto;}
+.vehicle_car_btn_bg_name{float:left;width: 100%;height: 3em;text-align: center;margin-top: 2em;font-size: 18px;color: #fff;font-weight: bold;text-shadow:2px 3px 2px #7400e7;}
+.vehicle_car_btn_bg_btn{float:left;width: 12em;height: 4em;background: url("../../images/bogo_car_bg_btn.png");background-size: 100% 100%;margin-top: 4.5em ;margin-left:6em;cursor: pointer;}
+
+.luck_bottom_bor{width: 90%;margin:1em auto;border-radius: 1em;box-shadow:-2px 0 3px 2px #f3e4fc,0 -2px 3px -1px #f3e4fc, 0 2px 3px -1px #f3e4fc, 2px 0 3px -1px #f3e4fc; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

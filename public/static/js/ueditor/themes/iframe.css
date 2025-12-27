@@ -1,0 +1,9 @@
+/*可以在这里添加你自己的css*/
+img{
+    max-width: 100%;
+}
+div,p,span {
+    word-wrap: break-word; /* 允许在单词内换行 */
+    overflow-wrap: break-word; /* 同上，现代浏览器推荐使用 */
+    white-space: normal; /* 允许自动换行 */
+}

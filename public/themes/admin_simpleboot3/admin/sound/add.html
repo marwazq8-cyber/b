@@ -1,0 +1,78 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('sound/index')}">{:lang('直播间音效列表')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('添加直播间音效')}</a></li>
+    </ul>
+    <form action="{:url('sound/addPost')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('音效名称 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[name]"
+                                   id="title" required value="{$sound.name |default=''}" placeholder="{:lang('请输入音效名称')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('音效图标')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[img]" id="sound" value="{$sound['img'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#sound');">
+                                    <if condition="$sound['img']">
+                                        <img src="{$sound['img']}"
+                                             id="sound-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="sound-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('音频上传')}<span class="form-required">*</span></th>
+                        <td>
+                            <input type="text" readonly name="post[audio_file]"  id="files" value="{$sound['audio_file']|default=''}" style="width:70%;">
+                            <a href="javascript:uploadOne('音频上传','#files','audio');"
+                               class="btn btn-sm btn-default">{:lang('音频上传')}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                   required value="{$sound.sort |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$sound.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('sound/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+
+
+</body>
+</html>

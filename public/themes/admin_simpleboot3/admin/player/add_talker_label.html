@@ -1,0 +1,85 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('player/talker_label')}">{:lang('ADMIN_TAG_INDEX')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_TAG_ADD')}</a></li>
+    </ul>
+    <form action="{:url('player/addTalkerPost')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_TAG_NAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[label_name]"
+                                   id="title" required value="{$list.label_name |default=''}" placeholder="{:lang('ADMIN_TAG_NAME')}"/>
+                        </td>
+                    </tr>
+
+
+                    <!--<tr>
+                        <th>{:lang('标签背景图')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[label_img]" id="level" value="{$list['label_img'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#level');">
+                                    <if condition="$list['label_img']">
+                                        <img src="{$list['label_img']}"
+                                             id="level-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="level-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-level-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>-->
+                    <tr>
+                        <th>{:lang('SORT')} <span class="form-required"></span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[orderno]"
+                                   id="title" required value="{$list.orderno |default='50'}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('player/label')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    function ColorGetFn(dom){
+        document.getElementById('colors').value = dom.value;
+    }
+ $('.btn-level-thumbnail').click(function () {
+            $('#level-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#level').val('');
+        });
+  $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .gift-in input {
+        width: 20px;
+    }
+
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('发言光圈列表')}</a></li>
+        <li><a href="{:url('noble/aperture_add')}">{:lang('添加发言光圈')}</a></li>
+
+    </ul>
+
+    <form class="js-ajax-form" action="{:url('noble/upd')}" method="post">
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('ADMIN_NAME')}</th>
+                <th>{:lang('ADMIN_NOBLE')}</th>
+                <th>{:lang('特效地址')}</th>
+                <th>{:lang('ADD_TIME')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="data" id="vo">
+                <tr>
+
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+
+                    <td>{$vo.noble_name}</td>
+                    <td>{$vo.aperture_svga}</td>
+
+                    <td>{$vo.create_time | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <a href="{:url('noble/aperture_add',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <button type="button" class="btn btn-primary" style="margin-top:20px;margin-right:20px;float: left;"> {:lang('SORT')}</button>
+        <div class="pagination">{$page}</div>
+    </form>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('noble/aperture_del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id,type:5},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function () {
+        $(".js-ajax-form").submit();
+    })
+
+</script>
+</body>
+</html>

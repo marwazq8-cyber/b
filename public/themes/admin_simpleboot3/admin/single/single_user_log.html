@@ -1,0 +1,141 @@
+<include file="public@header"/>
+<style>
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .gift-img{width:120px;height:40px;}
+     .gift-img img{height:100%};
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('约单记录列表')}</a></li>
+    </ul>
+     <form class="well form-inline margin-top-20" method="post" action="{:url('single/single_user_log')}">
+         {:lang('USER_ID')}：
+        <input class="form-control" type="text" name="uid" style="width: 200px;" value="{:input('request.uid')}"
+               placeholder="{:lang('USER_ID')}">
+        {:lang('ADMIN_INCOME_USER')}ID：
+        <input class="form-control" type="text" name="touid" style="width: 200px;" value="{:input('request.touid')}"
+               placeholder="{:lang('USER_ID')}">
+
+         {:lang('ADMIN_CHECK_STATUS')}：
+        <select name="status" id="type" class="form-control">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="0" <if condition="$request.status eq '0'"> selected="selected" </if>>{:lang('未支付')}</option>
+            <option value="1" <if condition="$request.status eq 1"> selected="selected" </if>>{:lang('等待接单')}</option>
+            <option value="2" <if condition="$request.status eq 2"> selected="selected" </if>>{:lang('已接单')}</option>
+            <option value="3" <if condition="$request.status eq 3"> selected="selected" </if>>{:lang('约单失败')}</option>
+            <option value="4" <if condition="$request.status eq 4"> selected="selected" </if>>{:lang('执行约单')}</option>
+            <option value="5" <if condition="$request.status eq 5"> selected="selected" </if>>{:lang('已结束')}</option>
+        </select>
+        约单功能
+        <select name="game_id" id="type"  class="form-control">
+            <option value="0">{:lang('ALL')}</option>
+            <foreach name="game" item="v">
+                <option value="{$v['id']}" <if condition="$v['id'] eq $request.game_id"> selected="selected" </if>>{$v['name']}</option>
+            </foreach>
+        </select>
+         约单类型
+        <select name="genre_id" id="type"  class="form-control">
+            <option value="0">{:lang('ALL')}</option>
+            <foreach name="genre" item="v">
+                <option value="{$v['id']}" <if condition="$v['id'] eq $request.genre_id"> selected="selected" </if>>{$v['name']}</option>
+            </foreach>
+        </select>
+
+         {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time" value="{:input('request.start_time')}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time" value="{:input('request.end_time')}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}"/>
+        <a class="btn btn-danger" href="{:url('single/single_user_log')}">{:lang('EMPTY')}</a>
+    </form>
+
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{:lang('下单人(ID)')}</th>
+            <th>{:lang('收益人(ID)')}</th>
+            <th>{:lang('下单金额')}</th>
+            <th>{:lang('下单数量')}</th>
+            <th>{:lang('约单游戏')}</th>
+            <th>{:lang('约单类型')}</th>
+            <th>{:lang('下单时间')}</th>
+            <th>{:lang('约单开始时间')}</th>
+            <th>{:lang('ADMIN_ACTIVITY_MSG_END_TIME')}</th>
+            <th>{:lang('STATUS')}</th>
+           <!--  <th>{:lang('ACTIONS')}</th> -->
+        </tr>
+        </thead>
+        <tfoot>
+            <php> $status = array('0'=>'未支付','1'=>'等待接单','2'=>'已接单','3'=>'约单失败','4'=>'执行约单','5'=>'已结束'); </php>
+        <foreach name="list" id="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.user_nickname}({$vo.uid})</td>
+                <td>{$vo.ename}({$vo.touid})</td>
+                <td>{$vo.coin} / {$vo.tname}</td>
+                <td>{$vo.sum}</td>
+                <td>{$vo.name}</td>
+                <td>{$vo.sname}</td>
+                <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                <td>
+                    <empty name="$vo.start_time">
+                        未开始
+                        <else/>
+                        {$vo.start_time | date="Y-m-d H:i:s",###}
+                    </empty>
+
+                </td>
+                <td>
+                    <empty name="$vo.start_time">
+                        未结束
+                        <else/>
+                        {$vo.endtime | date="Y-m-d H:i:s",###}
+                    </empty>
+                </td>
+                <td>{$status[$vo.status]}</td>
+              <!-- <td>
+                    <if condition="$vo.status eq 1">
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('接单')}</a>
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('拒单')}</a>
+                    </if>
+                </td> -->
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+     <ul class="pagination">{$page}</ul>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('single/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<include file="public@header"/>
+<body>
+<style>
+    .table-box{
+        overflow-x:scroll;
+    }
+    #table{
+        min-width: 100%;
+    }
+    #table tr th{
+        white-space:nowrap;
+    }
+</style>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('agent/index')}">{:lang('渠道列表')}</a></li>
+        <li class="active"><a href="javascript:void(0)">{:lang('agent_level2')}列表</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('agent/promoter')}">
+       {:lang('渠道账号')}:
+        <input type="text" class="form-control" name="agent_login" style="width: 120px;"
+               value="{$data.agent_login|default=''}" placeholder="{:lang('账号或昵称')}">
+       {:lang('推广人ID')}:
+        <input type="text" class="form-control" name="id" style="width: 120px;" value="{$data.id |default=''}" placeholder="{:lang('推广人ID')}">
+        {:lang('agent_level2')}ID:
+        <input type="text" class="form-control" name="agent_staff" style="width: 120px;" value="{$data.agent_staff |default=''}" placeholder="{:lang('agent_level2')}ID">
+        {:lang('agent_level1')}ID:
+        <input type="text" class="form-control" name="agent_company" style="width: 120px;" value="{$data.agent_company |default=''}" placeholder="{:lang('agent_level1')}ID">
+        {:lang('状态')}:
+        <select class="form-control" name="status" style="width: 140px;">
+            <option value="-1">{:lang('全部')}</option>
+            <option value="0" <if condition="$data.status eq '0'"> selected='selected' </if>>{:lang('封号')}</option>
+            <option value="1" <if condition="$data.status eq 1"> selected='selected' </if>>{:lang('正常')}</option>
+        </select>
+        <div style="margin-top:15px;">
+           {:lang('房间号')}:
+            <input type="text" class="form-control" name="voice_id" style="width: 120px;" value="{$data.voice_id |default=''}" placeholder="{:lang('房间号')}">
+           {:lang('主播号')}:
+            <input type="text" class="form-control" name="host_id" style="width: 120px;" value="{$data.host_id |default=''}" placeholder="{:lang('主播号')}">
+
+           {:lang('时间')}:
+            <input type="text" class="form-control js-bootstrap-date" name="starttime" value="{$data['starttime']|default=''}" style="width: 140px;" autocomplete="off">-
+            <input type="text" class="form-control js-bootstrap-date" name="endtime" value="{$data['endtime']|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+            <input type="submit" class="btn btn-primary" value="{:lang('搜索')}"/>
+            <a class="btn btn-danger" href="{:url('agent/promoter')}">{:lang('清空')}</a>
+            <spam>{:lang('总人数:{$number}')}</spam>
+        </div>
+
+    </form>
+
+    <div class="table-box">
+        <table class="table table-hover table-bordered" id="table">
+            <thead>
+            <tr>
+                <th>{:lang('渠道ID')}</th>
+                <th>{:lang('渠道账号')}</th>
+                <th>{:lang('账号昵称')}</th>
+                <th>{:lang('注册人数')}</th>
+                <th>{:lang('推广码')}</th>
+                <th>{:lang('agent_level2')}</th>
+                <th>{:lang('推广人')}</th>
+                <th>{:lang('房间号')}</th>
+                <th>{:lang('主播号')}</th>
+                <th>{:lang('备注')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th width="230">{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <php>$user_statuses=array("0"=>lang('账号已封'),"1"=>lang('正常'));</php>
+            <foreach name="users" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.agent_login}</td>
+                    <td>{$vo.login_name}</td>
+                    <td>{$vo['register']}</td>
+                    <td>{$vo['channel']}</td>
+                    <td>{$vo.sname}({$vo.agent_staff})</td>
+                    <td>{$vo.cname}({$vo.agent_company})</td>
+                    <td>{$vo['voice_id']}</td>
+                    <td>{$vo['host_id']}</td>
+                    <td>{$vo['remarks']}</td>
+                    <td>{$user_statuses[$vo['status']]}</td>
+                    <td>
+                        <a href='{:url("agent/edit",array("id"=>$vo["id"]))}'>{:lang('编辑')}</a> |
+                        <a href='{:url("agent/registered",array("link_id"=>$vo["id"]))}'>{:lang('注册')}</a> |
+                        <a href='{:url("agent/earnings",array("agent_id"=>$vo["id"]))}'>{:lang('充值')}</a> |
+                        <if condition="$vo['agent_level'] eq 2">
+                            <a href='{:url("agent/staff",array("uid"=>$vo["id"]))}'>{:lang('agent_level2')}统计</a>
+                            <else/>
+                            <a href='{:url("agent/extension",array("uid"=>$vo["id"]))}'>{:lang('agent_level3')}统计</a>
+                        </if>
+
+
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>

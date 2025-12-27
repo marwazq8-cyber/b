@@ -1,0 +1,57 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('Voice/type')}">{:lang('语音频道列表')}</a></li>
+			<li><a href="{:url('Voice/add')}">{:lang('增加语音频道类型')}</a></li>
+		</ul>
+
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th width="50">ID</th>
+					<th>{:lang('语音频道名称')}</th>
+					<th>{:lang('背景')}</th>
+					<th>{:lang('STATUS')}</th>
+					<!--<th>{:lang('直播类型')}</th>-->
+					<th>{:lang('SORT')}</th>
+					<th>{:lang('ACTIONS')}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<foreach name="list" item="vo">
+				<tr>
+					<td>{$vo.id}</td>
+					<td>{$vo.name}</td>
+					<td>
+						<img style="width: 30px;" src="{$vo.img}" alt="">
+					</td>
+					<td>
+						<if condition="$vo['status'] eq 1">
+							{:lang('OPEN')}
+							<else />
+							{:lang('CLOSE')}
+						</if>
+					</td>
+					<!--<td>
+						<if condition="$vo['type'] eq 1">
+							单人直播
+							<else />
+							多人直播
+						</if>
+					</td>-->
+					<td>{$vo['sort']}</td>
+					<td>
+						<a href="{:url('Voice/add',array('id'=>$vo['id']))}">{:lang('EDIT')}</a>
+						<a href="{:url('Voice/del',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>
+					</td>
+
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+
+	</div>
+
+</html>

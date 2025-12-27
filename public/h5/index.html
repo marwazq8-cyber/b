@@ -1,0 +1,19 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover"><title></title><link href=/h5/static/css/app.75b80d5b52c8ff86537e0e52ddf7dbb4.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/h5/static/js/manifest.d1b0f580ae16b22724f6.js></script><script type=text/javascript src=/h5/static/js/vendor.f08ad345f6b3e10c3f2e.js></script><script type=text/javascript src=/h5/static/js/app.497220c9f1c7658354e9.js></script></body></html>
+<script>
+
+const parentDiv = document.querySelector('.van-tabs__nav');
+
+
+if (parentDiv && parentDiv.firstElementChild) {
+    parentDiv.removeChild(parentDiv.firstElementChild);
+}
+
+
+const newFirstTab = parentDiv.querySelector('.van-tab');
+if (newFirstTab) {
+    newFirstTab.click(); 
+}
+
+
+
+</script>

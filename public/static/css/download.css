@@ -1,0 +1,19 @@
+body,html{font-size:14px;height:100%;margin:0; overflow:hidden;}
+.pad{padding:0px!important;}
+.download-my{position: fixed;width:80%;left:10%;bottom:3em;background: #8564DE;color:#ffffff;height: 3em;line-height: 3em;text-align: center;font-size: 16px;font-weight: bold;border-radius: 0.5em;cursor: pointer;}
+
+.section{ position:absolute; top:0; left:0; width:100%; height:100%; background-color:#FCC; }
+.section.current{ display:inline-block;}
+.section.next{ display:inline-block; z-index: 2;}
+.section.prev{ display:inline-block; z-index: 2;}
+.sec1{background: url("../img/fenxiangxiazai_bac@2x.png")no-repeat;background-size: 100% 100%; position:relative;}
+
+.download-tile{position:absolute;top:8em;left:25%;width:50%;height:6em;}
+.download-tile-img{width:5em;height:5em;margin:auto;}
+.download-tile-img img{width:100%;height:100%;}
+.download-tile-name{width:100%;height:3em;line-height:3em;text-align: center;font-size: 16px;font-weight: bold;color:#4caedf;}
+.sec1-img{width:100%;text-align: center;}
+.sec1-img-a{margin-top: 5rem;}
+.sec1-img-b{margin-top: 2rem;}
+.sec1-img-a img{width: 90%;}
+.sec1-img-b img{width: 80%;}

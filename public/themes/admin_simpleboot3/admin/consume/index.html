@@ -1,0 +1,180 @@
+<include file="public@header"/>
+<style>
+    .gift-img{width:50px;height:50px}
+    .gift-img img{width:100%;height:100%;}
+    .gift-in input{width:25px;}
+    .js-ajax-form{margin-top:30px;}
+    .identity img{width:30px;height:30px;border-radius: 50%;}
+    .details{cursor: pointer;}
+    .layui-layer-demo .layui-layer-title{
+        background: #e0e0e0!important;
+    }
+    .form-control{width:110px!important;}
+    #status,#type{    width: 100px;
+        height: 32px;
+        border-color: #dce4ec;
+        color: #aeb5bb;}
+    .table-list{font-size:14px!important;}
+    .consume-col{color:#ff41ee;}
+    .layui-layer{width: 1000px!important;}
+    a{text-decoration: none;}
+    .details_type td{text-align: center;}
+    .consume_count{width:100%;height:40px;line-height: 40px}
+    .consume_count span{margin-left:30px;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_CONSUME_LIST')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" name="form1" method="post">
+        {:lang('ADMIN_CONSUME_USER_ID')}：
+        <input class="form-control" type="text" name="uid" style="width: 200px;" value="{:input('request.uid')}"
+               placeholder="{:lang('USER_ID')}">
+        {:lang('ADMIN_CONSUME_INCOME_USER')}：
+        <input class="form-control" type="text" name="touid" style="width: 200px;" value="{:input('request.touid')}"
+               placeholder="{:lang('USER_ID')}">
+        {:lang('ADMIN_CONSUME_TYPE')}：
+        <select name="type" id="type">
+            <option value="-1">{:lang('全部消费')}</option>
+            <foreach name="Consumer_classification" id="c">
+                <option value="{$c.id}" <if condition="$request.type eq $c.id"> selected="selected" </if> >{$c.title}</option>
+            </foreach>
+
+        </select>
+        {:lang('ADMIN_GUILD_ID')}：
+        <input class="form-control" type="text" name="guild_uid" style="width: 200px;" value="{:input('request.guild_uid')}"
+               placeholder="{:lang('USER_ID')}">
+        {:lang('agent_level1')}ID：
+        <input class="form-control" type="text" name="agent_company" style="width: 200px;" value="{:input('request.agent_company')}"
+               placeholder="{:lang('agent_level1')}ID">
+
+        {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time"
+               value="{$request.start_time|default=''}"
+               style="width: 200px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time"
+               value="{$request.end_time|default=''}"
+               style="width: 200px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" onclick='form1.action="{:url('Consume/index')}";form1.submit();'/>
+        <a class="btn btn-danger" href="{:url('Consume/index')}">{:lang('EMPTY')}</a>
+
+        <input type="button" class="btn btn-primary from_export" style="background-color: #1dccaa;" value="{:lang('导出')}" onclick='form1.action="{:url('Consume/export')}";form1.submit();'>
+
+
+    </form>
+
+    <form class="js-ajax-form" action="{:url('Consume/upd')}" method="post">
+
+        <if condition="$is_show_total eq 1"/>
+         <h4>{:lang('ADMIN_ALL_CONSUMPTION')}: {$coin}({$currency_name})<span style="margin-left: 20px">{$system_coin}({$system_currency_name})</span><span style="margin-left: 60px">{:lang('ADMIN_ALL_INCOME')}：{$total}({$profit_name})</span></h4>
+        <else/>
+
+        </if>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('ADMIN_CONSUME_USER')}（ID）</th>
+                <th>{:lang('ADMIN_INCOME_USER')}（ID）</th>
+                <th>{:lang('ADMIN_CONSUME_NUM')}</th>
+                <th>{:lang('ADMIN_ANCHOR_INCOME')}({$profit_name})</th>
+                <th>{:lang('ADMIN_CONSUME_TYPE')}</th>
+                <th>{:lang('ADMIN_CONSUME_CONTENT')}(ID)</th>
+                <th>{:lang('ADMIN_GUILD')}(ID)</th>
+                <th>{:lang('ADMIN_GUILD_INCOME')}</th>
+                <th>{:{:lang('agent_level1')}}({:lang('公司ID/员工ID/推广员ID')})</th>
+                <th>{:lang('ADMIN_CONSUME_TIME')}</th>
+
+            </tr>
+            </thead>
+            <tfoot>
+
+            <foreach name="data" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.uname}({$vo.user_id})</td>
+                    <td>
+                        <if condition="$vo['to_user_id'] eq 0"/>
+                           {:lang('平台')}
+                        <else/>
+                            {$vo.toname}({$vo.to_user_id})
+                        </if>
+                    </td>
+                    <td>
+                        {$vo.coin} {$vo.coin_type == 1 ? $currency_name : $system_currency_name}
+                    </td>
+                    <td>{$vo.profit}</td>
+                    <th>
+                        <if condition="$vo['type'] eq 4"/>
+                            <a href="javascript:void(0);" class="details" data-id="{$vo.table_id}"> {$type[$vo.type]}</a>
+                        <else/>
+                             {$type[$vo.type]}
+                        </if>
+
+                    </th>
+                    <th>{$vo.content}</th>
+                    <td>{$vo.guild_name}({$vo.guild_uid})</td>
+                    <td>{$vo.guild_earnings}</td>
+                    <td>{$vo.agent_company_name}（{$vo.agent_company} /{$vo.agent_staff} /{$vo.agent_id}）</td>
+                    <th>{$vo.create_time | date="Y-m-d H:i:s",###}</th>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <ul class="pagination">{$page}</ul>
+
+    </form>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    const currency_name = '{$currency_name}';
+    $(".details").click(function(){
+        var id=$(this).attr("data-id");
+        $.ajax({
+            url: "{:url('consume/select_call')}",
+            type: 'get',
+            dataType: 'json',
+            offset: 'rb', //具体配置参考：offset参数项
+            area: ['1000px', '500px'],
+            data: {id: id},
+            success: function (data) {
+
+                var html='<div style="width:1000px!important;height:500px;"><div class="consume_count"><span>{:lang("总消费")}('+ currency_name +')：'+data.coin+'</span><span>{:lang("主播总收益")}：'+data.profit+' </span><span>{:lang("邀请总收益 ：")} '+data.money+'<span><span>{:lang("总时长 ：")} '+data.time+'<span></div><table class="table table-hover table-bordered details_type"><thead><tr><th style="text-align: center;background: #f7f7f7;">{:lang(\'ADMIN_CONSUME_USER\')}（ID）</th><th style="text-align: center;background: #f7f7f7;">{:lang(\'ADMIN_INCOME_USER\')}（ID）</th><th style="text-align: center;background: #f7f7f7;">{:lang(\'ADMIN_CONSUMPTION_NUMBER\')}（'+ currency_name +'）</th><th style="text-align: center;background: #f7f7f7;">{:lang(\'ADMIN_ANCHOR_INCOME\')}</th><th style="text-align: center;background: #f7f7f7;">{:lang("主播邀请人(ID)")}</th><th style="text-align: center;background: #f7f7f7;">{:lang("邀请收益(元)")}</th><th style="text-align: center;background: #f7f7f7;">{:lang(\'ADMIN_CONSUME_CONTENT\')}</th><th style="text-align: center;background: #f7f7f7;">{:lang(\'ADMIN_CONSUME_TIME\')}</th></tr></thead><tbody>';
+               var user=data.user;
+                for(var i=0;i<user.length;i++){
+                    html+='<tr><td>'+user[i]['uname']+'('+user[i]['user_id']+')</td><td>'+user[i]['toname']+'('+user[i]['to_user_id']+')</td><td>'+user[i]['coin']+'</td><td>'+user[i]['profit']+'</td><td>';
+                    if(user[i]['cid']){
+                         html+=user[i]['cname']+'('+user[i]['cid']+')</td><td>'+user[i]['money'];
+                    }else{
+                         html+='</td><td>';
+                    }
+                    html+='</td><td>'+user[i]['content']+'</td><td>'+user[i]['create_time']+'</td></tr>';
+
+                }
+                html+='</tbody></table></div>';
+                 //自定页
+                 layer.open({
+                    type: 1,
+                    title: "{:lang('Video_call')}",
+                    closeBtn: 0,
+                    shadeClose: true,
+                    skin: 'yourclass',
+                    content: html
+                });
+
+            }
+        });
+
+
+
+    })
+
+
+</script>
+</body>
+</html>

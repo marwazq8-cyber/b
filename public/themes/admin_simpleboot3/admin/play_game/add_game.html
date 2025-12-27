@@ -1,0 +1,163 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift,#is_banner{
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:url('PlayGame/play_game')}">{:lang('ADMIN_PLAYER_GAME_LIST')}</a></li>
+        <li class="active"><a  href="javascript:;">{:lang('ADMIN_PLAYER_GAME_ADD')}</a></li>
+    </ul>
+    <form action="{:url('PlayGame/addGamePost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_GAME_NAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[name]"
+                                   id="title" required value="{$data.name |default=''}" placeholder="{:lang('Please_enter_name')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_GAME_TYPE')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[type_id]" id="gift">
+                                <foreach name="type" id="val">
+                                <option value="{$val.id}" <if condition="$data['type_id'] eq $val.id"> selected = "selected" </if>>{$val.type_name}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_NAVIGATION_BAR_DISPLAY')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[is_banner]" id="is_banner">
+                                <option value="1" <if condition="$data['is_banner'] eq 1"> selected = "selected" </if>>{:lang('是')}</option>
+                                <option value="0" <if condition="$data['is_banner'] eq 0"> selected = "selected" </if>>{:lang('否')}</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[orderno]" style="width:100px;"
+                                   required value="{$data.orderno |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('ADMIN_PLAYER_GAME_IMG')}<span class="form-required">*100*100</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[img]" id="thumbnail" value="{$data['img'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <if condition="$data['img']">
+                                        <img src="{$data['img']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_DEMO_IMG')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[demo_img]" id="thumbnaila" value="{$data['demo_img'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnaila');">
+                                    <if condition="$data['demo_img']">
+                                        <img src="{$data['demo_img']}"
+                                             id="thumbnaila-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnaila-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnaila" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('技能背景图片')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[bg_img]" id="thumbnailb" value="{$data['bg_img'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnailb');">
+                                    <if condition="$data['bg_img']">
+                                        <img src="{$data['bg_img']}"
+                                             id="thumbnailb-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnailb-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnailb" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$data.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('PlayGame/play_game')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+        $('.btn-cancel-thumbnailb').click(function () {
+            $('#thumbnailb-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnailb').val('');
+        });
+         $('.btn-cancel-svga').click(function () {
+            $('#svga-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#svga').val('');
+        });
+
+    });
+</script>
+
+</body>
+</html>

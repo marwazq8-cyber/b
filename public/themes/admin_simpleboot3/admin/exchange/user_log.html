@@ -1,0 +1,56 @@
+<include file="public@header"/>
+<style>
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_EXCHANGE_RULES_LOG')}</a></li>
+    </ul>
+     <form class="well form-inline margin-top-20" method="post" action="{:url('exchange/user_log')}">
+            {:lang('ADMIN_EXCHANGE_USER_ID')}:
+           <input type="text" class="form-control" name="uid" style="width: 120px;" value="{$data['uid']|default=''}" placeholder="{:lang('请输入兑换ID')}">
+            {:lang('ADMIN_INCOME_USER_ID')}:
+           <input type="text" class="form-control" name="touid" style="width: 120px;" value="{$data['touid']|default=''}" placeholder="{:lang('请输入收益人ID')}">
+         {:lang('TIME')}:
+            <input type="text" class="form-control js-bootstrap-date" name="start_time" value="{$data['start_time']|default=''}" style="width: 140px;" autocomplete="off">-
+            <input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$data['end_time']|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+            <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+            <a class="btn btn-danger" href="{:url('exchange/user_log')}">{:lang('EMPTY')}</a>
+         <span style="margin-left: 15px">{:lang('总扣除数')}: {$sum.earnings}</span>
+         <span style="margin-left: 15px">{:lang('总到账数')}: {$sum.coin}</span>
+        </form>
+   
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>{:lang('ADMIN_EXCHANGE_USER')}(ID)</th>
+                <th>{:lang('ADMIN_INCOME_PEOPLE')}(ID)</th>
+                <th>{:lang('ADMIN_DEDUCT_INCOME_NUM')}</th>
+                <th>{:lang('ADMIN_GET_INCOME')}</th>
+                <th>{:lang('TIME')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.uname}({$vo.uid})</td>
+                    <td>{$vo.toname}({$vo.touid})</td>
+                    <td>{$vo.earnings}</td>
+                    <td>{$vo.coin}</td>
+                    <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+         <div class="pagination">{$page}</div>
+ 
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

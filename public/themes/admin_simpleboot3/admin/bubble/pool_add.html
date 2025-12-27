@@ -1,0 +1,123 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('bubble/pool_index')}">{:lang('奖池列表')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('修改奖池')}</a></li>
+
+    </ul>
+    <form action="{:url('bubble/poolAddPost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('奖池名称 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[name]"
+                                   id="title" required value="{$data.name |default=''}" placeholder="{:lang('Please_enter_name')}"/>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('TYPE')} <span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[pool_type]" class="form-control">
+                                <option <if condition="$data.pool_type eq 1">selected</if> value="1">{:lang('公池')}</option>
+                                <option <if condition="$data.pool_type eq 2">selected</if> value="2">{:lang('个池')}</option>
+                            </select>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_CONSUMPTION_NUMBER')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[consumption]"
+                                   id="consumption" required value="{$data.consumption |default=''}" placeholder="{:lang('请输入消费数')}"/>
+                        </td>
+                        <td>{:lang('大于消费数更换奖池')}</td>
+                    </tr>
+                    <!--<tr>
+                        <th>{:lang('爆率 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[rate]"
+                                   id="rate" required value="{$data.rate |default=''}" placeholder="{:lang('请输入名称')}"/>
+                        </td>
+                        <td>{:lang('小于爆率更换奖池')}</td>
+                    </tr>-->
+                    <tr>
+                        <th>{:lang('跳转奖池 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[next_pool]" id="" class="form-control">
+                                <foreach name="list" id="vo">
+                                <option <if condition="$data.next_pool eq $vo.id">selected</if> value="{$vo.id}">{$vo.name}</option>
+                                </foreach>
+                            </select>
+
+                        </td>
+                        <td>{:lang('更换的奖池')}</td>
+                    </tr>
+
+
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[orderno]" style="width:100px;"
+                                   required value="{$data.orderno |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$data.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('bubble_new/pool_index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    var status = {$data['noble_status'] | default = 1};
+    var types = {$data['type'] | default = 1};
+    $('#gift').val(status);
+    $('#types').val(types);
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+         $('.btn-cancel-svga').click(function () {
+            $('#svga-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#svga').val('');
+        });
+
+    });
+
+
+</script>
+
+</body>
+</html>

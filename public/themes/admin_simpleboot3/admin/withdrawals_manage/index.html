@@ -1,0 +1,242 @@
+<include file="public@header"/>
+<link href="__STATIC__/css/admin_button.css" rel="stylesheet" type="text/css">
+</head>
+
+<style>
+
+    #status,#type{    width: 100px;
+        height: 32px;
+        border-color: #dce4ec;
+        color: #aeb5bb;}
+    .getChecked{float:left;width:80px;height:34px;line-height: 34px;text-align: center;background: #2C3E50;color:#fff;margin-right:10px;cursor:pointer;}
+</style>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('withdrawals_manage/index')}">{:lang('提现记录')}</a></li>
+        <li><a href="{:url('withdrawals_manage/user_binding')}">{:lang('账号绑定列表')}</a></li>
+    </ul>
+    <div class="table-actions">
+        <form class="well form-inline margin-top-20" name="form1" method="post">
+            {:lang('ADMIN_PHONE_NUMBER')}:
+            <input type="text" class="form-control" name="mobile" style="width: 120px;" value="{$request.mobile|default=''}" placeholder="{:lang('请输入手机号')}">
+            {:lang('USER_ID')}:
+            <input type="text" class="form-control" name="id" style="width: 120px;" value="{$request.id|default=''}" placeholder="{:lang('USER_ID')}">
+           {:lang('昵称')}:
+            <input type="text" class="form-control" name="name" style="width: 120px;" value="{$request.name|default=''}" placeholder="{:lang('请输入用户昵称')}">
+           {:lang('BENEFICIARY_ACCOUNT')}:
+            <input type="text" class="form-control" name="pay" style="width: 120px;" value="{$request.pay|default=''}" placeholder="{:lang('BENEFICIARY_ACCOUNT')}">
+            {:lang('ADMIN_CHECK_STATUS')}：
+            <select name="status" id="status">
+                <option value="-1">{:lang('ALL')}</option>
+                <option value="0" <if condition="$request.status eq '0'"> selected="selected" </if>>{:lang('UNREVIEWED')}</option>
+                <option value="1" <if condition="$request.status eq 1"> selected="selected" </if>>{:lang('AUDITED')}</option>
+                <option value="2" <if condition="$request.status eq 2"> selected="selected" </if>>{:lang('REJECTED')}</option>
+            </select>
+<!--             {:lang('提现类型')}:-->
+<!--            <select name="type" id="status">-->
+<!--                <option value="0">{:lang('ALL')}</option>-->
+<!--                <option value="1" <if condition="$request.type eq 1"> selected="selected" </if>>{:lang('WECHAT')}</option>-->
+<!--                <option value="2" <if condition="$request.type eq 2"> selected="selected" </if>>{:lang('ALIPAY')}</option>-->
+<!--                <option value="3" <if condition="$request.type eq 3"> selected="selected" </if>>{:lang('银行卡')}</option>-->
+<!--            </select>-->
+            <br/>
+            <input type="hidden"  name="page"  value="{$request.page|default='1'}">
+            <div style="margin-top:20px;"> {:lang('TIME')}:
+                <input type="text" class="form-control js-bootstrap-datetime" name="start_time" value="{$request.start_time|default=''}" style="width: 140px;" autocomplete="off">-
+                <input type="text" class="form-control js-bootstrap-datetime" name="end_time" value="{$request.end_time|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+                <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" onclick='form1.action="{:url('withdrawals_manage/index')}";form1.submit();'/>
+                <a class="btn btn-danger" href="{:url('withdrawals_manage/index')}">{:lang('EMPTY')}</a>
+                <input type="button" class="btn btn-primary from_export" style="background-color: #1dccaa;" value="{:lang('导出')}" onclick='form1.action="{:url('withdrawals_manage/export')}";form1.submit();'>
+                <span> {:lang('Withdrawal_quantity')}：{$income} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{:lang('ADMIN_WITHDRAW_MONEY')}：{$money} </span>
+            </div>
+
+        </form>
+    </div>
+    <form class="js-ajax-form" action="{:url('withdrawals_manage/refuse_cash_all')}" method="post">
+    <div style="margin-bottom: 10px;">
+        <div class="getChecked" onclick="getChecked('on')">{:lang('全选')}</div>
+        <div class="getChecked" onclick="getChecked('off')">{:lang('取消全选')}</div>
+        <div class="getChecked" onclick="getChecked('onWWoff')">{:lang('反选')}</div>
+        <button type="submit" name="type" value="1" class="btn btn-primary">{:lang('批量通过')}</button>
+        <button type="submit" name="type" value="2" class="btn btn-primary">{:lang('批量拒绝')}</button>
+    </div>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th></th>
+            <th width="50">ID</th>
+            <th>{:lang('USER_ID')}</th>
+            <th>{:lang('USER_NICKNAME')}</th>
+            <th>{:lang('ADMIN_PHONE_NUMBER')}</th>
+            <th>{:lang('Withdrawal_quantity')}</th>
+            <th>{:lang('ADMIN_WITHDRAW_MONEY')}</th>
+            <th>{:lang('提现类型')}</th>
+            <th>{:lang('Name_of_withdrawal')}</th>
+            <th>{:lang('Withdrawal_payment_account_number')}</th>
+            <th>{:lang('SUBMIT_TIME')}</th>
+            <th>{:lang('STATUS')}</th>
+            <th>{:lang('打款状态')}</th>
+            <th width="130">{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <php>
+            $statuses=array('0'=> lang('UNREVIEWED'),"1"=>lang('AUDIT_BY'),"2" => lang('Refuse_to_withdraw'));
+            $transfer_status=array('0'=>lang('未打款'),"1"=>lang('已打款'),"2" => "");
+        </php>
+        <foreach name="data" item="vo">
+            <tr>
+                <td>
+                    <input type="checkbox" name="id[]" value="{$vo.id}" class="chechbox_input">
+                </td>
+                <td>{$vo.id}</td>
+                <td>{$vo.user_id}</td>
+                <td>{$vo.user_nickname}</td>
+                <td>{$vo.mobile}</td>
+                <td>{$vo.income}</td>
+                <th>{$vo.money}</th>
+                <td>
+                    <if condition="$vo.type eq 1">
+                        {:lang('WECHAT')}
+                        <elseif condition="$vo.type eq 2"/>
+                            {:lang('ALIPAY')}
+                        <else/>
+                        {:lang('银行卡')}({$vo['bank_name']})
+                    </if>
+                </td>
+                <td>{$vo.gathering_name}</td>
+                <td>{$vo.gathering_number}</td>
+
+                <td>{$vo.create_time | date="Y-m-d H:i:s",###}</td>
+
+                <td>{$statuses[$vo.status]}</td>
+                <td>{$transfer_status[$vo.transfer_status]}</td>
+                <td>
+                    <button class="ipt btn btn-info" type="button">{:lang('ACTIONS')} <strong>+</strong></button>
+                    <ul id="ul">
+                        <if condition="$vo.status eq 1 && $vo.transfer_status eq 0 && $alipay_fund_transfer_status eq 1">
+                            <li>
+                                <a class="transfer_status" data-id="{$vo.id}">{:lang('打款')}</a>
+                            </li>
+                        </if>
+
+                        <if condition="$vo.status eq 1 && $vo.transfer_status eq 0 && $alipay_fund_transfer_status eq 0">
+                            <li>
+                                <a class="transfer_status_open" data-id="{$vo.id}">{:lang('打款')}</a>
+                            </li>
+                        </if>
+
+                        <if condition="$vo.status eq 0">
+                            <li>
+                                <a href="{:url('withdrawals_manage/adopt_cash',array('id'=>$vo['id']))}">{:lang('AUDIT_BY')}</a>
+                            </li>
+                            <li>
+                                <a href="{:url('withdrawals_manage/refuse_cash',array('id'=>$vo['id']))}">{:lang('REFUSE')}</a>
+                            </li>
+                            <else/>
+                            <li>
+                                <a href="{:url('withdrawals_manage/del',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>
+                            </li>
+                        </if>
+
+                    </ul>
+
+
+
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+
+    <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript" src="__STATIC__/js/admin_button.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+</body>
+</html>
+<script>
+    $('.transfer_status').click(function(){
+        var id = $(this).attr('data-id');
+
+        var html = '{:lang("打款备注")}:<textarea style="width: 100%" type="text" name="" id="remark" value=""></textarea>';
+        //自定页
+        layer.open({
+            title: "{:lang('填写打款备注')}",
+            type: 1,
+            skin: 'layui-layer-demo', //样式类名
+            closeBtn: 0, //不显示关闭按钮
+            btn: ["{:lang('OK')}", "{:lang('关闭')}"],
+            area: '450px;',
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: "<div style='width:80%;margin-left: 10%;margin-top: 30px;' class='sel' name=''>"+html+"<div/>",
+            success: function(layero){
+                var btn = layero.find('.layui-layer-btn');
+
+                btn.find('.layui-layer-btn0').click(function () {
+                    var remark = $("#remark").val();
+                    $.ajax({
+                        url: "{:url('withdrawals_manage/fund_transfer')}",
+                        type: 'post',
+                        dataType: 'json',
+                        data: {id: id,remark:remark},
+                        success: function (data) {
+
+                            if (data.code == '1') {
+                                layer.msg(data.msg, {time: 2000, icon: 1}, function () {
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg(data.msg, {time: 2000, icon: 2});
+                            }
+                        }
+                    });
+                });
+
+            }
+        });
+    })
+    $(".transfer_status_open").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm("{:lang('是否已线下打款？')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('withdrawals_manage/fund_transfer_status')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("{:lang('修改成功')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('修改失败')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+    function getChecked(a) {
+        var x = document.getElementsByClassName('chechbox_input');
+        for (var i = 0; i < x.length; i++) {
+            switch (a) {
+                case 'on':
+                    x[i].checked = true;
+                    break;
+                case 'off':
+                    x[i].checked = false;
+                    break;
+                case 'onWWoff':
+                    x[i].checked = !x[i].checked;
+                    break;
+            };
+        }
+    }
+</script>

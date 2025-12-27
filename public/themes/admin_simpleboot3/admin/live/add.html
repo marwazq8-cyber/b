@@ -1,0 +1,92 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('live/index')}">{:lang('直播中列表')}</a></li>
+        <li  class="active"><a>{:lang('添加直播')}</a></li>
+
+    </ul>
+    <form action="{:url('live/addPost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_ANCHOR_ID')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="user_id"
+                                   id="title" required  placeholder="{:lang('请输入主播ID')}"/>
+                        </td>
+                    </tr>
+                  
+                  
+                    <tr>
+                        <th>{:lang('直播标题')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="title" 
+                                   required  placeholder="{:lang('Please_enter_live_broadcast_title')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('直播封面图')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="img" id="thumbnail" value="">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                   
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                   
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                      <tr>
+                        <th>{:lang('播放地址 ')}<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="video_vid" id="source"  placeholder="{:lang('请输入播放地址')}"></td>
+                    </tr>
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('live/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+
+    });
+</script>
+
+</body>
+</html>

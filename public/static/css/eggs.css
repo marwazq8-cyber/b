@@ -1,0 +1,233 @@
+body,html{font-size:12px;margin:0!important;padding:0!important;}
+body{background-color:transparent!important;width: 100%;height: 100%;}
+ul,li{list-style-type:none;padding:0;margin:0;}
+ @media (max-width: 370px) { 
+ 	.eggs_name_bg{height: 2.5em;line-height: 2.5em;}
+ 	.eggs_name_bg_border{border:3px solid #4fbed2;color:#fff;line-height:2em!important;}
+ 	 .eggs_announcement{margin:7% 15% 0;}
+ 	 .eggs_wutai_left_coin_sum{margin: 1em 1em 0;}
+ 	 .eggs_jackpot_gift_center li{    margin: 0.3em 0 0 1%!important;}
+ 	 .eggs_jackpot_gift_center{padding-top: 0px!important;}
+ 	 .eggs_jackpot_gift_title{    height: 3em!important;padding-top: 1em!important;}
+ 	 .buy_hammer_type_btn{bottom: 2em;}
+ 	 .buy_hammer_type_sum{    margin: 1em auto 0!important;}
+ 	 .eggs_instructions_center{line-height: 1.5em;font-size: 12px;}
+   .winning_tips_title{max-height: 58%}
+   .winning_tips_gift_img img{height: 1.5em!important;}
+   .winning_tips_title_name{ font-size: 12px;}
+   .winning_tips_btn{margin:6% auto;}
+ }
+@media (min-width: 370px) and  (max-width: 400px){ 
+	.eggs_name_bg{height: 3em;line-height: 3em;}
+	.eggs_name_bg_border{border:3px solid #4fbed2;color:#fff;line-height:2.5em!important;}
+	.eggs_announcement{margin:10% 15% 0;}
+	.eggs_wutai_left_coin_sum{margin: 1em 1em 0;}
+	.eggs_wutai_right_img{margin-top: 0.5em;}
+	.buy_hammer_type_btn{bottom: 3em;}
+	.eggs_instructions_center{line-height: 1.7em;}
+   .winning_tips_title{max-height: 60%}
+    .winning_tips_gift_img{padding: 0 1em;line-height:2.5em;}
+   .winning_tips_btn{margin:6% auto;}
+ }
+ @media (min-width: 400px){ 
+ 	.eggs_name_bg{height: 3em;line-height: 3em;}
+ 	.eggs_name_bg_border{border:3px solid #4fbed2;color:#fff;line-height:2.5em!important;}
+ 	.eggs_announcement{margin:11% 15% 0;}
+ 	.eggs_wutai_left_coin_sum{margin: 2em 1em 0;}
+ 	.eggs_wutai_right_img{margin-top: 1em;}
+ 	.buy_hammer_type_btn{bottom: 4em;}
+ 	.eggs_instructions_center{line-height: 2em;    font-size: 14px;}
+   .winning_tips_title{max-height: 52%}
+   .winning_tips_gift_img{padding: 0 1em;line-height: 3em;}
+   .winning_tips_btn{margin:6% auto;}
+ }
+/*.eggs_bg{width: 100%;height: 100%;}*/
+.eggs_location{width: 100%;height: 70%;position: fixed;bottom: 0;left: 0;background: url('../image/zadan_bac.png');background-size: 100% 100%;}
+.eggs_name{width: 80%;margin:1em 10%;height: 3em;}
+.eggs_name_bg{float:left;width: 30%;margin-left:3%;cursor: pointer;background-image: linear-gradient(to right , #fc66d4, #6e3aff);border-radius: 0.8em;text-align: center;font-weight: bold;color:#6000b8;}
+.eggs_name_bg_border span{ background: linear-gradient(to right, #feffd6, #e9dc05);-webkit-background-clip: text;color: transparent;}
+.eggs_announcement{width: 70%;height: 2.5em; background-image: linear-gradient(to bottom , #7930b5, #573484);border: 1px solid #9c5bd1;border-radius: 2em;font-size: 12px;;position: relative;}
+.eggs_announcement_name{width:calc(100% - 1em);height: 2.5em;line-height: 2.5em;color: #E1B6FF;margin-left: 1em;overflow: hidden;position: relative;}
+.eggs_announcement_select{width: 6em;height: 2.5em;line-height: 2.5em;color: #F8EFFF; background-image: linear-gradient(to bottom , #ff92eb, #e800f3);text-align: center;border-radius: 2em;position: absolute;top:-0.1em;right:-2em;cursor: pointer;}
+.eggs_announcement_name img{width: 1.7em;height: 1.7em;}
+.eggs_marquee_span{margin-left: 2em;}
+.eggs_marquee {animation: eggs_marquee 20s linear infinite;white-space: nowrap;position: absolute;}
+@keyframes eggs_marquee {0% { left: 0; }100% { left: -110%;}}
+
+.eggs_wutai{width: 100%;height: 60%;margin-top: 1em;position: relative;}
+.eggs_wutai_bg{width: 90%;height: 100%;margin:0 auto;background: url("../image/wutai.png");background-size: 100% 100%;}
+.eggs_wutai_left{position: absolute;top:1em;left: 0;width: 7em;height: 8em;}
+.eggs_wutai_left_coin{width:100% ;height: 2em;position: relative;}
+.eggs_wutai_left_coin_sum{width: 5.5em;height: 2em;line-height: 2em;text-align: center;color:#fff;background: #FF58C5;border-radius: 3em; cursor: pointer;}
+.eggs_wutai_left_coin_img{position: absolute;top:0;left: 0;height: 2.5em;}
+
+.eggs_wutai_right{position: absolute;top:1em;right: 0;width:4em;height: 8em;}
+.eggs_wutai_right_img{width: 3em;height: 3em;cursor: pointer;}
+.eggs_wutai_right_img img{width: 100%;}
+
+.eggs_smashing{width: 100%;height: 3em;position: absolute;bottom: 1em;left: 0;}
+.eggs_smashing_btn{float: left;width: 25%;margin-left: 6%;height: 3em;line-height:3em;border-radius: 2em;background: #FBAE0F;text-align: center;color:#fff;cursor: pointer;font-weight: bold;	}
+
+
+.eggs_wutai_bg_1{width: 100%;height: 75%;text-align: center;padding-top: 20%;position: relative;}
+.eggs_animation{height: 100%;
+	animation:moves 3s 0s infinite;-webkit-animation:moves 3s 0s infinite;transform-origin:bottom;-webkit-transform-origin:bottom;
+}
+.eggs_wutai_bg_2{width: 100%;height: 75%;text-align: center;padding-top: 20%;position: relative;display: none;}
+.eggs_animation_2{height: 100%;
+	animation:moves 3s 0s linear ;-webkit-animation:moves 3s 0s linear ;transform-origin:bottom;-webkit-transform-origin:bottom;
+}
+.eggs_hammer_2{width: 5em;position: absolute;top:3em;right:24%;
+animation:hammer 3s 0s linear;-webkit-animation:hammer 3s 0s linear;transform-origin:bottom;-webkit-transform-origin:bottom;
+}
+
+.eggs_animation_end .eggs_hammer_gaung{width: 5em;position: absolute;top:5em;right:32%;display: none;}
+.eggs_animation_end .eggs_hammer_xing{width: 5em;position: absolute;top:0.5em;right:17%;z-index: -1;display: none;}
+/*.eggs_animation_end .eggs_animation_2,.eggs_animation_end .eggs_hammer_2{animation-play-state:paused;}*/
+@keyframes moves
+{
+    0%, 25%{ 
+      -webkit-transform:rotate(0deg);
+      transform:rotate(0deg);
+    }
+    30% {  
+      -webkit-transform:rotate(6deg);
+      transform:rotate(6deg);
+    }
+    35% {  
+      -webkit-transform:rotate(-6deg);
+      transform:rotate(-6deg);
+    }
+    40% {  
+      -webkit-transform:rotate(6deg);
+      transform:rotate(6deg);
+
+    }
+    45% {  
+      -webkit-transform:rotate(-6deg);
+      transform:rotate(-6deg);
+    }
+    50% {  
+      -webkit-transform:rotate(6deg);
+      transform:rotate(6deg);
+    }
+    55% {  
+      -webkit-transform:rotate(-6deg);
+      transform:rotate(-6deg);
+
+    }
+    60%,100% {  
+      -webkit-transform:rotate(0deg);
+      transform:rotate(0deg);
+
+    }
+}
+
+.eggs_hammer{width: 5em;position: absolute;top:3em;right:24%;
+animation:hammer 3s 0s infinite;-webkit-animation:hammer 3s 0s infinite;transform-origin:bottom;-webkit-transform-origin:bottom;
+}
+@keyframes hammer
+{
+	0%{
+		-webkit-transform:rotate(0deg);
+      transform:rotate(0deg);
+	}
+    10%{ 
+       -webkit-transform:rotate(46deg);
+      transform:rotate(46deg);
+    }
+    15% {  
+      -webkit-transform:rotate(-46deg);
+      transform:rotate(-46deg);
+    }
+    40%,100% {  
+       -webkit-transform:rotate(0deg);
+      transform:rotate(0deg);
+
+    }
+}
+.eggs_instructions,.winning_record,.winning_tips{width: 100%;height:100%; background-color:rgba(0,0,0,0.38); position: fixed; left: 0;bottom: 0;z-index: 1;display: none; }
+.eggs_jackpot,.buy_hammer,.eggs_send{width: 100%;height:100%; background-color:rgba(0,0,0,0.38); position: fixed; left: 0;bottom: 0;z-index: 1;font-size: 12px;display: none; }
+
+/*查看奖池*/
+.eggs_jackpot_gift{width: 80%;height: 50%;margin: 70% auto 0;background: linear-gradient(to bottom, #cd49e9, #a005e9);border-radius: 1em;position: relative;}
+.eggs_jackpot_gift_title{width: 90%;height: 4em;margin:0 auto;padding-top:1.5em;}
+.eggs_jackpot_gift_title_name{float:left;width: 30%;margin-left: 3%;color:#7402A6;border-radius: 0.5em;text-align: center;height: 2.5em;line-height: 2.5em;border:1px solid #7402A6;cursor: pointer;}
+.eggs_jackpot_gift_bg{background:#F52BFC;border:1px solid #F52BFC!important;color:#fff!important;}
+.eggs_jackpot_gift_center{width: 90%;margin:0 auto;padding-top:1.5em;}
+.eggs_jackpot_gift_center li{float:left;width: 24%;height: 6em;margin:1em 0 0 1%;}
+.eggs_jackpot_gift_center_img{width: 100%;height: 3em;text-align: center;}
+.eggs_jackpot_gift_center_img img{height: 100%;}
+.eggs_jackpot_gift_center_name{width: 100%;height: 1.5em;line-height: 1.5em;text-align: center;color:#fff;}
+.eggs_jackpot_gift_center_coin{width: 100%;height: 1.5em;line-height: 1.5em;text-align: center;color:#fff;}
+.eggs_jackpot_gift_center_coin img{width: 1.5em;}
+
+.eggs_jackpot_gift_center ul{margin:0px!important;display: none;}
+.eggs_jackpot_btn{position: absolute;top:-2em;right:-2em;width: 3em;height: 3em;}
+.eggs_jackpot_btn img,.eggs_instructions_btn img{width: 100%;}
+.eggs_jackpot_gift_center ul:first-child{display: block;}
+
+/*购买锤子*/
+.buy_hammer_type{width: 100%;height: 35%;margin: 116% auto 0;background: linear-gradient(to bottom, #cd49e9, #a005e9);position: relative;}
+.buy_hammer_type_name{width: 100%;height: 4em;line-height: 2em;padding-top: 2em;text-align: center;color:#fff;}
+.buy_hammer_type_sum{width: 80%;margin: 2em auto;height: 3em;color:#fff;}
+.buy_hammer_type_sum_number{float: left;width: 50%;height: 3em;line-height: 3em;}
+.buy_hammer_type_sum_coin{float: right;width: 50%;height: 3em;line-height: 3em;text-align: right;}
+.buy_hammer_type_sum_coin img{width: 2em;}
+.buy_hammer_type_btn{width: 80%;height: 3em;line-height: 3em;text-align: center;background: #fff;position: absolute;left:10%;border-radius: 3em;color:#AF31FF;cursor: pointer;}
+
+/*中奖说明*/
+
+.eggs_instructions_title{width: 80%;height: 53%;margin: 70% auto 0;background: linear-gradient(to bottom, #cd49e9, #a005e9);    overflow-x: hidden;border-radius: 1em;position: relative;}
+.eggs_instructions_btn{position: absolute;top:0em;right:0em;width: 4em;height: 3em;color:#fff;text-align: center;line-height: 3em;}
+.eggs_instructions_name{width: 100%;height: 4em;line-height: 3em;padding-top: 1em;font-weight: bold;color:#fff;text-align: center;font-size: 16px;}
+.eggs_instructions_center{width: 90%;margin:1em auto;color:#fff;}
+
+/* 中奖提示开关  */
+.eggs_send_title{width: 100%;height: 15%;margin: 151% auto 0;background: linear-gradient(to bottom, #cd49e9, #a005e9);padding-top: 9%;}
+.eggs_send_name{float:left;width: 60%;height: 3em;line-height: 3em;text-align: left;color:#fff;padding-left: 2em;}
+.eggs_send_img{float:left;width: 40%;height: 3em;line-height: 3em;text-align: right;color:#fff;padding-right: 2em;}
+.eggs_send_img img{height: 70%;}
+
+/*我的中奖记录*/
+
+.winning_record_title{width: 100%;height: 60%;margin: 71% auto 0;background: linear-gradient(to bottom, #cd49e9, #a005e9);}
+.winning_record_title_name{width: 100%;height: 3em;line-height: 3em;text-align: center;color:#fff;position: relative;}
+.winning_record_btn{position: absolute;width: 3em;line-height: 2em;height: 2em;text-align: center;font-size: 20px;color: #fff;top: 0;right:0;cursor: pointer;}
+.winning_record_title_center{width: 90%;margin:1em auto;height: calc(100% - 4em);overflow: hidden;padding:0.5em 0;}
+.winning_record_title_center ul{width: 100%;height: 100%;overflow-x: hidden;overflow-y: scroll;}
+.winning_record_title_center li{width: 100%;height: 3.5em;border-bottom: 1px solid #CC66FF;}
+.winning_record_img{width: 3em;height: 2em;text-align: center;float:left;margin-top: 0.8em;}
+.winning_record_img img{height: 100%;}
+.winning_record_name{float:left;width:calc(100% - 11em);height: 3.5em;line-height: 3.5em;color:#fff; }
+.winning_record_time{float:left;width:8em;height: 3.5em;line-height: 3.5em;color: #E3AAFF;}
+
+
+/*中奖提示*/
+
+.winning_tips_title{width: 80%;min-height:50%;margin: 70% auto 0;background: linear-gradient(to bottom, #cd49e9, #a005e9);border-radius: 1em;position: relative;padding-top: 25%;}
+.winning_tips_title_img{width: 100%;height: 10em;position: absolute;top:-5em;left:0;text-align: center;}
+.winning_tips_title_img img,.winning_tips_title_gongxi img{height: 100%;}
+.winning_tips_title_gongxi{width: 100%;height: 2.5em;text-align: center;}
+.winning_tips_title_name{width: 100%;min-height: 3em;text-align: center;color:#fff;margin-top: 5%;    padding: 0 1em;}
+.winning_tips_gift_img{width: 100%;min-height: 3em;text-align: center;color:#fff;}
+.winning_tips_gift_img img{height: 2em;}
+.winning_tips_btn{width: 50%;height: 2.5em;line-height: 2.5em;text-align: center;border:1px solid #e1aaef;color: #e1aaef;border-radius: 3em;cursor: pointer;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

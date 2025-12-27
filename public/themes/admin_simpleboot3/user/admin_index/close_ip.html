@@ -1,0 +1,122 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('user/adminIndex/close_ip')}">{:lang("禁封IP记录")}</a></li>
+        <li><a href="{:url('admin/Anchor/equipment_closures')}">{:lang("禁封设备列表")}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('User/adminIndex/close_ip')}">
+        {:lang('用户ID')}:
+        <input type="text" class="form-control" name="uid" style="width: 120px;" value="{$data.uid | default =''}" placeholder="{:lang('请输入ID')}">
+        IP:
+        <input type="text" class="form-control" name="ip" style="width: 200px;" value="{$data.ip | default =''}" placeholder="{:lang('请输入IP')}">
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('User/adminIndex/close_ip')}">{:lang('EMPTY')}</a>
+        <a class="btn add_ip" style="margin-left: 10px;color: #fff; background-color: #18BC9C;border-color: #18BC9C;">{:lang("添加IP")}</a>
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>IP</th>
+            <th>{:lang('LAST_LOGIN_TIME')}</th>
+            <th>{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="list" item="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.ip}</td>
+                <td>
+                    <if condition="$vo['addtime'] eq 0">
+                        {:lang('USER_HAVE_NOT_LOGIN')}
+                        <else />
+                        {:date('Y-m-d H:i:s',$vo['addtime'])}
+                    </if>
+                </td>
+                <td>
+                    <a href="javescript:void(0);" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    $(".add_ip").click(function(){
+        layer.open({
+            type: 0,
+            title:   "{:lang('禁封ip')}",
+            area: ['380px', '250px'],   //宽高
+            shade: 0.4,   //遮罩透明度
+            btn: ["{:lang('禁封')}","{:lang('取消')}"], //按钮组,
+            content: '<div style="width:330px;height:100px;">' +
+                '<table class="table table-hover table-bordered">' +
+                '<tbody><' +
+                'tr>' +
+                '<td>' +
+                '<div class="ban_type">' +
+               "{:lang('禁封的IP')}" + '<input type="text" id="ip" style="width: 100%;height:40px;padding: 10px;"/>' +
+                '</div>' +
+                '</td>' +
+                '</tr>' +
+                '</tbody>' +
+                '</table>' +
+                '</div>',
+            yes:function(index){   //点击确定回调
+                var ip=$("#ip").val();
+
+                layer.close(index);
+                $.ajax({
+                    url: "{:url('User/adminIndex/add_closures_ip')}",
+                    type: 'get',
+                    dataType: 'json',
+                    data: {ip: ip},
+                    success: function (data) {
+                        if(data['code'] == 1){
+                            layer.msg(data['msg'],{time: 2000, icon:1},function(){
+                                window.location.reload();
+                            });
+                        }else{
+                            layer.msg(data['msg'],{time: 2000, icon:2});
+                        }
+                    }
+                });
+            }
+        });
+
+
+    })
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('User/adminIndex/delete_close_ip')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function () {
+        $(".js-ajax-form").submit();
+    })
+</script>
+</body>
+</html>

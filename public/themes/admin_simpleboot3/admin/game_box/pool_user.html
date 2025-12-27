@@ -1,0 +1,123 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+    .eggs_name{
+        width: 100%;height: 30px;line-height: 30px;color:#fb7373;margin-left: 20px;  }
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .select{width: 150px;height:30px;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('GameBox/pool_index')}">{:lang('ADMIN_PRIZE_POOL_LIST')}</a></li>
+        <li class="active"><a href="#">{:lang('ADMIN_USER_LIST')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('GameBox/pool_user')}">
+        {:lang('USER_ID')}：
+        <input class="form-control" type="text" name="uid" style="width: 100px;" value="{:input('request.uid')}"
+               placeholder="{:lang('Please_enter_user_ID')}">
+        {:lang('USER_NICKNAME')}：
+        <input class="form-control" type="text" name="keyword" style="width: 120px;" value="{:input('request.keyword')}"
+               placeholder="{:lang('请输入用户昵称')}">
+        <input type="hidden" name="id" value="{$id}">
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('bubble/pool_user',array('id'=>$id))}">{:lang('EMPTY')}</a>
+
+    </form>
+
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{:lang('USER_ID')}</th>
+            <th>{:lang('USER_NICKNAME')}</th>
+            <th>{:lang('ADMIN_CONSUMPTION_NUMBER')}</th>
+            <th>{:lang('ADMIN_INCOME_NUMBER')}</th>
+            <th>{:lang('ADMIN_GAME_BOX')}</th>
+            <!--<th>{:lang('中奖概率')}</th>
+            <th>{:lang('连续打泡泡次数')}</th>
+            <th>{:lang('STATUS')}</th>-->
+            <!--<th>{:lang('排序')}</th>-->
+            <if condition="$pool.pool_type eq 2">
+<!--            <th>{:lang('ACTIONS')}</th>-->
+            </if>
+        </tr>
+        </thead>
+        <tfoot>
+        <foreach name="list" id="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.uid}</td>
+                <td>{$vo.user_nickname}</td>
+                <td>{$vo.coin}</td>
+                <td>{$vo.income}</td>
+                <td>{$vo.t_name}</td>
+                <if condition="$pool.pool_type eq 2">
+<!--                <td>
+                    &lt;!&ndash;<a href="{:url('BubbleNew/gift_list',array('id'=>$vo.id))}">{:lang('礼物列表')}</a> |&ndash;&gt;
+                    <a href="{:url('GameBox/edit',array('id'=>$vo.id))}">{:lang('查看奖池')}</a>
+                    &lt;!&ndash;<a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>&ndash;&gt;
+                </td>-->
+                </if>
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm('删除后会重新开始统计打泡泡次数 ？', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('bubbleNew/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".clear_both_gift").click(function(){
+        layer.confirm('确定清除缓存？', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('bubble/clear_both_voice_gift')}",
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    layer.msg("{:lang('清除缓存成功')}", {time: 2000, icon: 1});
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function () {
+        $(".js-ajax-form").submit();
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link href="__STATIC__/css/income_withdrawal.css" rel="stylesheet">
+    <link href="__STATIC__/css/bootstrap.min.css" rel="stylesheet">
+    <title>结算</title>
+
+<script>window.PointerEvent = void 0</script>
+
+</head>
+<body class="income_withdrawal_bg">
+  <div class="income_withdrawal_title">
+      <div class="income_withdrawal_title_type" >
+        <div class="income_withdrawal_title_type_name">我的收益</div>
+        <div class="income_withdrawal_title_type_coin">{$userinfo['income']}</div>
+      </div>
+       <div class="income_withdrawal_title_type" >
+        <div class="income_withdrawal_title_type_name">可提现</div>
+        <div class="income_withdrawal_title_type_coin">{$userinfo['money']}</div>
+      </div>
+  </div>
+  <div class="income_withdrawal_settlement">
+      <div class="income_withdrawal_settlement_go">结算到</div>
+          {if condition="$pays['wx'] eq 1"}
+            <div class="income_withdrawal_settlement_type income_withdrawal_settlement_type_bor" data-type="1">
+                <div class="income_withdrawal_settlement_type_img"></div>
+                <div class="income_withdrawal_settlement_type_buy_img"><img src="__STATIC__/image/weixin.png"></div>
+                <div class="income_withdrawal_settlement_type_bname">微信</div>
+            </div>
+         {/if}
+          {if condition="$pays['pay'] eq 1"}
+             <div class="income_withdrawal_settlement_type" data-type="2">
+                <div class="income_withdrawal_settlement_type_img"></div>
+                <div class="income_withdrawal_settlement_type_buy_img"><img src="__STATIC__/image/zhifubao.png"></div>
+                <div class="income_withdrawal_settlement_type_bname">支付宝</div>
+             </div>
+          {/if}
+  </div>
+  <div class="income_withdrawal_btn">立即结算</div>
+  <div class="binding_account" >绑定账户</div>
+  <div class="income_withdrawal_centent">
+    温馨提示<br/>
+    1、每天结算{$userinfo['day_cash_num']}次,最少{$userinfo['min_money']}元,最多{$userinfo['max_money']}元。<br/>
+    2、结算金额24小时到账<br/>
+    3、请绑定支付宝或者微信账户查看到账金额
+  </div>
+  <div class="vehicle_car_btn">
+    <div class="vehicle_car_btn_bg">
+        <div class="vehicle_car_btn_bg_name">{$name}</div>
+        <div class="vehicle_car_btn_bg_btn" data-type="{$type}"> 确 定</div>
+    </div>
+</div>
+</body>
+<script src="__STATIC__/js/jquery-1.10.2.min.js"></script>
+<script src="__STATIC__/layer/mobile/layer.js" rel="stylesheet"></script>
+<script>
+   $(".income_withdrawal_settlement_type").first().addClass("income_withdrawal_checked");
+
+   $(".income_withdrawal_settlement_type").click(function(){
+      $(".income_withdrawal_settlement_type").removeClass("income_withdrawal_checked");
+      $(this).addClass("income_withdrawal_checked");
+   })
+   var uid="{$uid}";
+   var token="{$token}";
+    $(".vehicle_car_btn_bg_btn").click(function(){
+      var type=$(this).attr("data-type");
+      if(type !='1'){
+        $(".vehicle_car_btn").hide();
+        return false;
+      }else{
+        withdrawal();
+      }
+   })
+   $(".income_withdrawal_btn").click(function(){
+      $(".vehicle_car_btn").show();
+   })
+
+  $(".vehicle_car_btn").click(function(){
+         $(".vehicle_car_btn").hide();
+    })
+      //阻止冒泡
+    $(".vehicle_car_btn_bg").on('click',function(e){
+        e.stopPropagation();
+    });
+    function withdrawal(){
+     var type= $(".income_withdrawal_checked").attr("data-type");
+      $.ajax({
+          url:'/api/userinfo_api/cash_income',
+          type:'get',
+          data:{uid:uid,token:token,type:type},
+          dataType:'json',
+          success:function(data){
+              $(".vehicle_car_btn").hide();
+               layer.open({
+                    content: data.msg
+                    , skin: 'msg'
+                    , time: 2 //2秒后自动关闭
+                });
+              if(data.code =='1'){
+
+                  setTimeout(function(){
+                    window.location.reload();
+                   }, 2000)
+              }
+           
+          },
+      })     
+    }
+    $(".binding_account").click(function(){
+      var url="/api/userinfo_api/binding_account/uid/"+uid+"/token/"+token;
+      window.location.href=url;
+    })
+ 
+</script>
+</html>

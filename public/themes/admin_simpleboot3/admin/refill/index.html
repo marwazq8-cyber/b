@@ -1,0 +1,92 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('充值列表')}</a></li>
+        <li><a href="{:url('refill/add')}">{:lang('添加充值分类')}</a></li>
+    </ul>
+
+
+    <form class="js-ajax-form" action="{:url('refill/upd')}" method="post">
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>{:lang('SORT')}</th>
+                <th>ID</th>
+                <th>{:lang('充值金额(元)')}</th>
+                <!--<th>PayPal充值金额(美元 USD)</th>-->
+                <th>{:lang('金币数')}</th>
+                <th>{:lang('赠送金币数')}</th>
+                <th>{:lang('苹果支付金额(元)')}</th>
+                <th>{:lang('苹果支付金币')}</th>
+                <th>{:lang('苹果支付名称')}</th>
+                <th>{:lang('谷歌支付标识')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('ADD_TIME')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td style="width:100px;"><input type="text" name="listorders[{$vo.id}]" value="{$vo.orderno}" style="width:30px;"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.money}</td>
+                    <!--<td>{$vo.pay_pal_money}</td>-->
+                    <td>{$vo.coin}</td>
+                    <td>{$vo.give}</td>
+                    <td>{$vo.ios_money}</td>
+                    <td>{$vo.apple_pay_coin}</td>
+                    <td>{$vo.apple_pay_name}</td>
+                    <td>{$vo.google_pay_id}</td>
+                    <if condition="$vo['type'] eq 0">
+                            <td>{:lang('CLOSE')}</td>
+                        <else/>
+                            <td>{:lang('OPEN')}</td>
+                    </if>
+                    <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <a href="{:url('refill/add',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+
+        <button type="button" class="btn btn-primary" style="margin-top:20px;"> {:lang('SORT')} </button>
+    </form>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('refill/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("{:lang('DELETE_SUCCESS')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('DELETE_FAILED')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function(){
+        $(".js-ajax-form").submit();
+    })
+</script>
+</body>
+</html>

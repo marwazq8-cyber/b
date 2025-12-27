@@ -1,0 +1,178 @@
+<include file="public@header"/>
+<style>
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .gift-img{width:120px;height:40px;}
+     .gift-img img{height:100%};
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_PLAYER_LIST')}</a></li>
+       <!-- <li><a href="{:url('level/add')}">{:lang('添加等级分类')}</a></li>-->
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('player/index')}">
+        {:lang('USER_ID')}:
+        <input type="text" class="form-control" name="name" style="width: 120px;" value="{$data.name|default=''}" placeholder="{:lang('USER_ID')}">
+        {:lang('USERNAME')}:
+        <input type="text" class="form-control" name="colors" style="width: 120px;" value="{$data.colors|default=''}" placeholder="{:lang('USERNAME')}">
+         {:lang('ADMIN_GAME')}：
+        <select class="form-control" name="game_id" style="width: 140px;">
+            <option value="0">{:lang('ALL')}</option>
+            <foreach name="game" id="val">
+                <option value="{$val.id}" <if condition="$data.game_id eq $val.id"> selected='selected' </if>>{$val.name}</option>
+            </foreach>
+        </select>
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('player/index')}">{:lang('EMPTY')}</a>
+    </form>
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('USERNAME')}</th>
+                <th>{:lang('ADMIN_GAME_NAME')}</th>
+                <th>{:lang('CATCH_ORDER_TIME')}</th>
+                <th>{:lang('ADMIN_PRICE')}</th>
+                <th>{:lang('ADMIN_PAID_USER_NUM')}</th>
+                <th>{:lang('ADMIN_ALL_ORDER_NUM')}</th>
+                <!--<th>{:lang('颜色值')}</th>
+                <th>{:lang('SORT')}</th>-->
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+                <php>
+                    $type=array('1'=>lang('YES'),'0'=>lang('NO'));
+                </php>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.user_nickname}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.order_date} {$vo.order_time_start}</td>
+                    <td>{$vo.price}/{$vo.order_type}</td>
+                    <td>{$vo.count_user}</td>
+                    <td>{$vo.count_order}</td>
+
+                    <!--<td>{$type[$vo.is_recommend]}</td>-->
+
+                    <td>
+                        <!--<if condition="$vo.is_recommend eq 1">
+                            <a class="out_details"  data-id="{$vo.id}">{:lang('取消推荐')}</a>
+                            <else/>
+                        <a url="{:url('player/start_recommend',array('id'=>$vo.id))}" class="details" data-id="{$vo.id}">{:lang('推荐')}</a>
+                        </if>
+                        |
+                        <a href="{:url('player/evaluation',array('id'=>$vo.id))}" >{:lang('查看评价')}</a>
+                        |-->
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('player/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id,type:4},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+
+    $(".out_details").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('确定取消推荐？')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('player/start_recommend')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id,type:2},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('Recommendation_cancelled_successfully')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('推荐失败')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+
+    $(".details").click(function () {
+        var id = $(this).attr('data-id');
+        var lists = {$label};
+
+        var html = '';
+        for(var i=0;i<lists.length;i++){
+
+            html += "<option value='"+lists[i].id+"'>"+lists[i].label_name+"</option>";
+        }
+        //自定页
+        layer.open({
+            title: "{:lang('选择推荐标签')}",
+            type: 1,
+            skin: 'layui-layer-demo', //样式类名
+            closeBtn: 0, //不显示关闭按钮
+            btn: ["{:lang('OK')}", "{:lang('关闭')}"],
+            area: '250px;',
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: "<select style='width:80%;margin-left: 10%;margin-top: 30px;' class='sel' name=''>"+html+"<select/>",
+            success: function(layero){
+                var btn = layero.find('.layui-layer-btn');
+
+                btn.find('.layui-layer-btn0').click(function () {
+                    var a = $(".sel").val();
+                    $.ajax({
+                        url: "{:url('player/start_recommend')}",
+                        type: 'post',
+                        dataType: 'json',
+                        data: {id: id,recommend_label:a,type:1},
+                        success: function (data) {
+                            if (data == '1') {
+                                layer.msg("{:lang('Recommended_successfully')}", {time: 2000, icon: 1}, function () {
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg("{:lang('操作失败')}", {time: 2000, icon: 2});
+                            }
+                        }
+                    });
+                });
+
+            }
+        });
+    })
+</script>
+</body>
+</html>

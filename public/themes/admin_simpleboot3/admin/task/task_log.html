@@ -1,0 +1,66 @@
+<include file="public@header"/>
+<style>
+    .gift-img img{width:100%;height:100%;}
+    .gift-in input{width:25px;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:void(0);">{:lang('任务奖励记录')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('task/task_log')}">
+       {:lang('任务类型')}:
+        <select class="form-control" name="type" style="width: 140px;">
+            <option value='0'>{:lang('全部')}</option>
+            <option value='1' <if condition="$request.type eq 1"> selected='selected' </if>>{:lang('绑定手机号')}</option>
+            <option value='2' <if condition="$request.type eq 2"> selected='selected' </if>>{:lang('动态')}</option>
+            <option value='3' <if condition="$request.type eq 3"> selected='selected' </if>>{:lang('私聊')}</option>
+            <option value='4' <if condition="$request.type eq 4"> selected='selected' </if>>{:lang('邀请')}</option>
+            <option value='5' <if condition="$request.type eq 5"> selected='selected' </if>>{:lang('分享')}</option>
+            <option value='6' <if condition="$request.type eq 6"> selected='selected' </if>>{:lang('语音')}</option>
+            <option value='7' <if condition="$request.type eq 7"> selected='selected' </if>>{:lang('视频')}</option>
+            <option value='8' <if condition="$request.type eq 8"> selected='selected' </if>>{:lang('送礼物')}</option>
+            <option value='9' <if condition="$request.type eq 9"> selected='selected' </if>>{:lang('陪玩下单')}</option>
+        </select>
+       {:lang('时间')}:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time" value="{$request['start_time']|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$request['end_time']|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+        {:lang('USER_ID')}:
+        <input type="text" class="form-control" name="uid" style="width: 200px;"
+               value="{$request.uid|default=''}" placeholder="{:lang('Please_enter_user_ID')}">
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}"/>
+    </form>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{:lang('用户(ID)')}</th>
+            <th>{:lang('任务名')}</th>
+            <th>{:lang('奖励数量')}</th>
+            <th>{:lang('类型')}</th>
+            <th>{:lang('时间')}</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <php>
+            $type = array(1=>lang('绑定手机号'),2=>lang('动态'),3=> lang('私聊'),4=>lang('邀请'),5=>lang('分享'),6=>lang('语音'),7=>lang('视频'),8=>lang('送礼物'),9=>lang('配玩下单'));
+        </php>
+        <foreach name="data" id="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.uname}({$vo.uid})</td>
+                <td>{$vo.name}</td>
+                <td>{$vo.coin}</td>
+                <td>{$type[$vo.type]}</td>
+                <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+    <ul class="pagination">{$page|default=''}</ul>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

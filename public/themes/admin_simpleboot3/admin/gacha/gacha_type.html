@@ -1,0 +1,91 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .gift-in input {
+        width: 20px;
+    }
+
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_GACHA_COUNT')}</a></li>
+        <li><a href="{:url('gacha/gacha_type_add')}">{:lang('ADMIN_GACHA_COUNT_ADD')}</a></li>
+    </ul>
+
+    <form class="js-ajax-form" action="{:url('gacha/gacha_type')}" method="post">
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>{:lang('SORT')}</th>
+                <th>ID</th>
+                <th>{:lang('ADMIN_COUNT')}</th>
+                <th>{:lang('ADD_TIME')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td class="gift-in"><input type="text" name="listorders[{$vo.id}]" value="{$vo.orderno}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+
+                    <td>{$vo.create_time | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <a href="{:url('gacha/gacha_type_add',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <button type="button" class="btn btn-primary" style="margin-top:20px;"> {:lang('SORT')}</button>
+    </form>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('gacha/gacha_type_del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function () {
+        $(".js-ajax-form").submit();
+    })
+</script>
+</body>
+</html>

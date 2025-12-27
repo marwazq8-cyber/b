@@ -1,0 +1,70 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+    .select{width: 150px;height: 30px;}
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('eggs/index')}">{:lang('列表')}</a></li>
+<!--        <li class="active"><a href="{:url('eggs/add')}">{:lang('添加砸蛋类型')}</a></li>-->
+    </ul>
+    <form action="{:url('compared/addPost')}" method="post" enctype="multipart/form-data">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_FILE1')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="file" name="file1">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('ADMIN_FILE2')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="file" name="file2">
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('eggs/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+
+    });
+</script>
+
+</body>
+</html>

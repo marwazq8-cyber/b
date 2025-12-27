@@ -1,0 +1,170 @@
+<include file="public@header"/>
+<style>
+    .home-info li em {
+        float: left;
+        width: 120px;
+        font-style: normal;
+        font-weight: bold;
+    }
+
+    .home-info ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    .panel {
+        margin-bottom: 0;
+    }
+    .grid-item {
+        margin-bottom: 5px;
+        padding: 5px;
+    }
+
+    .btn-main-box{
+        cursor: pointer;
+        position: relative;
+        padding: 20px 20px 20px 20px;
+        background-color: #fff;
+        color: #333;
+        font-weight: 400;
+        font-size: 16px;
+        text-align: center;
+    }
+</style>
+<link rel="stylesheet" href="/themes/admin_simpleboot3/public/assets/simpleboot3/css/index.css">
+<hook name="admin_before_head_end"/>
+</head>
+<body>
+<div class="wrap">
+    <empty name="has_smtp_setting">
+        <!--<div class="grid-item col-md-12">
+            <div class="alert alert-danger alert-dismissible fade in" role="alert" style="margin-bottom: 0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>{:lang('提示!')}</strong> 邮箱配置未完成,无法进行邮件发送!
+                <a href="#" data-dismiss="alert" aria-label="Close"
+                   onclick="parent.openapp('{:url('Mailer/index')}','admin_mailer_index','邮箱配置');">{:lang('现在设置')}</a>
+            </div>
+        </div>-->
+    </empty>
+
+    <if condition="!extension_loaded('fileinfo')">
+        <div class="grid-item col-md-12">
+            <div class="alert alert-danger alert-dismissible fade in" role="alert" style="margin-bottom: 0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>{:lang('提示!')}</strong> php_fileinfo扩展没有开启，无法正常上传文件！
+            </div>
+        </div>
+    </if>
+
+    <div class="grid-item col-md-12" id="thinkcmf-notices-grid" style="display:none;">
+        <div class="dashboard-box">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{:lang('SYSTEM_NOTIFICATIONS')}</h3>
+                </div>
+                <div class="panel-body home-info">
+                    <ul id="thinkcmf-notices" class="list-unstyled">
+                        <li>
+                            <img src="__TMPL__/public/assets/images/loading.gif" style="vertical-align: middle;"/>
+                            <span style="display: inline-block; vertical-align: middle;">{:lang('LOADING')}...</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--首页-->
+    <div class="bogo_index">
+    </div>
+    <div class="bogo_index_right">
+        <div class="bogo_index_right_type bogo_index_right_type_radius bogo_index_bottom">
+            <div class="bogo_index_right_type_img bogo_index_tel1"></div>
+            <div class="bogo_index_right_type_name">{:lang('SYSTEM_VERSION')}</div>
+            <div class="bogo_index_right_type_center">v1.1.0</div>
+        </div>
+        <if condition="IS_OFFICIAL eq 1">
+        <div class="bogo_index_right_type bogo_index_right_type_radius bogo_index_bottom">
+            <div class="bogo_index_right_type_img bogo_index_tel2"></div>
+            <div class="bogo_index_right_type_name">{:lang('COMMERCIAL_COPYRIGHT')}</div>
+            <div class="bogo_index_right_type_center">Shandong Cuckoo Network Technology Co., Ltd.</div>
+        </div>
+        </if>
+        <if condition="IS_OFFICIAL eq 1">
+        <div class="bogo_index_right_type bogo_index_right_type_radius bogo_index_bottom">
+            <div class="bogo_index_right_type_img bogo_index_tel3"></div>
+            <div class="bogo_index_right_type_name">{:lang('OFFICIAL_WEBSITE')}</div>
+            <div class="bogo_index_right_type_center"><a href="http://www.bogokj.com" target="_blank">http://www.bogokj.com</a>
+            </div>
+        </div>
+        </if>
+        <if condition="IS_GUILD eq 1">
+            <div class="bogo_index_right_type bogo_index_right_type_radius bogo_index_bottom">
+                <div class="bogo_index_right_type_img"><i class="fa fa-user-plus" aria-hidden="true" style="font-size: 40px"></i></div>
+                <div class="bogo_index_right_type_name">{:lang('公会后台')}</div>
+                <div class="bogo_index_right_type_center copy_url" data-url="{$http}/guild">{:lang('Copy_address')}</div>
+
+            </div>
+        </if>
+
+        <div class="bogo_index_right_type bogo_index_right_type_radius bogo_index_bottom">
+            <div class="bogo_index_right_type_img"><i class="fa fa-btc" aria-hidden="true" style="font-size: 40px"></i></div>
+            <div class="bogo_index_right_type_name">{:lang('充值代理商后台')}</div>
+            <div class="bogo_index_right_type_center copy_url" data-url="{$top_up_url}">{:lang('Copy_address')}</div>
+
+        </div>
+
+        <if condition="IS_AGENT eq 1">
+        <div class="bogo_index_right_type bogo_index_right_type_radius bogo_index_bottom">
+            <div class="bogo_index_right_type_img"><i class="fa fa-users" aria-hidden="true" style="font-size: 40px"></i></div>
+            <div class="bogo_index_right_type_name">{:lang('CPS 渠道后台')}</div>
+            <div class="bogo_index_right_type_center copy_url" data-url="{$http}/agent">{:lang('Copy_address')}</div>
+        </div>
+        </if>
+<!--        <div class="btn-main-box bogo_index_right_type_radius bogo_index_bottom">-->
+<!--            <div class="btn-main" data-url="{$http}/union">{:lang('COPY_THE_UNION_BACKSTAGE_ADDRESS')}</div>-->
+<!--            <div class="bogo_index_right_type_center"></div>-->
+<!--        </div>-->
+        <div class="btn-main-box bogo_index_right_type_radius bogo_index_bottom">
+            <div class="btn-main copy_url" data-url="{$http}/api/download_api/phone_index">{:lang('COPY_DOWNLOAD_ADDRESS')}</div>
+            <div class="bogo_index_right_type_center"></div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="__STATIC__/js/admin.js"></script>
+
+<script src="__STATIC__/js/amcharts.js" type="text/javascript"></script>
+<script src="__STATIC__/js/serial.js" type="text/javascript"></script>
+<script src="__STATIC__/js/pie.js" type="text/javascript"></script>
+<script src="__STATIC__/js/clipboard.min.js" type="text/javascript"></script>
+<script>
+    var url = '';
+    $('.copy_url').click(function(){
+        url = $(this).attr('data-url');
+    })
+    var clipboard = new ClipboardJS('.copy_url', {
+        // 点击copy按钮，直接通过text直接返回复印的内容
+        text: function() {
+            return url;
+        }
+    });
+
+    clipboard.on('success', function(e) {
+        console.log(e);
+        layer.msg('Copy successful');
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+</script>
+<hook name="admin_before_body_end"/>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('refill/pay_menu')}">{:lang('支付渠道列表')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('添加支付渠道')}</a></li>
+    </ul>
+    <form class="js-ajax-form" action="{:url('refill/edit_pay_menu_post')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_NAME')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[pay_name]"
+                                   id="title" required value="{$data.pay_name |default=''}" placeholder="{:lang('Please_enter_name')}"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('支付图标')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[icon]" id="thumbnail" value="{$data['icon'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <if condition="$data['icon']">
+                                        <img src="{$data['icon']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('商户号 ')}<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[merchant_id]" id="merchant_id" value="{$data.merchant_id |default=''}"
+                                 ></td>
+                    </tr>
+
+                    <tr>
+                        <th>APP_ID <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[app_id]" id="app_id" value="{$data.app_id |default=''}"
+                                   placeholder="{:lang('APP ID')}"></td>
+                    </tr>
+
+
+                    <tr>
+                        <th>{:lang('类名 ')}<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[class_name]" id="class_name" value="{$data.class_name |default=''}"
+                                  ></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <input  type="radio" name="post[status]" <if condition="$data['status'] eq 1">checked="checked"</if>  value="1"/>&nbsp;&nbsp;{:lang('OPEN')} &nbsp;&nbsp;&nbsp;&nbsp;
+                            <input  type="radio" name="post[status]" <if condition="$data['status'] eq 0">checked="checked"</if> value="0"/>&nbsp;&nbsp;{:lang('CLOSE')}
+                        </td>
+                    </tr>
+<!--                    <tr>
+                        <th>IOS是否显示<span class="form-required">*</span></th>
+                        <td>
+                            <input  type="radio" name="post[ios_on]" <if condition="$data['ios_on'] eq 1">checked="checked"</if>  value="1"/>&nbsp;&nbsp;是 &nbsp;&nbsp;&nbsp;&nbsp;
+                            <input  type="radio" name="post[ios_on]" <if condition="$data['ios_on'] eq 0">checked="checked"</if> value="0"/>&nbsp;&nbsp;否
+                        </td>
+                    </tr>-->
+
+                    <tr>
+                        <th>{:lang('公钥 ')}<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[public_key]" id="public_key" value="{$data.public_key |default=''}"
+                                   placeholder="{:lang('公钥')}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('私钥')}<span class="form-required">*</span></th>
+
+                        <td><input class="form-control" type="text" name="post[private_key]" id="private_key" value="{$data.private_key |default=''}"
+                                   ></td>
+                    </tr>
+                </table>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('refill/pay_menu')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+
+
+                <input type="hidden" name="id" value="{$data.id |default=''}"/>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+
+
+</body>
+</html>

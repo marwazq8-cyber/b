@@ -1,0 +1,189 @@
+<include file="public@header" />
+<link href="/static/css/admin_acction.css" rel="stylesheet">
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('voice/index')}">{:lang('语音直播列表')}</a></li>
+			<li><a href="{:url('voice/add_index')}">{:lang('添加语音直播')}</a></li>
+		</ul>
+        <form class="well form-inline margin-top-20" method="post" action="{:url('Voice/index')}">
+			{:lang('USER_ID')}:
+            <input type="text" class="form-control" name="user_id" style="width: 120px;" value="{:input('request.user_id/s','')}" placeholder="{:lang('Please_enter_user_ID')}">
+           {:lang('房间ID')}:
+            <input type="text" class="form-control" name="voice_id" style="width: 120px;" value="{:input('request.voice_id/s','')}" placeholder="{:lang('请输入房间ID')}">
+<!--            {:lang('房间直播状态')}:-->
+<!--	        <select name="status" class="form-control">-->
+<!--	            <option value="0">{:lang('ALL')}</option>-->
+<!--	            <option value="1" <if condition="input('request.status/s','') eq '1'"> selected='selected' </if> >{:lang('正在语音直播')}</option>-->
+<!--	        </select>-->
+	        {:lang('房间类型')}:
+	        <select name="type" class="form-control">
+	            <option value="-1">{:lang('ALL')}</option>
+	            <option value="1" <if condition="input('request.type/s','') eq '1'"> selected='selected' </if> >{:lang('交友厅')}</option>
+	            <option value="2" <if condition="input('request.type/s','') eq '2'"> selected='selected' </if> >{:lang('派单厅')}</option>
+	        </select>
+	         {:lang('语音频道类型')}:
+	        <select name="voice_type" class="form-control">
+	            <option value="0">{:lang('ALL')}</option>
+	            <foreach name="voice_type" item="v">
+	            	<option value="{$v['id']}" <if condition="$v['id'] eq input('request.voice_type/s','')"> selected='selected' </if> >{$v['name']}</option>
+	        	</foreach>
+	        </select>
+            <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+            <a class="btn btn-danger" href="{:url('Voice/index')}">{:lang('EMPTY')}</a>
+        </form>
+        <form class="js-ajax-form" action="{:url('Voice/upd_index_sort')}" method="post">
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th>{:lang('SORT')}</th>
+						<th width="50">ID</th>
+						<th>{:lang('语音标题')}</th>
+						<th>{:lang('房间封面')}</th>
+						<th>{:lang('USER_ID')}</th>
+						<th>{:lang('USER_NICKNAME')}</th>
+						<th>{:lang('TIME')}</th>
+						<th>{:lang('语音频道')}</th>
+						<th>{:lang('房间类型')}</th>
+						<th>{:lang('密码')}</th>
+						<th>{:lang('观看人数')}</th>
+						<th>{:lang('群组ID')}</th>
+						<th>{:lang('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="list" item="vo">
+					<tr>
+						<td ><input type="text" name="sort[{$vo.id}]" value="{$vo.sort}" style="width: 30px;"></td>
+						<td>{$vo.id}</td>
+						<td>{$vo.title}</td>
+						<td>
+							<img style="width: 50px;height: 50px;object-fit: cover;" src="{$vo.avatar}" alt="">
+						</td>
+						<td>{$vo.user_id}</td>
+						<td>{$vo['user_nickname']}</td>
+
+						<td>{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
+						<td>{$vo.name}</td>
+						<td>
+							<if condition="$vo['room_type'] eq 1">
+								{:lang('交友厅')}
+								<else />
+								{:lang('派单厅')}
+							</if>
+						</td>
+						<td>{$vo.voice_psd_show}</td>
+						<td>{$vo.online_number}</td>
+						<td>{$vo.group_id}</td>
+						<td>
+							<button class="ipt btn btn-info" type="button">{:lang('ACTIONS')} <strong>+</strong></button>
+							<ul id="ul">
+								<li>
+									<a href="{:url('voice/add_index',array('id'=>$vo['id']))}">{:lang('EDIT')}</a>
+								</li>
+								<li>
+									<a href="{:url('voice/voice_administrator',array('voice_id'=>$vo['user_id']))}">{:lang('管理员列表')}</a>
+								</li>
+								<li>
+									<a href="{:url('voice/voice_host',array('voice_id'=>$vo['user_id']))}">{:lang('主持人列表')}</a>
+								</li>
+								<li>
+									<a href="{:url('voice/voice_wheat',array('voice_id'=>$vo['user_id']))}">{:lang('麦位列表')}</a>
+								</li>
+								<li>
+									<a href="javascript:void(0);" onclick="get_voice_audience('{$vo.user_id}')">{:lang('观众列表')}</a>
+								</li>
+								<li>
+									<if condition="$vo['reference'] eq 0">
+										<a style="text-decoration:none;"  href="{:url('user/adminIndex/reference',array('id'=>$vo['user_id'],'type'=>1))}">{:lang('推荐房间')}</a>
+										<else/>
+										<a style="text-decoration:none;"  data-value="{:url('adminIndex/reference',array('id'=>$vo['user_id'],'type'=>0))}" href="{:url('user/adminIndex/reference',array('id'=>$vo['user_id'],'type'=>0))}">{:lang('取消推荐')}</a>
+									</if>
+								</li>
+								<li>
+									<a href="#" class="del" data-id="{$vo.id}">{:lang('关闭房间')}</a>
+								</li>
+							</ul>
+
+						</td>
+
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			 <button type="button" class="btn btn-primary" style="margin-top:20px;">{:lang('排序')}</button>
+		</form>
+		<div class="pagination">{$page}</div>
+	</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+	function get_voice_audience(id) {
+		layer.open({
+			type: 2,
+			title: "{:lang('观众列表')}",
+			shadeClose: true,
+			area: ['80%', '80%'],   //宽高
+			shade: 0.4,   //遮罩透明度
+			content:  "{:url('voice/voice_audience')}?voice_id=" + id
+		});
+	}
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('您是否要关闭房间？')}", {
+			title: "{:lang('操作')}",
+            btn: ["{:lang('确定')}","{:lang('取消')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('voice/voice_del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function () {
+        $(".js-ajax-form").submit();
+    })
+
+	flag = true;
+	$(".ipt").click(function(){
+
+		if(flag){
+			$(this).children('strong').html(' -');
+			$(this).next('ul').css('display','block');
+			flag = false;
+		}else{
+			flag = true;
+			var self = $(this);
+			setTimeout(function(){
+				self.children('strong').html(' +');
+				self.next('ul').css('display','none');
+			},200)
+		}
+
+
+	});
+
+	$(".ipt").blur(function(){
+		flag = true;
+		var self = $(this);
+		setTimeout(function(){
+			self.children('strong').html('+');
+			self.next('ul').css('display','none');
+		},200)
+	});
+</script>
+</body>
+</html>
+

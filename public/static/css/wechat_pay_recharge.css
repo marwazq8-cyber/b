@@ -1,0 +1,208 @@
+.box{
+    min-height: 100vh;
+    overflow: hidden;
+    background: #F3F4F8;
+}
+.top{
+    width: 100%;
+    height: 7rem;
+    background: #FFFFFF;
+    overflow: hidden;
+}
+.top input{
+    width: 90%;
+    line-height: 5rem;
+    margin: 0 auto;
+    font-size: 2rem;
+    border: none;
+}
+.content{
+    width: 100%;
+    margin: 2rem auto;
+    overflow: hidden;
+    background-color: #FFFFFF;
+}
+.content-title{
+    width: 90%;
+    margin: 0 auto;
+    text-align: left;
+    font-size: 2rem;
+    line-height: 6rem;
+    font-weight: 600;
+}
+.content-box{
+    width: 50%;
+    float: left;
+}
+.content-box-a{
+    width: 80%;
+    margin: 0 auto;
+    background: #FFFFFF;
+    margin-bottom: 2rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    /*box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;*/
+    border: 2px solid #E6E6E6;
+}
+.content-box-a-top-bx{
+    width: 90%;
+    font-size: 2rem;
+    color: #333333;
+    border-bottom-right-radius: 1rem;
+    margin: 1rem auto 0 auto;
+
+}
+.content-box-a-bottom{
+    font-size: 1.8rem;
+}
+.footer{
+    width: 100%;
+    background-color: #FFFFFF;
+    overflow: hidden;
+}
+.footer-box{
+    width: 90%;
+    margin: 0 auto;
+    /*background: #57BE5E;
+    line-height: 5rem;
+    font-size: 2rem;
+    color: #FFFFFF;
+    border-radius: 1rem;*/
+    overflow: hidden;
+    padding: 2rem 0;
+    /*border-bottom:1px solid #E6E6E6 ;*/
+}
+/*.footer-box:last-child{
+    border-bottom:none ;
+}*/
+.footer-box-a-l{
+    float: left;
+}
+.footer-box img{
+    height: 4rem;
+}
+.mask{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    background-color: rgba(0,0,0,0.3);
+    display: none;
+}
+.footer-box-a-c{
+    float: left;
+    line-height: 4rem;
+    margin-left: 1%;
+    font-size: 1.8rem;
+}
+.footer-box-a-r{
+    float: right;
+    margin-top: 1rem;
+}
+.footer-box-a-r-a{
+    width: 1.8rem;
+    height: 1.8rem;
+}
+.footer-button{
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    background: linear-gradient(-90deg, #864BF8 0%, #ED6491 100%);
+    font-size: 2rem;
+    border-radius: 2.5rem;
+    line-height: 5rem;
+    color: #FFFFFF;
+    cursor:pointer ;
+}
+.footer-button-bottom{
+    width: 100%;
+    height: 50pt;
+}
+.top-left{
+    float: left;
+    width: 80%;
+    margin-top: 1rem;
+}
+.top-right{
+    width: 20%;
+    float: right;
+    margin-top: 1rem;
+}
+.top-right img{
+    height: 5rem;
+    width: 5rem;
+    border-radius: 2.5rem;
+    object-fit: cover;
+}
+.is-wechat{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    background-color: rgba(0,0,0,0.4);
+    display: none;
+}
+.is-wechat img{
+    width: 100%;
+}
+.footer-pay-type-c{
+    width: 90%;
+    height: 1px;
+    background-color: #F3F4F8;
+    margin: 0 auto;
+}
+.footer-protocol{
+    width: 90%;
+    margin: 3rem auto 1rem auto;
+    text-align: left;
+}
+.footer-protocol span{
+    color: #9563F7;
+}
+.rule-give-box{
+    width: 46%;
+    position: absolute;
+    overflow: hidden;
+    margin-top: -1.5rem;
+}
+.rule-give{
+    float: right;
+    background: url("../image/zengsong_bgm@2x.png") no-repeat;
+    background-size: 100% 100%;
+    color: #FFFFFF;
+    /*margin-left: 30%;
+    margin-top: -1.5rem;*/
+}
+.rule-give-text{
+    margin: 0.2rem 0.5rem 1rem 0.5rem;
+}
+
+.portal-content{
+    width: 95%;
+    margin: 0 auto;
+}
+.wechat-customize{
+    width: 100%;
+    margin: 3vh 0;
+    background: #FFFFFF;
+}
+.wechat-customize-coin{
+    height: 7vh;
+    width: 90%;
+    font-size: 18px;
+    -webkit-appearance: none;
+    /*border: none;
+    border-bottom: 1px solid #c0c0c0;*/
+    border: 2px solid #E6E6E6;
+    border-radius: 4vh;
+    margin: 1vh 0;
+    padding: 0 0 0 5%;
+}
+.wechat-customize-text{
+    width: 90%;
+    margin: 0 auto;
+    text-align: left;
+    color: #c0c0c0;
+}

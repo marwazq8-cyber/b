@@ -1,0 +1,58 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('AdminTag/index')}">{:lang("标签管理")}</a></li>
+        <li><a href="{:url('AdminTag/add')}">{:lang('ADMIN_TAG_ADD')}</a></li>
+    </ul>
+    <form method="post" class="js-ajax-form margin-top-20">
+        <div class="table-actions">
+            <!--<button type="submit" class="btn btn-primary btn-sm js-ajax-submit">{:lang('SORT')}</button>-->
+        </div>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="50">ID</th>
+                <th>{:lang('ADMIN_TAG_NAME')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th width="160">{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="tags" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$arrStatus[$vo['status']]}</td>
+                    <td>
+                        <if condition="$vo['status'] eq 1">
+                            <a class="js-ajax-dialog-btn"
+                               href="{:url('AdminTag/upStatus',['id'=>$vo['id'],'status'=>0])}">{:lang("禁用")}</a>
+                            <else/>
+                            <a class="js-ajax-dialog-btn"
+                               href="{:url('AdminTag/upStatus',['id'=>$vo['id'] ,'status'=>1])}">{:lang("启用")}</a>
+                        </if>
+                        <a class="js-ajax-delete" href="{:url('AdminTag/delete',['id'=>$vo['id']])}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th width="50">ID</th>
+                <th>{:lang('ADMIN_TAG_NAME')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th width="160">{:lang('ACTIONS')}</th>
+            </tr>
+            </tfoot>
+        </table>
+        <div class="table-actions">
+            <!--<button type="submit" class="btn btn-primary btn-sm js-ajax-submit">{:lang('SORT')}</button>-->
+        </div>
+    </form>
+    <ul class="pagination">{$page|default=''}</ul>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

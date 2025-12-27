@@ -1,0 +1,88 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+
+
+ .select{width: 150px;height:30px;}
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('打泡泡奖励礼物列表')}</a></li>
+    </ul>
+      <form class="well form-inline margin-top-20" method="post" action="{:url('bubble/eggs_log')}">
+          {:lang('USER_ID')}:
+           <input type="text" class="form-control" name="uid" style="width: 120px;" value="{$request['uid']|default=''}" placeholder="{:lang('USER_ID')}">
+           {:lang('使用类型')}:
+            <select class="select" name="type">
+                <option val="0">{:lang('ALL')}</option>
+                 <option value="1" <if condition="$request['type'] eq 1"> selected = "selected" </if>>{:lang('公共奖池')}</option>
+                 <option value="2" <if condition="$request['type'] eq 2"> selected = "selected" </if>>{:lang('独立奖池')}</option>
+            </select>
+          {:lang('ADMIN_GIFT')}:
+            <select class="select" name="gift_id">
+                <option val="0">{:lang('ALL')}</option>
+                 <foreach name="gift" item="vo">
+                    <option value="{$vo['id']}" <if condition="$request['gift_id'] eq $vo['id']"> selected = "selected" </if>>{$vo['name']}</option>
+                </foreach>
+            </select>
+            {:lang('奖励列表轮回次数')}:
+            <input type="text" class="form-control" name="cycles" style="width: 120px;" value="{$request['cycles']|default=''}" placeholder="{:lang('请输入轮回次数')}">
+
+            <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+            <a class="btn btn-danger" href="{:url('bubble/eggs_log')}">{:lang('EMPTY')}</a>
+        </form>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>{:lang('USER')}(ID)</th>
+                <th>{:lang('使用类型')}</th>
+                <th>{:lang('ADMIN_GIFT_NAME')}</th>
+                <th>{:lang('ADMIN_GIFT_NUM')}</th>
+                <th>{:lang('消耗(魔法棒)')}</th>
+                <th>{:lang('次数标识')}</th>
+                <th>{:lang('房间用户(ID)')}</th>
+                <th>{:lang('奖励轮回次数')}</th>
+                <th>{:lang('TIME')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.user_nickname}({$vo.uid})</td>
+                     <td>
+                       <if condition="$vo['type'] eq 1">
+                             {:lang('公共奖池')}
+                       <else/>
+                             {:lang('独立奖池')}
+                        </if>
+                    </td>
+                    <td>{$vo.gift}</td>
+                    <td>{$vo.sum}</td>
+                     <td>{$vo.expend}</td>
+                    <td>{$vo.only}</td>
+                    <td>{$vo.aname}({$vo.voice_user_id})</td>
+                    <td>{$vo.cycles}</td>
+                    <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+     <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+
+</body>
+</html>

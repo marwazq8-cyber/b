@@ -1,0 +1,49 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('luck/index')}">{:lang('ADMIN_LUCK_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_LUCK_ADD')}</a></li>
+    </ul>
+    <form action="{:url('luck/addPost')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_LUCK')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="number" name="post[nubmer]"
+                                   id="title" required value="{$list.nubmer |default=''}" placeholder="{:lang('Please_enter_good_number')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_PRICE')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[coin]" id="source" value="{$list.coin |default=''}"
+                                   placeholder="{:lang('ADMIN_PRICE')}"></td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('luck/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+
+
+</body>
+</html>

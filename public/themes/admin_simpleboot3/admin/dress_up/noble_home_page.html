@@ -1,0 +1,78 @@
+<include file="public@header"/>
+<style>
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .gift-img{width:120px;height:40px;}
+    .gift-img img{height:100%};
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('dress_up/noble_home_page')}">{:lang('ADMIN_HOME_PAGE_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_NOBLE')} {:lang('ADMIN_HOME_PAGE_LIST')}</a></li>
+        <li><a href="{:url('Dress_up/home_page_add')}">{:lang('ADMIN_HOME_PAGE_ADD')}</a></li>
+    </ul>
+
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{:lang('ADMIN_NAME')}</th>
+            <th>{:lang('ADMIN_ICON')}</th>
+            <th>{:lang('ADD_TIME')}</th>
+            <th>{:lang('SORT')}</th>
+            <th>{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <php>
+            $type=array('1'=>lang('OPEN'),'0'=>lang('CLOSE'));
+        </php>
+        <foreach name="list" id="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.name}</td>
+                <td class="gift-img"><img src="{$vo.icon}" alt=""></td>
+                <td>{$vo.addtime| date="Y-m-d H:i:s",###}</td>
+                <td>{$vo.orderno}</td>
+                <td>
+                    <a href="{:url('dress_up/home_page_add',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                    <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                </td>
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('dress_up/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id,type:2},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+</script>
+</body>
+</html>

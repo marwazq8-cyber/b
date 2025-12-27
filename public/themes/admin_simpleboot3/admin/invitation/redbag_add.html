@@ -1,0 +1,79 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('invitation/redbag')}">{:lang('ADMIN_RED_BAG_LIST')}</a></li>
+        <li  class="active"><a href="javascript:;">{:lang('ADMIN_RED_BAG_ADD')}</a></li>
+    </ul>
+    <form action="{:url('invitation/redbagAddPost')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{$currency_name} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="number" name="post[coin]"
+                                   id="title" required value="{$level.coin |default=''}" placeholder="{:lang('请输入数量')}"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('ADMIN_USER_NUMBER')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[num]" id="source" value="{$level.num |default=''}"
+                                   placeholder="{:lang('请输入邀请人数 ')}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('TYPE')} <span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[type]" class="select">
+                                <option value="1" <if condition="$level['type'] eq 1"> selected="selected" </if>>{:lang('ADMIN_INVITE_AWARD_ONE')}</option>
+                                <option value="2" <if condition="$level['type'] eq 2"> selected="selected" </if>>{:lang('ADMIN_INVITE_AWARD_TWO')}</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[orderno]" style="width:100px;"
+                                   required value="{$level.orderno |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$level.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('invitation/redbag')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    function ColorGetFn(dom){
+        document.getElementById('colors').value = dom.value;
+    }
+ $('.btn-level-thumbnail').click(function () {
+            $('#level-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#level').val('');
+        });
+  $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<include file="public@header"/>
+<style>
+    .guild-img {
+        width: 50px;
+        height: 50px
+    }
+
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('Withdrawal_records_Association')}</a></li>
+    </ul>
+
+    <form class="well form-inline margin-top-20" name="form1" method="post" action="{:url('guild_manage/withdrawal')}">
+       {:lang('公会ID')}:
+        <input type="text" class="form-control" name="id" style="width: 120px;" value="{$data.id|default=''}" placeholder="{:lang('请输入公会ID')}">
+
+       {:lang('提现状态')}:
+        <select name="status" class="form-control">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="0" <if condition="$data.status eq '0'"> selected='selected' </if> >{:lang('审核中')}</option>
+            <option value="1" <if condition="$data.status eq 1"> selected='selected' </if> >{:lang('成功')}</option>
+            <option value="2" <if condition="$data.status eq 2"> selected='selected' </if> >{:lang('失败')}</option>
+        </select>
+        {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time" value="{$data['start_time']|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$data['end_time']|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="button" class="btn btn-primary" value="{:lang('SEARCH')}" onclick='form1.action="{:url('guild_manage/withdrawal')}";form1.submit();'/>
+        <a class="btn btn-danger" href="{:url('guild_manage/withdrawal')}">{:lang('EMPTY')}</a>
+        <input type="button" class="btn btn-primary from_export" style="background-color: #1dccaa;" value="{:lang('导出')}" onclick='form1.action="{:url('guild_manage/export_withdrawal_record')}";form1.submit();'>
+
+    </form>
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('ADMIN_GUILD_NAME')}(ID)</th>
+                <th>{:lang('ADMIN_WITHDRAW_NUMBER')}</th>
+                <th>{:lang('ADMIN_WITHDRAW_COIN')}</th>
+                <th>{:lang('ADMIN_ACCOUNT_TYPE')}</th>
+                <th>{:lang('ADMIN_ACCOUNT_NAME')}</th>
+                <th>{:lang('ADMIN_ACCOUNT_USER')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('LAST_CREATE_TIME')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}({$vo.gid})</td>
+                    <td>{$vo.coin}</td>
+                    <td>{$vo.money}</td>
+                    <td>
+                        <if condition="$vo['account_type'] eq '1'">
+                            {:lang('ALIPAY')}
+                            <else/>
+                            {:lang('WECHAT')}
+                        </if>
+                    </td>
+                    <td>{$vo.account_name}</td>
+                    <td>{$vo.cash_account}</td>
+                    <td>
+                        <if condition="$vo['status'] eq '0'">
+                            {:lang('CHECK_LOADING')}
+                            <elseif condition="$vo['status'] eq '1'"/>
+                            {:lang('AUDIT_BY')}
+                            <else/>
+                            {:lang('AUDIT_NO')}
+                        </if>
+                    </td>
+                    <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <if condition="$vo['status'] eq '0'">
+                            <a href="{:url('guild_manage/upd_withdrawal',array('id'=>$vo.id,'status'=>1))}">{:lang('PASS_THROUGH')}</a>
+                            <a href="{:url('guild_manage/upd_withdrawal',array('id'=>$vo.id,'status'=>2))}">{:lang('REFUSE')}</a>
+                        </if>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+         <div class="pagination">{$page}</div>
+
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+     $(".del").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}","{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('guild_manage/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("{:lang('DELETE_SUCCESS')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('DELETE_FAILED')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+</script>
+</body>
+</html>

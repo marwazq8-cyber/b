@@ -1,0 +1,303 @@
+<include file="public@header"/>
+<style>
+    .guild-img {
+        width: 50px;
+        height: 50px
+    }
+
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .btn-info:hover,.btn-info:click{
+        outline:0!important;
+        color:#2a6496!important;
+        background: #ecf0f1!important;
+        border-color: #ecf0f1!important;
+
+    }
+    .btn-info:focus{
+        outline:0!important;
+        box-shadow:none;
+    }
+
+    tr:hover .btn-info{
+        color:#2a6496!important;
+        background: #ecf0f1!important;
+        border-color: #ecf0f1!important;
+    }
+
+    .btn-info{
+        color:#2a6496!important;
+        background: #fff!important;
+        border-color: #fff!important;
+    }
+    #ul{
+        font-size: 12px;
+        list-style:none;
+        width:120px;
+        border:1px solid #c1c1c1;
+        display:none;
+        padding-left:0px;
+        position: absolute;
+        right:60px;
+        background-color: #ffffff
+    }
+    .ipt{
+        /*margin:1px 0 0 0px;*/
+        /*border:0px solid;*/
+    }
+    #ul li a{
+        display:inline-block;
+        float:left;
+        width:100%;
+        height:30px;
+        line-height: 30px;
+        text-decoration:none;
+
+        color: #333;
+    }
+    #ul li{
+        margin-left: 0;
+        padding-left: 0;
+        width:100%;height: 30px;
+        padding-left:15px;
+
+    }
+
+    #ul li:hover{
+        background-color:#f5f5f5;
+    }
+    #ul li a:hover{
+        color:#333;
+    }
+    .ipt::-ms-input-placeholder {
+        text-align: center;
+    }
+
+    .ipt::-webkit-input-placeholder {
+        text-align: center;
+
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_ANCHOR_LIST')}</a></li>
+        <li><a href="{:url('guild_manage/add_user_list',array('guild_id'=>$id))}">{:lang('ADMIN_ANCHOR_ADD')}</a></li>
+    </ul>
+    <!--<div style="width: 100%;height:30px;line-height: 30px;color:#f45e5e;padding-left: 20px;margin:15px 0;">*收益单位:心币</div>-->
+    <form class="js-ajax-form" action="{:url('guild_manage/upd')}" method="post" style="margin-top: 0px;">
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('USERNAME')}(ID)</th>
+                <th>{:lang('ADMIN_USER_ID')}</th>
+
+                <th>{:lang('ADMIN_GIFT_INCOME')}</th>
+                <th>{:lang('ADMIN_CHAT_INCOME')}</th>
+                <th>{:lang('ADMIN_CALL_INCOME')}</th>
+                <th>{:lang('ADMIN_PLAYER_INCOME')}</th>
+                <th>{:lang('ADMIN_ALL_INCOME')}</th>
+                <th>{:lang('USER_FROM')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('LAST_CREATE_TIME')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.user_nickname}({$vo.user_id})</td>
+                    <td>
+                        <if condition="$vo['is_talker'] eq '1'">
+                            {:lang('ADMIN_TAKER')}
+                            <else/>
+                            {:lang('ADMIN_PLAYER')}
+                        </if>
+                    </td>
+
+                    <td>{$vo.gift_coin}</td>
+                    <td>{$vo.pr_coin}</td>
+                    <td>{$vo.call_coin}</td>
+                    <td>{$vo.play_coin}</td>
+                    <td>{$vo.guild_earnings}</td>
+                    <td>
+                        <if condition="$vo.introduction">
+                            <div>{$vo.introduction}</div>
+                        </if>
+                        <if condition="$vo.inviter_user">
+                            <div>{:lang('ADMIN_RECOMMEND')}:{$vo.inviter_user}</div>
+                        </if>
+                        <if condition="$vo.tel">
+                            <div>{:lang('ADMIN_TEL_NUMBER')}:{$vo.tel}</div>
+                        </if>
+                    </td>
+                    <td>
+                        <if condition="$vo['status'] eq '0'">
+                            {:lang('CHECK_LOADING')}
+                            <elseif condition="$vo['status'] eq '1'"/>
+                            {:lang('PASS_THROUGH')}
+                            <elseif condition="$vo['status'] eq '2'"/>
+                            {:lang('REFUSE')}
+                            <else/>
+                            {:lang('CLOSE')}
+                        </if>
+                    </td>
+
+                    <td>{$vo.create_time | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <!--<button class="ipt btn btn-info" type="button">{:lang('ACTIONS')} <strong>+</strong></button>
+                        <ul id="ul">
+                            <li>
+                                <a href="#" onclick="select_join_list({$vo.id})">{:lang('查看主播列表')}</a>
+                            </li>
+                            <li>
+                                <a href="{:url('guild_manage/add',array('id'=>$vo.id))}">{:lang('EDIT')}</a>
+                            </li>
+                            <li>
+                                <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                            </li>
+                        </ul>-->
+                        <if condition="$vo.status  eq 0">
+                            <a href="javescript:;" class="status_list" data-id="{$vo.id}">{:lang('PASS_THROUGH')}</a> |
+                            <a href="javescript:;" class="status_list2" data-id="{$vo.id}">{:lang('REFUSE')}</a>|
+                        </if>
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    function select_info(id) {
+        layer.open({
+            type: 2,
+            title: '公会信息',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['50%', '60%'],
+            content: "{:url('guild_manage/select_guild_info')}?id=" + id //iframe的url
+        });
+    }
+
+    function select_join_list(id) {
+        layer.open({
+            type: 2,
+            title: '主播列表',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['65%', '70%'],
+            content: "{:url('guild_manage/join_list')}?id=" + id //iframe的url
+        });
+    }
+     $(".del").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('guild_manage/user_del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("{:lang('DELETE_SUCCESS')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('DELETE_FAILED')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+
+    $(".status_list").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm('确定通过审核？', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('guild_manage/status_user')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id,type:1},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("{:lang('审核成功')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('审核失败')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+
+    $(".status_list2").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm('确定拒绝审核？', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('guild_manage/status_user')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id,type:2},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("{:lang('审核成功')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('审核失败')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+
+    flag = true;
+    $(".ipt").click(function(){
+
+        if(flag){
+            $(this).children('strong').html(' -');
+            $(this).next('ul').css('display','block');
+            flag = false;
+        }else{
+            flag = true;
+            var self = $(this);
+            setTimeout(function(){
+                self.children('strong').html(' +');
+                self.next('ul').css('display','none');
+            },200)
+        }
+
+
+    });
+
+    $(".ipt").blur(function(){
+        flag = true;
+        var self = $(this);
+        setTimeout(function(){
+            self.children('strong').html('+');
+            self.next('ul').css('display','none');
+        },200)
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<include file="public@header"/>
+</head>
+<style>
+
+    #sex, #is_online, #reference, #user_status, #order {
+        width: 80px;
+        height: 32px;
+        border-color: #dce4ec;
+        color: #aeb5bb;
+    }
+
+    .gift-in input {
+        width: 25px;
+    }
+
+    .user_details_type {
+        float: left;
+        width: 50%;
+        text-align: left;
+    }
+
+    .btn-info:hover, .btn-info:click {
+        outline: 0 !important;
+        color: #2a6496 !important;
+        background: #ecf0f1 !important;
+        border-color: #ecf0f1 !important;
+
+    }
+
+    .btn-info:focus {
+        outline: 0 !important;
+        box-shadow: none;
+    }
+
+    tr:hover .btn-info {
+        color: #2a6496 !important;
+        background: #ecf0f1 !important;
+        border-color: #ecf0f1 !important;
+    }
+
+    .btn-info {
+        color: #2a6496 !important;
+        background: #fff !important;
+        border-color: #fff !important;
+    }
+
+    #ul {
+        font-size: 12px;
+        list-style: none;
+        width: 120px;
+        border: 1px solid #c1c1c1;
+        display: none;
+        padding-left: 0px;
+        position: absolute;
+        right: 60px;
+        background-color: #ffffff
+    }
+
+    .ipt {
+        /*margin:1px 0 0 0px;*/
+        /*border:0px solid;*/
+    }
+
+    #ul li a {
+        display: inline-block;
+        float: left;
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        text-decoration: none;
+
+        color: #333;
+    }
+
+    #ul li {
+        margin-left: 0;
+        padding-left: 0;
+        width: 100%;
+        height: 30px;
+        padding-left: 15px;
+
+    }
+
+    #ul li:hover {
+        background-color: #f5f5f5;
+    }
+
+    #ul li a:hover {
+        color: #333;
+    }
+
+    .ipt::-ms-input-placeholder {
+        text-align: center;
+    }
+
+    .ipt::-webkit-input-placeholder {
+        text-align: center;
+
+    }
+
+
+</style>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('agent/index')}">渠道管理</a></li>
+        <li><a href="{:url('agent/edit')}">添加渠道</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('agent/index')}">
+        渠道ID:
+        <input type="text" class="form-control" name="agent_id" style="width: 120px;"
+               value="{:input('request.agent_id/s','')}" placeholder="渠道id">
+        账号:
+        <input type="text" class="form-control" name="agent_login" style="width: 120px;"
+               value="{:input('request.agent_login/s','')}" placeholder="账号或昵称">
+        推广码:
+        <input type="text" class="form-control" name="channel" style="width: 120px;"
+               value="{:input('request.channel/s','')}" placeholder="推广码">
+        <if condition="$agent['agent_level'] eq 1">
+            推荐人ID:
+            <input type="text" class="form-control" name="subordinate_id" style="width: 120px;"
+                   value="{:input('request.subordinate_id/s','')}" placeholder="推荐人id">
+            账号类型：
+            <select class="form-control" name="agent_level" >
+                <option value="0">全部</option>
+                <if condition="$agent['agent_level'] eq 1">
+                    <option value="2"
+                    <if condition="$data['agent_level'] eq 2"> selected="selected"</if>
+                    >{:lang('agent_level2')}</option>
+                </if>
+                <option value="3"
+                <if condition="$data['agent_level'] eq 3"> selected="selected"</if>
+                >{:lang('agent_level3')}</option>
+            </select>
+        </if>
+        注册时间:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time"
+               value="{$data.start_time|default=''}"
+               style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time"
+               value="{$data.end_time|default=''}"
+               style="width: 140px;" autocomplete="off">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('agent/index')}">清空</a>
+        <span>总推广数: {$number}</span>
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th width="60">渠道ID</th>
+            <th>账号昵称</th>
+            <th>联系方式</th>
+            <th>推广码</th>
+            <th>推荐人id</th>
+            <th>账号类型</th>
+            <th>注册数</th>
+            <th>充值</th>
+            <if condition="$agent['agent_level'] eq 1">
+                <th>房间号</th>
+                <th>主播号</th>
+            </if>
+            <th>注册时间</th>
+            <th>备注</th>
+            <th>{:lang('STATUS')}</th>
+            <th width="130">{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <php>
+            $status=array('0'=>'账号已封','1'=>'正常');
+            $agent_level = array('1'=> lang('agent_level1'),'2'=> lang('agent_level2'),'3'=> lang('agent_level3'));
+        </php>
+        <foreach name="users" item="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.login_name}</td>
+                <td>{$vo.mobile}</td>
+                <td>{$vo.channel}</td>
+                <td>{$vo.agent_staff ? $vo.agent_staff : $vo.agent_company }</td>
+                <td>{$agent_level[$vo.agent_level]}</td>
+                <td>
+                    <a href="#" data-dismiss="alert" aria-label="Close"
+                       onclick="parent.openapp('{:url('agent/agent/userlist',array('agent_id'=>$vo['id']))}','agentuserlist','推广明细');">{$vo.register}</a>
+                </td>
+                <td>
+                    <a href="#" data-dismiss="alert" aria-label="Close"
+                       onclick="parent.openapp('{:url('agent/agent/userindex',array('agent_id'=>$vo['id'],'pay_type'=>0))}','agentuserindex','充值明细');">{:floatval($vo.recharge_coin)} 元</a>
+                </td>
+                <if condition="$agent['agent_level'] eq 1">
+                    <td> <a href="javascript:void(0)" class="add_voice" data-id="{$vo.id}" data-tid="{$vo.voice_id}">{$vo.voice_id}</a></td>
+                    <td> <a href="javascript:void(0)" class="add_host" data-id="{$vo.id}" data-tid="{$vo.host_id}">{$vo.host_id}</a></td>
+                </if>
+                <td>{:date('Y-m-d',$vo['addtime'])}</td>
+                <td>{$vo.remarks}</td>
+                <td>{$status[$vo['status']]}</td>
+                <td>
+                    <button class="ipt btn btn-info" type="button">操作 <strong>+</strong></button>
+                    <ul id="ul">
+                            <if condition="$agent['agent_level'] neq 3">
+                                <li><a href='{:url("agent/edit",array("id"=>$vo["id"]))}'>{:lang('EDIT')}</a></li>
+                            </if>
+                            <if condition="$agent['agent_level'] neq 3 && $agent['id'] neq $vo['id']">
+                                <li>
+                                    <if condition="$vo['status'] eq 1">
+                                        <a href="{:url('agent/ban',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn"
+                                           data-msg="{:lang('确定要封号')}">封号</a>
+                                        <else/>
+                                        <a href="{:url('agent/cancelban',array('id'=>$vo['id']))}"
+                                           class="js-ajax-dialog-btn" data-msg="{:lang('确定解封号')}">解封</a>
+                                    </if>
+                                </li>
+                            </if>
+                            <li><a href="{:url('user/information',array('id'=>$vo['id']))}">信息</a></li>
+                        <if condition="$agent['agent_level'] eq 1">
+                            <li> <a href="javascript:void(0)" class="add_voice" data-id="{$vo.id}" data-tid="{$vo.voice_id}">绑定房间号</a></li>
+                            <li> <a href="javascript:void(0)" class="add_host" data-id="{$vo.id}" data-tid="{$vo.host_id}">绑定主播号</a></li>
+                        </if>
+                    </ul>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__TMPL__/public/assets/simpleboot3/js/adminindex.js"></script>
+<script>
+    const agent_voice= {$agent_voice};
+    const agent_host= {$agent_host};
+    flag = true;
+    $(".ipt").click(function () {
+
+        if (flag) {
+            $(this).children('strong').html(' -');
+            $(this).next('ul').css('display', 'block');
+            flag = false;
+        } else {
+            flag = true;
+            var self = $(this);
+            setTimeout(function () {
+                self.children('strong').html(' +');
+                self.next('ul').css('display', 'none');
+            }, 200)
+        }
+
+
+    });
+
+    $(".ipt").blur(function () {
+        flag = true;
+        var self = $(this);
+        setTimeout(function () {
+            self.children('strong').html('+');
+            self.next('ul').css('display', 'none');
+        }, 200)
+    });
+    $(".add_host").click(function () {
+        let id = $(this).attr('data-id');
+        let tid = $(this).attr('data-tid');
+        const lists = agent_host;
+
+        let html = '';
+        for(let i=0; i<lists.length; i++){
+
+            html += "<option value='"+lists[i].host_id+"'";
+            if (tid == lists[i].host_id) {
+                html += "selected='selected'";
+            }
+            html +=">"+lists[i].host_id+"("+lists[i].remarks+")</option>";
+        }
+
+        //自定页
+        layer.open({
+            title: '绑定主播ID',
+            type: 1,
+            skin: 'layui-layer-demo', //样式类名
+            closeBtn: 0, //不显示关闭按钮
+            btn: ["{:lang('OK')}", '关闭'],
+            area: '500px;',
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: "<p style='height: 30px;line-height: 30px;margin-left: 10%;margin-top: 20px;'>主播ID号:</p><select style='width:80%;margin-left: 10%;height: 35px;' class='selhost' name=''>"+html+"<select/>",
+            success: function(layero){
+                const btn = layero.find('.layui-layer-btn');
+
+                btn.find('.layui-layer-btn0').click(function () {
+                    const a = $(".selhost").val();
+                    $.ajax({
+                        url: "{:url('agent/binding_host')}",
+                        type: 'post',
+                        dataType: 'json',
+                        data: {'id': id,'host_id':a},
+                        success: function (data) {
+                            if (data.code == 1) {
+                                layer.msg(data.msg, {time: 2000, icon: 1}, function () {
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg(data.msg, {time: 2000, icon: 2});
+                                layer.close(index);
+                            }
+                        }
+                    });
+                });
+            }
+        });
+    });
+    $(".add_voice").click(function () {
+        let id = $(this).attr('data-id');
+        let tid = $(this).attr('data-tid');
+        const lists = agent_voice;
+
+        let html = '';
+        for(let i=0; i<lists.length; i++){
+
+            html += "<option value='"+lists[i].voice_id+"'";
+            if (tid == lists[i].voice_id) {
+                html += "selected='selected'";
+            }
+            html +=">"+lists[i].voice_id+"("+lists[i].remarks+")</option>";
+        }
+
+        //自定页
+        layer.open({
+            title: '绑定房间号',
+            type: 1,
+            skin: 'layui-layer-demo', //样式类名
+            closeBtn: 0, //不显示关闭按钮
+            btn: ["{:lang('OK')}", '关闭'],
+            area: '500px;',
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: "<p style='height: 30px;line-height: 30px;margin-left: 10%;margin-top: 20px;'>房间号:</p><select style='width:80%;margin-left: 10%;height: 35px;' class='sel' name=''>"+html+"<select/>",
+            success: function(layero){
+                const btn = layero.find('.layui-layer-btn');
+
+                btn.find('.layui-layer-btn0').click(function () {
+                    const a = $(".sel").val();
+                    $.ajax({
+                        url: "{:url('agent/binding_voice')}",
+                        type: 'post',
+                        dataType: 'json',
+                        data: {'id': id,'voice_id':a},
+                        success: function (data) {
+                            if (data.code == 1) {
+                                layer.msg(data.msg, {time: 2000, icon: 1}, function () {
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg(data.msg, {time: 2000, icon: 2});
+                                layer.close(index);
+                            }
+                        }
+                    });
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

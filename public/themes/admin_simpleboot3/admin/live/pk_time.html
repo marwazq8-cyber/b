@@ -1,0 +1,42 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('live/pkTime')}">PK时长列表</a></li>
+			<li><a href="{:url('live/pkTimeAdd')}">{:lang('增加PK时长')}</a></li>
+		</ul>
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th width="50">ID</th>
+					<th>PK时长</th>
+					<th>{:lang('LAST_CREATE_TIME')}</th>
+					<th>{:lang('UPDATE_TIME')}</th>
+					<th width="130">{:lang('ACTIONS')}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<foreach name="list" item="vo">
+				<tr>
+					<td>{$vo.id}</td>
+					<td>{$vo.time}分</td>
+					<td>{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
+					<td>{:date('Y-m-d H:i:s',$vo['modify_time'])}</td>
+					<td>
+						<a href='{:url("live/pkTimeModify",array("id"=>$vo["id"]))}'>{:lang('EDIT')}</a>
+						<a class="js-ajax-delete" href="{:url('live/pkTimeDelete',array('id'=>$vo['id']))}">{:lang
+							('DELETE')}</a>
+					</td>
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<div class="pagination">{$page}</div>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+	<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+	<script>
+	</script>
+</body>
+</html>

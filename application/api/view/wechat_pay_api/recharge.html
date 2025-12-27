@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>充值</title>
+    <script type="text/javascript" src="__STATIC__/js/jquery.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/num-alignment1.js"></script>
+    <script src="__STATIC__/js/lc_switch.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="__STATIC__/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="__STATIC__/css/common.css" />
+    <!--<link rel="stylesheet" href="__STATIC__/css/bubble.css" />-->
+    <!--<link rel="stylesheet" href="__STATIC__/css/bubble_bounced.css" />-->
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/css/style2.css">-->
+    <script src="__STATIC__/layer/mobile/layer.js" rel="stylesheet"></script>
+    <link rel="stylesheet" href="__STATIC__/css/wechat_pay_recharge.css">
+
+    <script type="text/javascript">
+        document.addEventListener('plusready', function(){
+            //console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+        });
+    </script>
+</head>
+<style>
+
+</style>
+<body>
+<div class="box">
+    <div class="top">
+        <div class="top-left">
+            <input id="uid" type="text" placeholder="{:lang('Please_enter_user_ID')}">
+        </div>
+        <div class="top-right">
+            <img class="avatar" src="__STATIC__/image/user@2x.png" alt="">
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="content-title">请选择充值{$currency_name}</div>
+        {foreach name="pay_list" item="v"}
+        <div class="content-box">
+            {if condition="$v.give > 0"}
+            <div class="rule-give-box">
+                <div class="rule-give">
+                    <div class="rule-give-text">赠送{$v.give}{$currency_name}</div>
+                </div>
+            </div>
+            {/if}
+            <div class="content-box-a content-box-a{$v.id}" data-id="{$v.id}">
+                <div class="content-box-a-top">
+                    <div class="content-box-a-top-bx">
+                        {$v.coin}{$currency_name}&nbsp;&nbsp;
+                    </div>
+                </div>
+                <div class="content-box-a-bottom">
+
+                    ¥{$v.money}
+                </div>
+            </div>
+        </div>
+        {/foreach}
+        <!--自定义充值金额-->
+        <div class="wechat-customize">
+            <input class="wechat-customize-coin" type="number" id="wechat-customize-coin" data-min="{$recharge_min_money}" placeholder="请输入充值金额">
+            <div class="wechat-customize-text">
+                最低充值金额{$recharge_min_money}元，充值比例1:{$recharge_money_proportion}
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        {foreach name="pay_type" item="val"}
+        <label style="display:block">
+            <div class="footer-box">
+                <div class="footer-box-a">
+                    <div class="footer-box-a-l">
+                        <img src="{$val.icon}" alt="">
+                    </div>
+                    <div class="footer-box-a-c">
+                        {$val.pay_name}
+                    </div>
+                    <div class="footer-box-a-r">
+                        <input class="footer-box-a-r-a" type="radio" name="pay_type_id" value="{$val.id}" id="a">
+                    </div>
+                </div>
+            </div>
+        </label>
+        <div class="footer-pay-type-c"></div>
+        {/foreach}
+        <!--<div class="footer-box">
+            <img src="__STATIC__/image/weixin1@2x.png" alt="">
+            微信支付
+        </div>-->
+    </div>
+    <div class="footer-protocol">支付即表示你已同意 <span class="protocol-url">《充值协议》</span></div>
+    <div class="footer-button">确认支付</div>
+    <div class="footer-button-bottom">
+        &nbsp;
+    </div>
+</div>
+<div class="mask"></div>
+<div class="is-wechat">
+    <img src="__STATIC__/image/wechat_open.png" alt="">
+</div>
+</body>
+<script src="__STATIC__/js/preloadjs-NEXT.min.js"></script>
+<script src="__STATIC__/js/soundjs-NEXT.min.js"></script>
+<script src="__STATIC__/js/iscroll.js"></script>
+<script src="__STATIC__/js/sign.js"></script>
+<script src="__STATIC__/js/jquery.md5.js"></script>
+<script src= "https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.1/alipayjsapi.inc.min.js" > </script>
+<script>
+    $(function(){
+        function is_weixn(){
+            var ua = navigator.userAgent.toLowerCase();
+            //console.log(ua);return;
+            if(ua.match(/MicroMessenger/i)=="micromessenger") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        if(is_weixn()){
+            $('.is-wechat').css('display','block');
+        }
+    })
+    var id = '';
+    var uid = '';
+    var pay_type_id = '';
+    var request_status = 1;
+    var money = 0;
+    $('.content-box-a').click(function(){
+        id = $(this).attr('data-id');
+        $('.content-box-a').css('border','2px solid #E6E6E6');
+        $('.content-box-a').css('background','#FFFFFF');
+        $('.content-box-a'+id).css('border','2px solid #9563F7');
+        $('.content-box-a'+id).css('background',' #FAF5FF');
+    });
+
+    $('.footer-button').click(function(){
+        uid = $('#uid').val();
+        pay_type_id = $('input[name="pay_type_id"]:checked').val();
+        money = $('#wechat-customize-coin').val();
+        var min_money = $('#wechat-customize-coin').attr('data-min');
+
+        if(id <= 0){
+            layer.open({
+                content: '请选择充值规则'
+                ,skin: 'msg'
+                ,time: 2 //2秒后自动关闭
+            });
+            return;
+        }
+
+        if(money<min_money && id <= 0){
+            layer.open({
+                content: '请填写正确的充值金额'
+                ,skin: 'msg'
+                ,time: 2 //2秒后自动关闭
+            });
+            return;
+        }
+
+        if(uid<=0){
+            layer.open({
+                content: '请输入正确的用户ID'
+                ,skin: 'msg'
+                ,time: 2 //2秒后自动关闭
+            });
+            return;
+        }
+        if(pay_type_id<=0 || pay_type_id==undefined){
+            layer.open({
+                content: '请选择充值方式'
+                ,skin: 'msg'
+                ,time: 2 //2秒后自动关闭
+            });
+            return;
+        }
+        //console.log(pay_type_id);
+        if(request_status==1){
+            pay(id,pay_type_id,money);
+        }
+    });
+    function pay(id,pid,money) {
+        if(request_status == '1'){
+            //$('.mask').css('display','block');
+            request_status=0;
+            //var sum=$(".bubble_type_color").attr("data-id");
+            const datas = {'uid': uid,'rid':id,'pid':pid,'money':money};
+            datas['sign'] = myJs.getJson(datas);
+            $.ajax({
+                type: 'POST',
+                url: "{:url('wechat_pay_api/pay_coin')}",
+                data: datas,
+                dataType: 'json',
+                success: function (data) {
+                    if(data.code == 1){
+                        if(data.pay.type==1){
+                            /*var a = ap.tradePay({
+                                orderStr :  data.pay.pay_info
+                            },  function ( res ) {
+                                ap.alert(res.resultCode);
+                            });*/
+                            //console.log(a);return;
+                            window.location.href= data.pay.pay_info;
+                        }else{
+                            //console.log(data);return;
+                            window.location.href= data.pay.mweb_url;
+                        }
+
+                        request_status = 1;
+                    }else{
+                        request_status = 1;
+                        layer.open({
+                            content: data.msg
+                            ,skin: 'msg'
+                            ,time: 2 //2秒后自动关闭
+                        });
+                        $('.mask').css('display','none');
+                    }
+                }
+            });
+        }
+    }
+
+    function onBridgeReady(data) {
+        //console.log(data);
+        window.WeixinJSBridge.invoke('getBrandWCPayRequest', {
+                "appId":data.appId,     //公众号ID，由商户传入
+                "nonceStr":data.nonceStr,      //随机串
+                "package":data.package,
+                "signType":"MD5",     //微信签名方式：
+                "timeStamp":data.timeStamp.toString(),     //时间戳，自1970年以来的秒数
+                "paySign":data.sign //微信签名
+
+            },
+            function(res) {
+                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                    // 使用以上方式判断前端返回,微信团队郑重提示：
+                    //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+                    request_status = 1;
+                    layer.open({
+                        content: '充值成功'
+                        ,skin: 'msg'
+                        ,time: 2 //2秒后自动关闭
+                    });
+                    $('.mask').css('display','none');
+                }
+            });
+
+    }
+
+    $("#uid").bind('input propertychange', function() {
+        var uid = $("#uid").val();
+        console.log(uid)
+        //$(".box2").val(a);
+        //$('.mask').css('display','block');
+        //var sum=$(".bubble_type_color").attr("data-id");
+        const datas = {'uid': uid};
+        datas['sign'] = myJs.getJson(datas);
+        $.ajax({
+            type: 'POST',
+            url: "{:url('wechat_pay_api/get_user_info')}",
+            data: datas,
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                if(data.code == 1){
+                    $('.avatar').attr('src',data.data.avatar);
+                }else{
+                    $('.avatar').attr('src','__STATIC__/image/user@2x.png');
+                }
+            }
+        });
+    })
+
+    $('.protocol-url').click(function(){
+        window.location.href = "{:url('wechat_pay_api/protocol')}";
+    })
+
+</script>
+</html>
+<style>
+
+
+</style>

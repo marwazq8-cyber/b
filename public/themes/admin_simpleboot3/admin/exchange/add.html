@@ -1,0 +1,65 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('Exchange/index')}">{:lang('ADMIN_EXCHANGE_RULES')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_EXCHANGE_RULES_ADD')}</a></li>
+    </ul>
+    <form class="js-ajax-form" action="{:url('Exchange/addPost')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                     <tr>
+                        <th>{:lang('ADMIN_EXCHANGE_RULES_NUM')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[coin]" id="source" value="{$rule.coin |default=''}"
+                                   placeholder="{:lang('请输入钻石数')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_WITHDRAW_DEDUCT_NUM')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[earnings]" id="source" value="{$rule.earnings |default=''}"
+                                   placeholder="{:lang('请输入积分数')}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                   required value="{$rule.sort |default='100'}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('OPEN_STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <input  type="radio" name="post[status]" <if condition="$rule['status'] eq 1">checked="checked"</if>  value="1"/>&nbsp;&nbsp;{:lang('OPEN')} &nbsp;&nbsp;&nbsp;&nbsp;
+                            <input  type="radio" name="post[status]" <if condition="$rule['status'] eq 0">checked="checked"</if> value="0"/>&nbsp;&nbsp;{:lang('CLOSE')}
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$rule.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('Exchange/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+
+
+</body>
+</html>

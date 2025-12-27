@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link href="__STATIC__/css/wallet.css" rel="stylesheet">
+    <link href="__STATIC__/css/bootstrap.min.css" rel="stylesheet">
+    <title>我的收益</title>
+
+<script>window.PointerEvent = void 0</script>
+</head>
+<body class="userinfo_eamings_body">
+  <div class="userinfo_eamings">
+      <div class="userinfo_eamings_name">我的收益</div>
+      <div class="userinfo_eamings_num">
+          <div class="userinfo_eamings_num_type">
+              <div class="userinfo_eamings_num_type_title">{:lang('ADMIN_ALL_INCOME')}</div>
+              <div class="userinfo_eamings_num_type_coin">{$user_info['income_total']}</div>
+          </div>
+            <div class="userinfo_eamings_num_type">
+              <div class="userinfo_eamings_num_type_title">余额</div>
+              <div class="userinfo_eamings_num_type_coin">{$user_info['income']}</div>
+          </div>
+      </div>
+      <div class="userinfo_eamings_btn" >
+          <div class="userinfo_eamings_btn_name href" data-href="/api/userinfo_api/income_withdrawal?uid={$uid}&token={$token}">结算</div>
+          <div class="userinfo_eamings_btn_name href" data-href="/api/exchange_api/integral?uid={$uid}&token={$token}">兑换</div>
+      </div>
+  </div>
+  <div class="userinfo_eamings_name_log">结算记录</div>
+  <div class="userinfo_eamings_log" >
+    <div id="wrapper"  class="userinfo_eamings_wrapper" >
+      <div class="scroller">
+          <ul>
+               {volist name="list" id="v"}
+                <li>
+                    <div class="userinfo_eamings_log_left">
+                        <div class="userinfo_eamings_log_left_name">
+                          {$v['status_name']}
+                        </div>
+                        <div class="userinfo_eamings_log_left_time">{$v['create_time']}</div>
+                    </div>
+                    <div class="userinfo_eamings_log_right">{$v['money']}</div>
+                </li>
+              {/volist}
+          </ul>
+          <div class="more"><i class="pull_icon"></i><span>上拉加载...</span></div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="__STATIC__/js/jquery-1.10.2.min.js"></script>
+<script src="__STATIC__/js/iscroll.js"></script>
+<script src="__STATIC__/layer/layer.js" rel="stylesheet"></script>
+<script>
+    var uid="{$uid}";
+
+    var is_page='0';
+    var myscroll = new iScroll("wrapper",{
+        onScrollMove:function(){
+            if (this.y<(this.maxScrollY)) {
+                $('.pull_icon').addClass('flip');
+                $('.pull_icon').removeClass('loading');
+                $('.more span').text('释放加载...');
+            }else{
+                $('.pull_icon').removeClass('flip loading');
+                $('.more span').text('上拉加载...')
+            }
+            if (this.y>(this.minScrollY)) {
+
+            }
+        },
+        onScrollEnd:function(){
+            if ($('.pull_icon').hasClass('flip')) {
+                $('.pull_icon').addClass('loading');
+                $('.more span').text('加载中...');
+                if(is_page){
+                   is_page='';
+                   pullUpAction();
+                }
+               
+            }
+
+
+        },
+        onRefresh:function(){
+            $('.more').removeClass('flip');
+            $('.more span').text('上拉加载...');
+        }
+
+    });
+    var page="1";
+    function pullUpAction(){
+          var html='';
+
+            $.ajax({
+                url:'/api/userinfo_api/earnings_page',
+                type:'get',
+                data:{uid:uid,page:page},
+                dataType:'json',
+                success:function(data){
+                    var html='';
+                    if(data.length >0){
+                        for (var i = 0; i < data.length; i++) {
+                            html+=' <li> <div class="userinfo_eamings_log_left"> <div class="userinfo_eamings_log_left_name">'+data[i]['status_name']+'</div><div class="userinfo_eamings_log_left_time">'+data[i]['create_time']+'</div></div><div class="userinfo_eamings_log_right">'+data[i]['money']+'</div></li>';
+                        }
+                        $('.scroller ul').append(html);
+                        myscroll.refresh();
+                        setTimeout(function(){
+                            is_page=1;
+                         }, 3000)
+                    }else{
+                        $('.more span').text('暂无数据...');
+                    }
+                    page++;
+                },
+
+            })
+            myscroll.refresh();
+       
+    }
+    if ($('.scroller').height()<$('#wrapper').height()) {
+        $('.more').hide();
+        myscroll.destroy();
+    }
+
+    $(".href").click(function(){
+
+        var url=$(this).attr("data-href");
+
+        window.location.href=url;
+    })
+
+</script>
+</html>

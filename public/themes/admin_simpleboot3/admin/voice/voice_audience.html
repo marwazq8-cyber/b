@@ -1,0 +1,58 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>{:lang('用户昵称(ID)')}</th>
+            <th>{:lang('头像')}</th>
+            <th>{:lang('性别')}</th>
+            <th>{:lang('年龄')}</th>
+            <th>{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="list" item="vo">
+            <tr>
+                <td>{$vo['user_nickname']}({$vo['user_id']})</td>
+                <td><img width="25" height="25" src="{$vo['avatar']}"/></td>
+                <td>{$vo.sex == 1 ? lang('MALE'): lang('FEMALE')}</td>
+                <td>{$vo.age}</td>
+                <td>
+                    <a href="javascript:void(0);" class="del" data-id="{$vo.user_id}" data-vid="{$vo.voice_id}">{:lang('退出房间')}</a>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        var vid = $(this).attr('data-vid');
+        layer.confirm("{:lang('确定退出房间')}", {
+            btn: ["{:lang('确定')}","{:lang('取消')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('voice/exit_room_user')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id:id,vid:vid},
+                success: function (data) {
+                    if (data === 1) {
+                        layer.msg("{:lang('退出成功')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('退出失败')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+        });
+    })
+</script>
+</body>
+</html>
+

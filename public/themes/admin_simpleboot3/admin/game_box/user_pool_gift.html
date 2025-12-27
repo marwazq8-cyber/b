@@ -1,0 +1,149 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+    .eggs_name{
+        width: 100%;height: 30px;line-height: 30px;color:#fb7373;margin-left: 20px;  }
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .select{width: 150px;height:30px;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('GameBox/user_pool')}">{:lang('ADMIN_POOL_PERSONAL_LIST')}</a></li>
+        <li class="active"><a  href="javascript:;">{:lang('ADMIN_POOL_GIFT_LIST')}</a></li>
+    </ul>
+    <!--<form class="well form-inline margin-top-20" method="post" action="{:url('bubble/user_pool')}">
+        {:lang('USER_ID')}：
+        <input class="form-control" type="text" name="uid" style="width: 100px;" value="{:input('request.uid')}"
+               placeholder="{:lang('请输入用户ID')}">
+       {:lang('奖池')}:
+        <select class="select" name="pool_id">
+            <option val="0">{:lang('ALL')}</option>
+            <foreach name="pool" item="vo">
+                <option value="{$vo['id']}" <if condition="$request['pool_id'] eq $vo['id']"> selected = "selected" </if>>{$vo['name']}</option>
+            </foreach>
+        </select>
+       {:lang('连续的次数')}:
+        <select class="select" name="continuous_id">
+            <option val="0">{:lang('ALL')}</option>
+            <foreach name="bubble_type" item="vo">
+                <option value="{$vo['id']}" <if condition="$request['continuous_id'] eq $vo['id']"> selected = "selected" </if>>{$vo['sum']}次</option>
+            </foreach>
+        </select>
+
+        <input type="submit" class="btn btn-primary" value="{:lang('搜索')}" />
+        <a class="btn btn-danger" href="{:url('bubble/user_pool')}">{:lang('清空')}</a>
+
+    </form>-->
+
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{:lang('ADMIN_TYPE_OF_USE')}</th>
+            <th>{:lang('ADMIN_PRIZE_POOL')}</th>
+            <th>{:lang('ADMIN_GIFT_NAME')}</th>
+            <th>{:lang('ADMIN_GIFT_PRICE')}</th>
+            <th>{:lang('ADMIN_NUMBER_OF_WINS')}</th>
+            <th>{:lang('ADMIN_NUMBER_OF_REWARDS')}</th>
+            <th>{:lang('ADMIN_WHETHER_THE_SYSTEM_PUSH')}</th>
+            <th>{:lang('ADMIN_WHETHER_TO_PUSH_IN_FULL_SCREEN')}</th>
+            <th>{:lang('ADMIN_FLOATING_SCREEN')}</th>
+            <th>{:lang('ADMIN_WHETHER_THE_LUCK_LIST_SHOWS')}</th>
+            <th>{:lang('ADMIN_REMAINING_NUMBER_OF_WINS')}</th>
+<!--            <th>{:lang('连续打泡泡次数')}</th>-->
+            <!--<th>{:lang('SORT')}</th>-->
+            <!--<th>{:lang('ACTIONS')}</th>-->
+        </tr>
+        </thead>
+        <tfoot>
+        <php> $status=array('1'=>lang('YES'),'2'=>lang('NO'));
+        </php>
+        <foreach name="list" id="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>
+                    <if condition="$vo['type'] eq 1">
+                        {:lang('ADMIN_PUBLIC')}
+                        <else/>
+                        {:lang('ADMIN_INDEPENDENCE')}
+                    </if>
+                </td>
+                <td>{$vo.pname}</td>
+                <td>{$vo.name}</td>
+                <td>{$vo.coin}</td>
+                <td>{$vo.odds}</td>
+                <td>{$vo.sum}</td>
+                <td>{$status[$vo.is_system_push]}</td>
+                <td>{$status[$vo.is_male_screen]}</td>
+                <td>{$status[$vo.is_all_notify]}</td>
+                <td>{$status[$vo.is_rank]}</td>
+                <td>{$vo.arrival_times}</td>
+<!--                <td>{$vo.continuous}次</td>-->
+                <!--<td>{$vo.sort}</td>-->
+                <!--<td>
+                    <a href="{:url('bubble/add',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                    <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                </td>-->
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm('删除后会重新开始统计打泡泡次数 ？', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('bubble/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".clear_both_gift").click(function(){
+        layer.confirm('确定清除缓存？', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('bubble/clear_both_voice_gift')}",
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    layer.msg("{:lang('清除缓存成功')}", {time: 2000, icon: 1});
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function () {
+        $(".js-ajax-form").submit();
+    })
+</script>
+</body>
+</html>

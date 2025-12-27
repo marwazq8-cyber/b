@@ -1,0 +1,65 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <form action="{:url('hook/pluginListOrder')}" method="post" class="js-ajax-form">
+        <php>
+            $types = ["1"=>lang('系统钩子'),'2'=>lang('应用钩子'),'3'=>lang('模板钩子'),'4'=>lang('后台模板钩子')];
+            $status=array("1"=>lang('OPEN'),"0"=>lang('禁用'),"3"=>lang('未安装'));
+        </php>
+        <div class="table-actions">
+            <button type="submit" class="btn btn-primary btn-sm js-ajax-submit">{:lang('SORT')}</button>
+        </div>
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th width="50">{:lang('SORT')}</th>
+                <th>{:lang('插件名称')}</th>
+                <th>{:lang('插件标识')}</th>
+                <th>{:lang('钩子')}</th>
+                <th>{:lang('描述')}</th>
+                <th>{:lang('作者')}</th>
+                <th width="60">{:lang('STATUS')}</th>
+                <th width="150">{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="plugins" item="vo">
+                <tr>
+                    <td><input name="list_orders[{$vo.hook_plugin_id}]" type="text" size="3" value="{$vo.list_order}"
+                               class="input input-order"></td>
+                    <td>{$vo.title}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.hooks|default=''}</td>
+                    <td>{$vo.description}</td>
+                    <td>{$vo.author}</td>
+                    <td>{$status[$vo['hook_plugin_status']]}</td>
+                    <td>
+                        <if condition="$vo['status']==3">
+                            <a href="{:url('plugin/install',array('name'=>$vo['name']))}" class="js-ajax-dialog-btn"
+                               data-msg="{:lang('确定安装该插件吗？')}">{:lang('安装')}</a>
+                            <else/>
+                            <php>$config=json_decode($vo['config'],true);</php>
+                            <if condition="!empty($config)">
+                                <a href="{:url('plugin/setting',array('id'=>$vo['id']))}">{:lang('设置')}</a> |
+                                <else/>
+                                <a href="javascript:;" style="color: #ccc;">{:lang('设置')}</a> |
+                            </if>
+
+                            <if condition="!empty($vo['has_admin'])">
+                                <a href="javascript:parent.openapp('{:cmf_plugin_url($vo['name'].'://AdminIndex/index')}','plugin_{$vo.name}','{$vo.title}')">{:lang('管理')}</a>|
+                                <else/>
+                                <a href="javascript:;" style="color: #ccc;">{:lang('管理')}</a>
+                            </if>
+
+                        </if>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<include file="public@header"/>
+<body>
+<style>
+    .table-box{
+        overflow-x:scroll;
+    }
+    #table{
+        min-width: 100%;
+    }
+    #table tr th{
+        white-space:nowrap;
+    }
+</style>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('GameTripartite/tripartit_game_log')}">{:lang('游戏记录')}</a></li>
+        <li class="active"><a href="javascript:void(0);">{:lang('游戏消费记录')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('GameTripartite/tripartit_game_user_log')}">
+       {:lang('用户ID')}:
+        <input type="text" class="form-control" name="uid" style="width: 120px;"
+               value="{$data.uid|default=''}" placeholder="{:lang('用户ID')}">
+       {:lang('轮数标识')}:
+        <input type="text" class="form-control" name="game_order_id" style="width: 120px;"
+               value="{$data.game_order_id|default=''}" placeholder="{:lang('轮数标识')}">
+        {:lang('类型')}:
+        <select class="form-control" name="game_type" style="width: 140px;">
+            <option value="">{:lang('全部')}</option>
+            <foreach name="$game_type_list" item="g">
+                <option value="{$g.value}" <if condition="$data.game_type eq $g.value"> selected='selected' </if>> {$g.label}</option>
+            </foreach>
+        </select>
+       {:lang('时间')}:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time" value="{$data['start_time']|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$data['end_time']|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+        <input type="submit" class="btn btn-primary" value="{:lang('搜索')}"/>
+        <a class="btn btn-danger" href="{:url('GameTripartite/tripartit_game_user_log')}">{:lang('清空')}</a>
+        <div>{:lang('消费金额')}: {$sum['consumption_coin']} ;{:lang('奖励数')}: {$sum['total_income']} ; {:lang('消费游戏币')}: {$sum1['consumption_coin']} ;{:lang('奖励礼物价值')}: {$sum1['total_income']}</div>
+    </form>
+
+    <div class="table-box">
+        <table class="table table-hover table-bordered" id="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('用户(ID)')}</th>
+                <th>{:lang('游戏名称')}</th>
+                <th>{:lang('轮数标识')}</th>
+                <th>{:lang('消费金额')}</th>
+                <th>{:lang('奖励数')}</th>
+                <th>{:lang('游戏结果')}</th>
+                <th>{:lang('时间')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.user_nickname}({$vo.uid})</td>
+                    <td>{$vo.game_type}</td>
+                    <td>{$vo.game_order_id}</td>
+                    <td>{$vo.consumption_coin}</td>
+                    <td>{$vo.total_income}</td>
+                    <td>{$vo.game_result_text}</td>
+                    <th>{$vo.create_time | date="Y-m-d H:i:s",###}</th>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script src="__STATIC__/js/admin.js"></script>
+</body>

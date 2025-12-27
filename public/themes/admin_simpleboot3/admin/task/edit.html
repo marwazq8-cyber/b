@@ -1,0 +1,60 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+    .gift{margin-top:40px;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('task/index')}">{:lang('任务列表')}</a></li>
+        <li class="active"><a href="javascript:void(0)">{:lang('编辑任务')}</a></li>
+    </ul>
+    <form action="{:url('task/editPost')}" class="js-ajax-form" method="post" >
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('任务名称')}</th>
+                        <td>
+                            <input class="form-control" type="text" name="name" style="width:150px;" value="{$data.name}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('奖励数量')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="coin" style="width:150px;" required value="{$data.coin}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')}</th>
+                        <td>
+                            <select name="status">
+                                <option value="0">{:lang('关闭')}</option>
+                                <option value="1" <if condition="$data.status eq 1"> selected="selected" </if> >{:lang('开启')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}</th>
+                        <td>
+                            <input class="form-control" type="text" name="orderno" style="width:100px;" value="{$data.orderno}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                    <input type="hidden" name="id" value="{$data.id}">
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('EDIT')}</button>
+                        <a class="btn btn-default" href="{:url('task/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

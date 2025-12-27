@@ -1,0 +1,121 @@
+<include file="public@header" />
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a  href="javascript:void(0)">{:lang('渠道推广提现记录')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('agent/withdrawal')}">
+
+       {:lang('推广id')}:
+        <input type="text" class="form-control" name="agent_id" style="width: 120px;" value="{$data.agent_id|default=''}" placeholder="{:lang('请输入推广id')}">
+        &nbsp;&nbsp;
+       {:lang('时间')}:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time" value="{$data.start_time|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$data.end_time|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="{:lang('搜索')}" />
+        <a class="btn btn-danger" href="{:url('agent/withdrawal')}">{:lang('清空')}</a>
+
+        <div style="margin-top:20px;">{:lang('提现的总金额')} :  {$sum} {:lang('元')}</div>
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>{:lang('申请时间')}</th>
+            <th>{:lang('USERNAME')}(ID)</th>
+            <th>{:lang('扣除金额')}</th>
+            <th>{:lang('到账金额')}</th>
+            <th>{:lang('账号类型')}</th>
+            <th>{:lang('账号卡号')}</th>
+            <th>{:lang('账号名称')}</th>
+            <th>{:lang('状态')}</th>
+            <th>{:lang('备注')}</th>
+            <th>{:lang('结算时间')}</th>
+            <th>{:lang('操作')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <php>$user_statuses=array("0"=>'审核中',"1"=>'已提现','2'=>'拒绝提现');</php>
+        <foreach name="list" item="vo">
+            <tr>
+                 <td>{$vo['addtime'] |date='Y-m-d',###}</td>
+                <td>{$vo.agent_login}({$vo['agent_id']})</td>
+                <td>{$vo['income'] |default='0'} {:lang('元')}</td>
+                <td>{:floatval($vo['money'])} {:lang('元')}</td>
+                <td>{$vo.pay_type}</td>
+                <td>{$vo.pay}</td>
+                <td>{$vo.pay_name}</td>
+                <td>
+                    {$user_statuses[$vo.status]}
+                </td>
+                <td>{$vo['remarks']}</td>
+                <td>{$vo['updatetime'] |date='Y-m-d H:i:s',###}</td>
+                <td>
+                    <if condition="$vo['status'] eq 0">
+
+                        | <a href="javascript:void(0)" class="settlement_btn" data-id="{$vo['id']}" data-status="1">{:lang('结算成功')}</a> |
+                        <a href="javascript:void(0)" class="settlement_btn" data-id="{$vo['id']}" data-status="2">{:lang('拒绝结算')}</a>
+                    </if>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    $(".collection_btn").click(function () {
+        const pay = $(this).attr('data-pay');
+        const name = $(this).attr('data-name');
+        const title = "{:lang('支付宝收款账户')}";
+        layer.open({
+            type: 1,
+            title: title,
+            skin: 'layui-layer-molv',
+            closeBtn: 0,
+            shadeClose: true,
+            shade: 0.6,
+            area: ['300px', '180px'],
+            content:'<div id="mydiv" style="margin-left:10px;margin-top:10px;"><div style="width:270px;height:40px;line-height: 40px;padding-left: 20px;margin-top: 15px;">{:lang("收款账户姓名:")}'+ name +'</div><div style="width:270px;height:40px;line-height: 40px;padding-left: 20px;">{:lang("收款账户:")}'+ pay +'</div></div>',
+        });
+    })
+    $(".settlement_btn").click(function(){
+        // addwithdrawal
+        const status = $(this).attr('data-status');
+        const id = $(this).attr('data-id');
+        const title = status ==1 ? "{:lang('结算成功备注')}" : "{:lang('拒绝结算备注')}";
+        parent.layer.open({
+            type: 1,
+            title: title,
+            skin: 'layui-layer-molv',
+            closeBtn: 0,
+            shadeClose: true,
+            shade: false,
+            area: ['300px', '180px'],
+            content:'<div id="mydiv" style="margin-left:10px;margin-top:10px;"><textarea id="txtReason" style="width:270px;height:60px;resize:none;border-radius:6px;border-color:red;" ></textarea></div>',
+            btn: ["{:lang('确定')}", "{:lang('取消')}"]
+            , yes: function (index, layero) {
+                const txtReason = top.$('#txtReason').val();
+                parent.layer.close(index); //再执行关闭
+                $.ajax({
+                    url: "{:url('Agent/addwithdrawal')}",
+                    type: 'post',
+                    dataType: 'json',
+                    data: {id: id,status:status,remarks:txtReason},
+                    success: function (data) {
+                        layer.closeAll();
+                        if(data.status == 1){
+                            layer.msg(data.error,{time: 2000, icon:1},function(){
+                                window.location.reload();
+                            });
+                        }else{
+                            layer.msg(data.error,{time: 2000, icon:2});
+                        }
+                    }
+                });
+            }
+        });
+    })
+</script>
+</body>

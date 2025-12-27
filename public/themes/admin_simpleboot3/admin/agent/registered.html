@@ -1,0 +1,67 @@
+<include file="public@header" />
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:void(0)">{:lang('注册用户列表')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" name="form1" method="post" action="{:url('agent/registered')}">
+       {:lang('用户ID')}:
+        <input type="text" class="form-control" name="user_id" style="width: 120px;" value="{$data.user_id |default=''}" placeholder="{:lang('用户ID')}">
+       {:lang('推广码')}:
+        <input type="text" class="form-control" name="channel" style="width: 120px;" value="{$data.channel |default=''}" placeholder="{:lang('推广码')}">
+       {:lang('推广人ID')}:
+        <input type="text" class="form-control" name="link_id" style="width: 120px;" value="{$data.link_id |default=''}" placeholder="{:lang('推广人ID')}">
+        {:lang('agent_level2')}ID:
+        <input type="text" class="form-control" name="agent_staff" style="width: 120px;" value="{$data.agent_staff |default=''}" placeholder="{:lang('agent_level2')}ID">
+        {:lang('agent_level1')}ID:
+        <input type="text" class="form-control" name="agent_company" style="width: 120px;" value="{$data.agent_company |default=''}" placeholder="{:lang('agent_level1')}ID">
+       {:lang('时间')}:
+        <input type="text" class="form-control js-bootstrap-date" name="starttime" value="{$data['starttime']|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="endtime" value="{$data['endtime']|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+        <input type="submit" class="btn btn-primary" value="{:lang('搜索')}" onclick='form1.action="{:url('agent/registered')}";form1.submit();'/>
+        <a class="btn btn-danger" href="{:url('agent/registered')}">{:lang('清空')}</a>
+        <input type="button" class="btn btn-primary from_export" style="background-color: #1dccaa;" value="{:lang('导出')}" onclick='form1.action="{:url('agent/export_registered')}";form1.submit();'>
+
+        <span>{:lang('总注册人数:')}{$number}</span>
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>{:lang('用户昵称(ID)')}</th>
+            <th>{:lang('推广码')}</th>
+            <th>{:lang('推广人')}</th>
+            <th>{:lang('agent_level2')}</th>
+            <th>{:lang('agent_level1')}</th>
+            <th>{:lang('手机厂商')}</th>
+            <th>{:lang('注册机型')}</th>
+            <th>{:lang('注册IP(终端ip)')}</th>
+            <th>{:lang('注册IP(公网)')}</th>
+            <th>{:lang('注册设备号')}</th>
+            <th>{:lang('注册时间')}</th>
+            <th>{:lang('最后登录时间')}</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <foreach name="users" item="vo">
+            <tr>
+                <td>{$vo.user_nickname}({$vo.uid})</td>
+                <td>{$vo.channel}</td>
+                <td>{$vo.login_name}({$vo.id})</td>
+                <td>{$vo.sname}({$vo.agent_staff})</td>
+                <td>{$vo.cname}({$vo.agent_company})</td>
+                <td>{$vo.brand}</td>
+                <td>{$vo.model}</td>
+                <td>{$vo.intranet_ip}</td>
+                <td>{$vo.public_ip}</td>
+                <td>{$vo.register_device}</td>
+                <td>{$vo.create_time| date="Y-m-d H:i:s",###}</td>
+                <td>{$vo.last_login_time| date="Y-m-d H:i:s",###}</td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>

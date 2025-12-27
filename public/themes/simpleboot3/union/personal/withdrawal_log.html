@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> 修改资料</title>
+<meta name="keywords" content=""/>
+<meta name="description" content="">
+<include file="public@head"/>
+<style type="text/css">
+  .account_btn{cursor: pointer;}
+</style>
+</head>
+<body class="body-white" id="top" style="padding-top: 20px">
+
+    <div class="container tc-main" style="width: 100%;">
+       <div class="tabs">
+           <ul class="nav nav-tabs">
+               <li><a href="{:url('union/Personal/withdrawal')}" > 公会提现</a></li>
+               <li class="active"><a href="javascript:;" > 提现记录</a></li>
+           </ul>
+            <form class="well form-inline" method="post" action="{:url('union/Personal/withdrawal_log')}" style="margin-top:20px;">
+
+                {:lang('STATUS')}：
+                <select name="status" style="width:100px;height: 38px;">
+                    <option value="-1">{:lang('ALL')}</option>
+                    <option value="0"  <if condition="$result['status'] eq '0'"> selected="selected" </if>>{:lang('CHECK_LOADING')}</option>
+                    <option value="1" <if condition="$result['status'] eq '1'"> selected="selected" </if>>{:lang('PASS_THROUGH')}</option>
+                    <option value="2" <if condition="$result['status'] eq '2'"> selected="selected" </if>>{:lang('REFUSE')}</option>
+                </select>
+                {:lang('TIME')}:
+                <input type="text" class="form-control js-bootstrap-date" name="start_time" value="{$result['start_time']|default=''}" style="width: 140px;" autocomplete="off">-
+                <input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$result['end_time']|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+                <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+                <a class="btn btn-danger" href="{:url('union/Personal/withdrawal_log')}">{:lang('EMPTY')}</a>
+            </form>
+           <div class="tab-content" style="margin-top: 60px;">
+                <div class="tab-pane active" id="one">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>提现收益数量</th>
+                        <th>{:lang('ADMIN_WITHDRAW_COIN')}</th>
+                        <th>{:lang('ADMIN_ACCOUNT_TYPE')}</th>
+                        <th>{:lang('ADMIN_ACCOUNT_NAME')}</th>
+                        <th>{:lang('ADMIN_ACCOUNT_USER')}</th>
+                        <th>{:lang('TIME')}</th>
+                        <th>提现状态</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                       <foreach name="list" item="vo">
+                        <tr>
+                          <td>{$vo.coin|default='0'}</td>
+                          <td>{$vo.money|default='0'}</td>
+                         
+                          <td>
+                             <if condition="$vo['account_type'] eq 1">
+                                 {:lang('ALIPAY')}
+                              <else/>
+                                 {:lang('WECHAT')}
+                             </if>
+                          </td>
+                          <td>{$vo.account_name}</td>
+                          <td>{$vo.cash_account}</td>
+                          <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                          <td>
+                             <if condition="$vo['status'] eq 1">
+                                 {:lang('SUCCESS')}
+                              <elseif condition="$vo['status'] eq 2"/>
+                                 {:lang('FAILED')}
+                               <else/>
+                                 {:lang('CHECK_LOADING')}
+                             </if>
+                          </td>
+                        </tr>
+                      </foreach>
+                    </tbody>
+                </table>
+            </div>
+           </div>             
+       </div>
+            
+    </div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+
+</html>

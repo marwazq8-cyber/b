@@ -1,0 +1,73 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('agent/earnings')}">{:lang('ADMIN_CHANNEL_RECHARGE_LIST')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('agent/earnings')}">
+        {:lang('USER_ID')}:
+        <input type="text" class="form-control" name="uid" style="width: 120px;" value="{$data.uid|default=''}" placeholder="{:lang('USER_ID')}">
+        {:lang('ADMIN_CHANNEL')}:
+        <input type="text" class="form-control" name="channel" style="width: 120px;" value="{$data.channel|default=''}" placeholder="{:lang('请输入渠道')}">
+        {:lang('ADMIN_SUB_CHANNEL')}:
+        <input type="text" class="form-control" name="channel_link" style="width: 120px;" value="{$data.channel_link|default=''}" placeholder="{:lang('请输入账号')}">
+        {:lang('ADMIN_DEDUCTION')}：
+        <select name="type" class="form-control">
+            <option value="0">{:lang('ALL')}</option>
+            <option value="1" <if condition="$data.type eq 1"> selected='selected' </if> >{:lang('ADMIN_NO_DEDUCTION')}</option>
+            <option value="2" <if condition="$data.type eq 2"> selected='selected' </if> >{:lang('ADMIN_DEDUCTION')}</option>
+        </select>
+        {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time" value="{$data['start_time']|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$data['end_time']|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('agent/earnings')}">{:lang('EMPTY')}</a>
+        <div style="height:20px;line-height:20px;margin-top:10px;">{:lang('ADMIN_RECHARGE_COUNT')} ：{$money['money']}{:lang('元')} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {:lang('ADMIN_AGENT_INCOME')} ：{$money['agent_money']}{:lang('元')}</div>
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th width="50">ID</th>
+            <th>{:lang('ADMIN_RECHARGE_USER')}(ID)</th>
+            <th>{:lang('ADMIN_AGENT_NAME')}(ID)</th>
+            <th>{:lang('ADMIN_CHANNEL_NUMBER')}</th>
+            <th>{:lang('ADMIN_SUB_CHANNEL_NUMBER')}</th>
+            <th>{:lang('ADMIN_RECHARGE_TOTAL')}</th>
+            <th>{:lang('ADMIN_AGENT_INCOME')}</th>
+            <th>{:lang('ADMIN_AGENT_COMMISSION')}(%)</th>
+            <th>{:lang('ADMIN_DEDUCTION_TYPE')}</th>
+            <th>{:lang('TIME')}</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <foreach name="users" item="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.user_nickname}({$vo.uid})</td>
+                <td>{$vo.agentname}({$vo.agentid})</td>
+                <td>{$vo.channel|default=''}</td>
+                <td>{$vo.channel_link|default=''}</td>
+                <td>{$vo['money']|default='0'} {:lang('元')}</td>
+                <td>{$vo['agent_money']|default='0'} {:lang('元')}</td>
+                <td>{$vo['agent_commission']|default='0'}</td>
+                <td>
+                    <if condition="$vo['type'] eq 1">
+                            {:lang('NO')}
+                    <else/>
+                        {:lang('YES')}
+                    </if>
+                </td>
+                <td>{:date('Y-m-d',$vo['addtime'])}</td>
+
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

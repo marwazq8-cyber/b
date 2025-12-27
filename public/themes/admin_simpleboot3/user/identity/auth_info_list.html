@@ -1,0 +1,234 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .gift-in input {
+        width: 25px;
+    }
+
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+
+    .identity img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+
+    .details {
+        cursor: pointer;
+    }
+
+    .layui-layer-demo .layui-layer-title {
+        background: #e0e0e0 !important;
+    }
+
+    #status {
+        width: 100px;
+        height: 32px;
+        border-color: #dce4ec;
+        color: #aeb5bb;
+    }
+    .getChecked{float:left;width:80px;height:34px;line-height: 34px;text-align: center;background: #2C3E50;color:#fff;margin-right:10px;cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang("信息认证列表")}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('user/identity/auth_info_list')}">
+        {:lang('USER_ID')}：
+        <input class="form-control" type="text" name="uid" style="width: 200px;" value="{:input('request.uid')}"
+               placeholder="{:lang('USER_ID')}">
+        {:lang('STATUS')}：
+        <select name="status" id="status">
+            <option value="">{:lang('ALL')}</option>
+            <option value="0"<if condition="$request.status eq '0'"> selected="selected"</if>>{:lang('UNREVIEWED')}</option>
+            <option value="1"<if condition="$request.status eq 1"> selected="selected"</if>>{:lang('AUDITED')}</option>
+            <option value="2"<if condition="$request.status eq 2"> selected="selected"</if>>{:lang('REJECTED')}</option>
+        </select>
+        {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time"
+               value="{:input('request.start_time')}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time"
+               value="{:input('request.end_time')}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}"/>
+        <a class="btn btn-danger" href="{:url('user/identity/auth_info_list')}">{:lang('EMPTY')}</a>
+    </form>
+    <form class="js-ajax-form" action="{:url('identity/Saveall')}" method="post">
+        <div style="margin-bottom: 10px;">
+            <div class="getChecked" onclick="getChecked('on')">{:lang("全选")}</div>
+            <div class="getChecked" onclick="getChecked('off')">{:lang("取消全选")}</div>
+            <div class="getChecked" onclick="getChecked('onWWoff')">{:lang("反选")}</div>
+            <button type="submit" name="type" value="1" class="btn btn-primary">{:lang("批量通过")}</button>
+            <button type="submit" name="type" value="2" class="btn btn-primary">{:lang("批量拒绝")}</button>
+        </div>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>{:lang("昵称")}</th>
+                <th>{:lang("身份证姓名")}</th>
+                <!--<th>{:lang("邀请人ID")}</th>-->
+                <!-- <th>{:lang("身高")}</th>
+                   <th>{:lang("体重")}</th>
+                   <th>{:lang("性别")}</th>-->
+                <th>{:lang("身份证号码")}</th>
+                <th>{:lang('ADMIN_PHONE_NUMBER')}</th>
+                <!--<th>{:lang("星座")}</th>
+                <th>{:lang("所在地")}</th>
+                <th>{:lang("形象标签")}</th>
+                <th>{:lang("自我介绍")}</th>
+                <th>{:lang("个性签名")}</th> -->
+                <th>{:lang("身份证正面")}</th>
+                <th>{:lang("身份证反面")}</th>
+                <th>{:lang('SUBMIT_TIME')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>
+                        <if condition="$vo['status'] eq '0'">
+                            <input type="checkbox" name="id[]" value="{$vo.id}" class="chechbox_input">
+                            <else/>
+                        </if>
+                    </td>
+                    <td>{$vo.user_id}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.user_nickname}</td>
+                    <!--<td>{$vo.invite_id}</td>-->
+
+                    <td>{$vo.id_number}</td>
+                    <!--   <td>{$vo.height}</td>
+                      <td>{$vo.weight}</td>-->
+                    <td>{$vo.phone}</td>
+                    <!--<td>{$vo.constellation}</td>
+                    <td>{$vo.city}</td>
+                    <td>{$vo.image_label}</td>
+                    <td>{$vo.introduce}</td>
+                    <td>{$vo.sign}</td> -->
+                    <td><img height="50px" src="{$vo.auth_id_card_img_url1}"
+                             onclick="show_image('{$vo.auth_id_card_img_url1}')"></td>
+                    <td><img height="50px" src="{$vo.auth_id_card_img_url2}"
+                             onclick="show_image('{$vo.auth_id_card_img_url2}')"></td>
+                    <td>{$vo.create_time | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <if condition="$vo['status'] eq '0'">
+                            {:lang('CHECK_LOADING')}
+                            <elseif condition="$vo['status'] eq '2'"/>
+                            {:lang('REJECTED')}
+                            <else/>
+                            {:lang('AUDITED')}
+                        </if>
+                    </td>
+                    <td>
+                        <!--                        <a class="details" data-url="{$vo['auth_video_url']}">{:lang("查看认证视频")}</a>-->
+                        <if condition="$vo['status'] eq '0'">
+                            <a href="javascript:void(0)" class="is_audit_status"
+                               data-url="{:url('identity/change_status_auth_info',array('uid'=>$vo['user_id'],'id'=>$vo['id'],'type'=>1))}">{:lang('PASS_THROUGH')}| </a>
+                            <a href="javascript:void(0)" class="is_audit_status"
+                               data-url="{:url('identity/change_status_auth_info',array('uid'=>$vo['user_id'],'id'=>$vo['id'],'type'=>2))}">{:lang('REFUSE')}| </a>
+                        </if>
+                        <a href="javascript:void(0)" class="is_del_status" data-id="{$vo['id']}" data-uid="{$vo['user_id']}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <ul class="pagination">{$page}</ul>
+
+    </form>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    function getChecked(a) {
+        var x = document.getElementsByClassName('chechbox_input');
+        for (var i = 0; i < x.length; i++) {
+            switch (a) {
+                case 'on':
+                    x[i].checked = true;
+                    break;
+                case 'off':
+                    x[i].checked = false;
+                    break;
+                case 'onWWoff':
+                    x[i].checked = !x[i].checked;
+                    break;
+            };
+        }
+    }
+    function show_image(url) {
+        //图片显示
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            area: ['auto', 'auto'],
+            skin: 'layui-layer-nobg', //没有背景色
+            shadeClose: true,
+            content: "<img src='" + url + "' style='max-width:500px;max-height:500px;'/>"
+        });
+    }
+
+    $(".details").click(function () {
+        var url = $(this).attr("data-url");
+        //自定页
+        layer.open({
+            title:"{:lang('视频认证')}",
+            type: 1,
+            skin: 'layui-layer-demo', //样式类名
+            closeBtn: 0, //不显示关闭按钮
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: "<video src='" + url + "' controls='controls'></video>"
+        });
+    })
+
+    $(".is_del_status").click(function () {
+        var id = $(this).attr("data-id");
+        var uid = $(this).attr("data-uid");
+        //询问框
+        layer.confirm('是否删除', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('identity/delete_id')}",
+                type: 'get',
+                data: {id: id,uid:uid},
+                dataType: 'json',
+                success: function (data) {
+
+                    if(data =='1'){
+                        layer.msg("{:lang('DELETE_SUCCESS')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('DELETE_FAILED')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<include file="public@header"/>
+<style>
+
+    select{
+        width: 100px;
+        height: 32px;
+        border-color: #dce4ec;
+        color: #aeb5bb;}
+    th,td{text-align: center;}
+</style>
+</head>
+<body>
+<div class="wrap">
+<!--    <ul class="nav nav-tabs">-->
+<!--        <li class="active"><a>{:lang('收入记录')}</a></li>-->
+<!--    </ul>-->
+    <form class="well form-inline margin-top-20" method="post" action="{:url('user/adminIndex/revenue_records')}">
+        {:lang('USER_ID')}：
+        <input class="form-control" type="text" name="uid" style="width: 100px;" value="{:input('request.uid')}"
+               placeholder="{:lang('USER_ID')}">
+        {:lang('TYPE')}:
+        <select name="classification">
+            <option value="0">{:lang('ALL')}</option>
+            <option value="1" <if condition="$data.classification == 1">selected=selected</if>>{:lang('收入')}</option>
+            <option value="2" <if condition="$data.classification == 1">selected=selected</if>>{:lang('支出')}</option>
+        </select>
+        {:lang('TYPE')}:
+        <select name="type">
+            <option value="0">{:lang('ALL')}</option>
+            <foreach name="type_list" item="v">
+                <option value="{$v['id']}" <if condition="$data.type == $v['id']">selected=selected</if> >{$v['title']}</option>
+            </foreach>
+        </select>
+        {:lang('REGISTRATION_TIME')}:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time" value="{:input('request.start_time')}" style="width: 130px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time" value="{:input('request.end_time')}" style="width: 130px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}"/>
+    </form>
+
+    <form method="post" class="js-ajax-form">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('用户')}</th>
+                <th>{:lang('变更数据')}</th>
+                <th>{:lang('TYPE')}</th>
+                <th>{:lang("TIME")}</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo['user_nickname']}({$vo['uid']})</td>
+                    <td>{$vo['income']}</td>
+                    <td>{$vo['type_name']}</td>
+                    <td>{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script type="text/javascript">
+
+
+
+
+</script>
+</body>
+</html>

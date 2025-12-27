@@ -1,0 +1,135 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+    .form-required-text{font-size: 13px;color: #7e7e7e;}
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('gift/gift_lucky')}">{:lang("幸运礼物")}</a></li>
+        <li class="active"><a href="javascript:;">{:lang("添加幸运礼物")}</a></li>
+    </ul>
+    <form action="{:url('gift/gift_lucky_post')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('GIFT')} <span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[gift_id]" class="form-control">
+                                <foreach name="gift" item="v">
+                                    <option value="{$v.id}" <if condition="$gift_lucky.gift_id == $v.id"> selected="selected" </if>>{$v.name}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang("平台收益： ")}<span class="form-required">*</span><span class="form-required-text"> ({:lang('例如20%填写20')})</span></th>
+                        <td><input class="form-control input" type="text" name="post[lucky_platform]"
+                                   value="{$gift_lucky.lucky_platform |default=''}"
+                                   placeholder="{:lang('例如20%填写20')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang("主播收益： ")}<span class="form-required">*</span><span class="form-required-text"> ({:lang('例如20%填写20')})</span></th>
+                        <td><input class="form-control input" type="text" name="post[lucky_host]"
+                                   value="{$gift_lucky.lucky_host |default=''}"
+                                   placeholder="{:lang('例如20%填写20')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang("Guild_income")}<span class="form-required">*</span><span class="form-required-text"> ({:lang('例如20%填写20')})</span></th>
+                        <td><input class="form-control input" type="text" name="post[lucky_guild]"
+                                   value="{$gift_lucky.lucky_guild |default=''}"
+                                   placeholder="{:lang('例如20%填写20')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang("中奖概率： ")}<span class="form-required">*</span><span class="form-required-text"> ({:lang('用户中奖概率(0-100)')})</span></th>
+                        <td><input class="form-control input" type="text" name="post[lucky_rate]"
+                                   value="{$gift_lucky.lucky_rate |default=''}"
+                                   placeholder="{:lang('用户中奖概率(0-100)')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang("出奖倍数： ")}<span class="form-required">*</span><span class="form-required-text"> ({:lang('多个使用逗号隔开')})</span></th>
+                        <td><input class="form-control" type="text" name="post[lucky_multiple]"
+                                   value="{$gift_lucky.lucky_multiple |default=''}"
+                                   placeholder="{:lang('多个使用逗号隔开')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang("出奖倍数概率： ")}<span class="form-required">*</span><span class="form-required-text"> ({:lang('对应出奖倍数，多个使用逗号隔开')})</span></th>
+                        <td><input class="form-control" type="text" name="post[lucky_multiple_rate]"
+                                   value="{$gift_lucky.lucky_multiple_rate |default=''}"
+                                   placeholder="{:lang('对应出奖倍数，多个使用逗号隔开')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang("头奖限制人数： ")}<span class="form-required">*</span><span class="form-required-text"> ({:lang('当前分钟内达到人数后头奖生效')})</span></th>
+                        <td><input class="form-control" type="text" name="post[lucky_jackpot_limit]"
+                                   value="{$gift_lucky.lucky_jackpot_limit |default=''}"
+                                   placeholder="{:lang('当前分钟内达到人数后头奖生效')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang("头奖奖池限制金额： ")}<span class="form-required">*</span><span class="form-required-text"> ({:lang('当前奖池达到限制后头奖生效')})</span></th>
+                        <td><input class="form-control" type="text" name="post[lucky_jackpot_pot_amount]"
+                                   value="{$gift_lucky.lucky_jackpot_pot_amount |default=''}"
+                                   placeholder="{:lang('当前奖池达到限制后头奖生效')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang("头奖奖励人数： ")}<span class="form-required">*</span><span class="form-required-text"> ({:lang('当前分钟内达到后奖励总人数数量')})</span></th>
+                        <td><input class="form-control" type="text" name="post[lucky_jackpot_winners]"
+                                   value="{$gift_lucky.lucky_jackpot_winners |default=''}"
+                                   placeholder="{:lang('当前分钟内达到后奖励总人数数量')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang("头奖奖励倍数： ")}<span class="form-required">*</span><span class="form-required-text"> ({:lang('当前分钟内达到后奖励倍数')})</span></th>
+                        <td><input class="form-control" type="text" name="post[lucky_jackpot_bonus_multiple]"
+                                   value="{$gift_lucky.lucky_jackpot_bonus_multiple |default=''}"
+                                   placeholder="{:lang('当前分钟内达到后奖励倍数')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[status]" class="form-control">
+                                <option value="1" <if condition="$gift_lucky['status'] eq  1"> selected = "selected" </if>>{:lang('OPEN')}</option>
+                                <option value="0" <if condition="$gift_lucky['status'] eq '0'"> selected = "selected" </if>>{:lang('CLOSE')}</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$gift_lucky.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('gift/gift_lucky')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $('.input').on('keyup', function() {
+        const value = $(this).val(); //获取输入值
+        if (isNaN(value) || parseInt(value) > 100) { //判断输入是否合法
+            layer.msg("{:lang('请输入0-100的数')}");
+            $(this).val(""); //清空输入框中的非法值
+        }
+    });
+</script>
+</body>
+</html>

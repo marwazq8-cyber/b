@@ -1,0 +1,133 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+    .select{width: 150px;height: 30px;}
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .gift-in input {
+        width: 30px;
+    }
+
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_GIFT_LIST')}</a></li>
+        <li><a href="{:url('game_box/add_rate')}">{:lang('ADMIN_GIFT_ADD')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('GameBox/index_rate')}">
+
+        {:lang('ADMIN_GAME_BOX')}:
+        <select class="select form-control" name="type_id">
+            <option value="0">{:lang('ALL')}</option>
+            <foreach name="box" item="v">
+                <option value="{$v.id}" <if condition="$request['type_id'] eq $v.id"> selected = "selected" </if> >{$v.name}</option>
+            </foreach>
+
+        </select>
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('game_box/index_rate')}">{:lang('EMPTY')}</a>
+        <foreach name="box_coin" id="vc">
+            <div style="margin-top:15px;">
+                <span style="margin-left: 10px;">{$vc['type_name']}: </span>
+                <span style="margin-left: 10px;">{:lang('奖池每轮需消费总数')}：{$vc['count_coin']}</span>
+                <span style="margin-left: 10px;">{:lang('奖池每轮总价值')}：{$vc['gift_coin']}</span>
+            </div>
+        </foreach>
+
+    </form>
+    <form class="js-ajax-form" action="{:url('game_box/box_rule_upd')}" method="post">
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('ADMIN_GAME_BOX')}</th>
+                <th>{:lang('ADMIN_GIFT_NAME')}</th>
+                <th>{:lang('ADMIN_GIFT_PRICE')}</th>
+                <th>{:lang('ADMIN_NUMBER_OF_GIFTS_WON')}</th>
+
+                <th>{:lang('ADMIN_PROBABILITY_OF_WINNING')}</th>
+                <th>{:lang('奖池剩余数')}</th>
+                <th>{:lang('是否是触发大奖')}</th>
+                <th>{:lang('ADMIN_WHETHER_THE_SYSTEM_PUSH')}</th>
+                <th>{:lang('ADMIN_WHETHER_TO_PUSH_IN_FULL_SCREEN')}</th>
+                <th>{:lang('ADMIN_FLOATING_SCREEN')}</th>
+                <th>{:lang('ADD_TIME')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <php> $status=array('1'=>lang('YES'),'2'=>lang('NO'));$box_type=array('1'=>'普通宝箱','2'=>'至尊宝箱');
+            </php>
+            <foreach name="gift" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.type_name}</td>
+                    <td>{$vo.gift_name}</td>
+                    <td>{$vo.gift_coin}</td>
+                    <td>{$vo.count}</td>
+
+                    <td>{$vo.rate} ({$vo.rate_val})</td>
+                    <td>{$vo.surplus}</td>
+
+                    <td>{$status[$vo.is_trigger_jackpot]}</td>
+
+                    <td>{$status[$vo.is_system_push]}</td>
+                    <td>{$status[$vo.is_male_screen]}</td>
+                    <td>{$status[$vo.is_all_notify]}</td>
+                    <td>{$vo.create_time | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <a href="{:url('game_box/add_rate',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('game_box/del_rate')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function () {
+        $(".js-ajax-form").submit();
+    })
+</script>
+</body>
+</html>

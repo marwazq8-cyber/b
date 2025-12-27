@@ -1,0 +1,195 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+    .select{width:130px;height:35px;line-height: 35px;border: 1px solid #dce4ec;}
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('GameTripartite/index')}">{:lang('ADMIN_GAME_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('EDIT')}</a></li>
+    </ul>
+    <form action="{:url('GameTripartite/addPost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th> {:lang('ADMIN_GAME_NAME')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[title]"
+                                   id="title" required value="{$list.title |default=''}" placeholder="{:lang('Please_enter_name')}"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('ADMIN_GAME_ICON')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[icon]" id="thumbnail" value="{$list['icon'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <if condition="$list['icon']">
+                                        <img src="{$list['icon']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('Background_image')}</th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[bg_img]" id="thumbnail1" value="{$list['bg_img'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail1');">
+                                    <if condition="$list['bg_img']">
+                                        <img src="{$list['bg_img']}"
+                                             id="thumbnail1-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail1-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail1" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th> {:lang('ADMIN_CLIENT_ADDRESS')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[domain_name]"
+                                   required value="{$list.domain_name |default=''}" placeholder="{:lang('ADMIN_CLIENT_ADDRESS')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th> {:lang('Tripartite_game_configuration_interface')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[java_domain_name]"
+                                   required value="{$list.java_domain_name |default=''}" placeholder="{:lang('Tripartite_game_configuration_interface')}"/>
+                        </td>
+                    </tr>
+                    <foreach name="list.java_json" id="vo">
+                        <tr>
+                            <th> {$vo['title']}<span class="form-required">*</span></th>
+                            <td>
+                                <if condition="$vo['type'] eq 'array'">
+                                    <foreach name="vo.val" id="va">
+                                        <tr>
+                                            <th style="padding-left: 60px;"> {$va['title']} :</th>
+                                            <td>
+                                                <if condition="$va['type'] eq 'array'">
+                                                    <foreach name="va.val" id="vv">
+                                                        <div style="margin: 10px 0">{$vv['title']} : ({$vv.desc})</div>
+                                                        <if condition="$vv['type'] eq 'select'"/>
+                                                        <select name="post[{$vo['field_name'].'_'.$va['field_name'].'_'.$vv['field_name']}]" id="gift">
+                                                            <foreach name="vv.list" id="vvsa">
+                                                                <option value="{$vvsa.value}" <if condition="$vv['val'] eq $vvsa.value"> selected = "selected" </if>>{:lang($vsa.label)}</option>
+                                                            </foreach>
+                                                        </select>
+                                                        <else/>
+                                                        <input class="form-control" type="text" name="post[{$vo['field_name'].'_'.$va['field_name'].'_'.$vv['field_name']}]"
+                                                               required value="{$vv.val |default=''}" placeholder="{$vv['desc']}"/>
+                                                </if>
+                                    </foreach>
+                                    <elseif condition="$va['type'] eq 'select'"/>
+                                    <select name="post[{$vo['field_name'].'_'.$va['field_name']}]" id="gift">
+                                        <foreach name="va.list" id="vsa">
+                                            <option value="{$vsa.value}" <if condition="$va['val'] eq $vsa.value"> selected = "selected" </if> >{:lang($vsa.label)}</option>
+                                        </foreach>
+                                    </select>
+                                    <else/>
+                                    <input class="form-control" type="text" name="post[{$vo['field_name'].'_'.$va['field_name']}]"
+                                           required value="{$va.val |default=''}" placeholder="{$va['desc']}"/>
+                                </if>
+                            </td>
+                            <td>
+                    </foreach>
+                    <elseif condition="$vo['type'] eq 'select'"/>
+                    <select name="post[{$vo['field_name']}]" id="gift">
+                        <foreach name="vo.list" id="vs">
+                            <option value="{$vs.value}"  <if condition="$vo['val'] eq $vs.value"> selected = "selected" </if> >{:lang($vs.label)}</option>
+                        </foreach>
+                    </select>
+                    <else/>
+                    <input class="form-control" type="text" name="post[{$vo['field_name']}]"
+                           required value="{$vo.val |default=''}" placeholder="{$vo['desc']}"/>
+                    </if>
+                    </td>
+                    </tr>
+                    </foreach>
+
+
+
+
+
+
+
+
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                   required value="{$list.sort |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[status]" id="gift">
+                                <option value="1">{:lang('OPEN')}</option>
+                                <option value="2" <if condition="$list['status'] eq '2'"> selected="selected" </if> >{:lang('CLOSE')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('GameTripartite/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+        $('.btn-cancel-thumbnail1').click(function () {
+            $('#thumbnail1-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail1').val('');
+        });
+    });
+</script>
+</body>
+</html>

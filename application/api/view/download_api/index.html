@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$system_name}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="__STATIC__/css/download.css" rel="stylesheet">
+
+    <!--引入pageSlider.js文件-->
+    <script src="__STATIC__/js/jquery-1.10.2.min.js"></script>
+    <script src="__STATIC__/js/zepto.js"></script>
+    <script src="__STATIC__/js/pageSlider.js"></script>
+</head>
+
+<body>
+<div class="section sec1" >
+    <img id="downloadButton" class="href" style="height: 100vh;width: 100%;" src="{$share_bg}" alt="">
+   <!-- <div class="sec1-img sec1-img-a">
+        <img src="__STATIC__/img/fenxiangxiazai_zi1@2x.png" alt="">
+    </div>
+    <div class="sec1-img sec1-img-b">
+        <img src="__STATIC__/img/fenxiangxiazai_zi2@2x.png" alt="">
+    </div>
+    <div id="downloadButton" class="download-my href">下载APP</div>-->
+</div>
+
+<script type="text/javascript">
+    const download_url = "{$download_url}";
+    $(".href").click(function(){
+        console.log("下载地址：" + download_url);
+        window.location.href= download_url;
+    })
+</script>
+</body>
+</html>

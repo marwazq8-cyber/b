@@ -1,0 +1,167 @@
+<include file="public@header"/>
+<style>
+    .gift-img{width:50px;height:50px}
+    .gift-img img{width:100%;height:100%;}
+    .gift-in input{width:25px;}
+    .js-ajax-form{margin-top:30px;}
+    .push_all{cursor:pointer;}
+    .push_select{position:fixed;width:500px;height:300px;top:25%;left:25%;background: #f1f1f1;display: none;}
+    .push_select_name{width:300px;height:35px;margin:60px auto 30px;line-height: 35px;}
+    .push_select_name select{width:200px;height:35px;line-height: 35px;padding-left:20px;}
+    .push_user_id{width:300px;height:35px;margin:20px auto;line-height: 35px;}
+    .push_user_id input{width:200px;height:35px;line-height: 35px;border:1px solid #a1a1a1;padding-left:20px;}
+    .push_all_btn{width:300px;height:40px;margin:60px auto;}
+    .push_all_confirm{float:left;width:100px;height:40px;line-height: 40px;text-align: center;background: #1c51e5;color:#fff;border-radius: 10px;margin-left:20px;cursor: pointer;}
+    .push_all_cancel{float:left;width:100px;height:40px;line-height: 40px;text-align: center;background: #d61111;color:#fff;margin-left:40px;border-radius: 10px;cursor: pointer;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang("系统消息列表")}</a></li>
+        <li><a href="{:url('Message/add_all')}">{:lang("添加系统消息分类")}</a></li>
+    </ul>
+
+    <form class="js-ajax-form" action="{:url('Message/upd_all')}" method="post">
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang("系统消息标题")}</th>
+                <th>{:lang("系统消息内容")}</th>
+                <th style="width:30%">{:lang("系统消息连接地址")}</th>
+                <th>{:lang('ADD_TIME')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="gift" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.title}</td>
+                    <td>{$vo.centent}</td>
+                    <td>
+                        <if condition="$vo['url']">
+                            <div class="btn-main" data-url="{$vo.url}">{:lang("点击复制链接")}</div>
+                        </if>
+                    </td>
+                    <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <a href="{:url('Message/add_all',array('id'=>$vo.id))}">{:lang('EDIT')}</a>|
+                        <a class="push_all" data-id="{$vo.id}">{:lang("推送")}</a>
+                        |
+                        <a class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+    </form>
+    <div class="push_select">
+        <div class="push_select_name">
+            推送类型：
+            <select name="push_type" class="push_type_option">
+                <option value="1">{:lang('ALL')}</option>
+                <option value="2">{:lang("个人")}</option>
+                <option value="3">{:lang("已认证")}</option>
+                <option value="4">{:lang("未认证")}</option>
+            </select>
+        </div>
+        <div class="push_user_id">
+            个人用户：
+            <input type="text" class="push_type_input" placeholder="{:lang('USER_ID')}"/>
+        </div>
+        <div class="push_all_btn">
+          <div class="push_all_confirm" >{:lang('OK')}</div>
+            <div class="push_all_cancel" >{:lang("取消")}</div>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script src="__STATIC__/js/clipboard.min.js" type="text/javascript"></script>
+<script>
+    var url = '';
+    $('.btn-main').click(function(){
+        url = $(this).attr('data-url');
+    })
+    var clipboard = new ClipboardJS('.btn-main', {
+        // 点击copy按钮，直接通过text直接返回复印的内容
+        text: function() {
+            return url;
+        }
+    });
+
+    clipboard.on('success', function(e) {
+        console.log(e);
+        layer.msg("{:lang('复制成功')}");
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+</script>
+<script>
+    $(".push_all").click(function(){
+        var id=$(this).attr("data-id");
+        $(".push_all_confirm").attr("data-id",id);
+        $(".push_select").show();
+    })
+    $(".push_all_cancel").click(function(){
+        $(".push_select").hide();
+    })
+    $(".push_all_confirm").click(function(){
+        var id=$(this).attr("data-id");
+        var type=$(".push_type_option").val();
+        var input=$(".push_type_input").val();
+
+        //询问框
+        layer.confirm('您是否推送这条数据？', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('Message/push_all')}",
+                type: 'get',
+                dataType: 'json',
+                data: {id: id,type:type,name:input},
+                success: function (data) {
+
+                    if(data =='1'){
+                        layer.msg("{:lang('推送成功')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('推送失败')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".del").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm('同时会删除历史推送记录，确定删除？', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('Message/del_all')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("{:lang('DELETE_SUCCESS')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('DELETE_FAILED')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+
+</script>
+</body>
+</html>

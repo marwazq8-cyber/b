@@ -1,0 +1,394 @@
+<include file="public@header"/>
+<style>
+    .home-info li em {
+        float: left;
+        width: 120px;
+        font-style: normal;
+        font-weight: bold;
+    }
+
+    .home-info ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    .panel {
+        margin-bottom: 0;
+    }
+    .grid-item {
+        margin-bottom: 5px;
+        padding: 5px;
+    }
+
+    .btn-main-box{
+        cursor: pointer;
+        position: relative;
+        padding: 20px 20px 20px 20px;
+        background-color: #fff;
+        color: #333;
+        font-weight: 400;
+        font-size: 16px;
+        text-align: center;
+    }
+</style>
+<link rel="stylesheet" href="/themes/admin_simpleboot3/public/assets/simpleboot3/css/index.css">
+<hook name="admin_before_head_end"/>
+</head>
+<body>
+<div class="wrap">
+    <empty name="has_smtp_setting">
+        <!--<div class="grid-item col-md-12">
+            <div class="alert alert-danger alert-dismissible fade in" role="alert" style="margin-bottom: 0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>{:lang('提示!')}</strong> 邮箱配置未完成,无法进行邮件发送!
+                <a href="#" data-dismiss="alert" aria-label="Close"
+                   onclick="parent.openapp('{:url('Mailer/index')}','admin_mailer_index','邮箱配置');">{:lang('现在设置')}</a>
+            </div>
+        </div>-->
+    </empty>
+
+    <if condition="!extension_loaded('fileinfo')">
+        <div class="grid-item col-md-12">
+            <div class="alert alert-danger alert-dismissible fade in" role="alert" style="margin-bottom: 0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>{:lang('提示!')}</strong> php_fileinfo扩展没有开启，无法正常上传文件！
+            </div>
+        </div>
+    </if>
+
+    <div class="grid-item col-md-12" id="thinkcmf-notices-grid" style="display:none;">
+        <div class="dashboard-box">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{:lang('SYSTEM_NOTIFICATIONS')}</h3>
+                </div>
+                <div class="panel-body home-info">
+                    <ul id="thinkcmf-notices" class="list-unstyled">
+                        <li>
+                            <img src="__TMPL__/public/assets/images/loading.gif" style="vertical-align: middle;"/>
+                            <span style="display: inline-block; vertical-align: middle;">{:lang('LOADING')}...</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--首页-->
+    <div class="bogo_index">
+        <div class="bogo_index_title">{:lang('ADMIN_STATISTICS')}</div>
+        <div class="bogo_index_box">
+            <div class="bogo_index_row bogo_img1">
+                <div class="bogo_index_row_type">
+                    <div class="title">{:lang('ADMIN_DAY_PAYMENT_AMOUNT')}（{:lang('ADMIN_MONEY')}）</div>
+                    <a class="amount" href="{:url('refill/log_index')}" rel="noopener noreferrer">{$admin_index_list['charge']['day_log']['money']|default="0.00"}</a>
+                    <div class="amount-yesterday">
+                        {:lang('YESTERDAY')}：{$admin_index_list['charge']['Yesterday_log']['money']|default="0.00"}
+                    </div>
+                    <div class="amount-yesterday">
+                        {:lang('TOTAL_PAYMENT_AMOUNT')}：{$admin_index_list['charge']['total_log']['money']|default="0.00"}
+                    </div>
+                </div>
+                <div class="bogo_index_row_type">
+                    <div class="title">{:lang('NUMBER_OF_ORDERS_PAID_TODAY')}</div>
+                    <a class="amount" href="{:url('refill/log_index')}" rel="noopener noreferrer">{$admin_index_list['charge']['day_log']['ordersum']|default="0"}</a>
+                    <div class="amount-yesterday">
+                        {:lang('YESTERDAY')}：{$admin_index_list['charge']['Yesterday_log']['ordersum']|default="0"}
+                    </div>
+                    <div class="amount-yesterday">
+                        {:lang('ADMIN_ALL_RECHARGE_ORDER')}：{$admin_index_list['charge']['total_log']['ordersum']|default="0"}
+                    </div>
+                </div>
+                <div class="bogo_index_row_type">
+                    <div class="title">{:lang('ADMIN_RECHARGE_TODAY')}</div>
+                    <a class="amount" href="{:url('refill/log_index')}" rel="noopener noreferrer">{$admin_index_list['charge']['user_day']|default="0"}</a>
+                    <div class="amount-yesterday">{:lang('YESTERDAY')}：{$admin_index_list['charge']['user_Yesterday']|default="0"}</div>
+                    <div class="amount-yesterday">{:lang('NUMBER_OF_PAYMENTS_TODAY')}：{$admin_index_list['charge']['user_total']|default="0"}</div>
+                </div>
+                <div class="bogo_index_row_type">
+                    <div class="compare_title">
+                        {:lang('PAYMENT_AMOUNT_COMPARED_TO_THE_PREVIOUS_DAY')} ：
+                        <if condition="$admin_index_list['charge']['day_than']['type'] eq 1">
+                            <i class="fa fa-long-arrow-up">
+                                <else/>
+                                <i class="fa fa-long-arrow-down"> -
+                        </if>
+                        {$admin_index_list['charge']['day_than']['than']}% </i>
+
+                    </div>
+                    <div class="compare_title">
+                        {:lang('PAYMENT_ORDER_COMPARED_TO_THE_DAY_BEFORE')} ：
+                        <if condition="$admin_index_list['charge']['day_ordersum_than']['type'] eq 1">
+                            <i class="fa fa-long-arrow-up">
+                                <else/>
+                                <i class="fa fa-long-arrow-down"> -
+                        </if>
+                        {$admin_index_list['charge']['day_ordersum_than']['than']}% </i>
+                    </div>
+                    <div class="compare_title">
+                        {:lang('NUMBER_OF_PAYERS_COMPARED_TO_THE_PREVIOUS_DAY')} ：
+                        <if condition="$admin_index_list['charge']['day_user_than']['type'] eq 1">
+                            <i class="fa fa-long-arrow-up">
+                                <else/>
+                                <i class="fa fa-long-arrow-down"> -
+                        </if>
+                        {$admin_index_list['charge']['day_user_than']['than']}% </i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bogo_index_row bogo_img2">
+                <div class="bogo_index_row_type">
+                    <div class="title">{:lang('ADMIN_TODAY_REGISTER')}</div>
+                    <a class="amount" href="{:url('user/admin_index/index')}" rel="noopener noreferrer">{$admin_index_list['registered']['day_user']|default="0"}</a>
+                    <div class="amount-yesterday">{:lang('YESTERDAY')}：{$admin_index_list['registered']['Yesterday_user']|default="0"}
+                    </div>
+                    <div class="amount-yesterday">{:lang('ADMIN_ALL_REGISTER')}：{$admin_index_list['registered']['total_user']|default="0"}
+                    </div>
+                </div>
+                <!--<div class="bogo_index_row_type">
+                    <div class="title">{:lang('ADMIN_AGENT_TODAY_REGISTER')}</div>
+                    <a class="amount" href="{:url('agent/index')}" rel="noopener noreferrer">{$admin_index_list['registered']['day_agent']|default="0"}</a>
+                    <div class="amount-yesterday">{:lang('YESTERDAY')}：{$admin_index_list['registered']['Yesterday_agent']|default="0"}
+                    </div>
+                    <div class="amount-yesterday">{:lang('ADMIN_AGENT_ALL_REGISTER')}：{$admin_index_list['registered']['total_agent']|default="0"}
+                    </div>
+                </div>-->
+                <div class="bogo_index_row_type">
+                    <div class="title">{:lang('ADMIN_INVITE_TODAY_REGISTER')}</div>
+                    <a class="amount" href="{:url('invite_manage/invite_record_index')}" rel="noopener noreferrer">{$admin_index_list['registered']['day_invitation']|default="0"}</a>
+                    <div class="amount-yesterday">
+                        {:lang('YESTERDAY')}：{$admin_index_list['registered']['Yesterday_invitation']|default="0"}
+                    </div>
+                    <div class="amount-yesterday">
+                        {:lang('ADMIN_INVITE_ALL_REGISTER')}：{$admin_index_list['registered']['total_invitation']|default="0"}
+                    </div>
+                </div>
+                <div class="bogo_index_row_type">
+                    <div class="compare_title">
+                        {:lang('ADMIN_ALL_REGISTER_YESTERDAY')} ：
+                        <if condition="$admin_index_list['registered']['day_registered_than']['type'] eq 1">
+                            <i class="fa fa-long-arrow-up">
+                         <else/>
+                                <i class="fa fa-long-arrow-down"> -
+                        </if>
+                        {$admin_index_list['registered']['day_registered_than']['than']}% </i>
+
+                    </div>
+                    <!--<div class="compare_title">
+                        {:lang('ADMIN_ALL_AGENT_REGISTER_YESTERDAY')} ：
+                        <if condition="$admin_index_list['registered']['agent_registered_than']['type'] eq 1">
+                            <i class="fa fa-long-arrow-up">
+                                <else/>
+                                <i class="fa fa-long-arrow-down"> -
+                        </if>
+                        {$admin_index_list['registered']['agent_registered_than']['than']}% </i>
+                    </div>-->
+                    <div class="compare_title">
+                        {:lang('ADMIN_ALL_INVITE_REGISTER_YESTERDAY')} ：
+                        <if condition="$admin_index_list['registered']['invitation_registered_than']['type'] eq 1">
+                            <i class="fa fa-long-arrow-up">
+                                <else/>
+                                <i class="fa fa-long-arrow-down"> -
+                        </if>
+                        {$admin_index_list['registered']['invitation_registered_than']['than']}% </i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bogo_index_row bogo_img3">
+                <div class="bogo_index_row_type">
+                    <div class="title">{:lang('ADMIN_TODAY_CONSUMPTION')}</div>
+                    <a class="amount" href="{:url('Consume/index')}" rel="noopener noreferrer">{$admin_index_list['consumption']['day_consumption']['coin']|default="0.00"}</a>
+                    <div class="amount-yesterday">
+                        {:lang('YESTERDAY')}：{$admin_index_list['consumption']['Yesterday_consumption']['coin']|default="0.00"}
+                    </div>
+                    <div class="amount-yesterday">
+                        {:lang('ADMIN_ALL_CONSUMPTION')}：{$admin_index_list['consumption']['total_consumption']['coin']|default="0.00"}
+                    </div>
+                </div>
+                <div class="bogo_index_row_type">
+                    <div class="title">{:lang('ADMIN_TODAY_INCOME')}</div>
+                    <a class="amount" href="{:url('Consume/index')}" rel="noopener noreferrer">{$admin_index_list['consumption']['day_consumption']['profit']|default="0.00"}</a>
+                    <div class="amount-yesterday">
+                        {:lang('YESTERDAY')}：{$admin_index_list['consumption']['Yesterday_consumption']['profit']|default="0.00"}
+                    </div>
+                    <div class="amount-yesterday">
+                        {:lang('ADMIN_ALL_INCOME')}：{$admin_index_list['consumption']['total_consumption']['profit']|default="0.00"}
+                    </div>
+                </div>
+                <div class="bogo_index_row_type">
+                    <div class="title">{:lang('ADMIN_TODAY_WITHDRAW')}</div>
+                    <a class="amount" href="{:url('withdrawals_manage/index')}" rel="noopener noreferrer">{$admin_index_list['consumption']['day_withdrawal']['income']|default="0.00"}</a>
+                    <div class="amount-yesterday">
+                        {:lang('YESTERDAY')}：{$admin_index_list['consumption']['Yesterday_withdrawal']['income']|default="0.00"}
+                    </div>
+                    <div class="amount-yesterday">
+                        {:lang('ADMIN_ALL_WITHDRAW')}：{$admin_index_list['consumption']['total_withdrawal']['income']|default="0.00"}
+                    </div>
+                </div>
+                <div class="bogo_index_row_type">
+                    <div class="compare_title">
+                        {:lang('ADMIN_ALL_CONSUMPTION_YESTERDAY')} ：
+                        <if condition="$admin_index_list['consumption']['day_consumption_coin_than']['type'] eq 1">
+                            <i class="fa fa-long-arrow-up">
+                                <else/>
+                                <i class="fa fa-long-arrow-down"> -
+                        </if>
+                        {$admin_index_list['consumption']['day_consumption_coin_than']['than']}% </i>
+
+                    </div>
+                    <div class="compare_title">
+                        {:lang('ADMIN_ALL_INCOME_YESTERDAY')} ：
+                        <if condition="$admin_index_list['consumption']['day_consumption_profit_than']['type'] eq 1">
+                            <i class="fa fa-long-arrow-up">
+                                <else/>
+                                <i class="fa fa-long-arrow-down"> -
+                        </if>
+                        {$admin_index_list['consumption']['day_consumption_profit_than']['than']}% </i>
+                    </div>
+                    <div class="compare_title">
+                        {:lang('ADMIN_ALL_WITHDRAW_YESTERDAY')} ：
+                        <if condition="$admin_index_list['consumption']['day_withdrawal_than']['type'] eq 1">
+                            <i class="fa fa-long-arrow-up">
+                                <else/>
+                                <i class="fa fa-long-arrow-down"> -
+                        </if>
+                        {$admin_index_list['consumption']['day_withdrawal_than']['than']}% </i>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="bogo_index_row bogo_img5">
+                <div class="bogo_index_row_type">
+                    <div class="title"> {:lang('ADMIN_CERTIFICATION_AUDIT_NO')}</div>
+                    <a class="amount" href="{:url('user/identity/auth_info_list')}" rel="noopener noreferrer">{$admin_index_list['audit']['auth_record']['review']|default="0"}</a>
+                    <div class="amount-yesterday">
+                        {:lang('ADMIN_CERTIFICATION_AUDIT_YES')}：{$admin_index_list['audit']['auth_record']['through']|default="0"}
+                    </div>
+                    <div class="amount-yesterday">
+                        {:lang('ADMIN_CERTIFICATION_AUDIT_PASS')}：{$admin_index_list['audit']['auth_record']['refused']|default="0"}
+                    </div>
+                    <div class="amount-yesterday">
+                        {:lang('ADMIN_CERTIFICATION_AUDIT_ALL')}：{$admin_index_list['audit']['auth_record']['countid']|default="0"}
+                    </div>
+                </div>
+
+                <div class="bogo_index_row_type">
+                    <div class="title">{:lang('ADMIN_RECHARGE_TODAY_ANDROID')}</div>
+                    <a class="amount" href="{:url('refill/log_index')}" rel="noopener noreferrer">{$admin_index_list['charge_type']['android_day_log']|default="0"}</a>
+                    <div class="amount-yesterday">
+                        {:lang('ADMIN_RECHARGE_YESTERDAY')}：{$admin_index_list['charge_type']['android_Yesterday_log']|default="0"}
+                    </div>
+                    <div class="amount-yesterday">
+                        {:lang('ADMIN_RECHARGE_ALL')}：{$admin_index_list['charge_type']['android_total_log']|default="0"}
+                    </div>
+                </div>
+                <div class="bogo_index_row_type">
+                    <div class="title">{:lang('ADMIN_RECHARGE_TODAY_IOS')}</div>
+                    <a class="amount" href="{:url('refill/log_index')}" rel="noopener noreferrer">{$admin_index_list['charge_type']['ios_day_log']|default="0"}</a>
+                    <div class="amount-yesterday">
+                        {:lang('ADMIN_RECHARGE_YESTERDAY')}：{$admin_index_list['charge_type']['ios_Yesterday_log']|default="0"}
+                    </div>
+                    <div class="amount-yesterday">
+                        {:lang('ADMIN_RECHARGE_ALL')}：{$admin_index_list['charge_type']['ios']|default="0"}
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="bogo_index_right">
+        <div class="bogo_index_right_type bogo_index_right_type_radius bogo_index_bottom">
+            <div class="bogo_index_right_type_img bogo_index_tel1"></div>
+            <div class="bogo_index_right_type_name">{:lang('SYSTEM_VERSION')}</div>
+            <div class="bogo_index_right_type_center">v1.1.0</div>
+        </div>
+        <if condition="IS_OFFICIAL eq 1">
+            <div class="bogo_index_right_type bogo_index_right_type_radius bogo_index_bottom">
+                <div class="bogo_index_right_type_img bogo_index_tel2"></div>
+                <div class="bogo_index_right_type_name">{:lang('COMMERCIAL_COPYRIGHT')}</div>
+                <div class="bogo_index_right_type_center">Shandong Cuckoo Network Technology Co., Ltd.</div>
+            </div>
+        </if>
+        <if condition="IS_OFFICIAL eq 1">
+            <div class="bogo_index_right_type bogo_index_right_type_radius bogo_index_bottom">
+                <div class="bogo_index_right_type_img bogo_index_tel3"></div>
+                <div class="bogo_index_right_type_name">{:lang('OFFICIAL_WEBSITE')}</div>
+                <div class="bogo_index_right_type_center"><a href="http://www.bogokj.com" target="_blank">http://www.bogokj.com</a>
+                </div>
+            </div>
+        </if>
+        <if condition="IS_GUILD eq 1">
+            <div class="bogo_index_right_type bogo_index_right_type_radius bogo_index_bottom">
+                <div class="bogo_index_right_type_img"><i class="fa fa-user-plus" aria-hidden="true" style="font-size: 40px"></i></div>
+                <div class="bogo_index_right_type_name">{:lang('公会后台')}</div>
+                <div class="bogo_index_right_type_center copy_url" data-url="{$http}/guild">{:lang('Copy_address')}</div>
+
+            </div>
+        </if>
+
+        <div class="bogo_index_right_type bogo_index_right_type_radius bogo_index_bottom">
+            <div class="bogo_index_right_type_img"><i class="fa fa-btc" aria-hidden="true" style="font-size: 40px"></i></div>
+            <div class="bogo_index_right_type_name">{:lang('充值代理商后台')}</div>
+            <div class="bogo_index_right_type_center copy_url" data-url="{$top_up_url}">{:lang('Copy_address')}</div>
+
+        </div>
+
+        <if condition="IS_AGENT eq 1">
+            <div class="bogo_index_right_type bogo_index_right_type_radius bogo_index_bottom">
+                <div class="bogo_index_right_type_img"><i class="fa fa-users" aria-hidden="true" style="font-size: 40px"></i></div>
+                <div class="bogo_index_right_type_name">{:lang('CPS 渠道后台')}</div>
+                <div class="bogo_index_right_type_center copy_url" data-url="{$http}/agent">{:lang('Copy_address')}</div>
+            </div>
+        </if>
+        <!--        <div class="btn-main-box bogo_index_right_type_radius bogo_index_bottom">-->
+        <!--            <div class="btn-main" data-url="{$http}/union">{:lang('COPY_THE_UNION_BACKSTAGE_ADDRESS')}</div>-->
+        <!--            <div class="bogo_index_right_type_center"></div>-->
+        <!--        </div>-->
+        <div class="btn-main-box bogo_index_right_type_radius bogo_index_bottom">
+            <div class="btn-main copy_url" data-url="{$http}/api/download_api/phone_index">{:lang('COPY_DOWNLOAD_ADDRESS')}</div>
+            <div class="bogo_index_right_type_center"></div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="__STATIC__/js/admin.js"></script>
+
+<script src="__STATIC__/js/amcharts.js" type="text/javascript"></script>
+<script src="__STATIC__/js/serial.js" type="text/javascript"></script>
+<script src="__STATIC__/js/pie.js" type="text/javascript"></script>
+<script src="__STATIC__/js/clipboard.min.js" type="text/javascript"></script>
+<script>
+    var url = '';
+    $('.copy_url').click(function(){
+        url = $(this).attr('data-url');
+    })
+    var clipboard = new ClipboardJS('.copy_url', {
+        // 点击copy按钮，直接通过text直接返回复印的内容
+        text: function() {
+            return url;
+        }
+    });
+
+    clipboard.on('success', function(e) {
+        console.log(e);
+        layer.msg('Copy successful');
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+</script>
+<hook name="admin_before_body_end"/>
+</body>
+</html>

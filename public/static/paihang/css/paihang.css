@@ -1,0 +1,99 @@
+/*排行榜*/
+body div {margin: 0; padding: 0}
+body {
+	padding:0px;
+	margin: 0 auto;
+	min-width: 280px;
+	max-width: 620px;
+	font-size:12px;
+}
+.paihang {
+	background: url("../img/paihang_bj.png") no-repeat;
+	width:100%;min-height:14rem; 
+    background-size:100% 100%;  
+}
+.paihang_top{width:90%;margin:0 auto;padding-top:30px;}
+.paihang_top1{width:33%;float:left;margin-top:11px;background:#fff;padding-top: 10px;}
+.paihang_top03{width:33%;float:left;margin-top:12px;background:#fff;padding-top: 10px;}
+.paihang_top2{padding-top: 12px;width:33%;float:left;background:#fff;padding-bottom:0.36rem;border-left:1px solid #f2e3e8;border-right:1px solid #f2e3e8;}
+.paihang_img{position:relative}
+.paihang_top2 .paihang_img img{width:70%;padding-top:10px;margin-left:10%;}
+.paihang_top1 .paihang_img img,.paihang_top3 .paihang_img img{width:70%;margin-left:15%;padding-top:10px;}
+/* 	姓名 */
+.paihang_name{width:100%;padding-left:10%;color:#4d4d4d;}
+.paihang_name div{float:left;}
+.paihang_name div img{width:100%;}
+.paihang_name .paihang_nan{width:15%;padding-left:5%;padding-top: 4%;}
+.paihang_name .paihang_jib{width:25%;padding-left:0%;height: 1.2rem;}
+.paihang_ji{position: relative;top: -1.2rem;right: -0.6rem;font-size: 0.7em;color:#fff;}
+.paihang_name .paihang_name1{margin-top:4%;}
+.paihang_mar{margin-top:0.25rem;}
+.pai_img1{position: absolute;bottom:5%;left:7%;width:57%!important;}
+.border-solid{float:left;border-bottom:2px solid #6456ab;width:100%;}
+/* 收获星币 */
+.paihang_xing{width:80%;margin:0 auto;clear :both;text-align: center;font-size: 10px;color:#4d4d4d;}
+.paihang_red{color:#f00000;}
+/* 头像2 *//* 头像 3*/
+.paihang_touxing{position: absolute;bottom:17%;left:11%;width:61%;height:64%;}
+.paihang_touxing img{border-radius: 50%;width:100%!important;height:100%;}
+/* 头像1 */
+.paihang_touxing1{position: absolute;bottom:17%;left:8%;width:62%;height:64%;}
+.paihang_touxing1 img{border-radius: 50%;width:100%!important;height:100%;}
+
+/* 榜 */
+.paihang_type{clear:both;width:100%;height:30px;line-height:30px;padding-bottom: 10px;padding-top: 10px;}
+.type_xiao,.type_ri,.type_zhou,.type_yue{float:left;width:15%;text-align:center;margin:0 5%;}
+.paihang_type a,.paihang_type a:hover{color:#fff;text-decoration:none;}
+.border-x{border-bottom: 2px solid #fff;}
+/* 排名4以后 */
+.paihang-table  .paihang_li1{float:left;width:20%;text-align:center;height:100%;}
+.paihang_li2{float:left;width:40%;height:100%;}
+.paihang-table{border-bottom:1px solid #dadada;width:100%;height:60px;line-height:60px;}
+.tou-img{width: 50px;border-radius: 40px;height: 45px;margin-top:7px;margin-right: 6px;}
+.img-xin{width: 25px;margin-top:15px;}
+/* 姓名性别 */
+.table_ty{width:100%;height:30px;line-height:30px;margin-top: 10px;position:relative;color:#4d4d4d;}
+.table_name,.table_jib,.table_nan{float:left;}
+.table_nan{width:18px;padding:5px 5px 0;height: 25px;}
+.table_nan img{width:100%;}
+.table_jib img{width:60%;padding:2px 3px 0;}
+.table_xing{clear:both;width:100%;line-height:0px;color:#4d4d4d;}
+.table_ji{position: absolute;top: 0.1rem;left: 10em;font-size: 0.8em;color: #fff;}
+.paihang_no{font-size:16px;font-family: both;}
+
+/*名称超出隐藏*/
+.nick_name{width: 43%;height: 15px;overflow:hidden;}
+.table_name{height:30px!important;}
+
+/* <div class="paihang_top3">
+            <div class="paihang_img">
+                <div class="paihang_touxing"><img src="{$data.list.2.head_image}" alt=""></div>
+                <img src="{$TMPL}/paihang/img/paihang_3.png" alt="" class="pai_img">
+                <img src="{$TMPL}/paihang/img/no3.png" alt="" class="pai_img1">
+            </div>
+            <div class="paihang_name">
+                <div class="paihang_name1 nick_name">{$data.list.2.nick_name}</div>
+                <div class="paihang_nan">
+                    {if $data.list.2.sex eq 1 }
+                    <img src="{$TMPL}/paihang/img/paihang_nan.png" alt="">
+                    {else}
+                    <img src="{$TMPL}/paihang/img/paihang_nu.png" alt="">
+                    {/if}
+                </div>
+                <div class="paihang_jib">
+                    <img src="{$TMPL}/paihang/img/paihang_jibie.png" alt="">
+                    <div class="paihang_ji">{$data.list.2.last_login_level}</div>
+                </div>
+
+            </div>*/
+
+
+.paihang_img003{position: absolute;top:22%;left:14%;width:68%!important;height:64%;border-radius: 50%;}
+
+/* 头像2 *//* 头像 3*/
+.paihang_top03{width: 33%;  float: left;  margin-top: 12px;  background: #fff;}
+
+.paihang_img03{position:relative;}
+.paihang_touxing3{position: relative;bottom:54%;width:96%;height:100%;}
+.paihang_img004{width:100%;height:100%;}
+.paihang_top3 .paihang_img03 img{width:85%;}

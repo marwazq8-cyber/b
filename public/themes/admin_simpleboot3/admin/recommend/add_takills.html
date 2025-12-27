@@ -1,0 +1,78 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('recommend/index_takills')}">{:lang('ADMIN_RECOMMEND_TAKER')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_RECOMMEND_ADD')}</a></li>
+    </ul>
+    <form action="{:url('recommend/addPost')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('陪聊主播 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[uid]" class="select">
+                                <foreach name="list" id="val">
+                                <option value="{$val.id}" <if condition="$level['uid'] eq $val.id"> selected="selected" </if>>{$val.user_nickname}({$val.id})</option>
+                                </foreach>
+
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('ADMIN_LABEL')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[recommend_label]" class="select">
+                                <foreach name="label" id="val">
+                                    <option value="{$val.id}" <if condition="$level['recommend_label'] eq $val.id"> selected="selected" </if>>{$val.label_name}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <input type="hidden" name="post[type]" value="2">
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[orderno]" style="width:100px;"
+                                   required value="{$level.orderno |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$level.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('Recommend/index_takills')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    function ColorGetFn(dom){
+        document.getElementById('colors').value = dom.value;
+    }
+ $('.btn-level-thumbnail').click(function () {
+            $('#level-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#level').val('');
+        });
+  $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+
+@media ( min-width: 100px) and (max-width: 370px) {
+    body,html{font-size:12px;height:100%;margin:0;}
+    .invite_share_earnings,.invite_share_way{height: 11em;}
+    .invite_share_earnings_cumulative{margin-top: 1em;}
+    .invite_share_way_type{margin-top: 2.5em;}
+  
+    .user_withdrawal_coin input{width: 10em;}
+    .user_withdrawal_name{    height: 16em;}
+}
+
+@media ( min-width: 370px){
+    body,html{font-size:14px;height:100%;margin:0;}
+    .invite_share_earnings,.invite_share_way{height: 12em;}
+    .invite_share_earnings_cumulative{margin-top: 2em;}
+    .invite_share_way_type{margin-top: 3.5em;}
+    .user_withdrawal_name{    height: 15em;}
+}
+a{text-decoration: none;}
+.invite_share_bg{background: -webkit-linear-gradient(top,#9739F8,#6442F8);position: relative;}
+.invite_share_img{width: 100%;position: relative;}
+.invite_share_img img{width: 80%;margin-left:10%;}
+.invite_share_rules{position: absolute;padding:0.7em 1.5em;background: #7b2bf4;color:#fff;top:20%;right:0;border-radius:1.5em 0 0 1.5em;cursor: pointer; }
+.invite_share_earnings{position: absolute;width: 90%;background: #fff;top:34%;left:5%;border-radius:0.5em;}
+.invite_share_earnings_cumulative_title{padding:0.7em 2.5em;background:#902ff4;position: absolute;top:-1.5em;left:calc(43% - 2.5em);color:#FEBA44;border-radius:2em;}
+.invite_share_earnings_cumulative{width: 80%;padding-left: 10%;height: 4em;line-height: 4em;color:#646464;}
+.invite_share_earnings_coin{width: 80%;padding-left: 10%;height: 3em;line-height: 2em;color:#646464;text-align: center;}
+.invite_share_earnings_coin span{font-size: 18px;font-weight: bold;color: #323232;}
+.invite_share_earnings_user{float:left;width: 80%;margin-left: 10%;height: 3em;line-height: 3em;color:#909090;text-align: center;border-top:1px solid #EEEEEE;cursor: pointer;}
+
+.invite_share_way{position: absolute;width: 90%;background: #fff;top:69%;left:5%;border-radius:0.5em;}
+.invite_share_way_type{float:left;width: 33%;height: 8em;cursor: pointer;}
+.invite_share_way_img{width: 100%;height: 5em;text-align: center;}
+.invite_share_way_img img{height: 100%;}
+.invite_share_way_name{width: 100%;height: 2em;line-height: 2em;text-align: center;font-size: 12px;color:#666666;}
+
+.invite_share_activity_rules{position: fixed;top:0;left: 0;background:rgba(46, 43, 43, 0.5);width: 100%;height: 100%;display: none;}
+.invite_share_activity_rules_center{width: 80%;height: 56%;background: url("../image/fenxingguizhe_bac.png")no-repeat;background-size: 100%;margin:30% auto;}
+.invite_share_activity_rules_center_name{width: 80%;margin-left:10%;height: 70%;overflow: scroll;margin-top: 25%;float:left;}
+
+
+/*已邀请的用户*/
+.invited_share_user{width: 90%;height: 100%;margin:0 auto;}
+.invited_share_user_type{width: 100%;height: 6em;border-bottom: 1px solid #eee;}
+.invited_share_user_type_img{float:left;width: 20%;height: 4em;text-align: center;margin-top: 1em;}
+.invited_share_user_type_img img{height: 4em;border-radius: 50%;}
+.invited_share_user_type_title{float: left;width: 60%;height: 100%;}
+.invited_share_user_type_name{width: 100%;height: 3em;}
+.invited_share_user_type_number{width: 100%;height: 2em;line-height: 2em;color:#909090;}
+.invited_share_user_type_right{float: left;width: 20%;height: 6em;line-height: 6em;text-align: center;color:#706bf4;}
+
+.invited_share_user_type_name_1{float: left;max-width:calc(100% - 3.5em);height: 2em;line-height: 2em;margin-top: 1em;color:#323232;}
+.invited_share_user_type_name_img{float:left;width:3em;margin-top: 1.2em; margin-left:0.5em;position: relative;}
+.invited_share_user_type_name_img img{width: 100%}
+.invited_share_user_type_name_img_level{position: absolute;top:0em;left:0em;width: 4.5em;height: 1.5em;line-height: 1.5em;text-align: center;font-size: 12px;color:#fff;}
+
+
+/*我的收益*/
+
+.invited_share_wthdrawal{width: 84%;height: 10em;padding:0 8%;}
+.invited_share_wthdrawal_title{float:left;width: 60%;height: 10em;}
+.invited_share_wthdrawal_title_name{width: 100%;height: 3em;line-height: 3em;margin-top:2em;color:#909090;}
+.invited_share_wthdrawal_title_coin{width: 100%;height: 1.5em;line-height: 1.5em;font-size: 30px;font-weight: bold;color:#5d5959;}
+.invited_share_wthdrawal_btn{width: 30%;height: 3em;line-height: 3em;text-align: center;color:#fff;background: #6C7DF2FF;border-radius: 2em;float:right;margin:3.5em 0;}
+.invited_share_wthdrawal_log_name{width: 92%;height: 3em;line-height: 3em;background: #F1F1F1FF;color:#909090FF;padding-left: 8%;}
+.invited_share_wthdrawal_log{width: 84%;padding:0 8%;}
+.invited_share_wthdrawal_log_type{width: 100%;height: 5em;border-bottom:1px solid #F1F1F1FF;}
+.invited_share_wthdrawal_log_type_left{float:left;width: 70%;height: 5em;}
+.invited_share_wthdrawal_log_type_right{float:right;width: 30%;height: 5em;line-height: 5em;text-align: right;color:#918DFEFF;}
+.invited_share_wthdrawal_log_type_left_success{width: 100%;height: 2em;line-height: 2em;margin-top: 0.5em;color:#898989;}
+.invited_share_wthdrawal_log_type_left_time{width: 100%;height: 2em;line-height: 2.5em;color:#909090FF;font-size: 12px;}
+
+
+/*提现*/
+.user_withdrawal{width: 100%;height: 100%;position: fixed;top:0;left: 0;background:rgba(46, 43, 43, 0.5);display: none; }
+.user_withdrawal_name{width: calc(80% - 2em);margin:50% auto;background: #fff;border-radius: 1em;padding:1em;}
+.user_withdrawal_name_color{width: 100%;height: 3em;line-height: 3em;text-align: center;font-size: 18px;font-weight: bold;color:#5d5d5d;}
+.user_withdrawal_coin{width:100%;height: 3em;line-height: 3em;color:#5d5d5d;margin-top: 1em;}
+.user_withdrawal_coin input{height: 2em;line-height: 2em;}
+.user_withdrawal_name_center{width: 100%;color: #e77474;font-size: 12px;margin-top: 1em;}
+
+.user_withdrawal_type{width: 70%;height: 3em;line-height: 3em;text-align: center;background: #6C7DF2FF;color: #fff;margin:1em auto;border-radius: 1em;cursor: pointer;}
+
+/*绑定账号*/
+.binding_withdrawal_pay_bg{width: 100%;height: 100%;position: fixed;top:0;left: 0;background:rgba(46, 43, 43, 0.5);display: none;}
+.binding_withdrawal_pay_sum{width: 100%;height: 1em;line-height: 1em;text-align: center;font-size: 18px;font-weight: bold;margin:0.5em 0 1em;}
+.binding_withdrawal_pay{width: calc(80% - 2em);margin:50% auto;background: #fff;border-radius: 1em;padding:1em;}
+.binding_withdrawal_pay_name{width: 100%;margin-top: 1em;}
+.binding_withdrawal_pay_name span{float:left;width: 100%;height: 2em;line-height: 2em; color: #686868;}
+.binding_withdrawal_pay_name input{height: 1.5em;line-height: 1.5em;width: 100%;background:none;border:none;border-bottom:1px solid #ddd; }
+.binding_withdrawal_pay_btn{width: 70%;height: 3em;line-height: 3em;text-align: center;background: #6C7DF2FF;color: #fff;margin:1em auto;border-radius: 1em;cursor: pointer;}
+
+
+
+
+
+

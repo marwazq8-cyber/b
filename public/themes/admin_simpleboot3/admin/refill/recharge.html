@@ -1,0 +1,76 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('手动充值记录')}</a></li>
+        <li><a href="{:url('refill/add_recharge')}">{:lang('手动充值')}</a></li>
+    </ul>
+
+    <form class="well form-inline margin-top-20" method="post" action="{:url('Refill/recharge')}">
+        {:lang('USER_ID')}:
+        <input type="text" class="form-control" name="uid" style="width: 130px;"
+               value="{$recharge.uid|default=''}" placeholder="{:lang('USER_ID')}">
+        {:lang('TYPE')}：
+        <select name="type" id="sex" style="width:130px;height:30px;margin-right:10px;">
+            <option value="0">{:lang('ALL')}</option>
+            <option value="1" <if condition="$recharge.type eq 1"> selected='selected' </if> >{:lang('增加')}</option>
+            <option value="2" <if condition="$recharge.type eq 2"> selected='selected' </if> >{:lang('减少')}</option>
+        </select>
+        {:lang('ADMIN_USER_TYPE')}：
+        <select name="user_type" id="user_type" style="width:130px;height:30px;margin-right:10px;">
+            <option value="0">{:lang('ALL')}</option>
+            <option value="1" <if condition="$recharge.user_type eq 1"> selected='selected' </if> >{$currency_name}</option>
+            <option value="2" <if condition="$recharge.user_type eq 2"> selected='selected' </if> >{$profit_name}</option>
+            <option value="3" <if condition="$recharge.user_type eq 3"> selected='selected' </if> >{:lang('邀请收益')}</option>
+            <option value="4" <if condition="$recharge.user_type eq 4"> selected='selected' </if> >{$system_currency_name}</option>
+            <option value="5" <if condition="$recharge.user_type eq 5"> selected='selected' </if> >{:lang('cps收益')}</option>
+        </select>
+        {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time" value="{:input('request.start_time')}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time" value="{:input('request.end_time')}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}"/>
+        <span style="margin-left: 15px;">{:lang('总数')}: {$coin}</span>
+    </form>
+
+    <form class="js-ajax-form" method="post">
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('USER')}(ID)</th>
+                <th>{:lang('变动金额')}</th>
+                <th>{:lang('TYPE')}</th>
+                <th>{:lang('ADMIN_USER_TYPE')}</th>
+                <th>IP</th>
+                <th>{:lang('ACTION_TIME')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <php>
+                $type=array(1=>lang('增加'),2=>lang('减少'));
+                $user=array(1=> $currency_name,2=> $profit_name,3=>lang('邀请收益'),4=> $system_currency_name,5=>lang('cps收益'));
+            </php>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>
+                        {$vo.user_nickname}
+                        ({$vo.uid})
+                    </td>
+                    <td>{$vo.coin}</td>
+                    <td>{$type[$vo.type]}</td>
+                    <td>{$user[$vo.user_type]}</td>
+                    <td>{$vo.ip}</td>
+                    <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

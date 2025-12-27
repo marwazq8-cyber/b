@@ -1,0 +1,106 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+  .eggs_name{
+    width: 100%;height: 30px;line-height: 30px;color:#fb7373;margin-left: 20px;  }
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .select{width: 150px;height:30px;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_OPEN_GAME_BOX_NUM_LIST')}</a></li>
+        <li><a href="{:url('GameBox/add_continuous_number')}">{:lang('ADMIN_CONTINUOUS_FREQUENCY_ADD')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('GameBox/continuous_number')}">
+        {:lang('ADMIN_GAME_BOX_NAME')}:
+        <select class="select" name="box_type">
+            <option value="0">{:lang('ALL')}</option>
+            <foreach name="game_box_list" item="vo">
+                <option value="{$vo['id']}" <if condition="$request['box_type'] eq $vo['id']"> selected = "selected" </if>>{$vo['name']}</option>
+            </foreach>
+        </select>
+        {:lang('STATUS')}:
+        <select class="select" name="status">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="0" <if condition="$request['status'] eq '0'"> selected = "selected" </if>>{:lang('CLOSE')}</option>
+            <option value="1" <if condition="$request['status'] eq 1"> selected = "selected" </if>>{:lang('OPEN')}</option>
+        </select>
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('GameBox/continuous_number')}">{:lang('EMPTY')}</a>
+
+    </form>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('ADMIN_CONTINUOUS_FREQUENCY')}</th>
+                <th>{:lang('ADMIN_BOX_TYPE')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('SORT')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+                <php>
+                    $status=array('1'=>lang('OPEN'),'0'=>lang('CLOSE'));
+                </php>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo['sum']}</td>
+                    <td>{$vo.name}</td>
+
+                    <td>{$status[$vo.status]}</td>
+
+                    <td>{$vo.orderno}</td>
+
+                    <td>
+                       <a href="{:url('GameBox/add_continuous_number',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+</body>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('game_box/game_box_type_sum_del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+</script>
+</html>

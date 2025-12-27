@@ -1,0 +1,126 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+    .eggs_name{
+        width: 100%;height: 30px;line-height: 30px;color:#fb7373;margin-left: 20px;  }
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .select{width: 150px;height:30px;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_PRIZE_POOL_STATISTICS')}</a></li>
+        <!--        <li><a href="{:url('GameBox/add')}">{:lang('添加奖池奖品')}</a></li>-->
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('GameBox/statistics')}">
+        {:lang('USER_ID')}:
+        <input type="text" name="uid" value="{$request['uid']|default=''}" placeholder="{:lang('用户id')}">
+        <if condition="$GAME_BOX_TYPE eq 2">
+            {:lang('ADMIN_PRIZE_POOL')}:
+            <select class="select" name="pool_id">
+                <option value="-1">{:lang('ALL')}</option>
+                <foreach name="pool" item="vo">
+                    <option value="{$vo['id']}" <if condition="$request['pool_id'] eq $vo['id']"> selected = "selected" </if>>{$vo['name']}</option>
+                </foreach>
+            </select>
+        </if>
+
+        {:lang('ADMIN_BOX_TYPE')}:
+        <select class="select" name="box_type">
+            <option value="-1">{:lang('ALL')}</option>
+            <foreach name="game_box_type" item="vo">
+                <option value="{$vo.id}" <if condition="$request['box_type'] eq $vo.id"> selected = "selected" </if>>{$vo.name}</option>
+            </foreach>
+        </select>
+        {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time" value="{:input('request.start_time')}" style="width: 130px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time" value="{:input('request.end_time')}" style="width: 130px;" autocomplete="off">
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('GameBox/statistics')}">{:lang('EMPTY')}</a>
+
+    </form>
+
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>{:lang('ADMIN_ALL_CONSUMPTION')}</th>
+            <th>{:lang('ADMIN_TOTAL_PRIZES')}</th>
+            <!--            <th>{:lang('奖池')}</th>
+                        <th>{:lang('宝箱类型')}</th>
+                        <th>{:lang('消费数')}</th>
+                        <th>{:lang('收益数')}</th>
+                        <th>{:lang('ADD_TIME')}</th>-->
+            <!--            <th>{:lang('ACTIONS')}</th>-->
+        </tr>
+        </thead>
+        <tfoot>
+        <php> $status=array('1'=>lang('YES'),'2'=>lang('NO'));$box_type=array('1'=>'普通宝箱','2'=>'至尊宝箱');
+        </php>
+
+        <tr>
+            <td>{$list.money|default=0}</td>
+            <td>{$list.coin_count|default=0}</td>
+
+        </tr>
+
+        </tfoot>
+    </table>
+    <div class="pagination">{//$page}</div>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm('删除后会重新开始统计打泡泡次数 ？', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('GameBox/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".clear_both_gift").click(function(){
+        layer.confirm('确定清除缓存？', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('GameBox/clear_both_voice_gift')}",
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    layer.msg("{:lang('清除缓存成功')}", {time: 2000, icon: 1});
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function () {
+        $(".js-ajax-form").submit();
+    })
+</script>
+</body>
+</html>

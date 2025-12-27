@@ -1,0 +1,65 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('call/index')}">{:lang('预约列表')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('call/index')}">
+       {:lang('预约人id')}:
+        <input type="text" class="form-control" name="to_user_id" style="width: 120px;" value="{$data.to_user_id|default=''}" placeholder="{:lang('请输入预约人id')}">
+        {:lang('ADMIN_ANCHOR_ID')}:
+        <input type="text" class="form-control" name="user_id" style="width: 120px;" value="{$data.user_id|default=''}" placeholder="{:lang('请输入主播id')}">
+        {:lang('STATUS')}：
+        <select name="status" style="width:100px;height:31px;">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="0" <if condition="$data['status'] eq '0'"> selected="selected" </if> >{:lang('ADMIN_UNTREATED')}</option>
+            <option value="1" <if condition="$data['status'] eq 1"> selected="selected" </if> >{:lang('REJECTED')}</option>
+            <option value="2" <if condition="$data['status'] eq 2"> selected="selected" </if> >{:lang('已经拨通')}</option>
+            <option value="3" <if condition="$data['status'] eq 3"> selected="selected" </if> >{:lang('已超时')}</option>
+        </select>
+        {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time" value="{$data['start_time']|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$data['end_time']|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('call/index')}">{:lang('EMPTY')}</a>
+
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th width="50">ID</th>
+            <th>{:lang('预约人(ID)')}</th>
+            <th>{:lang('ADMIN_ANCHOR')}(ID)</th>
+            <th>{:lang('预约定金（元）')}</th>
+            <th>{:lang('预约时间')}</th>
+            <th>{:lang('STATUS')}</th>
+            <th width="130">{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <php>$user_statuses=array("0"=>lang('ADMIN_UNTREATED'),"1"=>lang('已拒绝')',"2"=>lang('已经拨通'),"3"=>lang('已超时'));</php>
+        <foreach name="users" item="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.tname}({$vo.to_user_id})</td>
+                <td>{$vo.uname}({$vo.user_id})</td>
+                <td>{$vo['coin'] |default='0'} </td>
+                <td>{:date('Y-m-d H:i:s',$vo['create_time'])} </td>
+                <td>{$user_statuses[$vo['status']]}</td>
+                <td>
+                    <if condition="$vo['status'] eq '0'">
+                        <a href='{:url("call/refund",array("id"=>$vo["id"],"uid"=>$vo["to_user_id"]))}'>{:lang('ADMIN_REFUND')}</a>
+                    </if>
+
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

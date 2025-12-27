@@ -1,0 +1,96 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+    .js-ajax-form{margin-top:30px;}
+    .gift{  width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;}
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:url('vip/rule')}" >vip规则详情列表</a></li>
+        <li class="active"><a href="javascript:;">{:lang('添加vip规则详情')}</a></li>
+    </ul>
+    <form class="js-ajax-form" action="{:url('vip/add_post_rule')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th><b>vip{:lang('ADMIN_PRIVILEGE_ICON')}</b></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="img" id="thumbnail" value="{$data.img |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang(lang('图片上传'))}','#thumbnail');">
+                                    <if condition="$data['img']">
+                                        <img src="{$data['img']}" id="thumbnail-preview" width="135" style="cursor: pointer">
+                                        <else/>
+                                        <img src="/admin/public/themes/admin_simpleboot3/public/assets/images/default-thumbnail.png" id="thumbnail-preview" width="135" style="cursor: pointer">
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>vip{:lang('ADMIN_PRIVILEGE_NAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="center"
+                                   id="title" required value="{$data.center |default=''}" placeholder="{:lang('Please_enter_name')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('分类')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="type" class="gift">
+                                <option value="1" <if condition="$data['type'] eq 1"> selected="selected" </if>>{:lang('昵称为红色')}</option>
+                                <option value="2" <if condition="$data['type'] eq 2"> selected="selected" </if> >{:lang('聊天发送图片')}</option>
+                                <option value="3" <if condition="$data['type'] eq 3"> selected="selected" </if> >{:lang('查看最近访客')}</option>
+                                <option value="4" <if condition="$data['type'] eq 4"> selected="selected" </if> >{:lang('使用录音库')}</option>
+                                <option value="5" <if condition="$data['type'] eq 5"> selected="selected" </if> >{:lang('优先排名')}</option>
+                                <option value="6" <if condition="$data['type'] eq 6"> selected="selected" </if> >{:lang('专用聊天气泡')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="status" class="gift">
+                                <option value="1">{:lang('OPEN')}</option>
+                                <option value="0" <if condition="$data['status'] eq '0'"> selected="selected" </if> >{:lang('CLOSE')}</option>
+
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="sort" id="day_count" value="{$data.sort |default='0'}"></td>
+                    </tr>
+
+
+
+
+                </table>
+                <input type="hidden" name="id" value="{$data.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('vip/rule')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+
+
+</body>
+</html>

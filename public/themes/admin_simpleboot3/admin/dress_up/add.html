@@ -1,0 +1,173 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a  href="{:url('dress_up/index')}">{:lang('ADMIN_MEAL_LIST')}</a></li>
+        <li><a href="{:url('dress_up/noble_index')}">{:lang('ADMIN_NOBLE')} {:lang('ADMIN_MEAL_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_MEAL_ADD')}</a></li>
+    </ul>
+    <form action="{:url('dress_up/addPost')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_NAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[name]"
+                                   id="title" required value="{$list.name |default=''}" placeholder="{:lang('Please_enter_name')}"/>
+                        </td>
+                    </tr>
+                    <input type="hidden" name="post[type]" value="1">
+                    <tr>
+                        <th>{:lang('ADMIN_ICON')}<span class="form-required">264*264</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[icon]" id="thumbnail" value="{$data['icon'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <empty name="$data['icon']">
+
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+
+                                        <img src="{$data['icon']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </empty>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="hidden">
+                        <th>{:lang('天')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[days]"
+                                   id="title" required value="{$list.days |default='0'}" placeholder="{:lang('天')}"/>
+                        </td>
+                    </tr>
+                    <tr class="hidden">
+                        <th>{:lang('价格')}({$currency_name}) <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[coin]"
+                                   id="title" required value="{$list.coin |default='0'}" placeholder="{:lang('请输入数量')}"/>
+                        </td>
+                    </tr>
+                    <!--<tr>
+                        <th>{:lang('展示背景图')}<span class="form-required">1500*1702</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[v_bg]" id="thumbnailvbg" value="{$data['v_bg'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnailvbg');">
+                                    <empty name="$data['v_bg']">
+
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnailvbg-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+
+                                        <img src="{$data['v_bg']}"
+                                             id="thumbnailvbg-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </empty>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnailvbg" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+-->
+
+                    <tr>
+                        <th>{:lang('SORT')} <span class="form-required"></span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[orderno]"
+                                   id="title" required value="{$list.orderno |default='50'}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th>Type Duration <span class="form-required"></span></th>
+                        <td>
+                            <select class="form-control" name="post[Type_duration]" id="Type_duration" required>
+                                <option value="1" {$list.Type_duration|default=1 === 1 ? 'selected' : ''}>Week</option>
+                                <option value="2" {$list.Type_duration|default=1 === 2 ? 'selected' : ''}>Month</option>
+                                <option value="3" {$list.Type_duration|default=1 === 3 ? 'selected' : ''}>Year</option>
+                                <option value="4" {$list.Type_duration|default=1 === 4 ? 'selected' : ''}>unlimited</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Type of Medal <span class="form-required"></span></th>
+                        <td>
+                            <select class="form-control" name="post[type_of_medal]" id="type_of_medal" required onchange="toggleInputField()">
+                                <option value="1" {$list.type_of_medal|default=1 === 1 ? 'selected' : ''}>for Supporter</option>
+                                <option value="2" {$list.type_of_medal|default=1 === 2 ? 'selected' : ''}>for receiver</option>
+                                <option value="3" {$list.type_of_medal|default=1 === 3 ? 'selected' : ''}>for gift giver</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="extra_input_row" style="display: none;">
+                        <th>Gift ID <span class="form-required"></span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[gift_id]" value="{$list.gift_id|default=NULL}" id="extra_info" placeholder="Enter extra information"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>target <span class="form-required"></span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[target_coin]"
+                                   id="title" required value="{$list.target_coin |default='1'}" placeholder="Target Coin"/>
+                        </td>
+                    </tr>
+                    <script>
+                        function toggleInputField() {
+                            var typeOfMedal = document.getElementById("type_of_medal").value;
+                            var extraInputRow = document.getElementById("extra_input_row");
+                        
+                            if (typeOfMedal === "3") {
+                                extraInputRow.style.display = "table-row"; 
+                            } else {
+                                extraInputRow.style.display = "none";
+                            }
+                        }
+                    </script>
+
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('dress_up/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    function ColorGetFn(dom){
+        document.getElementById('colors').value = dom.value;
+    }
+ $('.btn-level-thumbnail').click(function () {
+            $('#level-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#level').val('');
+        });
+  $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+</script>
+</body>
+</html>

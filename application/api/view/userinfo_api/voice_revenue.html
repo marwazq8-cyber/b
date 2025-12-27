@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link href="__STATIC__/css/wallet.css" rel="stylesheet">
+    <link href="__STATIC__/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>房间营收数据</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/styles.css" media="all">
+    <script src="__STATIC__/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/moment.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/bootstrap-datetimepicker.js"></script>
+    <script src="__STATIC__/js/clipboard.min.js"></script>
+    <script src="__STATIC__/layer/mobile/layer.js" rel="stylesheet"></script>
+</head>
+
+<body>
+  <div class="revenue">
+        <div class="revenue_name">时间</div>
+        <div class="revenue_name_input">
+            <input type="date" id="start_time"  name="input_date" placeholder="时间选择特效" class="revenue_input date addOn" />
+           <span>至</span>
+           <input type="date" id="end_time"  name="input_date" placeholder="时间选择特效" class="revenue_input date addOn"/>
+        </div>
+       <div class="revenue_center">
+            <div class="revenue_center_name">提示</div>
+            <!--<div class="revenue_center_name">最新可以选择前一天的数据</div>
+            <div class="revenue_center_name">下载链接粘贴PC浏览器可自动下载到本地</div>-->
+            <div class="revenue_center_name">只支持下载最近90天的数据</div>
+       </div>
+
+
+       <div class="revenue_btn" >查看房间营收数据</div>
+  </div>
+  <div class="revenue-fixd"></div>
+  <div class="revenue-alert">
+      <h2>提示</h2>
+      <p>已获取到本房间的营收数据Excel文件，是否复制到剪切板？</p>
+      <div class="revenue-alert-b">
+          <div class="revenue-alert-b-l">
+              <div class="revenue-alert-b-l-b">取消</div>
+
+          </div>
+          <div class="revenue-alert-b-r" >
+              <div class="revenue-alert-b-r-b" id="Copy">马上复制<input id="daima" value="{$url}" class="copy_val" data-url="{$url}"/></div>
+          </div>
+      </div>
+  </div>
+</body>
+<script>
+    $('.revenue_btn').click(function(){
+        /*$('.revenue-fixd').css('display','block');
+        $('.revenue-alert').css('display','block');*/
+        var url ='{$url}';
+        var start_time =$("#start_time").val();
+        var end_time =$("#end_time").val();
+        var name = url+"&start_time="+start_time+"&end_time="+end_time;
+        window.location.href = name;
+    })
+    $('.revenue-alert-b-l-b').click(function(){
+        $('.revenue-fixd').css('display','none');
+        $('.revenue-alert').css('display','none');
+    })
+$(document).ready(function(){
+    if($(".date").length>0){
+        $(".date").datetimepicker({
+            locale:"zh-cn",
+            format:"YYYY-MM-DD",
+            dayViewHeaderFormat:"YYYY年 MMMM"
+        });
+    }
+    var clipboard = new ClipboardJS('.revenue-alert-b-r-b', {
+        text: function() {
+             var url =$("#daima").attr("data-url");
+            var start_time =$("#start_time").val();
+            var end_time =$("#end_time").val();
+            var name=url+"&start_time="+start_time+"&end_time="+end_time;
+            return name;
+        }
+    });
+
+    clipboard.on('success', function(e) {
+        console.log(e);
+         layer.open({
+            content: "复制成功！"
+            , skin: 'msg'
+            , time: 2 //2秒后自动关闭
+        });
+        $('.revenue-fixd').css('display','none');
+        $('.revenue-alert').css('display','none');
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+})
+
+
+</script>
+</html>

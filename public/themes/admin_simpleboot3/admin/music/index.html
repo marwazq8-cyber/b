@@ -1,0 +1,138 @@
+<include file="public@header"/>
+</head>
+<style>
+      .gift-img {
+        width: 50px;
+        height: 50px
+    }
+     .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('music/index')}">{:lang('ADMIN_MUSIC_LIST')}</a></li>
+        <li><a href="{:url('music/add')}">{:lang('ADMIN_MUSIC_ADD')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('music/index')}">
+        {:lang('ADMIN_MUSIC_NAME')}:
+        <input type="text" class="form-control" name="title" style="width: 120px;"
+               value="{$data.title|default=''}" placeholder="{:lang('请输入音乐名称')}">
+        {:lang('ADMIN_SINGER')}:
+        <input type="text" class="form-control" name="user_name" style="width: 120px;"
+               value="{$data.user_name|default=''}" placeholder="{:lang('请输入歌手')}">
+        {:lang('ADMIN_MUSIC_TYPE')}：
+        <select name="music_type" class="form-control">
+            <option value="0">{:lang('ALL')}</option>
+            <foreach name="music_type_list" id="v">
+                 <option value="{$v['id']}" <if condition="$data.music_type eq $v['id']"> selected='selected' </if> >{$v['name']}</option>
+            </foreach>
+          
+        </select>
+        {:lang('STATUS')}：
+        <select name="status" class="form-control">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="0" <if condition="$data.status eq '0'"> selected='selected' </if> >{:lang('CLOSE')}</option>
+            <option value="1" <if condition="$data.status eq 1"> selected='selected' </if> >{:lang('OPEN')}</option>
+        </select>
+
+        {:lang('ADMIN_WHETHER_RECOMMEND')}：
+        <select name="is_recommended" class="form-control">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="0" <if condition="$data.is_recommended eq '0'"> selected='selected' </if> >{:lang('NO')}</option>
+            <option value="1" <if condition="$data.is_recommended eq 1"> selected='selected' </if> >{:lang('YES')}</option>
+        </select> 
+        
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}"/>
+        <a class="btn btn-danger" href="{:url('music/index')}">{:lang('EMPTY')}</a>
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th width="50">ID</th>
+            <th>{:lang('ADMIN_MUSIC_NAME')}</th>
+            <th>{:lang('ADMIN_SINGER_AVATAR')}</th>
+            <th>{:lang('ADMIN_MUSIC_TYPE')}</th>
+            <th>{:lang('ADMIN_SINGER')}</th>
+            <th>{:lang('ADMIN_DOWNLOAD_TIMES')}</th>
+            <th>{:lang('ADMIN_VIEWS')}</th>
+          <!--   <th>{:lang('价格')}</th> -->
+            <th>{:lang('ADMIN_WHETHER_RECOMMEND')}</th>
+            <th>{:lang('STATUS')}</th>
+            <th>{:lang('SORT')}</th>
+            <th>{:lang('TIME')}</th>
+            <th width="130">{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tbody>
+            <php> $is_recommended =array('1'=>lang('YES'),'0'=>lang('NO'));</php>
+        <foreach name="list" item="vo">
+            <tr>
+                <td>{$vo['id']}</td>
+                <td>{$vo['title']}</td>
+                <td class="gift-img"><img src="{$vo.img}" alt=""></td>
+                <td>{$vo['name']}</td>
+                <td>{$vo['user_name'] |default=''}</td>
+                <td>{$vo['download'] |default='0'}</td>
+                <td>{$vo['plays'] |default='0'}</td>
+
+              <!--   <td>{$vo['price'] |default='0'}</td> -->
+                <td>{$is_recommended[$vo['is_recommended']]}</td>
+                <td>
+                    <if condition="$vo['status'] eq '1'">
+                        {:lang('OPEN')}
+                    <else/>
+                        {:lang('CLOSE')}
+                    </if>
+   
+                </td>
+
+                <td>{$vo['sort'] |default='0'}</td>
+               <td>{:date('Y-m-d H:i:s',$vo['addtime'])}</td>
+                <td>
+                     <a href='{:url("music/add",array("id"=>$vo["id"]))}'>{:lang('EDIT')}</a>|
+                      <a href="javescript:;" class="del" data-id="{$vo['id']}">{:lang('DELETE')}</a>
+                   
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".settlement").click(function () {
+        var id = $(this).attr("data-id");
+        var money = $(this).attr("data-money");
+
+    })
+      $(".del").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}","{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('music/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("{:lang('DELETE_SUCCESS')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('DELETE_FAILED')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+</script>
+</body>
+</html>

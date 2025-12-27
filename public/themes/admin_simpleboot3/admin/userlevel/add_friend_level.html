@@ -1,0 +1,105 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('userlevel/friend_level')}">{:lang('ADMIN_LEVEL_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_LEVEL_ADD')}</a></li>
+    </ul>
+    <form action="{:url('userlevel/add_friend_post')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_LEVEL_NAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="number" name="post[name]"
+                                   id="title" required value="{$level.name |default=''}" placeholder="{:lang('请输入等级')}"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('需要的消费(收益)总数 ')}<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[level_up]" id="source" value="{$level.level_up |default=''}"
+                                   placeholder="{:lang('请输入消费(收益)总数 ')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('文字聊天 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[is_text]" id="" class="form-control">
+                                <option value="0" <if condition="$level.is_text eq 0">selected</if>>{:lang('CLOSE')}</option>
+                                <option value="1" <if condition="$level.is_text eq 1">selected</if>>{:lang('OPEN')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('语音聊天 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[is_audio]" id="" class="form-control">
+                                <option value="0" <if condition="$level.is_audio eq 0">selected</if>>{:lang('CLOSE')}</option>
+                                <option value="1" <if condition="$level.is_audio eq 1">selected</if>>{:lang('OPEN')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('视频聊天 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[is_video]" id="" class="form-control">
+                                <option value="0" <if condition="$level.is_video eq 0">selected</if>>{:lang('CLOSE')}</option>
+                                <option value="1" <if condition="$level.is_video eq 1">selected</if>>{:lang('OPEN')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <!--<tr>
+                        <th>{:lang('查看个人中心资料 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[is_info]" id="" class="form-control">
+                                <option value="0" <if condition="$level.is_info eq 0">selected</if>>{:lang('CLOSE')}</option>
+                                <option value="1" <if condition="$level.is_info eq 1">selected</if>>{:lang('开启')}</option>
+                            </select>
+                        </td>
+                    </tr>-->
+
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                   required value="{$level.sort |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$level.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('userlevel/player_level')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    function ColorGetFn(dom){
+        document.getElementById('colors').value = dom.value;
+    }
+    $('.btn-level-thumbnail').click(function () {
+        $('#level-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+        $('#level').val('');
+    });
+    $('.btn-cancel-thumbnail').click(function () {
+        $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+        $('#thumbnail').val('');
+    });
+</script>
+</body>
+</html>

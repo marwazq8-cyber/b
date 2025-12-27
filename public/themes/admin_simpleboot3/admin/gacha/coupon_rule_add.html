@@ -1,0 +1,81 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('gacha/coupon_rule')}">{:lang('ADMIN_GACHA_COUPON_PURCHASE_RULES')}</a></li>
+        <li class="active"><a href="{:url('gacha/coupon_rule_add')}">{:lang('ADMIN_GACHA_COUPON_PURCHASE_RULES_ADD')}</a></li>
+    </ul>
+    <form action="{:url('gacha/coupon_rule_add_post')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_NUMBER')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[num]"
+                                   id="num" required value="{$list.num |default=''}" placeholder="{:lang('请输入数量')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_PRICE')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[money]"
+                                   id="title" required value="{$list.money |default=''}" placeholder="{:lang('请输入价格')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[orderno]" style="width:100px;"
+                                   required value="{$list.orderno |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('gacha/coupon_rule')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+        $('.btn-cancel-svga').click(function () {
+            $('#svga-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#svga').val('');
+        });
+
+    });
+</script>
+
+</body>
+</html>

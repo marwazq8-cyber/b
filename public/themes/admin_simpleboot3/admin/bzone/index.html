@@ -1,0 +1,169 @@
+<include file="public@header"/>
+</head>
+<style type="text/css">
+    .ppp {
+        width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .bzone_view{cursor:pointer;color:#18BC9C}
+</style>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_DYNAMIC')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('bzone/index')}">
+        {:lang('USER_ID')}:
+        <input type="text" class="form-control" name="uid" style="width: 200px;"
+               value="{$refill.uid|default=''}" placeholder="{:lang('请输入会员id...')}">
+        {:lang('ADMIN_DYNAMIC_CONTENT')}:
+        <input type="text" class="form-control" name="msg_content" style="width: 200px;"
+               value="{$refill.msg_content|default=''}" placeholder="{:lang('ADMIN_DYNAMIC_CONTENT')}">
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}"/>
+        <a class="btn btn-danger" href="{:url('bzone/index')}">{:lang('EMPTY')}</a>
+    </form>
+    <form class="js-ajax-form" action="" method="post">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('USER')}</th>
+                <!--<th>{:lang('动态类型')}</th>-->
+                <th>{:lang('ADMIN_VIDEO')}</th>
+                <th>{:lang('ADMIN_DYNAMIC_CONTENT')}</th>
+                <th>{:lang('ADMIN_IMG')}</th>
+                <th>{:lang('ADMIN_LONGITUDE')}</th>
+                <th>{:lang('ADMIN_LATITUDE')}</th>
+                <th>{:lang('ADMIN_LIKE_NUMBER')}</th>
+                <th>{:lang('ADMIN_COMMENT_NUMBER')}</th>
+                <th>{:lang('ADD_TIME')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.user_nickname}({$vo.uid})</td>
+
+                    <td>
+                        <if condition="empty($vo['video_url'])">
+                            {:lang('ADMIN_WITHOUT')}
+                            <else/>
+                            <a href="javascript:;" class="layer-demolist" data-videourl="{$vo['video_url']}">{:lang('ADMIN_LOOK')}</a>
+                        </if>
+
+
+                    </td>
+                    <td width="200">
+                        <p class="ppp">{$vo.msg_content}</p>
+                    </td>
+                    <td>
+                        <if condition="$vo.bzimg neq ''">
+                            <div class="bzone_view" data-id="{$vo.id}" data-type="2">
+                                <foreach name="$vo.bzimg" id="m">
+                                    <img src="{$m.img}" style="height: 50px;">
+                                </foreach>
+                            </div>
+                            <else/>
+                            {:lang('ADMIN_WITHOUT')}
+                        </if>
+                    </td>
+
+                    <td>{$vo.lng}</td>
+                    <td>{$vo.lat}</td>
+                    <td>{$vo.bzlikenum}</td>
+                    <td>
+                        <if condition="$vo.bzreplynum gt 0">
+                            <a href="{:url('Bzone/bzone_reply',array('id'=>$vo['id']))}" > {$vo.bzreplynum}</a>
+                            <else/>
+                            {$vo.bzreplynum}
+                        </if>
+                    </td>
+
+                    <td>{$vo.publish_time | date="Y-m-d H:i:s",###}</td>
+
+                    <td>
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+
+    var loadstr='<video  width="400px" height="400px"  controls="controls" autobuffer="autobuffer"  autoplay="autoplay" loop="loop" style="position:fixed!important;top:0;left:0;"><source id="videos" src="abcdef123" type="video/mp4"></source></video>'
+    $('.layer-demolist').on('click', function(){
+        var videourl = $(this).data('videourl');
+        // $html = $(loadstr);
+        var aa =loadstr.replace('abcdef123',videourl);
+        // $('#videos',$html).attr('src',videourl);
+
+        layer.open({
+            type:1,
+            title: "",
+            area: ['400px', '400px'],
+            shade: 0,
+            closeBtn: 1,
+            content: aa,
+        });
+    })
+
+
+    $(".del").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}","{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('Bzone/bzone_del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("{:lang('DELETE_SUCCESS')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('DELETE_FAILED')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".bzone_view").click(function(){
+        var id=$(this).attr("data-id");
+        var type=$(this).attr("data-type");
+        if(type ==2){
+            //相册层
+            $.getJSON("{:url('Bzone/bzone_img')}?id="+id, function(json){
+                layer.photos({
+                    photos: json //格式见API文档手册页
+                    ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机
+                });
+            });
+        }else{
+            //iframe层-多媒体
+            layer.open({
+                type: 2,
+                title: false,
+                area: ['630px', '360px'],
+                shade: 0.8,
+                closeBtn: 0,
+                shadeClose: true,
+                content: id
+            });
+        }
+    })
+
+</script>
+</body>
+</html>

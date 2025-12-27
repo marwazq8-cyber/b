@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title></title>
+    <script type="text/javascript" src="__STATIC__/js/jquery.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/num-alignment1.js"></script>
+    <script src="__STATIC__/js/lc_switch.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="__STATIC__/css/game_box.css" />
+    <!--<link rel="stylesheet" href="__STATIC__/css/common.css" />-->
+    <link rel="stylesheet" href="__STATIC__/css/bubble.css" />
+
+    <script src="__STATIC__/layer/mobile/layer.js" rel="stylesheet"></script>
+    <link rel="stylesheet" href="__STATIC__/css/lc_switch.css">
+    <script type="text/javascript">
+        document.addEventListener('plusready', function(){
+            //console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+        });
+    </script>
+    <style>
+        .continuous_class{width:100%;height: 2em;}
+        .continuous_class span{float:right;margin-right:5%;height:2em;line-height:2em;}
+        .continuous_class .lcs_wrap{margin-right:25%;}
+        .randing_border{border-bottom:2px solid; border-image: linear-gradient(to left, rgba(198, 0, 255, 0.8), rgba(243, 106, 0, 0.8)) 1;;height: 3em;width: 4em;margin:0 auto;font-weight: bold;}
+        .table_name{width: 30%;float:left;height: 3em;line-height: 3em;text-align: center;cursor: pointer;}
+        .bubble_gift_floating_p{width: 80%;height: 60%;position: absolute;left:10%;top:0;overflow: hidden;}
+        .bubble_gift_floating{border-radius: 50%;}
+        .bubble_type{float:left;width:29%;margin:2%;background: #bebebe;border-radius: 2em;height:2.5em;line-height: 2.5em;color:#fff;cursor: pointer;}
+        .bubble_type_color{background: #ff4e99;}
+    </style>
+</head>
+<body>
+    <div class="game-box">
+        <div class="game-box-a">
+            <div class="game-box-a-top">
+                <div class="game-box-a-top-l">
+                    <img src="__STATIC__/img/game_box/introduce@2x.png" alt="">
+                </div>
+                <div class="game-box-a-top-c">
+                    <img src="__STATIC__/img/game_box/title@2x.png" alt="">
+                </div>
+                <div class="game-box-a-top-r">
+                    <img src="__STATIC__/img/game_box/more@2x.png" alt="">
+                </div>
+            </div>
+            <div class="game-box-a-center">
+                <img src="__STATIC__/img/game_box/baoxiang3@2x.png" alt="">
+            </div>
+            <div class="game-box-a-bottom">
+                {volist name="bubble_type" id="v"}
+                    <div class="game-box-a-bottom-b">
+                        <div class="game-box-a-bottom-button" data-id="{$v.id}">
+                            开{$v.sum}次
+                            <span>
+                                <img src="__STATIC__/img/bubble/diamonds_bigbig@2x.png" alt="">{$game_box_coin*$v['sum']}
+                            </span>
+                        </div>
+                    </div>
+                {/volist}
+            </div>
+        </div>
+    </div>
+<div class="bg-box"></div>
+<div class="list-l">
+    <div class="list-l-a gift-log">中奖纪录</div>
+    <div class="list-l-b"></div>
+    <div class="list-l-a rank-log">手气榜</div>
+    <div class="list-l-b"></div>
+    <div class="list-l-a pool-log">奖池礼物</div>
+</div>
+<!--游戏规则-->
+<div class="game-rule">
+    <div class="game-rule-top">
+        <div class="game-rule-top-l">
+            <img src="__STATIC__/img/bubble/back@2x.png" alt="">
+        </div>
+        <div class="game-rule-top-c">游戏规则</div>
+        <div class="game-rule-top-l"></div>
+    </div>
+    <div class="game-rule-box">
+        一、玩法说明<br/>
+
+        1.点击开宝箱即可参与活动;<br/>
+
+        二、开箱奖励<br/>
+
+        开宝箱可获得礼物，奖品价值随机注:<br/>
+
+        1.参与活动获得的礼物会自动放入礼物-背包内，请在礼物面板查看;<br/>
+
+    </div>
+</div>
+<!--中奖-->
+<div class="gift-box">
+    <div class="gift-box-a">
+        <div class="gift-box-a-top">
+            <div class="gift-box-a-top-l">&nbsp;</div>
+            <div class="gift-box-a-top-c">恭喜获得</div>
+            <div class="gift-box-a-top-r"><img src="__STATIC__/img/game_box/close@2x.png" alt=""></div>
+        </div>
+        <div class="gift-box-a-box">
+
+        </div>
+        <!--<div class="gift-box-a-bottom">奖品已放入您的背包</div>-->
+    </div>
+</div>
+<!--中奖纪录-->
+<div class="gift-list">
+
+    <div class="gift-list-box-top">
+        <div class="gift-list-box-top-r"><img src="__STATIC__/img/bubble/back@2x.png" alt=""></div>
+        <div class="gift-list-box-top-c">获奖记录</div>
+        <div class="gift-list-box-top-r">&nbsp;</div>
+    </div>
+    <div class="gift-list-box-center" id="wrapper5">
+        <div class="ranking scroller2" style="white-space: nowrap;">
+            <div class="more2 ranking_all2" style="text-align: center"><i class="pull_icon2"></i><span>上拉加载...</span></div>
+        </div>
+    </div>
+        <!--<div class="gift-box-a-bottom">奖品已放入您的背包</div>-->
+</div>
+<!--手气榜-->
+<div class="rank-list">
+    <div class="rank-list-box-top">
+        <div class="rank-list-box-top-r"><img src="__STATIC__/img/bubble/back@2x.png" alt=""></div>
+        <div class="rank-list-box-top-c">手气榜</div>
+        <div class="rank-list-box-top-r">&nbsp;</div>
+    </div>
+    <div class="rank-list-box-center" id="wrapper3">
+        <div class="ranking scroller3" style="white-space: nowrap;">
+            <div class="more2 ranking_all3" style="text-align: center"><i class="pull_icon2"></i><span>上拉加载...</span></div>
+        </div>
+    </div>
+<!--<div class="gift-box-a-bottom">奖品已放入您的背包</div>-->
+</div>
+<!--奖池-->
+<div class="gift-pool">
+    <div class="rank-list-box-top">
+        <div class="rank-list-box-top-r"><img src="__STATIC__/img/bubble/back@2x.png" alt=""></div>
+        <div class="rank-list-box-top-c">奖池礼物</div>
+        <div class="rank-list-box-top-r">&nbsp;</div>
+    </div>
+    <div class="gift-pool-box">
+        {volist name="gift_list" id="v"}
+        <div class="gift-pool-box-a">
+            <div class="gift-pool-box-b">
+                <div class="gift-pool-box-b-t">
+                    <img src="{$v.img}" alt="">
+                </div>
+                <div class="gift-pool-box-b-b">
+                    {$v.name}
+                </div>
+                <div class="gift-pool-box-b-coin">
+                    <img src="__STATIC__/img/bubble/diamonds_bigbig@2x.png" alt="">{$v.coin}
+                </div>
+            </div>
+        </div>
+        {/volist}
+    </div>
+</div>
+</body>
+<script src="__STATIC__/js/preloadjs-NEXT.min.js"></script>
+<script src="__STATIC__/js/soundjs-NEXT.min.js"></script>
+<script src="__STATIC__/js/iscroll.js"></script>
+<script src="__STATIC__/js/sign.js"></script>
+<script src="__STATIC__/js/jquery.md5.js"></script>
+<script>
+    $('.bg-box').click(function(){
+        $('.bg-box').css('display','none');
+        $('.list-l').css('display','none');
+        $('.gift-box').css('display','none');
+    });
+    $('.game-box-a-top-r').click(function(){
+        $('.bg-box').css('display','block');
+        $('.list-l').css('display','block');
+    });
+    $('.game-box-a-top-l').click(function(){
+        $('.game-rule').css('display','block');
+    });
+    $('.game-rule-top-l').click(function(){
+        $('.game-rule').css('display','none');
+    });
+
+    $('.gift-box-a-top-r').click(function(){
+        $('.bg-box').css('display','none');
+        $('.gift-box').css('display','none');
+    });
+    $('.gift-list-box-top-r').click(function(){
+        $('.bg-box').css('display','none');
+        $('.list-l').css('display','none');
+        $('.gift-list').css('display','none');
+    });
+    $('.rank-list-box-top-r').click(function(){
+        $('.bg-box').css('display','none');
+        $('.list-l').css('display','none');
+        $('.rank-list').css('display','none');
+        $('.gift-pool').css('display','none');
+    });
+
+    $('.pool-log').click(function(){
+        //$('.bg-box').css('display','block');
+        //$('.list-l').css('display','none');
+        //$('.rank-list').css('display','none');
+        $('.gift-pool').css('display','block');
+    });
+
+
+    var uid="{$uid}";
+    var token="{$token}";
+    var voice_id="{$voice_id}";
+    var request_status = 1;
+
+    $('.game-box-a-bottom-button').click(function(){
+        var sum = $(this).attr('data-id');
+
+        if(request_status==1){
+            //console.log(sum);return;
+
+            request_status = 0;
+            const datas = {'uid': uid,'token':token,'sum':sum,'voice_id':voice_id};
+            datas['sign'] = myJs.getJson(datas);
+            $.ajax({
+                type: 'POST',
+                url: "{:url('game_box_api/playing_box')}",
+                data: datas,
+                dataType: 'json',
+                success: function (data) {
+                    if(data.code == 1){
+                        request_status = 1;
+                        var winning = data.winning;
+                        $('.gift-box-a-box').html('');
+                        for (var i = 0; i < winning.length; i++) {
+
+                            var html = '<div class="gift-box-a-box-b"><div class="gift-box-a-box-b-a"><div class="gift-box-a-box-b-a-t"><img src="'+winning[i]["img"]+'" alt=""></div><div class="gift-box-a-box-b-a-bu">'+winning[i]["name"]+'<span>x'+winning[i]["count"]+'</span></div><div class="gift-box-a-box-b-a-coin"><img src="__STATIC__/img/bubble/diamonds_bigbig@2x.png" alt="">'+winning[i]["coin"]+'</div></div></div>';
+
+                            $('.gift-box-a-box').append(html);
+                        }
+                        $('.bg-box').css('display','block');
+                        $('.gift-box').css('display','block');
+
+                        /*$(".magic_wand_sum").html(data.user.magic_wand_sum);
+                        $(".user_coin").html(data.user.coin);*/
+
+                        //aClick(1,data.winning);
+                    }else{
+                        request_status = 1;
+                        //request_status=1;
+                        /*$(".agg_button").html('开始打泡泡');
+                        $(".agg_button").attr('data-type',1);
+                        $('.play-bubble-button'+bubble_sum).html(play_bubble_button);
+                        $('.play-bubble-button'+bubble_sum).removeClass('play-bubble-button-xz');
+                        $('.play-bubble-button'+bubble_sum).attr('data-status',0);*/
+                        layer.open({
+                            content: data.msg
+                            ,skin: 'msg'
+                            ,time: 2 //2秒后自动关闭
+                        });
+
+                    }
+                }
+            });
+        }
+    });
+
+
+    var p=1;
+    var ranking_status= false;
+    var continuous=1;
+    var play_bubble_button = '';
+
+    // 自定义类型：参数为数组，可多条数据
+    alignmentFns.createType([{"test": {"step" : 10, "min" : 10, "max" : 999, "digit" : 0}}]);
+    // 初始化
+    alignmentFns.initialize();
+    // 销毁
+    alignmentFns.destroy();
+    // js动态改变数据
+    $("#4").attr("data-max", "12")
+    // 初始化
+    alignmentFns.initialize();
+    $(function(){
+        $(".gift-log").click(function(){
+            $('.gift-list').css('display','block');
+            $('#wrapper5').css('height','50vh');
+            $('.ranking_all2').show();
+            $('.gift-list-box-center-b').remove();
+            //myscroll2_func();
+            //myscroll2.y = 0;
+            //console.log(myscroll2);
+            get_winning_record_list(0);
+        });
+
+        $(".rank-log").click(function(){
+            $('.rank-list').css('display','block');
+            $('#wrapper3').css('height','50vh');
+            $('.ranking_all3').show();
+            $('.winning_list').remove();
+            get_ranking_list(0);
+        });
+
+
+        $('#bubble_sum').removeAttr("readonly");
+        $("#myModa2").on('show.bs.modal', function () {
+            $("#myModa4").modal('hide');
+        });
+
+        //排行榜弹框点击显示执行
+        $('#myModal').on('show.bs.modal', function () {
+            $(".ranking_list_del").remove();
+            $('.ranking_all').show();
+            $('#wrapper').css('height','40vh');
+            get_ranking_list(0);
+        });
+        function get_ranking_list(page){
+            if(ranking_status == false){
+                ranking_status =true;
+                var type=3;
+                const datas = {'uid': uid,'token':token,'p':page,'type':type};
+                datas['sign'] = myJs.getJson(datas);
+                $.ajax({
+                    type: 'POST',
+                    url: "{:url('game_box_api/ranking_list')}",
+                    data: datas,
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.code == 1){
+                            dat='';
+                            if(type ==3){
+                                for (var i = 0; i < data.list.length; i++) {
+                                    dat+='<aside class="winning_list"><a href="#"><p class="fl"><img src="'+data.list[i].avatar+'" class="bubble_img"/></p><div style="float:left;width:50%;overflow:hidden;color: #ffffff;margin-top:0.5vh;"><div style="text-align:left;">'+data.list[i].user_nickname+'</div><div style="text-align:left;"> '+data.list[i].name+' x '+data.list[i].sum+'</div></div><p class="fr"><img src="'+data.list[i].img+'" /><span style="color: #ffffff;">'+data.list[i].addtime+'</span></p></a></aside>';
+                                }
+
+                            }else{
+                                for (var i = 0; i < data.list.length; i++) {
+                                    if(page<1){
+                                        var num = i*1+1;
+                                        if(num<10){
+                                            num = '0'+num;
+                                        }
+                                    }else{
+                                        var num = 10*page+1+i*1;
+                                        //console.log(page);
+                                    }
+                                    //<div style="width:35px;height:23px;background: url('+data.list[i].level_icon+') no-repeat;background-size: 100% 100%;line-height: 25px;text-align: right">'+data.list[i].level+'&nbsp;&nbsp;</div>
+                                    dat+='<aside class="ranking_list_del"><a href="#"><div class="bank-num bank-num'+num+'">'+num+'</div><div class="bank-avatar bank-avatar'+num+'"><img src="'+data.list[i].avatar+'" /></div><div class="bank-name"><div class="bank-name-l"><span>'+data.list[i].user_nickname+'</span><span><img src="" alt=""></span></div></div><p class="fr ranking_all_right">钻石'+data.list[i].coin+'</p></a></aside>';
+                                }
+                            }
+
+                            if(page == 0){
+                                $('.ranking_list_del').remove();
+                            }
+                            $('.ranking_all3').before(dat);
+                            p = data.p + 1;
+                            if(data.is_show == 1){
+                                $('.ranking_all3').show();
+                            }else{
+                                $('.ranking_all3').hide();
+                            }
+                            ranking_status = false;
+                            myscroll.refresh();
+                        }else{
+                            layer.open({
+                                content: data.msg
+                                ,skin: 'msg'
+                                ,time: 2 //2秒后自动关闭
+                            });
+                            ranking_status = false;
+                        }
+                    }
+                });
+            }
+        }
+
+
+        function get_winning_record_list(page){
+            const datas = {'uid': uid,'token':token,'p':page};
+            datas['sign'] = myJs.getJson(datas);
+            $.ajax({
+                type: 'POST',
+                url: "{:url('game_box_api/winning_record_list')}",
+                data: datas,
+                dataType: 'json',
+                success: function (data) {
+                    if(data.code == 1){
+                        dat='';
+                        for (var i = 0; i < data.list.length; i++) {
+                            //dat+='<div class="bubble-log-box"><div class="bubble-log-box-l"><img src="'+data.list[i].img+'" class="bubble_img"/></div><div class="bubble-log-box-r"><div class="bubble-log-box-r-name">'+data.list[i].name+'x'+data.list[i].sum+'</div><div class="bubble-log-box-r-time">'+data.list[i].addtime+'</div></div></div>';
+                            dat+='<div class="gift-list-box-center-b"><div class="gift-list-box-center-b-l"><img src="'+data.list[i].img+'" alt=""></div><div class="gift-list-box-center-b-c">'+data.list[i].name+'x'+data.list[i].sum+'</div><div class="gift-list-box-center-b-r">'+data.list[i].addtime+'</div></div>';
+
+                        }
+                        $('.ranking_all2').before(dat);
+                        p = data.p + 1;
+                        if(data.is_show == 1){
+                            $('.ranking_all2').show();
+                        }else{
+                            $('.ranking_all2').hide();
+                        }
+                        myscroll2.refresh();
+                    }else{
+                        layer.open({
+                            content: data.msg
+                            ,skin: 'msg'
+                            ,time: 2 //2秒后自动关闭
+                        });
+                    }
+                }
+            });
+        }
+
+
+        var myscroll2 = new iScroll("wrapper5",{
+            onScrollMove:function(){
+                if (this.y<(this.maxScrollY)) {
+                    $('.pull_icon2').addClass('flip');
+                    $('.pull_icon2').removeClass('loading');
+                    $('.more2 span').text('释放加载...');
+                }else{
+                    $('.pull_icon2').removeClass('flip loading');
+                    $('.more2 span').text('上拉加载...')
+                }
+                if (this.y>(this.minScrollY)) {
+
+                }
+                //console.log(myscroll2);
+            },
+            onScrollEnd:function(){
+                if ($('.pull_icon2').hasClass('flip')) {
+                    $('.pull_icon2').addClass('loading');
+                    $('.more2 span').text('加载中...');
+                    get_winning_record_list(p);
+                }
+            },
+            onRefresh:function(){
+                $('.more2').removeClass('flip');
+                $('.more2 span').text('上拉加载...');
+            }
+        });
+
+        if ($('.scroller2').height()<$('#wrapper5').height()) {
+            $('.more2').hide();
+            myscroll2.destroy();
+        }
+
+
+
+
+        /*
+        * 手气榜*/
+
+        $(".buy_magic aside").click(function(){
+            $(this).addClass("active").siblings("aside").removeClass("active");
+        })
+
+        var myscroll = new iScroll("wrapper3",{
+            onScrollMove:function(){
+                if (this.y<(this.maxScrollY)) {
+                    $('.pull_icon').addClass('flip');
+                    $('.pull_icon').removeClass('loading');
+                    $('.more1 span').text('释放加载...');
+                }else{
+                    $('.pull_icon').removeClass('flip loading');
+                    $('.more1 span').text('上拉加载...')
+                }
+                if (this.y>(this.minScrollY)) {
+
+                }
+            },
+            onScrollEnd:function(){
+                if ($('.pull_icon').hasClass('flip')) {
+                    $('.pull_icon').addClass('loading');
+                    $('.more1 span').text('加载中...');
+                    get_ranking_list(p);
+                }
+            },
+            onRefresh:function(){
+                $('.more1').removeClass('flip');
+                $('.more1 span').text('上拉加载...');
+            }
+        });
+
+        if ($('.scroller3').height()<$('#wrapper3').height()) {
+            $('.more1').hide();
+            myscroll.destroy();
+        }
+
+        /*$("#myModa11").on('show.bs.modal', function () {
+            //$("#myModa4").modal('hide');
+            //alert(1);
+            /!*$('#wrapper11').css('height','40vh');*!/
+            get_prize_pool_list(1);
+
+        });
+        function get_prize_pool_list(page){
+            const datas = {'uid': uid,'token':token,'p':page};
+            datas['sign'] = myJs.getJson(datas);
+            $.ajax({
+                type: 'POST',
+                url: "{:url('bubble_api/get_prize_pool')}",
+                data: datas,
+                dataType: 'json',
+                success: function (data) {
+                    if(data.code == 1){
+                        //console.log(data);
+                        $('.bubble-prize-box-a').html('');
+                        dat='';
+                        for (var i = 0; i < data.list.length; i++) {
+                            dat+='<div class="poll"><div class="poll-box"><div class="poll-img"><img src="'+data.list[i].img+'" alt=""></div><div class="poll-name">'+data.list[i].name+'</div></div></div></div>';
+                        }
+                        $('.bubble-prize-box-a').append(dat);
+
+                        console.log(dat);
+                        //$('.ranking_all2').before(dat);
+                        //p = data.p + 1;
+                        //myscroll2.refresh();
+                    }else{
+                        layer.open({
+                            content: data.msg
+                            ,skin: 'msg'
+                            ,time: 2 //2秒后自动关闭
+                        });
+                    }
+                }
+            });
+        };
+        //var myscroll11 = new iScroll("wrapper11",{});
+        $('.bubble-pool-gift').click(function(){
+            $(this).css('display','none');
+            $('.background-box2').css('display','none');
+        });*/
+    });
+</script>
+</html>
+<style>
+
+
+</style>

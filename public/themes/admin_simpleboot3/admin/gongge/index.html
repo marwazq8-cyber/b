@@ -1,0 +1,66 @@
+<include file="public@header"/>
+<style>
+    .gift-in input {
+        width: 30px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('宫格列表')}</a></li>
+    </ul>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{:lang('名称')}</th>
+            <th>{:lang('单次的价格({$currency_name})')}</th>
+            <th>{:lang('抽奖次数')}</th>
+            <th>{:lang('宫格背景色值')}</th>
+            <th>{:lang('礼物背景色值')}</th>
+            <th>{:lang('幸运时刻条件(幸运值)')}</th>
+            <th>{:lang('幸运时刻倒计时(秒)')}</th>
+            <th>{:lang('幸运时刻说明')}</th>
+            <th>{:lang('宫格数量')}</th>
+            <th>{:lang('等级限制')}</th>
+            <th>{:lang('STATUS')}</th>
+            <th>{:lang('SORT')}</th>
+            <th>{:lang('UPDATE_TIME')}</th>
+            <th>{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <foreach name="list" id="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.title}</td>
+                <td>{$vo.coin}</td>
+                <td>{$vo.frequency}</td>
+                <td>{$vo.bg_color}</td>
+                <td>{$vo.gift_bg_color}</td>
+                <td>{$vo.double ? $vo.double : lang('不显示') }</td>
+                <td>{$vo.count_down}</td>
+                <td>{$vo.explain}</td>
+                <td>{$vo.gift_count}</td>
+                <td>{$vo.level}</td>
+                <td>
+                    <if condition="$vo.status eq 1">
+                        {:lang('OPEN')}
+                        <else/>
+                        {:lang('CLOSE')}
+                    </if>
+                </td>
+                <td>{$vo.sort}</td>
+                <td>{$vo.create_time | date="Y-m-d H:i:s",###}</td>
+                <td>
+                    <a href="{:url('Gongge/gongge_edit',array('id'=>$vo.id))}">{:lang('EDIT')}</a>
+                </td>
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+</body>
+</html>

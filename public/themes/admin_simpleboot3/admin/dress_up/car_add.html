@@ -1,0 +1,166 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a  href="{:url('dress_up/car')}">{:lang('进场动画列表')}</a></li>
+        <li><a  href="{:url('dress_up/noble_car')}">{:lang('ADMIN_NOBLE')} {:lang('进场动画列表')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('添加进场动画')}</a></li>
+    </ul>
+    <form action="{:url('dress_up/addPostPublic')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('名称 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[name]"
+                                   id="title" required value="{$list.name |default=''}" placeholder="{:lang('Please_enter_name')}"/>
+                        </td>
+                    </tr>
+                    <input type="hidden" name="post[type]" value="7">
+                    <tr>
+                        <th>{:lang('图标')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[icon]" id="thumbnail" value="{$data['icon'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <empty name="$data['icon']">
+
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+
+                                        <img src="{$data['icon']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </empty>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('特效')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;margin-left:35%">
+                                <input type="hidden" id="thumbnailvbg" name="post[img_bg]" value="{$data['img_bg'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnailvbg');">
+                                <div id="demoCanvas" style="max-width: 200px;max-height: 100px;"></div>
+                                <if condition="$data['img_bg']">
+                                    <else/>
+                                    <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                         id="thumbnailvbg-preview"
+                                         width="135" style="cursor: pointer"/>
+                                </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnailvbg" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('天')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[days]"
+                                    required value="{$list.days |default=''}" placeholder="{:lang('天')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('价格')}({$currency_name}) <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[coin]"
+                                    required value="{$list.coin |default=''}" placeholder="{:lang('请输入数量')}"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('排序 ')}<span class="form-required"></span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[orderno]"
+                                   id="order" required value="{$list.orderno |default='50'}" placeholder="{:lang('排序')}"/>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('dress_up/car')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/svga.min.js"></script>
+<script>
+    function ColorGetFn(dom){
+        document.getElementById('colors').value = dom.value;
+    }
+    $('.btn-level-thumbnail').click(function () {
+        $('#level-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+        $('#level').val('');
+    });
+    $('.btn-cancel-thumbnail').click(function () {
+        $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+        $('#thumbnail').val('');
+    });
+    $('.btn-cancel-thumbnailvbg').click(function () {
+        $('#thumbnailvbg-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+        $('#thumbnailvbg').val('');
+        stopAnimation();
+    });
+
+    let svga_url = "{$data['img_bg']}";
+    const player = new SVGA.Player('#demoCanvas');
+    const parser = new SVGA.Parser('#demoCanvas'); // 如果你需要支持 IE6+，那么必须把同样的选择器传给 Parser。
+    player.loops=0;
+    player.clearsAfterStop=false;
+    // 获取 hidden input 元素
+    const hiddenInput = document.querySelector('input[id="thumbnailvbg"]');
+    // 创建一个 MutationObserver 实例
+    const observer = new MutationObserver((mutationsList) => {
+        for (let mutation of mutationsList) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'value') {
+                console.log('Hidden input value changed to:', hiddenInput.value);
+                toAnimation(hiddenInput.value);
+            }
+        }
+    });
+    // 配置观察选项
+    const config = {
+        attributes: true, // 观察属性变化
+        attributeFilter: ['value'] // 仅观察 'value' 属性
+    };
+    // 启动观察器
+    observer.observe(hiddenInput, config);
+    toAnimation(svga_url);
+    // https://voice-chat-intl-sg-1305970982.cos.accelerate.myqcloud.com/admin/13524a79db9a7d4ed2910eb0aa33d786.svga
+    //开始播放动画 https://vivo-1321722748.cos.accelerate.myqcloud.com/admin/616e6fd52d51a48743b56923f0665d7c.svga
+    // https://vivo-1321722748.cos.accelerate.myqcloud.com/admin/20b6675818fe69c32927b9b9dd68f1fc.svga
+    function toAnimation(svga_url){
+        parser.load(svga_url, function(videoItem) {
+            player.setVideoItem(videoItem);
+            player.startAnimation();
+            player.onFinished(function(){});
+        })
+    }
+    //停止播放动画，如果 clearsAfterStop === true，将会清空画布
+    function stopAnimation(){
+        player.stopAnimation();
+    }
+</script>
+</body>
+</html>

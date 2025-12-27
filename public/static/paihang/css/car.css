@@ -1,0 +1,50 @@
+/*我的座驾*/
+body div {margin: 0; padding: 0}
+body {
+	padding:0px;
+	margin: 0 auto;
+	min-width: 280px;
+	max-width: 620px;
+	font-size:12px;
+}
+.mycar{width:100%;}
+.mycar .mycar1{float:left;width:50%;list-style-type:none; margin-top: 10px;}
+.mycar_img{width:80%;margin:0 auto;height:150px;}
+.mycar_img img{width:100%;height:100%;}
+.mycar_text{width:80%;margin:0 auto;height:20px;line-height:20px;text-align:center;}
+.mycar-red{color:#ff3e3e;}
+.chul{width:50%;height:5em;line-height:5em;margin:0 25%;background:#353c94;text-align:center; position:absolute;  
+    left:0px; opacity: 0.5;font-size:18px; top:8em; z-index:70;display:none;color:#fff; }
+
+/* //按钮开关 */
+
+.div1{
+        width: 25%;
+        height: 25px;
+        border-radius: 50px;
+        position: relative;
+        margin: 5px auto;
+    }
+    .div2{
+        width: 50%;
+        height: 22px;
+        border-radius: 48px;
+        position: absolute;
+        background: white;
+        box-shadow: 0px 2px 4px rgba(0,0,0,0.4);
+    }
+    .open1{
+        background: rgba(0,184,0,0.8);
+    }
+    .open1 div{
+        top: 1px;
+        right: 1px;
+    }
+    .close1{
+       background: rgba(156, 156, 156, 0.4);
+        
+    }
+    .close1 div{
+        left: 1px;
+        top: 1px;
+    }

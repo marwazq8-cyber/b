@@ -1,0 +1,149 @@
+<include file="public@header" />
+</head>
+<style>
+    .client-a{
+        cursor: pointer;
+    }
+</style>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:void(0)">{:lang('ADMIN_GAMEBOX_INDEX_RATE')}</a></li>
+        <li ><a href="{:url('gongge/gift_add')}">{:lang('ADMIN_ACTIVITY_ADD')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('gongge/gongge_gift')}">
+        {:lang('宫格')}:
+        <select name="gongge_id" class="form-control">
+            <option value="-1">{:lang('ALL')}</option>
+            <foreach name="gongge_list" item="v">
+                <option value="{$v.id}" <if condition="$request.gongge_id == $v.id"> selected="selected" </if>>{$v.title}</option>
+            </foreach>
+        </select>
+
+        {:lang('ADMIN_GIFT')}：
+        <select name="gift_id" id="giftid" class="form-control">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="0" <if condition="$request.gift_id == 0"> selected="selected" </if>>{:lang('未中奖')}</option>
+            <foreach name="gift_list" item="v">
+                <option value="{$v.id}" <if condition="$request.gift_id == $v.id"> selected="selected" </if>>{$v.name}</option>
+            </foreach>
+        </select>
+        {:lang('系统推送')}:
+        <select name="is_system_push" class="form-control">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="1" <if condition="$request.is_system_push == 1"> selected="selected" </if>>{:lang('OPEN')}</option>
+            <option value="2" <if condition="$request.is_system_push == 2"> selected="selected" </if>>{:lang('CLOSE')}</option>
+        </select>
+        {:lang('公屏推送')}:
+        <select name="is_male_screen" class="form-control">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="1" <if condition="$request.is_male_screen == 1"> selected="selected" </if>>{:lang('OPEN')}</option>
+            <option value="2" <if condition="$request.is_male_screen == 2"> selected="selected" </if>>{:lang('CLOSE')}</option>
+        </select>
+        {:lang('飘屏')}:
+        <select name="is_all_notify" class="form-control">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="1" <if condition="$request.is_all_notify == 1"> selected="selected" </if>>{:lang('OPEN')}</option>
+            <option value="2" <if condition="$request.is_all_notify == 2"> selected="selected" </if>>{:lang('CLOSE')}</option>
+        </select>
+        {:lang('是否大奖')}:
+        <select name="is_double" class="form-control">
+            <option value="0">{:lang('ALL')}</option>
+            <option value="1" <if condition="$request.is_double == 1"> selected="selected" </if>>{:lang('NO')}</option>
+            <option value="2" <if condition="$request.is_double == 2"> selected="selected" </if>>{:lang('YES')}</option>
+        </select>
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('gongge/gongge_gift')}">{:lang('EMPTY')}</a>
+
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th width="50">ID</th>
+            <th>{:lang('宫格名称（ID）')}</th>
+            <th>{:lang('ADMIN_GIFT_NAME')}（ID）</th>
+            <th>{:lang('礼物价格')}</th>
+            <th>{:lang('礼物数量')}</th>
+            <th>{:lang('中奖概率')}</th>
+            <th>{:lang('系统推送')}</th>
+            <th>{:lang('公屏推送')}</th>
+            <th>{:lang('飘屏')}</th>
+            <th>{:lang('是否大奖')}</th>
+            <th>{:lang('排序')}</th>
+            <th>{:lang('时间')}</th>
+            <th>{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <foreach name="list" item="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.title}({$vo.gongge_id})</td>
+                <td>{$vo.name ? $vo.name : $vo.gift_name }({$vo.gift_id})</td>
+                <td>{$vo.coin ? $vo.coin : 0 }</td>
+                <td>{$vo.sum}</td>
+                <td>{$vo.odds}</td>
+                <td>
+                    <if condition="$vo.is_system_push == 1">
+                        {:lang('OPEN')}
+                    <else/>
+                        {:lang('CLOSE')}
+                    </if>
+                </td>
+                <td>
+                    <if condition="$vo.is_male_screen == 1">
+                        {:lang('OPEN')}
+                        <else/>
+                        {:lang('CLOSE')}
+                    </if>
+                </td>
+                <td>
+                    <if condition="$vo.is_all_notify == 1">
+                        {:lang('OPEN')}
+                        <else/>
+                        {:lang('CLOSE')}
+                    </if>
+                </td>
+                <td>{$vo.is_double > 1 ? lang('是') : lang('否') }</td>
+                <td>{$vo.sort}</td>
+                <td>{$vo.create_time | date="Y-m-d H:i:s",###}</td>
+                <td>
+                    <a href="{:url('gongge/gift_add',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                    <a href="javescript:void(0);" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/clipboard.min.js" type="text/javascript"></script>
+</body>
+</html>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('gongge/gift_del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+</script>

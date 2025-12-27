@@ -1,0 +1,129 @@
+
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('商城列表')}</a></li>
+        <li><a href="{:url('shop/add')}">{:lang('添加商城')}</a></li>
+    </ul>
+
+  
+    <form class="well form-inline margin-top-20" method="post" action="{:url('shop/buy_log')}">
+        {:lang('USER_ID')}:
+        <input type="text" class="form-control" name="uid" style="width: 120px;" value="{$data.uid|default=''}" placeholder="{:lang('USER_ID')}">
+       {:lang('商品id')}:
+        <input type="text" class="form-control" name="shop_id" style="width: 120px;" value="{$data.shop_id|default=''}" placeholder="{:lang('请输入商品id')}">
+
+        {:lang('TYPE')}:
+        <select class="form-control" name="type" style="width: 140px;">
+            <option value="1" <if condition="$data.type eq 1">{:lang('座驾')}</option>
+            <option value="2" <if condition="$data.type eq 2"> selected='selected' </if>>{:lang('头饰')}</option>
+            <option value="3" <if condition="$data.type eq 3"> selected='selected' </if>>{:lang('聊天气泡')}</option>
+        </select>
+        {:lang('STATUS')}：
+        <select class="form-control" name="status" style="width: 140px;">
+            <option value="-1"> {:lang('ALL')}</option>
+            <option value="0" <if condition="$data.status eq '0'"> selected='selected' </if>> {:lang('CLOSE')}</option>
+            <option value="1" <if condition="$data.status eq 1"> selected='selected' </if>>{:lang('OPEN')}</option>
+        </select>
+        {:lang('是否使用')}:
+        <select class="form-control" name="is_use" style="width: 140px;">
+            <option value="-1"> {:lang('ALL')}</option>
+            <option value="0" <if condition="$data.is_use eq '0'"> selected='selected' </if>>{:lang('未使用')}</option>
+            <option value="1" <if condition="$data.is_use eq 1"> selected='selected' </if>>{:lang('正在使用')}</option>
+        </select>
+       {:lang('购买时间')}:
+        <input type="text" class="form-control js-bootstrap-datetime" name="addtime"
+               value="{$data.addtime|default=''}"
+               style="width: 200px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="endtime"
+               value="{$data.endtime|default=''}"
+               style="width: 200px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}"/>
+        <a class="btn btn-danger" href="{:url('shop/buy_log')}">{:lang('EMPTY')}</a>
+
+    </form>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{:lang('USER')}(ID)</th>
+            <th>{:lang('商品(ID)')}</th>
+            <th>{:lang('TYPE')}</th>
+            <th>{:lang('消费价格')}</th>
+            <th>{:lang('购买的时间(月)')}</th>
+           
+            <th>{:lang('是否是续费的')}</th>
+            <th>{:lang('STATUS')}</th>
+            <th>{:lang('是否正在使用')}</th>
+
+            <th>{:lang('购买时间')}</th>
+            <th>{:lang('到期时间')}</th>
+            <th>{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tfoot>
+            <php> 
+                $type=array(1=>lang('座驾'),2=>lang('头饰'),3=>lang('聊天气泡'));
+                $status=array(0=>lang('结束'),1=>lang('正常'),2=>lang('后台结束'));
+                $is_renewal=array('1'=>lang('YES'),'0'=>lang('NO'));
+                $is_use=array(0=>lang('未使用'),1=>lang('正在使用中'));
+            </php>
+        <foreach name="list" id="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.user_nickname}({$vo.uid})</td>
+                <td>{$vo.name}({$vo.shop_id})</td>
+                <td>{$type[$vo.type]}</td>
+                <td>{$vo.coin}</td>
+                <td>{$vo.month}</td>
+
+                <td>{$is_renewal[$vo.is_renewal]}</td>
+                <td>{$status[$vo.status]}</td>
+                <td>{$is_use[$vo.is_use]}</td>
+
+                <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                <td>{$vo.endtime | date="Y-m-d H:i:s",###}</td>
+
+                <td>
+                    <if condition="$vo.status eq 1">
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('结束')}</a>
+                    </if>
+                </td>
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+    <div class="pagination">{$page}</div>    
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm('确定结束本用户购买的商品？', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('shop/del_buy_log')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("{:lang('Operation_successful')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('operation_failed')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+</script>
+</body>
+</html>

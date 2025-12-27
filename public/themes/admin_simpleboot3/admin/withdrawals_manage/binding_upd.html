@@ -1,0 +1,98 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+     <ul class="nav nav-tabs">
+        <li><a href="{:url('withdrawals_manage/index')}">{:lang('提现记录')}</a></li>
+        <li><a href="{:url('withdrawals_manage/user_binding')}">{:lang('账号绑定列表')}</a></li>
+        <li class="active"><a href="javascript:void(0);">{:lang('编辑账号列表')}</a></li>
+    </ul>
+    <form action="{:url('withdrawals_manage/user_binding_post')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('USER_ID')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" readonly type="text"  value="{$user['uid']|default=''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('USER_NICKNAME')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" readonly type="text"  value="{$user['user_nickname']|default=''}" />
+                        </td>
+                    </tr>
+
+                   
+                     <tr>
+                        <th>{:lang('账号姓名')}</th>
+                        <td>
+                            <input class="form-control" type="text" name="post[name]"  value="{$user['name']|default=''}" />
+                        </td>
+                    </tr>
+<!--                     <tr>-->
+<!--                        <th>{:lang('支付宝账号')}</th>-->
+<!--                        <td>-->
+<!--                            <input class="form-control" type="text" name="post[pay]"  value="{$user['pay']|default=''}" />-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                     <tr>-->
+<!--                        <th>{:lang('微信账号')}</th>-->
+<!--                        <td>-->
+<!--                            <input class="form-control" type="text" name="post[wx]"  value="{$user['wx']|default=''}" />-->
+<!--                        </td>-->
+<!--                    </tr>-->
+                     <tr>
+                        <th>{:lang('银行卡账号')}</th>
+                        <td>
+                            <input class="form-control" type="text" name="post[bank_card]"  value="{$user['bank_card']|default=''}" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('银行分类')}</th>
+                        <td>
+                            <select name="post[bank_card_id]" id="gift">
+                                <option value="0"></option>
+                                <foreach name="list" item="v">
+                                    <option value="{$v['id']}" <if condition="$user['bank_card_id'] eq $v['id']"> selected="selected" </if> >{$v['name']}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+
+                     <input class="form-control" type="hidden" name="id"  value="{$user['id']|default=''}" />
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('voice/type')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,240 @@
+/* 积分商城  */
+.Integral{width: 100%;overflow: auto;zoom:1}/*  */
+.Integral_bagcolor{width:100%;height:35%;background: #8B3BF8;position: absolute;top:0;z-index: 1;}/*  */
+.Integral_return{width:100%;padding: 1.2em;z-index: 99;margin-bottom: 2em;position: fixed;top: 0;left: 0;}
+.Integral_return a{width: 50%;color: #fff;font-size:1.4em;}
+.Integral_return a:first-child{text-align: left;}
+.Integral_return a:last-child{text-align: right;font-size:1.2em;}
+.Integral_return a img{width: 100%;max-width:32px ;}
+.Integral_return a:hover{outline: none;text-decoration: none;}
+
+.my_Integral>article>.container{width: 100%;margin: 0;}
+.my_Integral>article>.container>.row{margin: 0;}
+.my_Integral{width: 100%;padding: 2%;position: absolute;top:80px;z-index: 100;}
+.my_Integral>article{width:100%;background: #fff;border-radius: 20px;box-shadow:2px 2px 6px #888888;padding-bottom: 2em;}
+.my_Integral>article>header{font-size: 1.2em;line-height: 4em;}
+.my_Integral>article>aside.top{font-size: 4em;}
+.my_Integral>article>aside.bottom a{font-size: 1.2em;color: #333;}
+.my_Integral>article>aside.bottom a img{width: 100%;max-width: 24px;margin-right: 5px;}
+.my_Integral>article>aside.exchange>a{color: #999;text-decoration: none;outline: none; line-height: 3.5em;font-size: 1.2em;}
+.my_Integral>article>aside.exchange>a>img{width: 100%;max-width: 20px;margin-left: 5px;}
+.collapse.in span{display: block;text-align: left;}
+#collapseTwo{padding:10px 2em;text-align: left;}
+.Integral_exchange{width: 100%;padding: 2%;position: absolute;top:350px;z-index: 99;}
+.Integral_exchange>header{border-left: 4px #ff7805 solid;text-align: left;padding-left: 1em;font-size:1.3em ;margin: 2em 0;}
+.Integral_exchange>.container{width: 100%;margin: 0;}
+.Integral_exchange>.container>.row{margin: 0;}
+.Integral_exchange>.container>.row .col-xs-4{padding-left: 10px;padding-right: 10px;}
+.Integral_exchange>.container>.row aside{margin-bottom: 1em;height: 170px ;overflow: hidden; cursor: pointer;}
+.Integral_exchange dl{display: block;margin: 0;padding:0;}
+.Integral_exchange dl a{outline: none;text-decoration: none;}
+.Integral_exchange dt{width: 100%;padding:0.5em 0.5em ;background: #f7f7f7 ;text-align: center;border-radius: 20px;font-size: 1.2em;height: 110px ;overflow: hidden;}
+.Integral_exchange dt img{width: 50%;display: block;margin: 1em auto 0.5em;}
+.Integral_exchange dt span{color: #333;font-weight: normal;display: block;font-size: 0.9em}
+.Integral_exchange dt span em{font-weight: bold;color: #ff952d;font-style: normal;}
+.Integral_exchange dd{color: #333;display: block;margin-top: 1em;font-size: 1.2em;}
+
+.Integral_exchange p.head{font-size: 1.4em;color: #333;margin-bottom: 2em;}
+.Integral_exchange .container form{padding: 0 1em;}
+.Integral_exchange .container form label{float: left;text-align: left;font-weight: normal;margin-bottom: 1em;}
+.Integral_exchange .container form input{width: 100%;height: 30px;border: none;border-bottom: 1px solid rgba(0,0,0,.2);}
+.Integral_exchange .container form a{display: block;width: 50%;margin: 0 auto;border: none;background: #6C7DF2;font-size:1.3em;padding: 0.4em 0;color: #fff;margin-top: 1em;border-radius: 10px;margin-bottom: 2em;}
+/* 积分兑换详情  */
+.exchanges_header{text-align: left;margin-left: 2em;}
+.exchanges_header em{color: #000;font-weight: bold;font-style: normal;}
+.exchanges_money{overflow: auto;zoom:1;margin: 0 1.5em;}
+.exchanges_money p:first-child{padding: 1.2em;background:#f7f7f7;border: 1px #e8e8e8 solid;border-radius: 10px;margin-right: 10px;}
+.exchanges_money p.fl img{width: 100%;max-width: 55px;}
+.exchanges_money .fls{line-height: 1.5em;color: #8e8e8e;}
+.exchanges_money p:last-child span{color: #333;}
+.my_Integral>article.exchanges_two {margin-top:20px;padding: 1.5em 0;}
+.my_Integral>article.exchanges_two  aside p{overflow: auto;zoom:1;margin: 0 1.5em;margin-top: 1.5em;}
+
+.exchanges_button button{border: none;background: none;background: #6C7DF2;width: 100%;padding: 0.6em 0;border-radius: 50px;color: #fff;font-size: 1.4em;margin-top: 6em;}
+
+
+/*兑换密码设定 1有无密码提示*/
+.exchange_password1{background:#8B3BF8;position: static;padding: 1.2em;margin: 0;overflow: auto;zoom: 1;}
+.exchange_prompt{width: 100%;margin: 2em 0;}
+.exchange_prompt p{margin: 1.2em 0;}
+.exchange_prompt p big{font-size: 1.6em;}
+.exchange_prompt p img{width: 100%;max-width: 90px;}
+.exchange_prompt p>a{display: block;width: 96%;margin: 0 auto;border: none;background: #6C7DF2;font-size:1.4em;padding: 0.6em 0;border-radius: 50px;color: #fff;margin-top: 2em;}
+.exchange_prompt p span{color: #666;}
+.exchange_prompt p span a{color: #f6a327;}
+
+/*兑换密码设定 2注册密码*/
+.exchange_registered{}
+.modal_content{
+	padding: 1.2em;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.modal_content>div{
+	margin-bottom: 20px;
+}
+.modal_content>h5:first-child{
+	margin:30px 0px;
+}
+.modal_content label{
+	color: #666;
+	float: left;
+
+}
+#phone1{
+	display: block;
+	width: 100%;
+	height: 70px;
+	background: none;
+	padding-top: 30px;
+	border: 0;
+	outline:none;
+	margin-top: -30px;
+	font-size: 16px;
+	border-bottom: 1px solid rgba(0,0,0,.2);
+	border-radius: 0;
+
+}
+#pass1{
+	display: block;
+	width: 100%;
+	height: 70px;
+	background: none;
+	padding-top: 30px;
+	border: 0;
+	outline:none;
+	margin-top: -30px;
+	font-size: 16px;
+	border-bottom: 1px solid rgba(0,0,0,.2);
+	border-radius: 0;
+}
+#pass2{
+	display: block;
+	width: 100%;
+	height: 70px;
+	background: none;
+	padding-top: 30px;
+	border: 0;
+	outline:none;
+	margin-top: -30px;
+	font-size: 16px;
+	border-bottom: 1px solid rgba(0,0,0,.2);
+	border-radius: 0;
+}
+.code1{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+	height: 70px;
+	background: none;
+	padding-top: 30px;
+	margin-top: -30px;
+	font-size: 16px;
+	border-bottom: 1px solid rgba(0,0,0,.2);
+	border-radius: 0;
+}
+#code1{
+	width: calc(100% - 90px);
+	height: 55px;
+	background: none;
+	padding-top: 20px;
+	border: 0;
+	outline:none;
+	margin-top: -20px;
+	font-size: 16px;
+}
+#btnSendCode1{
+	width: 90px;
+	height: 30px;
+	padding: 0 5px;
+	margin: 0;
+	font-size: 14px;
+	background: transparent;
+	border-radius: 30px;
+	color: #a07941;
+	border-color: #a07941;
+
+}
+::-webkit-input-placeholder { /* WebKit browsers */
+	font-size: 14px;
+	color:   rgba(0,0,0,.4);
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	font-size: 14px;
+	color:   rgba(0,0,0,.4);
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+	font-size: 14px;
+	color:  rgba(0,0,0,.4);
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+	font-size: 14px;
+	color:   rgba(0,0,0,.4);
+}
+
+.next{
+	text-align: center;
+	margin: 20px 0;
+}
+.next a{
+	display: block;width: 100%;margin: 0 auto;border: none;background:#6C7DF2;font-size:1.4em;padding: 0.6em 0;border-radius: 50px;color: #fff;margin-top: 2em;
+}
+
+
+
+
+/*兑换登录*/
+.exchange_login{width: 100%;padding:4em 1.2em;}
+.exchange_login form input{width: 100%;height: 70px;
+	border: none;background: none; padding-top: 30px;	margin-top: -30px; font-size: 16px;border-bottom: 1px solid rgba(0,0,0,.2);border-radius: 0;}
+.exchange_login form a{display: block;width: 100%;margin: 0 auto;border: none;background: #6C7DF2;font-size:1.4em;padding: 0.6em 0;border-radius: 50px;color: #fff;margin-top: 2em;}
+
+
+/*收益记录*/
+.Earnings_record{width: 100%;}
+.E_my_Earnings{font-size: 1.2em;text-align: left;padding: 1em 0.6em;border-bottom: 1px solid rgba(0,0,0,.2);}
+.E_my_Earnings>span{color: #f6a327;}
+.E_my_gift aside{font-size: 1.2em;text-align: left;padding: 1em 0.6em;border-bottom: 1px solid rgba(0,0,0,.2);overflow: auto;zoom:1}
+.E_my_gift aside p span{display: block;line-height: 1.6em;}
+.E_my_gift aside p.fl{text-align: left;width: 50%;}
+.E_my_gift aside p.fr{text-align: right;width: 50%;}
+.E_my_gift aside p.fl span.people_gift{color: #5b5757;font-size: 1em;width: 100%;overflow: hidden;height: 1.5em;line-height: 1.5em;}
+.E_my_gift aside p.fr span{color: #f6a327;}
+.E_my_gift aside p.fr span.gift_time{color: #5b5757;font-size: 1em;}
+
+
+
+/*靓号*/
+.number_choose{padding: 2%;}
+.number_choose>header{border-left: 4px #ff7805 solid;text-align: left;padding-left: 1em;font-size:1.3em ;margin: 0.5em 0 2em;}
+.number_choose>.container{width: 100%;margin: 0;}
+.number_choose>.container>.row{margin: 0;}
+.number_choose>.container>.row .col-xs-4{padding-left: 10px;padding-right: 10px;}
+.number_choose>.container>.row aside{margin-bottom: 1em;height: 150px ;overflow: hidden;}
+.number_choose dl{display: block;margin: 0;padding:0;}
+.number_choose dl a{outline: none;text-decoration: none;outline: none;}
+.number_choose dl a:hover{outline: none;}
+.number_choose dl a.btn{padding: 0;border: none;width: 100%;font-size: 1.2em;}
+.number_choose dt{width: 100%;padding:0.5em 0.5em ;background: #f7f7f7 ;text-align: center;border-radius: 20px;font-size: 1.2em;height: 110px ;overflow: hidden;}
+.number_choose dt span{color: #333;font-weight: normal;display: block;}
+.number_choose dt span:first-child{margin-top: 0.5em;font-size: 1.4em;}
+.number_choose dt span em{font-style: normal;color: #ff7805;}
+.number_choose p.head{font-size: 1.4em;color: #333;margin-bottom: 2em;}
+
+
+
+.selected{border:1px solid #dfc6f8;border-radius: 10px;padding:10px 0;-moz-box-shadow:1px 1px 5px #f0daff; -webkit-box-shadow:1px 1px 5px #f0daff;box-shadow: 1px 1px 5px #f0daff;}
+.fls{float:left;width: 60%;}
+.flss{float:left;font-size: 16px;font-weight: bold;width: 60%;}
+.exchange_login_upd{width: 100%;height: 2em;}
+
+
+
+
+
+
+
+

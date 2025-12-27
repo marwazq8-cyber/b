@@ -1,0 +1,322 @@
+<include file="public@header" />
+<style>
+    .selectf{width: 50%;height: 35px;border:1px solid #dce4ec;}
+    .hiden{display:none;}
+    .gkred{color:#f53434;}
+    .gktop{height:35px;line-height:35px;}
+    .xzxz{margin-top:10px;}
+    .form-group_sum{margin-top: 10px;}
+    .form-group_sum_select{margin-top: 10px;}
+    .form-control_sum{width: 100px;height:35px;line-height:35px;float: left; margin-right: 10px;margin-bottom: 10px;}
+    /*.config_left{width: 150px;float:left;border:1px solid #ccc;min-height: 850px;background: #4e4e4e;}*/
+    #div_content{float:left;width: calc(100% - 160px);margin-left:10px;padding:10px;}
+    /*.config_left li{width: 100%;}*/
+    .config_left li a{color:#e4e4e4;}
+    .config_left li a:hover{color:#2C3E50;}
+    .config_left .active a{background: #f4f4f4!important;}
+    .config_left_type{width: 100%;background: #2c3e50;color:#fff;height: 40px;line-height: 40px;text-align: center;}
+    .wrap .config_red{float:left;width: 100%;height: 50px;line-height: 50px; background: #2c3e50;padding-left: 40px;margin-bottom: 10px;color: #fff;}
+    ..form-control_sum{width: 100px;height:35px;line-height:35px;float: left; margin-right: 10px;margin-bottom: 10px;}
+    .form-control_sum_btn{background: #2c3e50;color:#fff;    line-height: 24px!important;  width: 54px!important;}
+    /*.config_left{width: 150px;float:left;border:1px solid #ccc;min-height: 850px;background: #4e4e4e;}*/
+    #div_content{float:left;width: calc(100% - 160px);margin-left:10px;padding:10px;}
+    /*.config_left li{width: 100%;}*/
+    .config_left li a{color:#7b8a8b;background-color: #d8e0e6;border-top-left-radius: 5px;border-top-right-radius: 5px;}
+    .config_left li a:hover{color:#7b8a8b;}
+    .config_left .active a{background: #ffffff!important;}
+    /*.config_left_type{width: 100%;background: #2c3e50;color:#fff;height: 40px;line-height: 40px;text-align: center;}*/
+    .wrap .config_red{float:left;width: 100%;height: 50px;line-height: 50px; background: #2c3e50;padding-left: 40px;margin-bottom: 10px;color: #fff;}
+    .config_left_box{
+        width: 100%;
+        /*height: 50px;
+        overflow-y: hidden;
+        overflow-x: scroll;*/
+    }
+    .config_left{
+        /*position: fixed;
+        top: 0;*/
+        z-index: +999;
+        min-width: 100%;
+        height: 100%;
+        /*border:1px solid #ccc;*/
+        background: #e8edf0;
+        white-space:normal;
+        overflow: hidden;
+    }
+    .config_left li{
+        list-style: none;
+        float: left;
+        overflow: hidden;
+        padding: 2px 5px;
+        margin-top: 5px;
+    }
+    .config_left li a{
+        text-decoration: none;
+        /*padding: 15px 5px;*/
+        margin: 0;
+    }
+    .config_left li a:hover{
+        background-color: #ffffff;
+        color: #2C3E50;
+    }
+    .config_left .active a:hover{
+        color: #7b8a8b;
+    }
+    .config_left .active a {
+        color: #7b8a8b;
+        margin: 0;
+    }
+    .tab-pane:nth-child(even) .form-group{
+        background-color: #ffffff;
+    }
+    /*.tab-pane{
+        width: 100%;
+        display: none;
+        overflow: auto;
+    }
+    .active{
+        display: revert;
+    }*/
+</style>
+
+<!-- 颜色值 -->
+<link href="__TMPL__/public/assets/simpleboot3/css/colpick.css" rel="stylesheet">
+
+
+</head>
+<body>
+<div class="wrap js-check-wrap" style="padding:0px;">
+    <ul class="nav nav-tabs config_left">
+        <foreach name="type" item="vo">
+            <li>
+                <a href="{:url('systems/index')}" >{$vo.group_id}</a>
+            </li>
+        </foreach>
+        <li class="active">
+            <a href="{:url('systems/add_sys')}" >{:lang('添加配置')}</a>
+        </li>
+    </ul>
+    <form class="form-horizontal margin-top-20" role="form" action="{:url('systems/add_post')}" method="post" id="div_content">
+        <table class="table table-striped">
+            <tr>
+                <th>{:lang('变量标题')}</th>
+                <th>{:lang('变量值')}</th>
+            </tr>
+
+            <tr>
+                <td><span class="form-required">*</span>{:lang('系统配置标识')}</label></td>
+                <td> <input type="text" class="form-control" id="input-site-name" name="post[code]" placeholder="{:lang('输入系统配置标识')}"></td>
+            </tr>
+            <tr>
+                <td><span class="form-required">*</span>{:lang('系统配置名称')}</td>
+                <td><input type="text" class="form-control"  name="post[title]"  placeholder="{:lang('输入系统配置名称')}"></td>
+            </tr>
+            <tr>
+                <td><span class="form-required">*</span>{:lang('系统配置分类')}</td>
+                <td><input type="text" class="form-control"  name="post[group_id]" placeholder="{:lang('输入系统配置分类')}"></td>
+            </tr>
+            <tr>
+                <td><span class="form-required">*</span>{:lang('系统配置注释')}</td>
+                <td><input type="text" class="form-control"  name="post[desc]" placeholder="{:lang('输入系统配置注释')}"></td>
+            </tr>
+            <tr>
+                <td><span class="form-required">*</span>{:lang('系统配置分类')}</td>
+                <td>
+                    <select name="post[type]" class="selectf">
+                        <option value="0">{:lang('文本框')}</option>
+                        <option value="1">{:lang('文本域')}</option>
+                        <option value="2">{:lang('ADMIN_IMG')}</option>
+                        <option value="3">{:lang('多选框')}</option>
+                        <option value="4">{:lang('单选框框')}</option>
+                        <option value="5">{:lang('时间选择')}</option>
+                        <option value="6">{:lang('列表')}</option>
+                        <option value="7">{:lang('颜色')}</option>
+                        <option value="8">{:lang('下拉列表')}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="form-required">*</span>{:lang('系统配置值')}</td>
+                <td>
+                    <input type="text" class="form-control"  name="val[]" placeholder="{:lang('输入系统配置值')}">
+                </td>
+            </tr>
+        </table>
+        <fieldset>
+            <div class="tabbable">
+                <div class="tab-content">
+
+                    <div class="tab-pane active">
+
+                        <div>
+
+                            <div class="form-group hiden"  id="1">
+                                <label for="input-site-name" class="col-sm-2 control-label">
+                                    <span class="form-required">*</span>{:lang('文本域的值')}</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <textarea name="val[]"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group hiden" id="2">
+                                <label for="input-mobile_tpl_enabled" class="col-sm-2 control-label">{:lang('缩略图')}</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <div style="text-align: center;">
+                                        <input type="hidden" name="val[]" id="thumb" value="1">
+                                        <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumb');">
+                                            <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                                 id="thumb-preview" width="135" style="cursor: hand"/>
+                                        </a>
+                                        <input type="button" class="btn btn-sm"
+                                               onclick="$('#thumb-preview').attr('src','__TMPL__/public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;"
+                                               value="{:lang('取消图片')}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group hiden"  id="3">
+                                <label for="input-mobile_tpl_enabled" class="col-sm-2 control-label">{:lang('多选框中的名称')}</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control"  name="title_scope[]"  placeholder="{:lang('输入多选框中的名称')}">
+                                </div>
+                                <div class="col-md-4 gktop">
+                                    <span class="gkred">*多个值用,隔开</span>
+                                </div>
+
+                                <label for="input-mobile_tpl_enabled" class="col-sm-2 control-label xzxz">{:lang('选择第几个选中')}</label>
+                                <div class="col-md-6 col-sm-10 xzxz">
+                                    <input type="number" class="form-control"  name="val[]" placeholder="{:lang('输入要选中数字的值')}">
+                                </div>
+                                <div class="col-md-2 gktop xzxz">
+                                    <span class="gkred">*多个值用,隔开</span>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group hiden"  id="4">
+                                <label for="input-mobile_tpl_enabled" class="col-sm-2 control-label">{:lang('单选框中的名称')}</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control"  max="10" min="1" name="title_scope[]"  placeholder="{:lang('输入单选框中的名称')}">
+                                </div>
+                                <div class="col-md-4 gktop">
+                                    <span  class="gkred">*多个值用,隔开</span>
+                                </div>
+                                <label for="input-mobile_tpl_enabled" class="col-sm-2 control-label xzxz">{:lang('选择第几个选中')}</label>
+                                <div class="col-md-6 col-sm-10 xzxz">
+                                    <input type="number" class="form-control"  max="10" min="1" name="val[]" placeholder="{:lang('输入要选中数字的值')}">
+                                </div>
+                            </div>
+
+                            <div class="form-group hiden"  id="5">
+                                <label for="input-site-name" class="col-sm-2 control-label">
+                                    <span class="form-required">*</span>{:lang('系统配置时间值')}</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control js-bootstrap-datetime" name="val[]"
+                                           style="width: 140px;" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="form-group hiden"  id="6">
+                                <label for="input-site-name" class="col-sm-2 control-label">
+                                    <span class="form-required">*</span>{:lang('列表')}</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="number" class="form-control"  max="10" min="1" id="list_sum"  placeholder="{:lang('输入列表的数量')}">
+                                </div>
+
+                            </div>
+                            <div class="form-group form-group_sum hiden">
+                                <label for="input-site-name" class="col-sm-2 control-label">
+                                    <span class="form-required">*</span>{:lang('列表内容')}</label>
+                                <div class="col-md-6 col-sm-10 form-list_sum"> </div>
+                            </div>
+
+                            <div class="form-group hiden" id="7">
+                                <label for="input-site-name" class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('选择颜色值')}</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control picker"  name="val" placeholder="{:lang('输入颜色值')}" style="width: 130px;" >
+                                </div>
+                            </div>
+                            <div class="form-group hiden"  id="8">
+                                <label for="input-site-name" class="col-sm-2 control-label">
+                                    <span class="form-required">*</span>{:lang('列表数量')}</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="number" class="form-control"  max="10" min="1" id="list_sum_select"  placeholder="{:lang('输入列表的数量')}">
+                                </div>
+
+                            </div>
+                            <div class="form-group form-group_sum_select hiden">
+                                <label for="input-site-name" class="col-sm-2 control-label">
+                                    <span class="form-required">*</span>{:lang('列表内容')}</label>
+                                <div class="col-md-6 col-sm-10 form-list_sum_select"> </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="1" >{:lang('SAVE')}</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<!-- 颜色值 -->
+<script src="__TMPL__/public/assets/simpleboot3/js/colpick.js"></script>
+<script>
+    $(document).ready(function(){
+        $('select').change(function(){
+            var val=$(this).val();
+            $("#"+val).removeClass('hiden');
+            $("#"+val).siblings().addClass('hiden');
+
+        })
+        $("#list_sum").blur(function(){
+            var val=$(this).val();
+            if(val ==''){
+                layer.msg('请输入列表的数量');
+                return false;
+            }
+            var html='';
+            for(var i=0;i < val;i++){
+                html+='<input type="text" class="form-control_sum form-control"  max="10" min="1" name="list_val[]" placeholder="{:lang('输入内容')}">';
+            }
+            $(".form-list_sum").html(html);
+            $(".form-group_sum").show();
+
+        });
+
+        $("#list_sum_select").blur(function(){
+            var val=$(this).val();
+            if(val ==''){
+                layer.msg('请输入列表的数量');
+                return false;
+            }
+            var html='';
+            for(var i=0;i < val;i++){
+                html+='<input type="text" class="form-control_sum form-control"  max="10" min="1" name="list_val[]" placeholder="{:lang('输入内容')}">';
+            }
+            $(".form-list_sum_select").html(html);
+            $(".form-group_sum_select").show();
+
+        });
+        /*<!-- 颜色值 -->*/
+        $('.picker').colpick({
+            layout:'hex',
+            submit:0,
+            colorScheme:'dark',
+            onChange:function(hsb,hex,rgb,el,bySetColor) {
+                $(el).css('border-color','#'+hex);
+                if(!bySetColor) $(el).val('#'+hex);
+            }
+        }).keyup(function(){
+            $(this).colpickSetColor(this.value);
+        });
+
+
+    })
+</script>
+</body>
+</html>

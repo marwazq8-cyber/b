@@ -1,0 +1,58 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <title>通话列表</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content="">
+    <include file="public@head"/>
+</head>
+<style>
+    td{padding:1px 8px!important;}
+    .pagination{margin:0px!important;}
+</style>
+<body class="body-white" style="padding-top:0px;">
+    <div class="tab-content">
+        <div class="tab-pane active" id="one">
+             <form class="well form-inline" method="post" action="{:url('union/comment/video')}" style="margin-top:20px;">
+                 {:lang('USER_ID')}:
+                <input type="text" class="form-control" name="user_id" style="width: 140px;" value="{$result['user_id']|default=''}" placeholder="{:lang('USER_ID')}">
+                 {:lang('ADMIN_ANCHOR_ID')}:
+                <input type="text" class="form-control" name="to_user_id" style="width: 140px;" value="{$result['to_user_id']|default=''}" placeholder="请输入主播ID">
+                 {:lang('TIME')}:
+                <input type="text" class="form-control js-bootstrap-date" name="start_time" value="{$result['start_time']|default=''}" style="width: 140px;" autocomplete="off">-
+                <input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$result['end_time']|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+                <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+                <a class="btn btn-danger" href="{:url('union/comment/video',array('to_user_id'=>$result['to_user_id']))}">{:lang('EMPTY')}</a>
+            </form>
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>{:lang('ADMIN_CONSUME_USER')}(ID)</th>
+                    <th>{:lang('ADMIN_ANCHOR')}(ID)</th>
+                    <th>{:lang('ADMIN_COMMISSION_COIN')}</th>
+                    <th>{:lang('ADMIN_ANCHOR_INCOME')}</th>
+                    <th>{:lang('ADMIN_GUILD_INCOME')}</th>
+                    <th width="150">{:lang('TIME')}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <foreach name="list" item="vo">
+                    <tr>
+                        <td>{$vo.tname}({$vo.user_id})</td>
+                        <td>{$vo.uname}({$vo.to_user_id})</td>
+                        <td>{$vo.coin}</td>
+                        <td>{$vo.profit}</td>
+                        <td>{$vo.guild_earnings}</td>
+                        <td>{$vo.create_time | date="Y-m-d H:i:s",###}</td>
+                    </tr>
+                </foreach>
+                </tbody>
+            </table>
+        </div>
+
+        <ul class="pagination">{$page}</ul>
+    </div>
+</body>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script src="__STATIC__/js/admin.js"></script>
+</html>

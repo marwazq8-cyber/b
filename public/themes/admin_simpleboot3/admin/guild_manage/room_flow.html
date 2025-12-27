@@ -1,0 +1,75 @@
+<include file="public@header"/>
+<style>
+    .guild-img {
+        width: 50px;
+        height: 50px
+    }
+
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <form class="well form-inline margin-top-20" name="form1" method="post" action="{:url('guild_manage/room_flow')}">
+
+        <input type="hidden" class="form-control" name="guild_uid" style="width: 120px;" value="{$data.guild_uid|default=''}">
+
+        {:lang('ADMIN_ANCHOR_ID')}:
+        <input type="text" class="form-control" name="hid" style="width: 120px;" value="{$data.hid|default=''}" placeholder="{:lang('请输入主播ID')}">
+        {:lang('STATUS')}:
+        <select name="status" class="form-control">
+            <option value="0">{:lang('ALL')}</option>
+            <option value="1" <if condition="$data.status eq 1"> selected='selected' </if> >{:lang('OPEN')}</option>
+            <option value="2" <if condition="$data.status eq 2"> selected='selected' </if> >{:lang('CLOSE')}</option>
+        </select>
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" onclick='form1.action="{:url('guild_manage/room_flow')}";form1.submit();'/>
+        <a class="btn btn-danger" href="{:url('guild_manage/room_flow')}">{:lang('EMPTY')}</a>
+        <input type="button" class="btn btn-primary from_export" style="background-color: #1dccaa;" value="{:lang('导出')}" onclick='form1.action="{:url('guild_manage/room_flow_export')}";form1.submit();'>
+
+    </form>
+
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>{:lang('房间')}(ID)</th>
+            <th>{:lang('ADMIN_ANCHOR')}(ID)</th>
+            <th>{:lang('公会ID')}</th>
+
+            <th>{:lang('今日流水')}</th>
+            <th>{:lang('昨日流水')}</th>
+            <th>{:lang('本周流水')}</th>
+            <th>{:lang('上周流水')}</th>
+            <th>{:lang('本月流水')}</th>
+            <th>{:lang('上月流水')}</th>
+            <th>{:lang('STATUS')}</th>
+            <th>{:lang('TIME')}</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <foreach name="list" id="vo">
+            <tr>
+                <td>{$vo.title}({$vo.id})</td>
+                <td>{$vo.user_nickname}({$vo.user_id})</td>
+                <td>{$vo.guild_uid}</td>
+
+                <td>{$vo.day_coin}</td>
+                <td>{$vo.yesterday_coin}</td>
+                <td>{$vo.week_coin}</td>
+                <td>{$vo.last_week_coin}</td>
+                <td>{$vo.month_coin}</td>
+                <td>{$vo.last_month_coin}</td>
+
+                <td> {$vo.status == 1 ? lang('已开启') : lang('已关闭') } </td>
+                <td>{$vo.create_time | date="Y-m-d H:i",###}</td>
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+    <div class="pagination">{$page}</div>
+
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

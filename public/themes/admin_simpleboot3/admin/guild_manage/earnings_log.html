@@ -1,0 +1,105 @@
+<include file="public@header"/>
+<style>
+    .guild-img {
+        width: 50px;
+        height: 50px
+    }
+
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_GUILD_INCOME_LOG')}</a></li>
+    </ul>
+
+    <form class="well form-inline margin-top-20" name="form1" method="post" action="{:url('guild_manage/earnings_log')}">
+       {:lang('公会长ID')}:
+        <input type="text" class="form-control" name="id" style="width: 120px;" value="{$data.id|default=''}" placeholder="{:lang('请输入公会长ID')}">
+
+        {:lang('ADMIN_ANCHOR_ID')}:
+        <input type="text" class="form-control" name="hid" style="width: 120px;" value="{$data.hid|default=''}" placeholder="{:lang('请输入主播ID')}">
+        {:lang('USER_ID')}:
+        <input type="text" class="form-control" name="uid" style="width: 120px;" value="{$data.uid|default=''}" placeholder="{:lang('USER_ID')}">
+        {:lang('STATUS')}:
+        <select name="status" class="form-control">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="0" <if condition="$data.status eq '0'"> selected='selected' </if> >{:lang('发放中')}</option>
+            <option value="1" <if condition="$data.status eq 1"> selected='selected' </if> >{:lang('已到账')}</option>
+            <option value="2" <if condition="$data.status eq 2"> selected='selected' </if> >{:lang('已取消')}</option>
+        </select>
+       {:lang('类型')}:
+        <select name="classification" class="form-control">
+            <option value="0">{:lang('ALL')}</option>
+            <option value="1" <if condition="$data.classification eq 1"> selected='selected' </if> >{:lang('Voice_room')}</option>
+            <option value="2" <if condition="$data.classification eq 2"> selected='selected' </if> >{:lang('短视频')}</option>
+            <option value="4" <if condition="$data.classification eq 2"> selected='selected' </if> >{:lang('私信')}</option>
+        </select>
+        {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time" value="{$data['start_time']|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$data['end_time']|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('guild_manage/earnings_log')}">{:lang('EMPTY')}</a>
+        <input type="button" class="btn btn-primary from_export" style="background-color: #1dccaa;" value="{:lang('导出')}" onclick='form1.action="{:url('guild_manage/export_earnings_log')}";form1.submit();'>
+
+        <if condition="$is_show_total eq 1"/>
+            <div style="margin-top: 15px;">
+                <span>{:lang('总流水')}:{$count.coin}</span>
+                <span>{:lang('主播总收益')}:{$count.profit}</span>
+                <span>{:lang('公会总收益')}:{$count.guild_earnings}</span>
+            </div>
+        <else/>
+
+        </if>
+
+    </form>
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>{:lang('ADMIN_CONSUME_USER')}(ID)</th>
+                <th>{:lang('ADMIN_ANCHOR')}(ID)</th>
+                <th>{:lang('ADMIN_GUILD')}(ID)</th>
+                <th>{:lang('ADMIN_COMMISSION_COIN')}</th>
+                <th>{:lang('ADMIN_ANCHOR_INCOME')}</th>
+                <th>{:lang('ADMIN_GUILD_INCOME')}</th>
+                <th>{:lang('ADMIN_GUILD_COMMISSION_RATIO')}</th>
+                <th>{:lang('ADMIN_COMMISSION_INFO')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('TIME')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.uname}({$vo.uid})</td>
+                    <td>{$vo.hname}({$vo.to_user_id})</td>
+                    <td>{$vo.gname}({$vo.guild_uid ."/". $vo.guild_id})</td>
+                    <td>{$vo.ucoin}</td>
+                    <td>{$vo.profit}</td>
+                    <td>{$vo.guild_earnings}</td>
+                    <td>{$vo.guild_commission}</td>
+                    <td>{$vo.content}</td>
+
+                    <td>
+                        <if condition="$vo['status'] eq '1'">
+                            {:lang('已到账')}
+                            <else/>
+                            {$vo.status == 2 ? lang('已取消') : lang('发放中') }
+                        </if>
+                       </td>
+                    <td>{$vo.create_time | date="Y-m-d H:i",###}</td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+         <div class="pagination">{$page}</div>
+
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

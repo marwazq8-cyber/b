@@ -1,0 +1,133 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('userlevel/player_level')}">{:lang('ADMIN_LEVEL_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_LEVEL_ADD')}</a></li>
+    </ul>
+    <form action="{:url('userlevel/add_player_post')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_LEVEL_NAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="number" name="post[name]"
+                                   id="title" required value="{$level.name |default=''}" placeholder="{:lang('请输入等级')}"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('需要的消费(收益)总数 ')}<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[level_up]" id="source" value="{$level.level_up |default=''}"
+                                   placeholder="{:lang('请输入消费(收益)总数 ')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('最低收费金额 ')}<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[player_min_coin]" id="source" value="{$level.player_min_coin |default=0}"
+                                   placeholder="{:lang('请输入最大收费金额 ')}"></td>
+                        <td ><span class="form-required">*发布陪玩收费最高金额 0没有限制</span></td>
+
+                    </tr>
+                    <tr>
+                        <th>{:lang('最高收费金额 ')}<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[player_max_coin]" id="source" value="{$level.player_max_coin |default=0}"
+                                   placeholder="{:lang('请输入最大收费金额 ')}"></td>
+                        <td ><span class="form-required">*发布陪玩收费最高金额 0没有限制</span></td>
+
+                    </tr>
+                    <!--<tr>
+                        <th>{:lang('等级大图标')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[level_icon]" id="level" value="{$level['level_icon'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#level');">
+                                    <if condition="$level['level_icon']">
+                                        <img src="{$level['level_icon']}"
+                                             id="level-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="level-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-level-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>-->
+                    <tr>
+                        <th>{:lang('等级图标')}<span class="form-required">*128*64</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[chat_icon]" id="thumbnail" value="{$level['chat_icon'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <if condition="$level['chat_icon']">
+                                        <img src="{$level['chat_icon']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('ADMIN_COLORS')}</th>
+                        <td>
+                            <input class="form-control" type="text" name="post[colors]" id="colors" style="width:100px;"
+                                   required value="{$level.colors |default='#000000'}" placeholder="{:lang('颜色值默认#000000')}"/>
+                            <input type="color" id="colorGet" onchange="ColorGetFn(this)" value="{$level.colors |default='#000000'}">&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                   required value="{$level.sort |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$level.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('userlevel/player_level')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    function ColorGetFn(dom){
+        document.getElementById('colors').value = dom.value;
+    }
+    $('.btn-level-thumbnail').click(function () {
+        $('#level-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+        $('#level').val('');
+    });
+    $('.btn-cancel-thumbnail').click(function () {
+        $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+        $('#thumbnail').val('');
+    });
+</script>
+</body>
+</html>

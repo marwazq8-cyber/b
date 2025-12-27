@@ -1,0 +1,112 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #is_all_notify{width: 150px;height: 35px;    border: 1px solid #dce4ec;}
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('Voice/room_memes')}">{:lang('语音房间表情包列表')}</a></li>
+        <li class="active"><a href="{:url('Voice/add_room_memes')}">{:lang('增加表情包类型')}</a></li>
+    </ul>
+    <form action="{:url('voice/addPost_room_memes')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('表情包名称')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="name"
+                                   required  placeholder="{:lang('请输入表情包名称')}" value="{$list['name']|default=''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('表情包图片(必须是gif图片)')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="img" id="thumbnail" value="{$list['img'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <if condition="$list['img']">
+                                        <img src="{$list['img']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('表情类型')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="memes_type_id" id="is_all_notify">
+                                <option value="0" >{:lang('无')}</option>
+                                <foreach name="room_memes_type" item="vo">
+                                    <option value="{$vo['id']}" <if condition="$list['memes_type_id'] eq $vo['id']"> selected = "selected" </if>>{$vo['name']}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="sort" placeholder="{:lang('SORT')}" value="{$list['sort']|default='0'}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="status" id="is_all_notify">
+                                <option value="1" <if condition="$list['status'] eq '1'"> selected = "selected" </if>>{:lang('OPEN')}</option>
+                                <option value="2" <if condition="$list['status'] eq '2'"> selected = "selected" </if>>{:lang('CLOSE')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('是否有随机表情')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="type" id="is_all_notify">
+                                <option value="1" <if condition="$list['type'] eq '1'"> selected = "selected" </if>>{:lang('YES')}</option>
+                                <option value="2" <if condition="$list['type'] eq '2'"> selected = "selected" </if>>{:lang('否')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <input class="form-control" type="hidden" name="id"  value="{$list['id']|default=''}" />
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('voice/room_memes')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+
+    });
+</script>
+
+</body>
+</html>

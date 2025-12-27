@@ -1,0 +1,118 @@
+<include file="public@header"/>
+<style>
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .gift-img{width:120px;height:40px;}
+     .gift-img img{height:100%};
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('约单设置申请')}</a></li>
+
+    </ul>
+
+    <form class="well form-inline margin-top-20" method="post" action="{:url('single/setting')}">
+        {:lang('USER_ID')}：
+        <input class="form-control" type="text" name="uid" style="width: 200px;" value="{:input('request.uid')}"
+               placeholder="{:lang('USER_ID')}">
+
+        约单功能
+        <select name="game_id" id="type"  class="form-control">
+            <option value="0">{:lang('ALL')}</option>
+            <foreach name="game" item="v">
+                <option value="{$v['id']}" <if condition="$v['id'] eq $request.game_id"> selected="selected" </if>>{$v['name']}</option>
+            </foreach>
+        </select>
+        约单类型
+        <select name="genre_id" id="type"  class="form-control">
+            <option value="0">{:lang('ALL')}</option>
+            <foreach name="genre" item="v">
+                <option value="{$v['id']}" <if condition="$v['id'] eq $request.genre_id"> selected="selected" </if>>{$v['name']}</option>
+            </foreach>
+        </select>
+
+        {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time" value="{:input('request.start_time')}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time" value="{:input('request.end_time')}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}"/>
+        <a class="btn btn-danger" href="{:url('single/setting')}">{:lang('EMPTY')}</a>
+    </form>
+
+    <form class="js-ajax-form" action="" method="post">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('USERNAME')}(ID)</th>
+                <th>{:lang('约单类型')}</th>
+                <th>{:lang('约单功能')}</th>
+                <th>{:lang('金额')}</th>
+                <th>{:lang('OPEN_STATUS')}</th>
+                <th>{:lang('申请状态')}</th>
+                <th>{:lang('ADMIN_CHECK_TIME')}</th>
+                <!--<th>{:lang('SORT')}</th>-->
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+                <php> $status=array('0'=>'申请中','1'=>'通过','2'=>'拒绝'); </php>
+                <php> $open=array('1'=>lang('OPEN'),'2'=>lang('CLOSE')); </php>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.user_nickname}</td>
+                    <td>{$vo.genre_name}</td>
+                    <td>{$vo.game_name}</td>
+                    <td>{$vo.coin} {$currency_name}</td>
+                    <td>{$open[$vo.is_open]}</td>
+                    <td>{$status[$vo.status]}</td>
+                    <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                    <!--<td>{$vo.sort}</td>-->
+                    <td>
+                        <if condition="$vo.status eq 0">
+                        <a href="{:url('single/setting_post',array('id'=>$vo.id,'type'=>1))}">{:lang('PASS_THROUGH')}</a>|
+                        <a href="{:url('single/setting_post',array('id'=>$vo.id,'type'=>2))}">{:lang('REFUSE')}</a>|
+                        </if>
+
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <ul class="pagination">{$page}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('single/setting_del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+</script>
+</body>
+</html>

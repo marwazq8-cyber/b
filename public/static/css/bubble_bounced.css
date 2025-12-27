@@ -1,0 +1,120 @@
+*{margin: 0;padding: 0;}
+#box{width: 100%;background: #0d0012;overflow: auto;}
+.bubble_bounced{width: 100%;position: absolute;top:30% ;}
+.w_bubble_bounced{width:90%;margin: 0 auto;background-color: rgba(0, 0, 0, 0.58);border-radius: 20px;padding: 1em;}
+.bubble_bounced-nav .mtop{margin-top: 5px;}
+.bubble_bounced-nav a{color: #fb6cac;}
+.bubble_bounced-nav a:hover{outline: none;border: none;}
+.bubble_bounced-nav a img{width: 100%;max-width:35px ;margin-right: 5px;}
+.bubble_bounced-nav .mtop img{width: 100%;max-width:25px ;}
+.bubble_start{color: #fb6cac;position: relative;overflow: hidden;}
+.bubble_start button{width:80%;padding: 0.8em 0;border: none;color:#fff; background-image: linear-gradient(-90deg, #fff4ac 0%, #f146f9 100%);border-radius: 50px;margin-top: 10px;}
+.bubble_start .subtract{overflow: auto;zoom:1;margin-top: 10px;}
+.bubble_start .subtract span{display: block;margin: 0 auto;overflow: auto;text-align: center; }
+.bubble_start .subtract input{margin: 0 auto;background: #fff;color: #333;}
+div#5div{margin: 0 auto;}
+input#5{background: #fff;}
+.My_magic span{font-size: 2em;font-weight: bold;color: #ff4e99;margin-left: 10px;}
+.My_magic span img{width: 100%;max-width: 30px;}
+.buy_magic{margin-top: 10px;}
+.buy_magic aside{padding:0.5em  ; }
+.buy_magic aside a{display: block;background: #fef8ff;border: 1px #fef8ff solid;color: #333;font-size: 1.2em;text-decoration: none;}
+.buy_magic aside a p:first-child{background: url(../img/macg1.png) 70px center no-repeat;background-size:15px ;}
+.buy_magic aside a p:last-child{background: url(../img/zuan1.png) 70px center no-repeat;background-size:12px ;}
+.buy_magic aside a img{width: 100%;max-width: 20px;margin: 0 5px;}
+.buy_magic aside a:hover,.buy_magic aside.active a {border: 1px #ff4e99 solid;background: url(../img/queren.png) bottom right no-repeat;text-decoration: none;}
+.buy_magic aside a:hover p:first-child,.buy_magic aside.active a p:first-child{background: url(../img/macg.png) 70px center no-repeat;background-size:15px ;}
+.buy_magic aside a:hover p:last-child,.buy_magic aside.active a p:last-child{background: url(../img/zuan.png) 70px center no-repeat;background-size:12px ;}
+.magic_num header{padding: 1em 0;text-align: left;}
+.magic_num aside{overflow: auto;zoom:1}
+.magic_num aside input{padding:8px 10px;border: none;border-bottom: 1px #e8e8e8 solid;background: none;overflow: hidden;zoom:1}
+.modal-footer{overflow: auto;zoom:1}
+.modal-footer span{float: left;}
+.modal-footer span em{color: #ff4e99;font-size: 1.2em;font-style: normal;}
+.modal-footer span img{width: 100%;max-width: 20px;margin-left: 5px;}
+#box .btn-primary{background-image: linear-gradient(-90deg, #ff589f 0%, #ef85ff 100%);border: none;}
+#box .btn-primary:hover{outline: none;border: none;}
+.modal-dialog{width: 96%;}
+
+.user_coin,.magic_wand_sum{color:#fb6cac;}
+.ranking aside{padding: 0.8em 0.2em;overflow: auto;zoom:1;border-bottom: 1px #e8e8e8 solid;}
+.ranking aside p:first-child img{border-radius: 100px;margin-right: 10px; width: 3em; height: 3em;}
+.ranking_list_del .fl{margin-top: 0.5em;}
+.ranking aside p:last-child {color: #ff4e99;text-align: right;} 
+.ranking aside p:last-child img {width: 100%;max-width: 18px;margin-left: 10px;}
+.ranking aside a{color: #333;}
+.ranking aside p:last-child span{display: block;color: #ccc;}
+.eggs_animation_2{height: 100%;
+  animation:moves 3s 0s linear ;-webkit-animation:moves 3s 0s linear ;transform-origin:bottom;-webkit-transform-origin:bottom;
+}
+@keyframes moves
+{
+    0%, 25%{ 
+      -webkit-transform:rotate(0deg);
+      transform:rotate(0deg);
+    }
+    30% {  
+      -webkit-transform:rotate(6deg);
+      transform:rotate(6deg);
+    }
+    35% {  
+      -webkit-transform:rotate(-6deg);
+      transform:rotate(-6deg);
+    }
+    40% {  
+      -webkit-transform:rotate(6deg);
+      transform:rotate(6deg);
+
+    }
+    45% {  
+      -webkit-transform:rotate(-6deg);
+      transform:rotate(-6deg);
+    }
+    50% {  
+      -webkit-transform:rotate(6deg);
+      transform:rotate(6deg);
+    }
+    55% {  
+      -webkit-transform:rotate(-6deg);
+      transform:rotate(-6deg);
+
+    }
+    60%,100% {  
+      -webkit-transform:rotate(0deg);
+      transform:rotate(0deg);
+
+    }
+}
+
+
+/*更多*/
+.more p {display: block;overflow: auto;zoom:1;margin: 0;padding:0.6em 0;}
+.more p a{color: #333;font-size: 1.2em;outline: none;}
+.more p a img{width:100%;max-width: 25px;}
+
+
+/*疑问*/
+.doubt p{line-height: 2em;font-size: 1.2em;text-align: left;margin-top: 10px;}
+.doubt p:last-child{margin-bottom: 60px;}
+
+
+.modal-content{height: 97%;}
+.modal-dialog{height: calc(100% - 7em);margin-top:6em;}
+.ranking_list{width: 100%;height: 70%;}
+.ranking_list_pad{height: calc(100% - 70px);overflow-y: auto;}
+.ranking_all{width: 100%;margin-top:1em;}
+.ranking_all_right{height: 4em;line-height: 4em;}
+.bubble_img{width: 3em!important;height: 3em;}
+
+.bubble_gift_list{width: 100%;height: 100%}
+.bubble_gift_list li{width: 25%;height: 6.5em;margin-bottom: 1em;float:left;}
+.bubble_gift_list_img{width: 100%;height: 3em;text-align: center;}
+.bubble_gift_list_img img{height: 100%;}
+.bubble_gift_list_name{width: 100%;height: 1.5em;line-height: 1.5em;text-align: center;overflow: hidden;}
+.bubble_gift_list_coin{    width: 100%; height: 1.5em; line-height: 1.5em;text-align: center;}
+.bubble_gift_list_coin img{width: 1.5em;}
+
+.bubble_gift_floating_p_div{width: 100%;height: 100%;position: relative;}
+.bubble_gift_floating{width:3em;height:3em;background: url(../img/toumingpaopao.png) no-repeat center;background-size: 100% 100%;position: absolute;bottom:0;right:20%;}
+.bubble_gift_floating img{width:60%;margin-top: 20%;}
+.gamebox{overflow: hidden;}

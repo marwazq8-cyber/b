@@ -1,0 +1,166 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+    .select{width: 150px;height: 30px;}
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('voice/index')}">{:lang('语音直播列表')}</a></li>
+        <li class="active"><a href="{:url('voice/add_index')}">{:lang('添加语音直播')}</a></li>
+    </ul>
+    <form action="{:url('voice/addPost_index')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('房间标题')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[title]"
+                                   required  placeholder="{:lang('Please_enter_room_title')}" value="{$list['title']|default=''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('房间公告')}<span class="form-required">*</span></th>
+                        <td>
+                            <textarea class="form-control" name="post[announcement]" id="" cols="10" rows="3">{$list['announcement']|default=''}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('USER_ID')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[user_id]"
+                                   required  placeholder="{:lang('Please_enter_user_ID')}" value="{$list['user_id']|default=''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('房间图片')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[avatar]" id="thumbnail" value="{$list['avatar'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <if condition="$list['avatar']">
+                                        <img src="{$list['avatar']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('房间类型')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[room_type]" class="form-control">
+                                <option value="1" <if condition="$list['room_type'] eq 1"> selected = "selected" </if>>{:lang('交友厅')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('语音频道分类')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[voice_type]" class="form-control">
+                                <foreach name="voice_type" item="vo">
+                                    <option value="{$vo['id']}" <if condition="$list['voice_type'] eq $vo['id']"> selected = "selected" </if>>{$vo['name']}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <!--<tr>
+                       <th>{:lang('直播间类型')}<span class="form-required">*</span></th>
+                       <td>
+                           <select name="post[type]" class="select">
+                               <option value="1" <if condition="$list['type'] eq 1"> selected = "selected" </if>>{:lang('单人直播')}</option>
+                               <option value="2" <if condition="$list['type'] eq 2"> selected = "selected" </if>>{:lang('多人直播')}</option>
+                           </select>
+                       </td>
+                   </tr>-->
+                    <tr>
+                        <th>{:lang('是否是密码房间')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[voice_status]" class="form-control">
+                                <option value="0" <if condition="$list['voice_status'] eq '0'"> selected = "selected" </if>>{:lang('否')}</option>
+                                <option value="1" <if condition="$list['voice_status'] eq 1"> selected = "selected" </if>>{:lang('是')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('房间密码')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="number" name="post[voice_psd]"
+                                   placeholder="{:lang('请输入房间密码')}" value="{$list['voice_psd']|default=''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('房间背景图')}<span class="form-required">*</span></th>
+                        <td>
+                            <foreach name="voice_bg" item="v">
+                                <label>
+                                    <input type="radio" name="post[voice_bg]" value="{$v['id']}" <if condition="$list['voice_bg'] eq $v['id']"> checked = "checked" </if>>
+                                    <img src="{$v['image']}" style="width: 50px;height: 50px;">
+                                </label>
+                            </foreach>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th>{:lang('排序 ')}<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[sort]" placeholder="{:lang('排序')}" value="{$list['sort']|default='0'}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[status]" class="form-control">
+                                <option value="1" <if condition="$list['status'] eq '1'"> selected = "selected" </if>>{:lang('开启')}</option>
+                                <option value="2" <if condition="$list['status'] eq '2'"> selected = "selected" </if>>{:lang('关闭')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <input class="form-control" type="hidden" name="id"  value="{$list['id']|default=''}" />
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('voice/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+
+    });
+</script>
+
+</body>
+</html>

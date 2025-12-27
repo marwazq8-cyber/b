@@ -1,0 +1,242 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('gift/index')}">{:lang('ADMIN_GIFT_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_GIFT_ADD')}</a></li>
+         <li><a href="{:url('gift/moral')}">{:lang('ADMIN_GIFT_IMPLICATION')}</a></li>
+        <li><a href="{:url('gift/add_moral')}">{:lang('ADMIN_GIFT_IMPLICATION_ADD')}</a></li>
+<!--        <li><a href="{:url('gift/gift_animation')}">{:lang('ADMIN_SVGA')}</a></li>-->
+<!--        <li><a href="{:url('gift/add_gift_animation')}">{:lang('ADMIN_HOME_PAGE_ADD')}</a></li>-->
+        <li><a href="{:url('gift/gift_type')}">{:lang('ADMIN_GIFT_TYPE')}</a></li>
+    </ul>
+    <form action="{:url('gift/addPost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_GIFT_NAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[name]"
+                                   id="title" required value="{$gift.name |default=''}" placeholder="{:lang('请输入礼物名称')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_GIFT_TYPE')}<span class="form-required">*</span></th>
+                        <td>
+                            <select class="form-control" name="post[type]">
+                                <option value="1">{:lang('普通礼物')}</option>
+                                <!--<option value="2" <if condition="$gift['type'] eq '2'"> selected = "selected" </if>>{:lang('连续礼物')}</option>-->
+                                <option value="3" <if condition="$gift['type'] eq '3'"> selected = "selected" </if>>{:lang('ADMIN_SVGA')}</option>
+                                <option value="4" <if condition="$gift['type'] eq '4'"> selected = "selected" </if>>{:lang('ADMIN_MP4')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_CONSUME_TYPE')}<span class="form-required">*</span></th>
+                        <td>
+                            <select class="form-control"  name="post[coin_type]">
+                                <option value="1" <if condition="$gift['coin_type'] eq '1'"> selected = "selected" </if>>{$currency_name}</option>
+                                <option value="2" <if condition="$gift['coin_type'] eq '2'"> selected = "selected" </if>>{$system_currency_name}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_WHETHER_TO_PUSH_IN_FULL_SCREEN')}<span class="form-required">*</span></th>
+                        <td>
+                            <select class="form-control" name="post[is_all_notify]" id="is_all_notify">
+                                <option value="0" <if condition="$gift['is_all_notify'] eq '0'"> selected = "selected" </if>>{:lang('NO')}</option>
+                                <option value="1" <if condition="$gift['is_all_notify'] eq '1'"> selected = "selected" </if>>{:lang('YES')}</option>
+                            </select>
+                        </td>
+                    </tr>
+<!--                    <tr>-->
+<!--                        <th>{:lang('ADMIN_FLOATING_SCREEN')}</th>-->
+<!--                        <td>-->
+<!--                            <select class="form-control" name="post[gift_animation_id]">-->
+<!--                                <option value="0">{:lang('ADMIN_WITHOUT')}</option>-->
+<!--                                <option value="1" <if condition="1 eq $gift['gift_animation_id']">selected</if>>{:lang('YES')}</option>-->
+<!--                            </select>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+                    <tr>
+                        <th>{:lang('ADMIN_GIFT_PRICE')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[coin]" id="source"
+                                   value="{$gift.coin |default=''}"
+                                   placeholder="{:lang('请输入钻石数')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_GIFT_STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select class="form-control" name="post[status]" id="status">
+                                <option value="1">{:lang('YES')}</option>
+                                <!--<option value="2" <if condition="$gift['type'] eq '2'"> selected = "selected" </if>>{:lang('连续礼物')}</option>-->
+                                <option value="0" <if condition="$gift['status'] eq '0'"> selected = "selected" </if>>{:lang('NO')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[orderno]" style="width:100px;"
+                                   required value="{$gift.orderno |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                 <!--    <tr>
+                        <th>{:lang('房主抽成数 ')}<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[room_divide_info]" id="room_divide_info"
+                                   value="{$gift.room_divide_info |default=''}"
+                                   placeholder="{:lang('请输入房主抽成数')}"></td>
+                    </tr> -->
+                    <tr>
+                        <th>{:lang('ADMIN_GIFT_IMG')}<span class="form-required">*110px*110px</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[img]" id="thumbnail" value="{$gift['img'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <if condition="$gift['img']">
+                                        <img src="{$gift['img']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                     <tr>
+                        <th>{:lang('ADMIN_SVGA')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[svga]" id="svga" value="{$gift['svga'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#svga');">
+                                    <if condition="$gift['svga']">
+                                        <!--<img src="{$gift['svga']}"
+                                             id="svga-preview"
+                                             width="135" style="cursor: pointer"/>-->
+                                        <input class="form-control" type="text" id="svga-path" value="{$gift['svga']}">
+                                        <else/>
+                                        <!--<img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="svga-preview"
+                                             width="135" style="cursor: pointer"/>-->
+                                        <input class="form-control" type="text" id="svga-path" value="">
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-svga" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th>{:lang('音频上传')}<span class="form-required">*</span></th>
+                        <td>
+                            <input type="text" readonly name="post[audio_file]"  id="files" value="{$gift['audio_file']|default=''}" style="width:70%;">
+                            <a href="javascript:uploadOne('音频上传','#files','video');"
+                               class="btn btn-sm btn-default">{:lang('音频上传')}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_GIFT_TYPE')}</th>
+                        <td>
+                            <select class="form-control" name="post[gift_type_id]">
+                                <option value="0">{:lang('ADMIN_WITHOUT')}</option>
+                                <foreach name="gift_type" item="v">
+                                    <option <if condition="$v['id'] eq $gift['gift_type_id']">selected</if> value="{$v['id']}">{$v['title']}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>CP</th>
+                        <td>
+                            <select class="form-control" name="post[is_cp]">
+                                <option value="0" <if condition="$gift['is_cp'] eq '0'"> selected = "selected" </if>>{:lang('NO')}</option>
+                                <option value="1" <if condition="$gift['is_cp'] eq '1'"> selected = "selected" </if>>{:lang('YES')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>gif</th>
+                        <td>
+                            <select class="form-control" name="post[is_gifs]">
+                                <option value="0" <if condition="$gift['is_gifs'] eq '0'"> selected = "selected" </if>>{:lang('NO')}</option>
+                                <option value="1" <if condition="$gift['is_gifs'] eq '1'"> selected = "selected" </if>>{:lang('YES')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>music</th>
+                        <td>
+                            <select class="form-control" name="post[is_music]">
+                                <option value="0" <if condition="$gift['is_music'] eq '0'"> selected = "selected" </if>>{:lang('NO')}</option>
+                                <option value="1" <if condition="$gift['is_music'] eq '1'"> selected = "selected" </if>>{:lang('YES')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>star</th>
+                        <td>
+                            <select class="form-control" name="post[is_star]">
+                                <option value="0" <if condition="$gift['is_star'] eq '0'"> selected = "selected" </if>>{:lang('NO')}</option>
+                                <option value="1" <if condition="$gift['is_star'] eq '1'"> selected = "selected" </if>>{:lang('YES')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>luck</th>
+                        <td>
+                            <select name="post[is_luck]" class="form-control">
+                                <option value="0" <if condition="$gift['is_luck'] eq '0'"> selected = "selected" </if>>{:lang('NO')}</option>
+                                <option value="1" <if condition="$gift['is_luck'] eq '1'"> selected = "selected" </if>>{:lang('YES')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$gift.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('gift/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+         $('.btn-cancel-svga').click(function () {
+            $('#svga-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#svga').val('');
+            $('#svga-path').val('');
+        });
+
+    });
+</script>
+
+</body>
+</html>

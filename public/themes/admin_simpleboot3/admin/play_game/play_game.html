@@ -1,0 +1,108 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .gift-in input {
+        width: 20px;
+    }
+
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_PLAYER_GAME_LIST')}</a></li>
+        <li><a href="{:url('PlayGame/add_game')}">{:lang('ADMIN_PLAYER_GAME_ADD')}</a></li>
+    </ul>
+
+    <form class="js-ajax-form" action="{:url('PlayGame/upd')}" method="post">
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>{:lang('SORT')}</th>
+                <th>ID</th>
+                <th>{:lang('ADMIN_GAME_NAME')}</th>
+                <th>{:lang('ADMIN_PLAYER_GAME_IMG')}</th>
+                <th>{:lang('ADMIN_DEMO_IMG')}</th>
+                <th>{:lang('技能背景图片')}</th>
+                <th>{:lang('ADMIN_GAME_TYPE')}</th>
+                <th>{:lang('ADMIN_NAVIGATION_BAR_DISPLAY')}</th>
+                <th>{:lang('ADD_TIME')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td class="gift-in"><input type="text" name="listorders[{$vo.id}]" value="{$vo.orderno}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td class="gift-img"><img src="{$vo.img}" alt=""></td>
+                    <td class="gift-img"><img src="{$vo.demo_img}" alt=""></td>
+                    <td class="gift-img"><img src="{$vo.bg_img}" alt=""></td>
+                    <td>{$vo.type_name}</td>
+                    <td>
+                        <if condition="$vo.is_banner eq 1">
+                            {:lang('YES')}
+                            <else/>
+                            {:lang('NO')}
+                        </if>
+                    </td>
+                    <td>{$vo.create_time | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <a href="{:url('PlayGame/order_info',array('game_id'=>$vo.id))}">{:lang('ADMIN_ORDER_INFORMATION')}</a> |
+                        <a href="{:url('PlayGame/add_game',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <button type="button" class="btn btn-primary" style="margin-top:20px;float: left;"> {:lang('SORT')}</button>
+        <div class="pagination">{$page}</div>
+    </form>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('PlayGame/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id,type:2},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function () {
+        $(".js-ajax-form").submit();
+    })
+</script>
+</body>
+</html>

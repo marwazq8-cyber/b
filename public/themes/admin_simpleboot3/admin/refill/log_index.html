@@ -1,0 +1,141 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('Recharge_record')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" name="form1">
+       {:lang('充值状态')}:
+        <select class="form-control" name="status" style="width: 140px;">
+            <option value='-1' <if condition="$refill.status eq -1"> selected='selected' </if>>{:lang('ALL')}</option>
+            <option value='1' <if condition="$refill.status eq 1"> selected='selected' </if>>{:lang('SUCCESS')}</option>
+            <option value='0' <if condition="$refill.status eq 0"> selected='selected' </if>>{:lang('FAILED')}</option>
+        </select> &nbsp;&nbsp;
+
+         {:lang('充值方式')}:
+        <select class="form-control" name="pay_type_id" style="width: 140px;">
+            <option value='-1' <if condition="$refill.pay_type_id eq -1"> selected='selected' </if>>{:lang('ALL')}</option>
+             <foreach name="pay_menu" id="vo">
+                <option value='{$vo.id}' <if condition="$refill.pay_type_id eq $vo['id']"> selected='selected' </if>>{$vo.pay_name}</option>
+            </foreach>
+        </select> &nbsp;&nbsp;
+        {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time"
+               value="{$refill.start_time|default=''}"
+               style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time"
+               value="{$refill.end_time|default=''}"
+               style="width: 140px;" autocomplete="off">
+        <br/>
+        <br/>
+
+        {:lang('USER_ID')}:
+        <input type="text" class="form-control" name="uid" style="width: 200px;"
+               value="{$refill.uid|default=''}" placeholder="{:lang('用户ID')}">
+        {:lang('agency_recharge')}ID:
+        <input type="text" class="form-control" name="agency_id" style="width: 100px;"
+               value="{$refill.agency_id|default=''}">
+        {:lang('is_refund')}:
+        <select class="form-control" name="is_refund" style="width: 140px;">
+            <option value='-1' <if condition="$refill.is_refund eq -1"> selected='selected' </if>>{:lang('ALL')}</option>
+            <option value='1' <if condition="$refill.is_refund eq 1"> selected='selected' </if>>{:lang('是')}</option>
+            <option value='0' <if condition="$refill.is_refund eq 0"> selected='selected' </if>>{:lang('否')}</option>
+        </select>
+        <br/>
+        <br/>
+
+       {:lang('订单号')}:
+        <input type="text" class="form-control" name="order_id" style="width: 200px;"
+               value="{$refill.pay_order_id|default=''}" placeholder="{:lang('订单号')}">
+       {:lang('外部订单号')}:
+        <input type="text" class="form-control" name="trade_no" style="width: 200px;"
+               value="{$refill.trade_no|default=''}">
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}"  onclick='form1.action="{:url('refill/log_index')}";form1.submit();'/>
+        <input type="button" class="btn btn-primary from_export" style="background-color: #1dccaa;" value="{:lang('导出')}" onclick='form1.action="{:url('refill/export')}";form1.submit();'>
+    </form>
+    <form class="js-ajax-form" action="" method="post">
+        <h4>{:lang('总充值金额')}: {$total_money}; {:lang('到账数')}: {$total_coin}</h4>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('USER')}(ID)</th>
+                <th>{:lang('订单号')}</th>
+                <th>{:lang('外部订单号')}</th>
+                <th>{:lang('充值金额')}</th>
+                <th>{:lang('金币数')}</th>
+                <th>{:lang('充值方式')}</th>
+                <th>{:lang('ADD_TIME')}</th>
+                <th>{:lang('is_refund')}</th>
+                <th>{:lang('充值状态')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.user_nickname}({$vo.uid})</td>
+                    <td>{$vo.order_id}</td>
+                    <td>{$vo.pay_order_id}</td>
+                    <td>{$vo.money}</td>
+
+                    <td>{$vo.coin}</td>
+                    <td>{$vo.pay_name}</td>
+                    <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <if condition="$vo['is_refund'] eq 0">
+                            <if condition="$vo['status'] eq 1">
+                                <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('否')}</a>
+                                <else/>
+                                {:lang('否')}
+                            </if>
+                            <else/>
+                            <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('是')}</a>
+                        </if>
+
+
+                    </td>
+                    <if condition="$vo['status'] eq '1'">
+                        <td>{:lang('SUCCESS')}</td>
+                    <else/>
+                        <td>{:lang('FAILED')}</td>
+                    </if>
+
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+</body>
+<script>
+    $(".del").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm("{:lang('is_refund_status')}" + '?', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('refill/user_charge_refund')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data ==='1'){
+                        layer.msg("{:lang('Operation_successful')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('operation_failed')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+</script>
+</html>

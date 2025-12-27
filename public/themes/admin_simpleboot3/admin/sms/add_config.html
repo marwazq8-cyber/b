@@ -1,0 +1,120 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('sms/config')}">{:lang('短信平台列表')}</a></li>
+        <li  class="active"><a>{:lang('添加短信平台')}</a></li>
+    </ul>
+    <form action="{:url('sms/addPost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+
+                    <tr>
+                        <th>{:lang('短信服务商')}<span class="form-required">*</span></th>
+                        <td>
+                            <select class="form-control" name="post[val]" id="">
+                                <foreach name="type" item="v" key="k">
+                                    <option <if condition="$k eq $list['val']">selected</if> value="{$k}">{$v}</option>
+                                </foreach>
+
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>APP ID<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[app_id]"
+                                     placeholder="{:lang('请输入appId')}" value="{$list['app_id']|default=''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('短信API KEY')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[app_key]"
+                                     placeholder="{:lang('请输入短信API key')}" value="{$list['app_key']|default=''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('短信API密钥')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[app_secret]"
+                                     placeholder="{:lang('请输入短信API密钥')}" value="{$list['app_secret']|default=''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('短信签名')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sign_name]"
+                                     placeholder="{:lang('请输入短信签名')}" value="{$list['sign_name']|default=''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('短信模板ID')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[template]"
+                                     placeholder="{:lang('请输入短信模板ID')}" value="{$list['template']|default=''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('接入地址')}<span class="form-required"></span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[endpoint]"
+                                     placeholder="{:lang('请输入')}" value="{$list['endpoint']|default=''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('国际短信')}<span class="form-required">*</span></th>
+                        <td>
+                            <select class="form-control" name="post[type]">
+                                <option value="1" <if condition="$list['type'] eq '1'"> selected = "selected" </if>>{:lang('OPEN')}</option>
+                                <option value="0" <if condition="$list['type'] eq '0'"> selected = "selected" </if>>{:lang('CLOSE')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select class="form-control"  name="post[status]" id="is_all_notify">
+                                <option value="1" <if condition="$list['status'] eq '1'"> selected = "selected" </if>>{:lang('OPEN')}</option>
+                                <option value="2" <if condition="$list['status'] eq '2'"> selected = "selected" </if>>{:lang('CLOSE')}</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <input class="form-control" type="hidden" name="id"  value="{$list['id']|default=''}" />
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('voice/type')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+</body>
+</html>

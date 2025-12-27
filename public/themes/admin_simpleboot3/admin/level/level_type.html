@@ -1,0 +1,85 @@
+<include file="public@header"/>
+<style>
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .gift-img{width:120px;height:40px;}
+    .gift-img img{height:100%};
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('等级聊天背景图')}</a></li>
+        <li><a href="{:url('level/level_type_add')}">{:lang('添加等级聊天背景图')}</a></li>
+    </ul>
+
+
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{:lang('背景图标题')}</th>
+            <th>{:lang('图标')}</th>
+            <th>{:lang('进场特效')}</th>
+            <th>{:lang('等级')}</th>
+            <th>{:lang('SORT')}</th>
+            <th>{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <foreach name="level" id="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.level_type_name}</td>
+                <td class="gift-img">
+                    <if condition="$vo['level_icon']">
+                        <img src="{$vo.level_icon}" alt="">
+                    </if>
+                </td>
+                <td class="gift-img">
+                    <if condition="$vo['icon']">
+                        <img src="{$vo.icon}" alt="">
+                    </if>
+                </td>
+
+                <td>{$vo.min_level} - {$vo.max_level}</td>
+                <td>{$vo.sort}</td>
+                <td>
+                    <a href="{:url('level/level_type_add',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                    <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                </td>
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('level/level_type_del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+</script>
+</body>
+</html>

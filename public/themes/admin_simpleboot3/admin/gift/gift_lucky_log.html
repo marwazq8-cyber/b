@@ -1,0 +1,108 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+    .eggs_name{
+        width: 100%;height: 30px;line-height: 30px;color:#fb7373;margin-left: 20px;  }
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .select{width: 150px;height:30px;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('gift/gift_lucky')}">{:lang("幸运礼物")}</a></li>
+        <li class="active"><a href="javascript:;">{:lang("幸运礼物详情")}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('gift/gift_lucky_log')}">
+        {:lang('USER_ID')}：
+        <input class="form-control" type="text" name="uid" style="width: 100px;" value="{$data['uid'] |default=''}"
+               placeholder="{:lang('USER_ID')}">
+        {:lang('ADMIN_ANCHOR_ID')}：
+        <input class="form-control" type="text" name="host_id" style="width: 100px;" value="{$data['host_id'] |default=''}"
+               placeholder="{:lang('ADMIN_ANCHOR_ID')}">
+        {:lang('头奖计算时间标识')}：
+        <input class="form-control" type="text" name="jackpot_time" style="width: 150px;" value="{$data['jackpot_time'] |default=''}"
+               placeholder="{:lang('头奖计算时间标识')}">
+        {:lang('GIFT')}:
+        <select class="select" name="gift_id">
+            <option value="0">{:lang('ALL')}</option>
+            <foreach name="gift" item="v">
+                <option value="{$v['id']}" <if condition="$data['gift_id'] eq $v['id']"> selected = "selected" </if>>{$v['name']}</option>
+            </foreach>
+        </select>
+        {:lang('STATUS')}：
+        <select name="status" class="select">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="0"<if condition="$data.status eq '0'"> selected="selected"</if>>{:lang('Not_winning_prize')}</option>
+            <option value="1"<if condition="$data.status eq 1"> selected="selected"</if>>{:lang("中奖")}</option>
+            <option value="2"<if condition="$data.status eq 2"> selected="selected"</if>>{:lang("头奖")}</option>
+        </select>
+         {:lang('时间')}:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time" value="{$data['start_time']|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$data['end_time']|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('gift/gift_lucky_log')}">{:lang('EMPTY')}</a>
+        <div style="margin-top:15px;">
+            <span class="eggs_name">{:lang('消费金额')}：{$count['coin']|default='0'}</span>
+            <span class="eggs_name">{:lang('平台收入')}：{$count['platform_coin']|default='0'}</span>
+            <span class="eggs_name">{:lang('接收用户收入')}：{$count['ticket']|default='0'}</span>
+            <span class="eggs_name">{:lang('Guild_income')}：{$count['ticket']|default='0'}</span>
+            <span class="eggs_name">{:lang("奖励金额")}{$count['winning']|default='0'}</span>
+        </div>
+
+    </form>
+
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{:lang("消费用户")}(ID)</th>
+            <th>{:lang("接收用户")}(ID)</th>
+            <th>{:lang("礼物(ID)")}</th>
+            <th>{:lang("消费金额")}</th>
+            <th>{:lang("平台收入")}/{:lang("接收用户收入")}/{:lang("Guild_income")}/{:lang("奖池")}</th>
+            <th>{:lang("礼物数量")}</th>
+            <th>{:lang("奖励金额")}</th>
+            <th>{:lang("奖励倍数")}</th>
+            <th>{:lang('STATUS')}</th>
+            <th>{:lang("头奖计算时间标识")}</th>
+            <th>{:lang('ADD_TIME')}</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <php> $status=array('0'=>lang('未中奖'),'1'=>lang('中奖'),'2'=>lang('头奖')); </php>
+
+        <foreach name="list" id="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.user_name}({$vo.uid})</td>
+                <td>{$vo.host_name}({$vo.host_id})</td>
+                <td>{$vo.gift_name}({$vo.gift_id})</td>
+                <td>{$vo.coin}</td>
+                <td>{$vo.platform_coin} / {$vo.ticket} / {$vo.guild_coin} / {$vo.prize_pool_coin}</td>
+                <td>{$vo.num}</td>
+                <td>{$vo.winning}</td>
+                <td>{$vo.ratio}</td>
+                <td>{$status[$vo.status]}</td>
+                <td>{$vo.jackpot_time}</td>
+                <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

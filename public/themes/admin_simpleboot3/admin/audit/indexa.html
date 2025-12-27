@@ -1,0 +1,224 @@
+<include file="public@header"/>
+<style>
+    .gift-img{width:50px;height:50px}
+    .gift-img img{width:100%;height:100%;}
+    .gift-in input{width:25px;}
+    .js-ajax-form{margin-top:30px;}
+    .identity img{width:30px;height:30px;border-radius: 50%;}
+    .details{cursor: pointer; width: 100px;height: 200px}
+    .layui-layer-demo .layui-layer-title{
+        background: #e0e0e0!important;
+    }
+    #status,#type{    width: 100px;
+        height: 32px;
+        border-color: #dce4ec;
+        color: #aeb5bb;}
+    .img_preview{
+        width: 100px;
+        height: 150px;
+    }
+    .layer-demolist{
+        cursor: pointer;
+    }
+    .getChecked{float:left;width:80px;height:34px;line-height: 34px;text-align: center;background: #2C3E50;color:#fff;margin-right:10px;cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_VIDEO_CHECK_LIST')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('audit/indexa')}">
+        {:lang('USER_ID')}：
+        <input class="form-control" type="text" name="uid" style="width: 200px;" value="{:input('request.uid')}"
+               placeholder="{:lang('USER_ID')}">
+        {:lang('ADMIN_FREE_STATUS')}：
+        <select name="status" id="status">
+            <option value="">{:lang('ALL')}</option>
+            <option value="1" <if condition="$request.status eq 1"> selected="selected" </if>>{:lang('免费')}</option>
+            <option value="2" <if condition="$request.status eq 2"> selected="selected" </if>>{:lang('收费')}</option>
+        </select>
+        <!--审核状态：
+        <select name="type" id="type">
+            <option value="-1">{:lang('全部')}</option>
+            <option value="0" <if condition="$request.type eq '0'"> selected="selected" </if> >{:lang('UNREVIEWED')}</option>
+            <option value="1" <if condition="$request.type eq 1"> selected="selected" </if>>{:lang('AUDITED')}</option>
+            <option value="2" <if condition="$request.type eq 2"> selected="selected" </if>>{:lang('REJECTED')}</option>
+        </select>-->
+        {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time" value="{:input('request.start_time')}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time" value="{:input('request.end_time')}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}"/>
+        <a class="btn btn-danger" href="{:url('audit/indexa')}">{:lang('EMPTY')}</a>
+    </form>
+
+    <form class="js-ajax-form" action="{:url('audit/videoall')}" method="post">
+        <div style="margin-bottom: 10px;">
+            <div class="getChecked" onclick="getChecked('on')">{:lang('ADMIN_ON')}</div>
+            <div class="getChecked" onclick="getChecked('off')">{:lang('ADMIN_OFF')}</div>
+            <div class="getChecked" onclick="getChecked('onWWoff')">{:lang('ADMIN_ON_OFF')}</div>
+            <button type="submit" name="type" value="1" class="btn btn-primary">{:lang('ADMIN_BATCH_PASS')}</button>
+
+            &nbsp;&nbsp;
+            <button type="submit" name="type" value="2" class="btn btn-primary">{:lang('ADMIN_BULK_REJECTION')}</button>
+
+        </div>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>{:lang('AVATAR')}</th>
+                <th>{:lang('USERNAME')}</th>
+                <th>{:lang('ADMIN_VIDEO_TITLE')}</th>
+                <th>{:lang('ADMIN_VIDEO_IMG')}</th>
+                <th>{:lang('ADMIN_VIDEO_LOOK_COUNT')}</th>
+<!--                <th>{:lang('分享次数')}</th>
+                <th>{:lang('收费金额(金币)')}</th>
+                <th>{:lang('总收益')}</th>
+                <th>{:lang('收费状态')}</th>-->
+                <th>{:lang('ADMIN_VIDEO_TIME')}</th>
+                <!--<th>{:lang('是否推荐')}</th>-->
+                <!--<th>{:lang('STATUS')}</th>-->
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="user" id="vo">
+                <tr>
+                    <td>
+                        <if condition="$vo['type'] eq '0'">
+                            <input type="checkbox" name="id[]" value="{$vo.id}" class="chechbox_input">
+                            <else/>
+
+                        </if>
+                    </td>
+                    <td>{$vo.uid}</td>
+                    <td class="identity"><img src="{$vo.avatar}" alt=""></td>
+                    <td>{$vo.user_nickname}</td>
+                    <td>{$vo.title}</td>
+                    <td><if condition="$vo.img neq null"><img class="img_preview" src="{$vo.img}"/></if></td>
+                    <td>{$vo.viewed}</td>
+<!--                    <td>{$vo.share}</td>
+                    <td>{$vo.coin}</td>
+                    <td>{$vo.total_income}</td>
+                    <td><if condition="$vo.status eq '1'">{:lang('免费')}<else/>{:lang('收费')}</if></td>-->
+                    <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                    <!--<td>
+                        <if condition="$vo['is_recommend'] eq '0'">
+                            不推荐
+                            <else/>
+                            推荐
+                        </if>
+                    </td>
+                    <td>
+                        <if condition="$vo['type'] eq '0'">
+                            正在审核中
+                            <elseif condition="$vo['type'] eq '2'"/>
+                            {:lang('REJECTED')}
+                            <else/>
+                            {:lang('PASSED')}
+                        </if>
+                    </td>-->
+                    <td>
+                        <a class="layer-demolist" data-url="{$vo['video_url']}">{:lang('ADMIN_VIDEO_LOOK')}</a>
+                        <br/>
+                        <!--<if condition="$vo['type'] eq '0'">
+                            <a href="javascript:void(0)" class="is_audit_status" data-url="{:url('audit/upd',array('uid'=>$vo['uid'],'id'=>$vo['id'],'type'=>1))}">{:lang('通过')}</a>
+                            <br/>
+                            <a  href="javascript:void(0)" class="is_audit_status" data-url="{:url('audit/upd',array('uid'=>$vo['uid'],'id'=>$vo['id'],'type'=>2))}">{:lang('拒绝')}</a>
+                        </if>
+                        <br/>
+                        <if condition="$vo['is_recommend'] eq '0'">
+                            <a href="{:url('audit/recommend',array('uid'=>$vo['uid'],'id'=>$vo['id'],'is_recommend'=>1))}">{:lang('推荐')}</a>
+                            <else/>
+                            <a href="{:url('audit/recommend',array('uid'=>$vo['uid'],'id'=>$vo['id'],'is_recommend'=>0))}">{:lang('取消推荐')}</a>
+                        </if>
+                        <br/>-->
+                        <a href="{:url('audit/del_video',array('uid'=>$vo['uid'],'id'=>$vo['id'],'type'=>2))}">{:lang('DELETE')}</a>
+
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <ul class="pagination">{$page}</ul>
+
+    </form>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    $(".details").click(function(){
+        var url=$(this).attr("data-url");
+        //自定页
+        layer.open({
+            title: '视频认证',
+            type: 1,
+            skin: 'layui-layer-demo', //样式类名
+            closeBtn: 0, //不显示关闭按钮
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content:"<video src='"+url+"' controls='controls'></video>"
+        });
+    })
+    function getChecked(a) {
+        var x = document.getElementsByClassName('chechbox_input');
+        for (var i = 0; i < x.length; i++) {
+            switch (a) {
+                case 'on':
+                    x[i].checked = true;
+                    break;
+                case 'off':
+                    x[i].checked = false;
+                    break;
+                case 'onWWoff':
+                    x[i].checked = !x[i].checked;
+                    break;
+            };
+        }
+    }
+    $(".update_coin").click(function(){
+        var id=$(this).attr("data-id");
+        layer.prompt({title: '请输入修改的金额', formType: 0}, function(coin, index){
+            $.ajax({
+                url: "{:url('audit/account')}",
+                type: 'get',
+                dataType: 'json',
+                data: {id: id,coin:coin},
+                success: function (data) {
+                    if(data['status'] == 1){
+                        layer.msg(data['msg'],{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg(data['msg'],{time: 2000, icon:2});
+                    }
+                }
+            });
+            layer.close(index);
+        });
+    })
+
+    var loadstr='<video  width="400px" height="400px"  controls="controls" autobuffer="autobuffer"  autoplay="autoplay" loop="loop" style="position:fixed!important;top:0;left:0;"><source id="videos" src="abcdef123" type="video/mp4"></source></video>'
+    $('.layer-demolist').on('click', function(){
+        //var videourl = $(this).data('videourl');
+        var videourl=$(this).attr("data-url");
+        // $html = $(loadstr);
+        var aa =loadstr.replace('abcdef123',videourl);
+        // $('#videos',$html).attr('src',videourl);
+
+        layer.open({
+            type:1,
+            title: "",
+            area: ['400px', '400px'],
+            shade: 0,
+            closeBtn: 1,
+            content: aa,
+        });
+    })
+
+</script>
+</body>
+</html>

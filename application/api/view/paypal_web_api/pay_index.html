@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>PAYPALWEB</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+
+    <link rel="stylesheet" type="text/css" href="__STATIC__/paihang/css/weui.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/paihang/css/example.css" />
+    <script src="__STATIC__/js/iscroll.js"></script>
+<style>
+    #paypal-button-container{
+        width: 90%;margin:10vh auto;
+    }
+</style>
+
+</head>
+<body>
+<script
+        src="https://www.paypal.com/sdk/js?client-id=ATySIIpm5wnt3xKnHpuRipPfq5pcZTzzA4t9elskTDYwAIfIrjUR0LKJvzbiFFdH_ztJ-Gmpz0jaGJA2"> // 用沙盒客户端ID替换您的客户端ID。
+</script>
+<div id="paypal-button-container"></div>
+<script type="text/javascript" src="__STATIC__/paihang/js/jweixin-1.0.0.js"></script>
+<script src="__STATIC__/paihang/js/zepto.min.js"></script>
+<script src="__STATIC__/paihang/js/weui.min.js"></script>
+<script src="__STATIC__/layer/mobile/layer.js"></script>
+<script>
+    let token="{$token}";
+    let Loading_desperately="{$Loading_desperately}";
+    let got_it="{$got_it}";
+
+    function order_success(order_id){
+        layer.open({
+            type: 2
+            ,content: Loading_desperately
+        });
+        $.ajax({
+            type:"post",
+            url:'{:url('api/paypal_web_api/payment_successful')}',
+            dataType:"json",
+            data:{token:token,orderid:order_id},
+            success:function(data){
+                console.log(data)
+                if(data.status =='1'){
+                    layer.open({
+                        content: data.error,
+                        btn: got_it,
+                        shadeClose: false,
+                        yes: function(){
+                            window.location.href="live://pay_success";
+                            // window.location.href="wx517616f10f0b4165://pay";
+                        }
+                    });
+                }else{
+                    layer.open({
+                        content: data.error
+                        ,skin: 'msg'
+                        ,time: 2 //2秒后自动关闭
+                    });
+                }
+            }
+        })
+    }
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            // 创建订单
+            return actions.order.create({
+
+                purchase_units: [{
+                    reference_id: "{$order.order_id}",
+                    amount: {
+                        value: "{$order.money}"
+                    }
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                console.log(details);
+                console.log(data);
+                order_success(data.orderID);
+            });
+        }
+    }).render("#paypal-button-container");
+
+</script>
+</body>
+</html>

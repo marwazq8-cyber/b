@@ -1,0 +1,72 @@
+
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('图片资源库')}</a></li>
+        <li><a href="{:url('picture_resources/edit')}">{:lang('添加资源')}</a></li>
+    </ul>
+
+    <form class="well form-inline margin-top-20" method="post" action="{:url('picture_resources/index')}">
+       {:lang('分组名称')}:
+        <input type="text" class="form-control" name="grouping" style="width: 120px;" value="{:input('request.grouping/s','')}" placeholder="{:lang('分组名称')}">
+       {:lang('图片标题')}:
+        <input type="text" class="form-control" name="title" style="width: 120px;" value="{:input('request.title/s','')}" placeholder="{:lang('图片标题')}">
+       {:lang('图片标识')}:
+        <input type="text" class="form-control" name="identifier" style="width: 120px;" value="{:input('request.identifier/s','')}" placeholder="{:lang('图片标识')}">
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}"/>
+        <a class="btn btn-danger" href="{:url('picture_resources/index')}">{:lang('EMPTY')}</a>
+    </form>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{:lang('图片标题')}</th>
+            <th>{:lang('图片')}</th>
+            <th>{:lang('图片标识')}</th>
+            <th>{:lang('分组')}</th>
+            <th>{:lang('TIME')}</th>
+            <th>{:lang('SORT')}</th>
+            <th>{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <foreach name="list" id="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.title}</td>
+                <td>
+                    <img src="{$vo.img}" style="height:50px;" onclick="show_image('{$vo.img}')"/>
+                </td>
+                <td>{$vo.identifier}</td>
+                <td>{$vo.grouping}</td>
+                <td>{$vo.sort}</td>
+                <td>{$vo.create_time | date="Y-m-d H:i:s",###}</td>
+                <td>
+                    <a href="{:url('picture_resources/edit',array('id'=>$vo.id))}">{:lang('EDIT')}</a>
+                </td>
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    function show_image(url) {
+        //图片显示
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            area: ['auto', 'auto'],
+            skin: 'layui-layer-nobg', //没有背景色
+            shadeClose: true,
+            content: "<img src='" + url + "' style='max-width:500px;max-height:500px;'/>"
+        });
+    }
+</script>
+</body>
+</html>

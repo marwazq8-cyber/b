@@ -1,0 +1,51 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('agent/index')}">{:lang('ADMIN_AGENT')}</a></li>
+			<li class="active"><a href="{:url('agent/add')}">{:lang('ADMIN_AGENT_ADD')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('agent/addpost')}">
+			<div class="form-group">
+				<label for="input-user_login" class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('ADMIN_AGENT_ACCOUNT')}</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-user_login" name="agent_login" placeholder="{:lang('PLEASE_ENTER')}{:lang('ADMIN_TEL_NUMBER')}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-user_pass" class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('PASSWORD')}</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-user_pass" name="agent_pass" placeholder="******">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-user_email" class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('ADMIN_SHARE_RATIO')}(%)</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control"  name="commission" placeholder="{:lang('ADMIN_SHARE_RATIO')}%">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-user_email" class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('ADMIN_CHANNEL_NUMBER')}</label>
+				<div class="col-md-6 col-sm-10" style="position: relative;">
+					<input type="text" class="form-control" name="channel" placeholder="{:lang('ADMIN_CHANNEL_NUMBER')}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-user_email" class="col-sm-2 control-label">{:lang('ADMIN_DEDUCTION')}({:lang('ADMIN_DEFAULT_SYSTEM_DEDUCTION')})</label>
+				<div class="col-md-6 col-sm-10" style="position: relative;">
+					<input type="text" class="form-control" name="buckle_quantity" placeholder="{:lang('扣量（例如10表示10单扣1单）')}">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+/*靓号商城*/
+body{margin: 0; padding: 0;}
+.page.actionsheet, .page.dialog,.page, body{}
+.luck_top{padding: 20px 15px!important;margin-top:1em;height:1em;line-height: 1em;background:#fff;}
+.luck_top2{position: relative;margin-right: 10px;font-size: 20px;font-weight: 600;}
+.luck_top3{text-align:center;color: #f5ab1f; font-size: 16px;     margin-right: 4em; }
+.page.dialog .page__bd{padding:0px!important;}
+.luck_wei{margin-top:1em;}
+.luck_wei2{background-color: #fff!important;}
+.weui-navbar__item{font-weight: 500;font-size: 16px!important;}
+.weui-cells__title{margin-top: 1.5em!important; margin-bottom: 1em!important;}
+.weui-bar__item_on{background-color: #fff!important;border-bottom:2px solid #4b00ff;}
+.weui-navbar__item a{color:#7b7777;}
+.weui-bar__item_on a{color:#4b00ff!important;}
+.luck_img{width:50px;height:3em;float:left; border-radius: 5px;}
+.weui-cell__bd{float:left; margin-left: 30px;}
+.luck_ghd{width: 100%;}
+.luck_cell{border-bottom:1px solid #ececec;}
+.luck_img img{width:100%;}
+/*.luck_gou{float:right;height:2.5em;font-size: 14px;line-height:2.5em;border:1px solid #7d4cef;color:#7d4cef;margin-top: 0.5em;padding: 0 20px; border-radius: 25px;}*/
+
+.my-luck-title{width:100%;background: #615c8c;padding-top:50px;position: relative;}
+.my-luck-title-img{width:80%;margin:0 10%;background: url('/public/images/luck-img-bg.png')no-repeat;background-size:100% 100%;height:calc(100% - 50px);padding-top:50px;border-bottom: 1px solid #cacaca;}
+.my-luck-title-tou{width:60px;height:60px;border-radius: 50%;border:2px solid #fff;position: absolute;top:30px;left:calc(50% - 30px);}
+.my-luck-title-tou img{width:100%;height:100%;border-radius: 50%;}
+.my-luck-title-img-name-cen{float:left;}
+.my-luck-title-img-name{width:60%;height:30px;padding:0 20%;}
+.my-luck-title-img-name-pay{width:100%;height:30px;line-height: 30px;text-align: center;color:#0f0f0f;font-size: 14px;}
+.my-luck-title-img-name-ta{width:100%;height:30px;line-height: 30px;text-align: center;color:#0f0f0f;font-size: 12px;}
+.luck-my-nickname{width:60%;text-align: right;height:30px;line-height: 30px;color:#0f0f0f;}
+.luck-my-sex{width:calc(40% - 10px);height:20px;padding-left: 10px;}
+.luck-my-sex img{height:100%;margin-top:5px;}
+.my-luck-title-coin{width:100%;height:40px;}
+.my-luck-title-coin-name{float:left;width:45%;padding-left:5%;height:40px;line-height: 40px;font-size: 12px;color:#0f0f0f;}
+.my-luck-title-coin-name1{float:right;width:45%;padding-right:5%;height:40px;line-height: 40px;font-size: 12px;color:#0f0f0f;text-align: right;}
+.my-luck-title-coin-sele{float:left;width:25%;height:30px;background: #fca83e;color:#f1f1f1;font-size: 12px;text-align: center;line-height: 30px;margin-top:5px;border-radius: 10px;}
+.buying_process{width:100%;margin-top:30px;}
+.buying_process-name{width:100%;height:30px;}
+.buying_process-name-img{height:20px;margin-top:5px;width:20px;float:left;margin-left:5%;}
+.buying_process-name-img img{width:100%;}
+.buying_process-name-title{width:100px;float:left;height:30px;line-height: 30px;margin-left:10px;color:#6c6c6c;}
+.buying_process-img{width:calc(100% - 20%);padding:15px 10%;}
+.buying_process-img img{width:100%;}
+
+
+.buying_process-type-coin{width:calc(100% - 30px);padding:15px;overflow: hidden;}
+.buying_process-type-coin-left{float:left;width:30%;margin:15px 0 0 3.3%;background: url('/public/images/luck-bg-typr-img.png')no-repeat;height:50px;border-radius: 10px;background-size: 100% 100%;}
+.buying_process-type-coin-left-name,.buying_process-type-coin-left-money{width:100%;height:25px;line-height:25px;text-align: center;color:#fff;font-size: 12px;}
+
+/* 我的推荐 */
+.recommended{width:100%;}
+.recommended-bottom{width:100%;height:5em;border-bottom: 1px solid #e5e5e5;}
+.recommended-img{width:3em;height:3em;margin:1em 1em;float:left;}
+.recommended-img img{width:100%;height:100%;border-radius: 50%;}
+.recommended-name{float: left;width:calc(100% - 7em);height:5em;}
+.recommended-name-title{width:100%;height:2em;margin-top:0.9em;}
+.recommended-name-bottom{width:100%;height:2em;color:#6a6a6a;font-size: 12px;}
+.recommended-name-title-host{float: left;height:2em;line-height: 2em;color:#6a6a6a;font-size: 14px;padding-right:0.5em;}
+.recommended-name-title-sex{float:left;height:1em;margin:0.2em;width:1em;}
+.recommended-name-title-sex img{width:100%;height:100%;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

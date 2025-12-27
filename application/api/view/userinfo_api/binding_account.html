@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link href="__STATIC__/css/income_withdrawal.css" rel="stylesheet">
+    <link href="__STATIC__/css/bootstrap.min.css" rel="stylesheet">
+    <title>绑定账户</title>
+
+<script>window.PointerEvent = void 0</script>
+</head>
+<body class="bangding_account_bg">
+   {if condition="$account['wx'] eq 1"}      
+    <div class="bangding_account_type">
+        <div class="bangding_account_type_name">提现账号(微信)</div>
+        <div class="bangding_account_type_val">
+          <input type="text" class="wx" value="{$list['wx']}" placeholder="请输入微信账号">
+        </div>
+    </div>
+  {/if}
+  {if condition="$account['pay'] eq 1"}
+    <div class="bangding_account_type bangding_account_type_top">
+        <div class="bangding_account_type_name">提现账号(支付宝)</div>
+        <div class="bangding_account_type_val">
+          <input type="text" class="pay" value="{$list['pay']}" placeholder="请输入支付宝账号">
+        </div>
+    </div>
+  {/if}
+  {if condition="$account['name']"}
+     <div class="bangding_account_type">
+        <div class="bangding_account_type_name">姓名({$account['name']})</div>
+        <div class="bangding_account_type_val">
+          <input type="text" class="name" value="{$list['name']}" placeholder="请输入绑定的姓名">
+        </div>
+    </div>
+    <div class="bangding_account_type_btn"> 确 定</div>
+  {/if}
+</body>
+<script src="__STATIC__/js/jquery-1.10.2.min.js"></script>
+<script src="__STATIC__/layer/mobile/layer.js" rel="stylesheet"></script>
+<script>
+ 
+   var uid="{$uid}";
+   var token="{$token}";
+   var account_name ="{$list['name']}";
+    $(".bangding_account_type_btn").click(function(){
+      var pay= $(".pay").val();
+      var wx= $(".wx").val();
+      var name= $(".name").val();
+      const paynames = "{:lang('Enter_withdrawal_account_number')}";
+      if(!pay && !wx){
+         layer.open({
+              content: paynames
+              , skin: 'msg'
+              , time: 2 //2秒后自动关闭
+          });
+         return false;
+      }
+      if(!name){
+         layer.open({
+              content: '请输入绑定的姓名'
+              , skin: 'msg'
+              , time: 2 //2秒后自动关闭
+          });
+         return false;
+      }
+      if(account_name){
+        layer.open({
+              content: '账号已绑定不能更换'
+              , skin: 'msg'
+              , time: 2 //2秒后自动关闭
+          });
+         return false;
+      }
+      $.ajax({
+          url:'/api/userinfo_api/add_binding_account',
+          type:'get',
+          data:{uid:uid,token:token,pay:pay,wx:wx,name:name},
+          dataType:'json',
+          success:function(data){
+               layer.open({
+                    content: data.msg
+                    , skin: 'msg'
+                    , time: 2 //2秒后自动关闭
+                });
+              if(data.code =='1'){
+                  setTimeout(function(){
+                    window.location.reload();
+                   }, 2000)
+              }
+           
+          },
+      })     
+    })
+ 
+</script>
+</html>

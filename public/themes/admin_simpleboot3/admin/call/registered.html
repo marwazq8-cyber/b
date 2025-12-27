@@ -1,0 +1,53 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('agent/userlist')}">{:lang('ADMIN_CHANNEL_USER_LIST')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('agent/registered')}">
+        {:lang('USER_ID')}:
+        <input type="text" class="form-control" name="user_id" style="width: 120px;" value="{$data.user_id}" placeholder="{:lang('USER_ID')}">
+        {:lang('ADMIN_CHANNEL')}:
+        <input type="text" class="form-control" name="channel" style="width: 120px;" value="{$data.channel}" placeholder="{:lang('请输入渠道')}">
+        {:lang('ADMIN_SUB_CHANNEL')}:
+        <input type="text" class="form-control" name="channel_agent_link" style="width: 120px;" value="{$data.channel_agent_link}" placeholder="{:lang('请输入账号')}">
+        {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-date" name="starttime" value="{$data['starttime']|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="endtime" value="{$data['endtime']|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('agent/registered')}">{:lang('EMPTY')}</a>
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th width="50">ID</th>
+            <th>{:lang('USERNAME')}</th>
+            <th>{:lang('ADMIN_CHANNEL')}</th>
+            <th>{:lang('ADMIN_SUB_CHANNEL_NUMBER')}</th>
+            <th>{:lang('REGISTRATION_TIME')}</th>
+            <th>{:lang('ADMIN_RECHARGE_TOTAL')}</th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+        <foreach name="users" item="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.user_nickname}</td>
+                <td>{$vo.channel|default=''}</td>
+                <td>{$vo.link_id|default=''}</td>
+                <td>{:date('Y-m-d',$vo['create_time'])}</td>
+                <td>{$vo['summoney']|default='0'} {:lang('元')}</td>
+
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

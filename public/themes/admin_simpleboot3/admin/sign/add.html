@@ -1,0 +1,93 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a  href="{:url('sign/index')}">{:lang('签到列表')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('添加签到')}</a></li>
+    </ul>
+    <form action="{:url('sign/addPost')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('天数 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="number" name="post[name]"
+                                   id="title" required value="{$list.name |default=''}" placeholder="{:lang('请输入天数')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('奖励')}({$currency_name})<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="number" name="post[you_coin]"
+                                   id="title" required value="{$list.you_coin |default=''}" placeholder="{:lang('请输入')}"/>
+                        </td>
+                    </tr>
+<!--                    <tr>-->
+<!--                        <th>{:lang('是否开启宝箱 ')}<span class="form-required">*</span></th>-->
+<!--                        <td>-->
+<!--                            <select name="post[box_id]" class="form-control" id="">-->
+<!--                                <option value="1" <if condition="$list.box_id eq 1">selected</if>>{:lang('YES')}</option>-->
+<!--                                <option value="0" <if condition="$list.box_id eq 0">selected</if>>{:lang('NO')}</option>-->
+<!--                            </select>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>{:lang('一分钟免费语音数 ')}<span class="form-required">*</span></th>-->
+<!--                        <td>-->
+<!--                            <input class="form-control" type="number" name="post[audio_num]"-->
+<!--                                   id="title" required value="{$list.audio_num |default=''}" placeholder="{:lang('请输入')}"/>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>{:lang('一分钟免费视频数 ')}<span class="form-required">*</span></th>-->
+<!--                        <td>-->
+<!--                            <input class="form-control" type="number" name="post[video_num]"-->
+<!--                                   id="title" required value="{$list.video_num |default=''}" placeholder="{:lang('请输入')}"/>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+
+                    <tr>
+                        <th>{:lang('SORT')} <span class="form-required"></span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]"
+                                   id="title" required value="{$list.sort |default='50'}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('sign/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    function ColorGetFn(dom){
+        document.getElementById('colors').value = dom.value;
+    }
+ $('.btn-level-thumbnail').click(function () {
+            $('#level-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#level').val('');
+        });
+  $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+</script>
+</body>
+</html>

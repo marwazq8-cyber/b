@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>勋章</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="__STATIC__/css/medal.css" rel="stylesheet">
+    <link href="__STATIC__/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+ <div class="medal_title">
+     <div class="medal_title_img">
+         <img src="{$user_info['avatar']}"/>
+     </div>
+     <div class="medal_title_name">{$user_info['user_nickname']}</div>
+      <div class="medal_title_gou">
+      	<div class="medal_title_gou_centent">购买勋章</div>
+        <div class="medal_title_gou_url"></div>
+      </div>
+ </div>
+ <div class="medal_type">
+ 	<ul>
+     {volist name="medal" id="vo" key="k"}
+     
+     		<li  {if condition="$k ==1"} class="medal_checked"  {/if}  data-id="{$vo['id']}" data-coin="{$vo['coin']}">
+     			<div class="medal_type_day">{$vo['time']}天</div>
+     			<div class="medal_type_img"><img src="{$vo['icon']}"/></div>
+     			<div class="medal_type_name">{$vo['name']}</div>
+     			<div class="medal_type_name">
+            {if condition="$vo['id'] eq $user_info['medal_id'] && $user_info['is_medal']"}
+               {$user_info['medal_end_time']}到期
+           {else/}
+              {$vo['coin']}{$currency_name}
+           {/if}
+        </div>
+     		</li>
+    {/volist}
+ 	</ul>
+ </div>
+ <div class="medal_bottom">
+ 	<div class="medal_bottom_left" >
+    <div class="medal_bottom_left_coin"> 
+    {if condition="$medal"}
+        {$medal[0]['coin']}{$currency_name}
+    {/if}
+    </div>
+    <div class="medal_bottom_my_coin">余额：{$user_info['coin']} {$currency_name}</div>
+  </div>
+ 	<div class="medal_bottom_right" data-type="{$user_info['is_medal']}" data-gid="{$user_info['medal_id']}" data-id="{$medal[0]['id']}">立即购买</div>
+ </div>
+<script src="__STATIC__/js/jquery-1.10.2.min.js"></script>
+<script src="__STATIC__/layer/mobile/layer.js" rel="stylesheet"></script>
+<script>
+
+    var currency_name="{$currency_name}";
+     var __DATA = {uid:"{$uid}",token:"{$token}"};
+    $(".medal_type li").click(function(){
+        var coin=$(this).attr("data-coin");
+        var id=$(this).attr("data-id");
+      	$(this).addClass("medal_checked").siblings().removeClass("medal_checked");
+        $(".medal_bottom_left_coin").html(coin+currency_name);
+        $(".medal_bottom_right").attr("data-id",id);
+    })
+    $(".medal_bottom_right").click(function(){
+      var id=$(this).attr("data-id");
+      var is_medal=$(this).attr("data-type");
+      var medal_id=$(this).attr("data-gid");
+      var name="是否确定购买勋章？";
+      if(is_medal !=0 && medal_id){
+        if(id == medal_id){
+          name="勋章是否续费？";
+        }else{
+           name="您已有未到期的勋章,购买后已有的勋章作废";
+        }
+      }
+  	   layer.open({
+        content:name
+        ,btn: ['确定', '取消']
+        ,yes: function(index){
+          $.ajax({
+              type: 'GET',
+              url: "{:url('medal_api/buy_medal')}",
+              data:{'uid':__DATA.uid,'token':__DATA.token,'id':id},
+              dataType: 'json',
+              success: function(data){
+                 //提示层
+                   layer.open({
+                      content: data['msg']
+                      ,skin: 'msg'
+                      ,time: 2 //2秒后自动关闭
+                    });
+                  if(data['code'] == 1){
+                     setTimeout(function(){window.location.reload();}, 2000);
+                  }
+              }
+          });
+        }
+      });
+
+    })
+</script>
+</body>
+</html>

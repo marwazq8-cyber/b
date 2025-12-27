@@ -1,0 +1,106 @@
+<html>
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .gift-in input {
+        width: 30px;
+    }
+
+    .qiniu-box {
+        margin-top: 30px;
+    }
+</style>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('storage/index')}">{:lang('文件存储')}</a></li>
+<!--        <li><a href="{:url('plugin/setting',array('id'=>1))}">{:lang('七牛配置')}</a></li>-->
+        <li class="active"><a href="javascript:;">{:lang('腾讯云COS配置')}</a></li>
+    </ul>
+
+    <form action="{:url('upload/addPost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>SecretId<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[secret_id]"
+                                   id="SecretId" required value="{$list.secret_id |default=''}" placeholder="SecretId"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>SecretKey<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[secret_key]"
+                                   id="SecretKey" required value="{$list.secret_key |default=''}" placeholder="SecretKey"/>
+                        </td>
+                    </tr>
+<!--                    <tr>
+                        <th>{:lang('域名协议')}<span class="form-required">*</span></th>
+                        <td>
+                            <select class="form-control" name="post[protocol]" id="">
+                                <option value="http" >http</option>
+                                <option value="https" <if condition="$list.protocol eq 'https'">selected</if>>https</option>
+                            </select>
+                        </td>
+                    </tr>-->
+                    <tr>
+                        <th>{:lang('访问域名')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[url]"
+                                   id="url" required value="{$list.url |default=''}" placeholder="{:lang('空间域名')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('存储桶名称')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[bucket]"
+                                   id="bucket" required value="{$list.bucket |default=''}" placeholder="{:lang('存储桶名称')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('所属地区')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[region]"
+                                   id="region" required value="{$list.region |default=''}" placeholder="{:lang('所属地区')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('自定义加速域名')}</th>
+                        <td>
+                            <input class="form-control" type="text" name="post[accelerate_domain_name]"
+                                   id="region" value="{$list.accelerate_domain_name |default=''}" placeholder="{:lang('自定义加速域名')}"/>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <input type="hidden" name="type" value="{$list.type |default='1'}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script src="https://unpkg.com/cos-js-sdk-v5/dist/cos-js-sdk-v5.min.js"></script>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

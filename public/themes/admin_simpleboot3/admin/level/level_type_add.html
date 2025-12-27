@@ -1,0 +1,128 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+    .select{width:130px;height:35px;line-height: 35px;border: 1px solid #dce4ec;}
+
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('level/level_type')}">{:lang('等级聊天背景图')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('添加等级聊天背景图')}</a></li>
+    </ul>
+    <form action="{:url('level/levelTypePost')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('聊天背景图标题 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[level_type_name]"
+                                   id="title" required value="{$level.level_type_name |default=''}" placeholder="{:lang('请输入标题')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('图标')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[level_icon]" id="thumbnail1" value="{$level['level_icon'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail1');">
+                                    <if condition="$level['level_icon']">
+                                        <img src="{$level['level_icon']}"
+                                             id="thumbnail1-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail1-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail1" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('进场特效')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[icon]" id="thumbnail" value="{$level['icon'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <if condition="$level['icon']">
+                                        <img src="{$level['icon']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('最小等级 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[min_level]"
+                                  required value="{$level.min_level |default=''}" placeholder="{:lang('请输入最小等级')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('最大等级 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[max_level]"
+                                   required value="{$level.max_level |default=''}" placeholder="{:lang('请输入最大等级')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('类型')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[type]" class="select">
+                                <option value="1" <if condition="$level['type'] eq 1"> selected="selected" </if>>{:lang('财富')}</option>
+                                <option value="2" <if condition="$level['type'] eq 2"> selected="selected" </if>>{:lang('魅力')}</option>
+
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                   required value="{$level.sort |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$level.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('level/level_type')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $('.btn-cancel-thumbnail').click(function () {
+        $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+        $('#thumbnail').val('');
+    });
+    $('.btn-cancel-thumbnail1').click(function () {
+        $('#thumbnail-preview1').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+        $('#thumbnail1').val('');
+    });
+</script>
+</body>
+</html>

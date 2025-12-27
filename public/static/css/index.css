@@ -1,0 +1,43 @@
+
+/*新手引导*/
+a:hover,a:link{color:#424242;}
+.creal{padding:0px!important;}
+.guide{height:3.5em;line-height:3.5em;background:#f3f2ff;color:#848484;}
+.guide-cond{height:3.5em;line-height:3.5em;border-bottom:1px solid #e6e6e6;font-size:13px;}
+.guide-cond a{color:#464444;}
+.guide-div{height:1em;background:#f3f2ff;}
+.guide-bottom{height:5em;border-bottom:1px solid #e6e6e6;}
+.guide-left{border-left:1px solid #e6e6e6;}
+
+.guide-type a{color:#424242;}
+.guide-type-col i{color:#963ccc;}
+.guide-type-col2 i{color:#f50606;}
+.guide-type-col3 i{color:#ff7d1d;}
+.guide-type-col4 i{color:#037dc8;}
+.guide-guf{height:5em;line-height:5em;border-bottom:1px solid #e6e6e6;font-size:12px;}
+.guide-guf i{color:#f11010;padding-right:0.5em;}
+.guide-guf a{color:#424242;}
+
+/*详情页 */
+.guide-center{height:3.5em;line-height:3.5em;color:#5f5d5d;}
+@media ( min-width: 100px) and (max-width: 370px) {
+    .guide-cond a{ font-size: 15px;}
+    .guide-type{line-height:5em;font-size:15px;}
+    body,html{font-size:12px;height:100%;margin:0;overflow: hidden;}
+}
+
+@media ( min-width: 370px){
+    .guide-cond a{ font-size: 14px;}
+    .guide-type{line-height:5em;font-size:14px;}
+    body,html{font-size:14px;height:100%;margin:0;overflow: hidden;}
+
+}
+
+ul,li{list-style-type:none;padding:0;margin:0}
+/*关于我们2019/08/26*/
+.novice_about_log{width: 100%;height: 15em;text-align: center;line-height: 15em;}
+.novice_about_log img{width: 5em;}
+.novice_about_type{width: 100%;}
+.novice_about_type li{width: 100%;border-bottom: 1px solid #F1F1F1;height: 4em;padding:0 1em;}
+.novice_about_type_name{float: left;height: 4em;line-height: 4em;color:#6c6c6c;width: 70%;overflow: hidden;}
+.novice_about_type_jiant{float:right;height: 4em;line-height: 4em;color:#cdcdcd;width: 30%;text-align: right;}

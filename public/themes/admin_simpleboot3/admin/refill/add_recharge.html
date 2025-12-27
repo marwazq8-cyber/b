@@ -1,0 +1,71 @@
+<include file="public@header"/>
+<style>
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('refill/recharge')}">{:lang('手动充值记录')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('手动充值')}</a></li>
+    </ul>
+
+    <form class="js-ajax-form" method="post" action="{:url('refill/add_recharge_post')}">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('USER_ID')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" autocomplete="off" type="number" name="user_id"
+                                   placeholder="{:lang('USER_ID')}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('需要充值')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="number" name="count" value="{$rule.coin |default=''}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ACTIONS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="action" style="height: 35px;line-height: 35px;width: 130px;">
+                                <option value="1">{:lang('加')}</option>
+                                <option value="2">{:lang('减')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('选择充值类型')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="type"  style="height: 35px;line-height: 35px;width: 130px;">
+                                <foreach name="list" id="vo">
+                                    <option value="{$vo.id}">{$vo.name}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('输入密码')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="password" name="user_password" value="{$rule.user_password |default=''}"
+                                   placeholder="{:lang('输入密码')}">
+                        </td>
+                    </tr>
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<include file="public@header"/>
+<style>
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .gift-img{width:120px;height:40px;}
+     .gift-img img{height:100%};
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('签到列表')}</a></li>
+        <li><a href="{:url('sign/add')}">{:lang('添加签到')}</a></li>
+    </ul>
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('天数')}</th>
+                <th>{:lang('奖励')}</th>
+<!--                <th>{:lang('ADMIN_GAME_BOX')}</th>-->
+<!--                <th>{:lang('一分钟免费语音数')}</th>-->
+<!--                <th>{:lang('一分钟免费视频数')}</th>-->
+                <th>{:lang('ADD_TIME')}</th>
+                <th>{:lang('SORT')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+                <php>
+                    $type=array('1'=>lang('OPEN'),'0'=>lang('CLOSE'));
+                </php>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.you_coin}</td>
+<!--                    <td>{$type[$vo.box_id]}</td>-->
+<!--                    <td>{$vo.audio_num}</td>-->
+<!--                    <td>{$vo.video_num}</td>-->
+
+                    <td>{$vo.addtime| date="Y-m-d H:i:s",###}</td>
+                    <td>{$vo.sort}</td>
+                    <td>
+                        <a href="{:url('sign/add',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+    <div class="pagination">{//$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('sign/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id,type:3},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+</script>
+</body>
+</html>

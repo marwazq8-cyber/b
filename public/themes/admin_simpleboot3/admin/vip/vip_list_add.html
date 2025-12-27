@@ -1,0 +1,477 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+    .js-ajax-form{margin-top:30px;}
+    .gift{  width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;}
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('vip/vip_list')}">{:lang('vip_level')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADD')}</a></li>
+    </ul>
+    <form class="js-ajax-form" action="{:url('vip/add_post_vip_list')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>vip{:lang('ADMIN_NAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[title]"
+                                   required value="{$data.title |default=''}" placeholder="{:lang('ADMIN_NAME')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>vip{:lang('ADMIN_PRICE')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[coin]"
+                                   required value="{$data.coin |default=''}" placeholder="{:lang('ADMIN_PRICE')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('TIME')}({:lang('ADMIN_DAY')}) <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[days]"
+                                   required value="{$data.days |default=''}" placeholder="{:lang('ADMIN_DAY')}"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><b>vip{:lang('ADMIN_ICON')}</b></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[icon]" id="thumbnail" value="{$data.icon |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <if condition="$data['icon']">
+                                        <img src="{$data['icon']}" id="thumbnail-preview" width="135" style="cursor: pointer">
+                                        <else/>
+                                        <img src="/admin/public/themes/admin_simpleboot3/public/assets/images/default-thumbnail.png" id="thumbnail-preview" width="135" style="cursor: pointer">
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><b>vip{:lang('ADMIN_IMG')}</b></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[interval_icon]" id="thumbnail2" value="{$data.interval_icon |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail2');">
+                                    <if condition="$data['interval_icon']">
+                                        <img src="{$data['interval_icon']}" id="thumbnail2-preview" width="135" style="cursor: pointer">
+                                        <else/>
+                                        <img src="/admin/public/themes/admin_simpleboot3/public/assets/images/default-thumbnail.png" id="thumbnail2-preview" width="135" style="cursor: pointer">
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail2" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><b>{:lang('ADMIN_MEAL')}(web)</b></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[identity_url]" id="thumbnail3" value="{$data.identity_url |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail3');">
+                                    <if condition="$data['identity_url']">
+                                        <img src="{$data['identity_url']}" id="thumbnail3-preview" width="135" style="cursor: pointer">
+                                        <else/>
+                                        <img src="/admin/public/themes/admin_simpleboot3/public/assets/images/default-thumbnail.png" id="thumbnail3-preview" width="135" style="cursor: pointer">
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail3" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><b>{:lang('ADMIN_MEAL')}(app)</b></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[identity_app]" id="thumbnail13" value="{$data.identity_app |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail13');">
+                                    <if condition="$data['identity_app']">
+                                        <img src="{$data['identity_app']}" id="thumbnail13-preview" width="135" style="cursor: pointer">
+                                        <else/>
+                                        <img src="/admin/public/themes/admin_simpleboot3/public/assets/images/default-thumbnail.png" id="thumbnail13-preview" width="135" style="cursor: pointer">
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail13" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><b>{:lang('ADMIN_AVATAR_FRAME')}(web)</b></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[headwear_web]" id="thumbnail4" value="{$data.headwear_web |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail4');">
+                                    <if condition="$data['headwear_web']">
+                                        <img src="{$data['headwear_web']}" id="thumbnail4-preview" width="135" style="cursor: pointer">
+                                        <else/>
+                                        <img src="/admin/public/themes/admin_simpleboot3/public/assets/images/default-thumbnail.png" id="thumbnail4-preview" width="135" style="cursor: pointer">
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail4" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><b>{:lang('ADMIN_AVATAR_FRAME')}</b></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <select name="post[headwear_id]" class="gift">
+                                    <option value="0">{:lang('ADMIN_WITHOUT')}</option>
+                                    <foreach name="headwear_list" id="vo">
+                                        <option value="{$vo['id']}" <if condition="$data['headwear_id'] eq $vo['id']"> selected="selected" </if> >{$vo['name']}</option>
+                                    </foreach>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><b>{:lang('ADMIN_ENTRY_REMINDER')}(web)</b></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[approach_web]" id="thumbnail5" value="{$data.approach_web |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail5');">
+                                    <if condition="$data['approach_web']">
+                                        <img src="{$data['approach_web']}" id="thumbnail5-preview" width="135" style="cursor: pointer">
+                                        <else/>
+                                        <img src="/admin/public/themes/admin_simpleboot3/public/assets/images/default-thumbnail.png" id="thumbnail5-preview" width="135" style="cursor: pointer">
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail5" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><b>{:lang('ADMIN_ENTRY_REMINDER')}</b></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <select name="post[approach_id]" class="gift">
+                                    <option value="0">{:lang('ADMIN_WITHOUT')}</option>
+                                    <foreach name="approach_list" id="vo">
+                                        <option value="{$vo['id']}" <if condition="$data['approach_id'] eq $vo['id']"> selected="selected" </if> >{$vo['name']}</option>
+                                    </foreach>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+<!--                    <tr>-->
+<!--                        <th><b>{:lang('Sound_wave')}(web)</b></th>-->
+<!--                        <td>-->
+<!--                            <div style="text-align: center;">-->
+<!--                                <input type="hidden" name="post[sound_wave_url]" id="thumbnail6" value="{$data.sound_wave_url |default=''}">-->
+<!--                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail6');">-->
+<!--                                    <if condition="$data['sound_wave_url']">-->
+<!--                                        <img src="{$data['sound_wave_url']}" id="thumbnail6-preview" width="135" style="cursor: pointer">-->
+<!--                                        <else/>-->
+<!--                                        <img src="/admin/public/themes/admin_simpleboot3/public/assets/images/default-thumbnail.png" id="thumbnail6-preview" width="135" style="cursor: pointer">-->
+<!--                                    </if>-->
+
+<!--                                </a>-->
+<!--                                <input type="button" class="btn btn-sm btn-cancel-thumbnail6" value="{:lang('取消图片')}">-->
+<!--                            </div>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th><b>{:lang('Sound_wave')}(app)</b></th>-->
+<!--                        <td>-->
+<!--                            <div style="text-align: center;">-->
+<!--                                <input type="hidden" name="post[sound_wave_app]" id="thumbnail16" value="{$data.sound_wave_app |default=''}">-->
+<!--                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail16');">-->
+<!--                                    <if condition="$data['sound_wave_app']">-->
+<!--                                        <img src="{$data['sound_wave_app']}" id="thumbnail16-preview" width="135" style="cursor: pointer">-->
+<!--                                        <else/>-->
+<!--                                        <img src="/admin/public/themes/admin_simpleboot3/public/assets/images/default-thumbnail.png" id="thumbnail16-preview" width="135" style="cursor: pointer">-->
+<!--                                    </if>-->
+
+<!--                                </a>-->
+<!--                                <input type="button" class="btn btn-sm btn-cancel-thumbnail16" value="{:lang('取消图片')}">-->
+<!--                            </div>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th><b>{:lang('ADMIN_CHAT_BUBBLE')}(web)</b></th>-->
+<!--                        <td>-->
+<!--                            <div style="text-align: center;">-->
+<!--                                <input type="hidden" name="post[bubble_web]" id="thumbnail7" value="{$data.bubble_web |default=''}">-->
+<!--                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail7');">-->
+<!--                                    <if condition="$data['bubble_web']">-->
+<!--                                        <img src="{$data['bubble_web']}" id="thumbnail7-preview" width="135" style="cursor: pointer">-->
+<!--                                        <else/>-->
+<!--                                        <img src="/admin/public/themes/admin_simpleboot3/public/assets/images/default-thumbnail.png" id="thumbnail7-preview" width="135" style="cursor: pointer">-->
+<!--                                    </if>-->
+
+<!--                                </a>-->
+<!--                                <input type="button" class="btn btn-sm btn-cancel-thumbnail7" value="{:lang('取消图片')}">-->
+<!--                            </div>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th><b>{:lang('ADMIN_CHAT_BUBBLE')}</b></th>-->
+<!--                        <td>-->
+<!--                            <div style="text-align: center;">-->
+<!--                                <select name="post[bubble_id]" class="gift">-->
+<!--                                    <option value="0">{:lang('ADMIN_WITHOUT')}</option>-->
+<!--                                    <foreach name="bubble_list" id="vo">-->
+<!--                                        <option value="{$vo['id']}" <if condition="$data['bubble_id'] eq $vo['id']"> selected="selected" </if> >{$vo['name']}</option>-->
+<!--                                    </foreach>-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+                    <tr>
+                        <th><b>{:lang('Business_card')}</b></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[room_card_url]" id="thumbnail8" value="{$data.room_card_url |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail8');">
+                                    <if condition="$data['room_card_url']">
+                                        <img src="{$data['room_card_url']}" id="thumbnail8-preview" width="135" style="cursor: pointer">
+                                        <else/>
+                                        <img src="/admin/public/themes/admin_simpleboot3/public/assets/images/default-thumbnail.png" id="thumbnail8-preview" width="135" style="cursor: pointer">
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail8" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><b>{:lang('Business_card')}(app)</b></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[room_card_app]" id="thumbnail18" value="{$data.room_card_app |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail18');">
+                                    <if condition="$data['room_card_app']">
+                                        <img src="{$data['room_card_app']}" id="thumbnail18-preview" width="135" style="cursor: pointer">
+                                        <else/>
+                                        <img src="/admin/public/themes/admin_simpleboot3/public/assets/images/default-thumbnail.png" id="thumbnail18-preview" width="135" style="cursor: pointer">
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail18" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><b>{:lang('Exclusive_nickname')}</b></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[exclusive_nickname]" id="thumbnail9" value="{$data.exclusive_nickname |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail9');">
+                                    <if condition="$data['exclusive_nickname']">
+                                        <img src="{$data['exclusive_nickname']}" id="thumbnail9-preview" width="135" style="cursor: pointer">
+                                        <else/>
+                                        <img src="/admin/public/themes/admin_simpleboot3/public/assets/images/default-thumbnail.png" id="thumbnail9-preview" width="135" style="cursor: pointer">
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail8" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('Exclusive_nickname')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[is_nickname]" class="gift">
+                                <option value="1">{:lang('OPEN')}</option>
+                                <option value="0" <if condition="$data['is_nickname'] eq '0'"> selected="selected" </if> >{:lang('CLOSE')}</option>
+                            </select>
+                        </td>
+                    </tr>
+<!--                    <tr>-->
+<!--                        <th>{:lang('sign_in')}<span class="form-required">*</span></th>-->
+<!--                        <td>-->
+<!--                            <input class="form-control" type="text" name="post[sign_in_coin]"-->
+<!--                                   required value="{$data.sign_in_coin |default=''}" placeholder="{:lang('sign_in')}"/>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>{:lang('top_ranking')}<span class="form-required">*</span></th>-->
+<!--                        <td>-->
+<!--                            <select name="post[is_rank]" class="gift">-->
+<!--                                <option value="1">{:lang('OPEN')}</option>-->
+<!--                                <option value="0" <if condition="$data['is_rank'] eq '0'"> selected="selected" </if> >{:lang('CLOSE')}</option>-->
+<!--                            </select>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+                    <tr>
+                        <th>{:lang('visitors_log')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[is_visitors]" class="gift">
+                                <option value="1">{:lang('OPEN')}</option>
+                                <option value="0" <if condition="$data['is_visitors'] eq '0'"> selected="selected" </if> >{:lang('CLOSE')}</option>
+                            </select>
+                        </td>
+                    </tr>
+<!--                    <tr>-->
+<!--                        <th>{:lang('Casual_chat')}</th>-->
+<!--                        <td>-->
+<!--                            <input class="form-control" type="text" name="post[is_private_chat]"-->
+<!--                                   required value="{$data.is_private_chat |default=''}" placeholder="{:lang('Casual_chat')}"/>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>{:lang('Mall_discount')} <span class="form-required">*</span></th>-->
+<!--                        <td>-->
+<!--                            <input class="form-control" type="text" name="post[shop_coin]"-->
+<!--                                   required value="{$data.shop_coin |default=''}" placeholder="{:lang('Mall_discount')}"/>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>{:lang('Hierarchical_acceleration')} <span class="form-required">*</span></th>-->
+<!--                        <td>-->
+<!--                            <input class="form-control" type="text" name="post[level_acceleration]"-->
+<!--                                   required value="{$data.level_acceleration |default=''}" placeholder="{:lang('Hierarchical_acceleration')}"/>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+                    <tr>
+                        <th>{:lang('maximum_fans')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[maximum_fans]"
+                                   required value="{$data.maximum_fans |default=''}" placeholder="{:lang('maximum_fans')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('maximum_attention')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[maximum_attention]"
+                                   required value="{$data.maximum_attention |default=''}" placeholder="{:lang('Casual_chat')}"/>
+                        </td>
+                    </tr>
+<!--                    <tr>-->
+<!--                        <th>{:lang('Turn_stealth')}<span class="form-required">*</span></th>-->
+<!--                        <td>-->
+<!--                            <select name="post[is_stealth]" class="gift">-->
+<!--                                <option value="1">{:lang('OPEN')}</option>-->
+<!--                                <option value="0" <if condition="$data['is_stealth'] eq '0'"> selected="selected" </if> >{:lang('CLOSE')}</option>-->
+<!--                            </select>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+                    <tr>
+                        <th>{:lang('ban_attention')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[is_ban_attention]" class="gift">
+                                <option value="1">{:lang('OPEN')}</option>
+                                <option value="0" <if condition="$data['is_ban_attention'] eq '0'"> selected="selected" </if> >{:lang('CLOSE')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('voice_kick')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[is_kick]" class="gift">
+                                <option value="1">{:lang('OPEN')}</option>
+                                <option value="0" <if condition="$data['is_kick'] eq '0'"> selected="selected" </if> >{:lang('CLOSE')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_NICKNAME_COLORS')}</th>
+                        <td>
+                            <input class="form-control" type="text" name="post[colors]" id="colors" style="width:100px;"
+                                   required value="{$data.colors |default='#000000'}" placeholder="{:lang('颜色值默认#000000')}"/>
+                            <input type="color" id="colorGet" value="{$data.colors |default='#000000'}" onchange="ColorGetFn(this)">&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[status]" class="gift">
+                                <option value="1">{:lang('OPEN')}</option>
+                                <option value="0" <if condition="$data['status'] eq '0'"> selected="selected" </if> >{:lang('CLOSE')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[sort]" id="day_count" value="{$data.sort |default='0'}"></td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$data.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('vip/vip_list')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    function ColorGetFn(dom){
+        document.getElementById('colors').value = dom.value;
+    }
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+        $('.btn-cancel-thumbnail2').click(function () {
+            $('#thumbnail2-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail2').val('');
+        });
+        $('.btn-cancel-thumbnail3').click(function () {
+            $('#thumbnail3-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail3').val('');
+        });
+        $('.btn-cancel-thumbnail4').click(function () {
+            $('#thumbnail4-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail4').val('');
+        });
+        $('.btn-cancel-thumbnail5').click(function () {
+            $('#thumbnail5-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail5').val('');
+        });
+        $('.btn-cancel-thumbnail6').click(function () {
+            $('#thumbnail6-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail6').val('');
+        });
+        $('.btn-cancel-thumbnail7').click(function () {
+            $('#thumbnail7-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail7').val('');
+        });
+        $('.btn-cancel-thumbnail8').click(function () {
+            $('#thumbnail8-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail8').val('');
+        });
+        $('.btn-cancel-thumbnail9').click(function () {
+            $('#thumbnail9-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail9').val('');
+        });
+        $('.btn-cancel-thumbnail13').click(function () {
+            $('#thumbnail13-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail13').val('');
+        });
+        $('.btn-cancel-thumbnail16').click(function () {
+            $('#thumbnail16-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail16').val('');
+        });
+        $('.btn-cancel-thumbnail18').click(function () {
+            $('#thumbnail18-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail18').val('');
+        });
+    });
+</script>
+</body>
+</html>

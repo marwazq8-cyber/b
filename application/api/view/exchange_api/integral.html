@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>{:lang('收益兑换')}</title>
+    <script type="text/javascript" src="__STATIC__/js/jquery.min.js"></script>    
+    <script type="text/javascript" src="__STATIC__/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="__STATIC__/css/bootstrap.min.css" />   
+    <link rel="stylesheet" href="__STATIC__/css/common.css" /> 
+    <link rel="stylesheet" href="__STATIC__/css/Integral.css" />
+    <script src="__STATIC__/layer/mobile/layer.js" rel="stylesheet"></script>
+    <script type="text/javascript">
+   		document.addEventListener('plusready', function(){
+   			//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+   		});
+   		
+    </script>
+</head>
+<body>
+	<div id="box">
+		<div class="Integral">
+			<!--页面背景颜色-->
+			<div class="Integral_bagcolor"></div>
+			<!--页面顶部返回积分商城-->
+			<div class="Integral_return ">
+				<a href="#" class="fl">{$coin_name} {:lang('兑换')}</a>
+				<a href="#" class="fr"></a>
+			</div>
+			<!--我的收益 -->
+			<div class="my_Integral">
+				<article>
+					<header>{:lang('我的')}{$coin_name}</header>
+					<aside class="top">{$user.income| default='0'}</aside>
+					<aside class="bottom container">
+						<section class="row">
+					       <a href="{:url('exchange_api/earnings_record',array('uid'=>$user['id']))}?lang={$lang}" class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><img src="__STATIC__/img/jilu.png" />{:lang('收益记录')}</a>
+					       <a href="{:url('exchange_api/for_record',array('uid'=>$user['id']))}?lang={$lang}" class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><img src="__STATIC__/img/duihuan.png" />{:lang('兑换记录')}</a>
+					    </section>
+					</aside>
+					<aside class="exchange exchange_pad">
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+							{:lang('兑换规则')}<img src="__STATIC__/img/guize.png" />
+						</a>
+						<p id="collapseTwo" class="panel-collapse collapse">
+										<span>{:lang('商城兑换操作以下规则说明')}<br/>
+										{:lang('兑换规则说明',['coin_name1'=>$coin_name,'coin_name2'=>$coin_name])}
+							</span>
+						</p>
+					</aside>
+				</article>
+			</div>
+			<!--积分兑换钻石 {:url('exchange_api/exchange_password1')}-->
+			<div class="Integral_exchange">
+				<header>{$coin_name} {:lang('兑换')}</header>
+				<div class="container">
+					<p class="head"> {:lang('兑换')} {$coin_name}</p>
+					<article class="row">
+						{volist name="list" id="v"}
+							<aside class="col-xs-4 col-sm-4 col-md-4 col-lg-4 exchange_sel" data-id="{$v.id}" data-coin="{$v.earnings}">
+								<dl>
+									<a href="javascript:;">
+										<dt>
+											<img src="__STATIC__/img/zuanshi1.png" />
+											<span>{$v.coin}{$coin_name}</span>
+										</dt>
+										<dd>{$v.earnings}{$earnings_name}</dd>
+									</a>
+								</dl>
+							</aside>
+						{/volist}
+					</article>
+					{if condition="$open_custom_exchange eq 1"}
+						<p class="head"> {:lang('自定义兑换')}</p>
+						<form action="#" method="post">
+							<div style="margin-bottom: 40px">
+								<label for="custom_exchange">{:lang('收到得的')} {$coin_name}：<span id="custom_sum">0</span></label>
+								<input type="text" for="custom_exchange" placeholder="{:lang('扣除数量')}" id="custom_exchange"/>
+							</div>
+						</form>
+					{/if}
+					{if condition="$is_exchange eq 1"}
+						<p class="head"> {:lang('帮好友兑换')}</p>
+					{/if}
+					<form action="#" method="post">
+						{if condition="$is_exchange eq 1"}
+							<div>
+								<label for="friend">{:lang('请输入好友ID')}：</label>
+								<input type="text" for="friend" placeholder="{:lang('空是兑换给自己')}" id="exchange_user"/>
+							</div>
+						{/if}
+						<a href="javascript:;" class="exchange_btn" data-uid="{$user.id}" data-coin="{$user.income ? $user.income : 0}">{:lang('确认兑换')}</a>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+<script>
+	const ratio = "{$integral_coin}";
+	const lang="{$lang}";
+	const minimum_exchange_quantity = "{$minimum_exchange_quantity}";
+
+	$("#custom_exchange").on("input", function(e){
+		const value = parseInt($("#custom_exchange").val());
+		if (value > 0 && ratio > 0) {
+			const number = Math.floor(parseInt(value) / ratio);
+			$("#custom_sum").html(number);
+		}
+	});
+	$(".exchange_sel").click(function(){
+		$(this).siblings().removeClass("selected");
+		$(this).addClass("selected");
+	})
+	$(".exchange_btn").click(function(){
+		const id=$(".selected").attr("data-id");
+		const touid=$("#exchange_user").val();
+		const value = $("#custom_exchange").val();
+		const uid=$(this).attr("data-uid");
+		const coin=$(this).attr("data-coin");
+		const earnings=$(".selected").attr("data-coin");
+
+		if(id == undefined && (value == '' || parseInt(value)==0)){
+			layer.open({
+				content: "{:lang('请选择兑换类型')}"
+				,skin: 'msg'
+				,time: 2 //2秒后自动关闭
+			});
+			return false;
+		}
+		if(parseInt(coin) < parseInt(earnings) || parseInt(coin) < parseInt(value)){
+			layer.open({
+	            content: "{:lang('Insufficient_balance_cannot_be_exchanged')}"
+	            ,skin: 'msg'
+	            ,time: 2 //2秒后自动关闭
+	          });
+			return false;
+		}
+		if (value != '' && parseInt(minimum_exchange_quantity) > parseInt(value)) {
+			layer.open({
+				content: "{:lang('最少兑换',['exchange_sum'=>" + minimum_exchange_quantity + "])}"
+				,skin: 'msg'
+				,time: 2 //2秒后自动关闭
+			});
+			return false;
+		}
+		if(!uid){
+			layer.open({
+	            content: "{:lang('login_timeout')}"
+	            ,skin: 'msg'
+	            ,time: 2 //2秒后自动关闭
+	          });
+			return false;
+		}
+		if(touid){
+			$.ajax({
+				    type: 'POST',
+				    url: "{:url('exchange_api/is_user')}?lang="+lang,
+				    data: {'touid':touid},
+				    dataType: 'json',
+				    success: function (data) {
+				    	
+				 		if(data.code == 1){
+				 			var url="{:url('exchange_api/Integral_exchange2')}?id="+id+"&uid="+uid+"&touid="+touid+"&number="+value+"&lang="+lang;
+							window.location.href=url;
+				 		}else{
+				 			layer.open({
+				            content: data.msg
+				            ,skin: 'msg'
+				            ,time: 2 //2秒后自动关闭
+				          });
+				 		}
+				    }
+				  });
+		}else{
+			var url="{:url('exchange_api/Integral_exchange2')}?id="+id+"&uid="+uid+"&touid="+touid+"&number="+value+"&lang="+lang;
+			window.location.href=url;
+		}
+		
+		
+	})
+</script>
+</html>

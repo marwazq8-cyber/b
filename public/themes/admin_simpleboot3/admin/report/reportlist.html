@@ -1,0 +1,127 @@
+<include file="public@header"/>
+<style>
+    .gift-img{width:50px;height:50px}
+    .gift-img img{width:100%;height:100%;}
+    .gift-in input{width:25px;}
+    .js-ajax-form{margin-top:30px;}
+    .identity img{width:30px;height:30px;border-radius: 50%;}
+    .audit img{width:40px;height:40px;}
+    .details{cursor: pointer;}
+    .layui-layer-demo .layui-layer-title{
+        background: #e0e0e0!important;
+    }
+    #status,#type{    width: 100px;
+        height: 32px;
+        border-color: #dce4ec;
+        color: #aeb5bb;}
+
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('用户举报列表')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('report/reportlist')}">
+        {:lang('USER_ID')}：
+        <input class="form-control" type="text" name="uid" style="width: 200px;" value="{$request.uid|default=''}"
+               placeholder="{:lang('USER_ID')}">
+        {:lang('被举报人ID')}:
+        <input class="form-control" type="text" name="reportid" style="width: 200px;" value="{$request.reportid|default=''}"
+               placeholder="{:lang('被举报人ID')}">
+        {:lang('房间ID')}:
+        <input class="form-control" type="text" name="type_id" style="width: 200px;" value="{$request.type_id|default=''}"
+               placeholder="{:lang('房间ID')}">
+        {:lang('分类')}:
+        <select name="type" id="type">
+            <option value="" >{:lang('ALL')}</option>
+            <option value="1" <if condition="$request.type eq 1"> selected="selected" </if>>{:lang('用户')}</option>
+            <option value="2" <if condition="$request.type eq 2"> selected="selected" </if>>{:lang('房间')}</option>
+        </select>
+        {:lang('STATUS')}：
+        <select name="status" id="status">
+            <option value="" <if condition="$request.status eq -1"> selected="selected" </if>>{:lang('ALL')}</option>
+            <option value="1" <if condition="$request.status eq 1"> selected="selected" </if>>{:lang('AUDITED')}</option>
+            <option value="0" <if condition="$request.status eq 0"> selected="selected" </if>>{:lang('UNREVIEWED')}</option>
+        </select>
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}"/>
+        <a class="btn btn-danger" href="{:url('report/reportlist')}">{:lang('EMPTY')}</a>
+    </form>
+    <form class="js-ajax-form" action="{:url('report/reportlist_upd')}" method="post">
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('举报人（ID）')}</th>
+                <th>{:lang('被举报（ID）')}</th>
+                <th>{:lang('举报类型')}</th>
+                <th>{:lang('举报内容')}</th>
+                <th>{:lang('图片')}</th>
+                <th>{:lang('直播间(ID)')}</th>
+                <th>{:lang('举报时间')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="report" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.bname}({$vo.uid})</td>
+                    <td>{$vo.cname}({$vo.reportid})</td>
+                    <td>{$vo.title}</td>
+                    <td>{$vo.content}</td>
+                    <td>
+                        <foreach name="$vo.img" id="vo1">
+                            <img height="50px" src="{$vo1['img']}" onclick="show_image('{$vo1.img}')">
+                        </foreach>
+                    </td>
+                    <td>
+                        <if condition="$vo['type'] eq 2">
+                            {$vo.type_id}
+                        </if>
+                    </td>
+                    <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <if condition="$vo['status'] eq '0'">
+                            {:lang('ADMIN_UNTREATED')}
+                            <else/>
+                            {:lang('ADMIN_PROCESSED')}
+                        </if>
+                    </td>
+                    <td>
+                        <if condition="$vo['status'] eq '0'">
+                         <a href="{:url('report/report_list_upd',array('uid'=>$vo['uid'],'id'=>$vo['id'],'type'=>1))}">{:lang('ADMIN_DEAL_WITH')}</a>
+                        </if>
+
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <ul class="pagination">{$page}</ul>
+
+    </form>
+
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    function show_image(url) {
+        //图片显示
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            area: ['auto', 'auto'],
+            skin: 'layui-layer-nobg', //没有背景色
+            shadeClose: true,
+            content: "<img src='" + url + "' style='max-width:500px;max-height:500px;'/>"
+        });
+    }
+
+
+</script>
+</body>
+</html>

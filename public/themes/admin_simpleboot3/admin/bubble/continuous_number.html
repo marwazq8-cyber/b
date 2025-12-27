@@ -1,0 +1,62 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+  .eggs_name{
+    width: 100%;height: 30px;line-height: 30px;color:#fb7373;margin-left: 20px;  }
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .select{width: 150px;height:30px;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('连续打泡泡的次数列表')}</a></li>
+ <!--        <li><a href="{:url('bubble/add_continuous_number')}">{:lang('添加连续打泡泡的次数')}</a></li> -->
+    </ul>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('连续打泡泡次数')}</th>
+                <th>{:lang('泡泡类型')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('SORT')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+                <php> 
+                    $status=array('1'=>lang('OPEN'),'0'=>lang('CLOSE'));
+                    $type=array('1'=>'普通泡泡','2'=>'彩虹泡泡');
+                </php>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo['sum']}</td>
+                    <td>{$type[$vo.type]}</td>
+
+                    <td>{$status[$vo.status]}</td>
+                  
+                    <td>{$vo.orderno}</td>
+                  
+                    <td>
+                       <a href="{:url('bubble/add_continuous_number',array('id'=>$vo.id))}">{:lang('EDIT')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+</body>
+</html>

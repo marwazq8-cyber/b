@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的收益</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="__STATIC__/css/invited_share.css" rel="stylesheet">
+
+
+    <script src="__STATIC__/js/jquery-1.10.2.min.js"></script>
+
+</head>
+<body class="invited_share_wthdrawal_padding">
+    <div class="invited_share_wthdrawal">
+        <div class="invited_share_wthdrawal_title">
+            <div class="invited_share_wthdrawal_title_name">可提现</div>
+            <div class="invited_share_wthdrawal_title_coin">{$data.invitation_coin}</div>
+        </div>
+        <div class="invited_share_wthdrawal_btn">提现</div>
+    </div>
+    <div class="invited_share_wthdrawal_log_name">提现记录</div>
+    <div class="invited_share_wthdrawal_log">
+        {volist name="list" id="v" key="i"}
+          <div class="invited_share_wthdrawal_log_type">
+              <div class="invited_share_wthdrawal_log_type_left">
+                  <div class="invited_share_wthdrawal_log_type_left_success">
+                    {if condition="$v.status eq 1"}
+                       提现成功
+                    {elseif condition="$v.status eq 2"}
+                       提现失败
+                    {else}
+                      审核中
+                    {/if}
+                  </div>
+                  <div class="invited_share_wthdrawal_log_type_left_time">{$v['addtime']|date="Y-m-d H",###}</div>
+              </div>
+              <div class="invited_share_wthdrawal_log_type_right">{$v['coin']}</div>
+          </div>
+        {/volist}
+    </div>
+    <!-- 提现 -->
+    <div class="user_withdrawal">
+        <div class="user_withdrawal_name">
+            <div class="user_withdrawal_name_color">提现24小时到账</div>
+            <div class="user_withdrawal_coin">
+              <span>{:lang('ADMIN_WITHDRAW_COIN')}: </span>
+              <input type="text" value="" id="rewards_coin"  placeholder="{:lang('Please_enter_withdrawal_amount')}"/>
+            </div>
+             <div class="user_withdrawal_name_center">每日提现{$data['cash_day_limit']}次,最少提现{$data['less']}元,最多提现{$data['more']}元</div>
+            <div class="user_withdrawal_type" data-uid="{$data.uid}" data-coin="{$data.invitation_coin}">提现</div>
+        </div>
+    </div>
+    <!-- 绑定账号 -->
+    <div class="binding_withdrawal_pay_bg">
+
+        <div class="binding_withdrawal_pay">
+          <div class="binding_withdrawal_pay_sum">绑定提现账号</div>
+            <div class="binding_withdrawal_pay_name">
+              <span>提现账号(支付宝)：</span>
+              <input type="text" value="" id="pay"/>
+          </div>
+          <div class="binding_withdrawal_pay_name">
+              <span>提现 账号(微 信)：</span>
+              <input type="text" value="" id="wx"/>
+          </div>
+          <div class="binding_withdrawal_pay_name">
+              <span>姓名(支付宝,微信)：</span>
+              <input type="text" value="" id="name"/>
+          </div>
+          <div class="binding_withdrawal_pay_btn">绑定</div>
+        </div>
+    </div>
+
+ <script src="__STATIC__/js/jquery-1.10.2.min.js"></script>
+ <script src="__STATIC__/layer/mobile/layer.js" rel="stylesheet"></script>
+<script>
+
+  var token="{$data.token}";
+   var uid="{$data.uid}";
+   $(".invited_share_wthdrawal_btn").click(function(){
+        $(".user_withdrawal").show();
+   })
+  $(".user_withdrawal").click(function(){
+      $(this).hide();
+   })
+  $(".binding_withdrawal_pay_bg").click(function(){
+    $(this).hide();
+  })
+
+  $(".user_withdrawal_name").click(function(e){
+       e.stopPropagation();
+  })
+  $(".binding_withdrawal_pay").click(function(e){
+       e.stopPropagation();
+  })
+
+  $(".user_withdrawal_type").click(function(){
+     var uid=$(this).attr("data-uid");
+     var coin=$(this).attr("data-coin");
+     var val=$("#rewards_coin").val();
+     var reg = /^\d+(\.\d+)?$/;
+     if (reg.test(val) != true || val <= 0) {
+          layer.open({
+              content: '请输入正确的金额'
+              , btn: '确定'
+          });
+          return false;
+      }
+
+      if (parseInt(coin) < parseInt(val)) {
+          layer.open({
+              content: '请输入正确的金额'
+              , btn: '确定'
+          });
+          return false;
+      }
+      $.ajax({
+          url: "/api/invited_share_api/add_rewards",
+          type: 'get',
+          dataType: 'json',
+          data: {"val": val, uid: uid,token:token},
+          success: function (data) {
+              layer.open({
+                  content: data.msg
+                  , skin: 'msg'
+                  , time: 2 //2秒后自动关闭
+              });
+              if (data.status == '1') {
+                  setTimeout(function () {
+                      window.location.reload();
+                  }, 2000);
+              } else if(data.status == '3') {
+ 
+                setTimeout(function () {
+                      $(".binding_withdrawal_pay_bg").show();
+                  }, 2000);
+                    layer.close(index);
+              }else {
+                  layer.close(index);
+              }
+          }
+      });
+  })
+  /*绑定支付宝账号*/
+   $(".binding_withdrawal_pay_btn").click(function () {
+        var pay = $("#pay").val();
+        var wx = $("#wx").val();
+        var name = $("#name").val();
+        if (pay.length == 0 && wx.length == 0) {
+            layer.open({
+                content: '请输入账号'
+                , btn: '确定'
+            });
+            return false;
+        }
+       const content = "{:lang('Please_enter_account_name')}";
+        if (name.length == 0) {
+            layer.open({
+                content: content
+                , btn: '确定'
+            });
+            return false;
+        }
+        $.ajax({
+            url: "/api/invited_share_api/insert_rewards",
+            type: 'get',
+            dataType: 'json',
+            data: {pay: pay, wx: wx, name: name, uid: uid},
+            success: function (data) {
+
+                layer.open({
+                    content: data.msg
+                    , skin: 'msg'
+                    , time: 2 //2秒后自动关闭
+                });
+                if (data.status == '1') {
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000);
+                } else {
+                    layer.close(index);
+                }
+            }
+        });
+
+    })
+</script>
+</body>
+</html>

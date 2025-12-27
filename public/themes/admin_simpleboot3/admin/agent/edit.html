@@ -1,0 +1,149 @@
+<include file="public@header" />
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('agent/index')}">{:lang('推广列表')}</a></li>
+			<li class="active"><a>{:lang('编辑推广')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('agent/editPost')}">
+			<div class="form-group">
+				<label for="input-user_login" class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('推广登录账号')}</label>
+				<div class="col-sm-3">
+					<if condition="$list['id']">
+						<input type="text" class="form-control" id="input-user_login" name="agent_login" value="{$list['agent_login']|default=''}" readonly="true">
+						<else/>
+						<input type="text" class="form-control" id="input-user_login" name="agent_login" value="{$list['agent_login']|default=''}">
+					</if>
+
+				</div>
+				<div class="col-sm-7">{:lang('账号1')}</div>
+			</div>
+			<div class="form-group">
+				<label for="input-user_login" class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('账号昵称')}</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" name="agent_name" value="{$list['login_name']|default=''}">
+				</div>
+				<div class="col-sm-7">{:lang('账号昵称2')}</div>
+			</div>
+			<div class="form-group">
+				<label for="input-user_pass" class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('推广登录密码')}</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" id="input-user_pass" name="agent_pass" value="" placeholder="******">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">{:lang('上级账号ID')}</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" name="superior_id" value="{$list['superior_id']|default=''}">
+				</div>
+				<div class="col-sm-7">
+					<div>{:lang('添加上级账号ID(尽量不要添加或修改;默认没有上级账号)')}</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">{:lang('联系方式')}</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" name="mobile" value="{$list['mobile']|default=''}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('充值额分成率')}</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" name="commission" placeholder="0-1之间的小数" value="{$list['commission']|default=''}" oninput="OnInputRecharge (event)" onpropertychange="OnPropRechargeChanged (event)">
+				</div>
+				<div class="col-sm-7">
+					<div><span class="Recharge_text">{:lang('必须是0-1之间的小数;当前充值额分成率为 ')}<span class="Recharge_commission">{$list['commission'] * 100 }</span>%;{:lang('最大不能超过')}：{$user['commission'] * 100}%</span></div>
+					<div>{:lang('只有账号类型为公司的有效')}</div>
+				</div>
+			</div>
+
+			<div class="form-group" v-if="$user['agent_level'] < 3">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('账号类型')}</label>
+				<div class="col-sm-3">
+					<select class="form-control" name="agent_level" >
+						<foreach name="agent_sum" item="v">
+							<option value="{$v['id']}" <if condition="$list['agent_level'] == $v['id']"> selected="selected"</if> >{$v['name']}</option>
+						</foreach>
+
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-user_login" class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('推广码')}</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" placeholder="{:lang('推广码')}" readonly="true" value="{$list['channel']| default=''}">
+				</div>
+				<div class="col-sm-7">
+					<div>{:lang('空值会自动生成一个推广码')}</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">{:lang('备注信息')}</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" name="remarks" value="{$list['remarks']|default=''}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('状态')}</label>
+				<div class="col-md-6 col-sm-10">
+					<label class="checkbox-inline">
+						<input value="1" type="radio" name="status"
+						<if condition="$list['status'] eq 1">checked</if>
+						>{:lang('账号正常')}
+					</label>
+					<label class="checkbox-inline">
+						<input value="0" type="radio" name="status"
+						<if condition="$list['status'] eq 0"> checked</if>
+						>{:lang('禁封本账号')}
+					</label>
+					<label class="checkbox-inline">
+						<input value="2" type="radio" name="status"
+						<if condition="$list['is_ban_all'] eq 2"> checked</if>
+						>{:lang('禁封本账号和旗下所有账号')}
+					</label>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="hidden" name="id" value="{$list['id']|default=''}" />
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+	<script>
+		const Recharge_max = "{$user['commission']}";
+		const min_commission = "{$list['min_commission']}";
+		// Firefox, Google Chrome, Opera, Safari, Internet Explorer from version 9
+		function OnInputRecharge (event) {
+			if(parseFloat(Recharge_max) < parseFloat(event.target.value) || parseFloat(min_commission) > parseFloat(event.target.value)){
+				$(".Recharge_text").css('color','#e40303');
+			}else{
+				$(".Recharge_text").css('color','#2C3E50');
+			}
+			let values = 0;
+			if(parseFloat(event.target.value)){
+				values = parseFloat(event.target.value) * 100;
+			}
+			$(".Recharge_commission").text(values.toFixed(2));
+		}
+		// Internet Explorer
+		function OnPropRechargeChanged (event) {
+			if (event.propertyName.toLowerCase () === "value" ) {
+				if(parseFloat(Recharge_max) < parseFloat(event.target.value) || parseFloat(min_commission) > parseFloat(event.target.value)){
+					$(".Recharge_text").css('color','#e40303');
+				}else{
+					$(".Recharge_text").css('color','#2C3E50');
+				}
+				let values = 0;
+				if(parseFloat(event.target.value)){
+					values = parseFloat(event.target.value) * 100;
+				}
+				$(".Recharge_commission").text(values.toFixed(2));
+			}
+		}
+	</script>
+</body>

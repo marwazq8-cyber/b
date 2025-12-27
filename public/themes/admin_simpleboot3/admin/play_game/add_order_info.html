@@ -1,0 +1,69 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+    .select{width:130px;height:35px;line-height: 35px;border: 1px solid #dce4ec;}
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('PlayGame/order_info',array('game_id'=>$data.id))}">{$data['name']}{:lang('ADMIN_ORDER_INFORMATION')}</a></li>
+        <li  class="active"><a href="javascript:;">{:lang('ADMIN_ORDER_INFORMATION_ADD')}</a></li>
+    </ul>
+    <form action="{:url('PlayGame/add_order_info_run')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_NAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[name]"
+                                   id="title" required value="{$list.name |default=''}" placeholder="{:lang('如：接单大区')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('TYPE')} <span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[type]" id="" class="form-control">
+                                <option value="1" <if condition="$list.type eq 1">selected="selected"</if>>{:lang('选择')}</option>
+                                <option value="2" <if condition="$list.type eq 2">selected="selected"</if>>{:lang('填写')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_INFORMATION')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[val]"
+                                   id="title" required value="{$list.val |default=''}" placeholder="{:lang('选择类型 每个信息用英文下逗号隔开,如:QQ,微信。其他类型可不填写')}"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[orderno]" style="width:100px;"
+                                    value="{$list.orderno |default='50'}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <input type="hidden" name="game_id" value="{$data.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('PlayGame/play_type')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+
+
+</body>
+</html>

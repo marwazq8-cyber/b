@@ -1,0 +1,118 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        /*width: 50px;*/
+        width:auto;
+        height: 50px;
+        text-align: center;
+    }
+
+    .gift-img img {
+        width:auto;
+        height: 30px
+    }
+
+    .gift-in input {
+        width: 20px;
+    }
+
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_NOBLE_LIST')}</a></li>
+        <li><a href="{:url('noble/add')}">{:lang('ADMIN_NOBLE_ADD')}</a></li>
+
+    </ul>
+
+    <form class="js-ajax-form" action="{:url('noble/upd')}" method="post">
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>{:lang('SORT')}</th>
+                <th>ID</th>
+                <th>{:lang('ADMIN_NOBLE_NAME')}</th>
+                <th>{:lang('ADMIN_MEAL')}</th>
+                <th>{:lang('ADMIN_PRICE')}</th>
+                <th>{:lang('ADMIN_RENEWAL_PRICE')}</th>
+                <!--<th>{:lang('充值规则')}({$currency_name}/¥)</th>-->
+                <th>{:lang('续费')} {:lang('ADMIN_SEND')}{$currency_name}</th>
+                <!--<th>{:lang('续费钻石数')}</th>
+                <th>{:lang('续费赠送钻石数')}</th>-->
+                <th>{:lang('ADMIN_TIMES_DAY')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('ADD_TIME')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="data" id="vo">
+                <tr>
+                    <td class="gift-in"><input type="text" name="listorders[{$vo.id}]" value="{$vo.orderno}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+
+                    <td class="gift-img"><img src="{$vo.noble_img}" alt=""></td>
+                    <td>{$vo.coin}</td>
+                    <td>{$vo.renew_coin}</td>
+                    <td>{$vo.return_coin}</td>
+                    <td>{$vo.noble_time}</td>
+
+                    <td>
+                        <if condition="$vo['status'] eq '1'">
+                            {:lang('OPEN')}
+                            <else/>
+                            {:lang('CLOSE')}
+                        </if>
+                    </td>
+                    <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <a href="{:url('noble/add',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <button type="button" class="btn btn-primary" style="margin-top:20px;margin-right:20px;float: left;"> {:lang('SORT')}</button>
+        <div class="pagination">{$page}</div>
+    </form>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('noble/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id,type:1},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function () {
+        $(".js-ajax-form").submit();
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<include file="public@header" />
+</head>
+<style>
+    .client-a{
+        cursor: pointer;
+    }
+</style>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('client_log/index')}">{:lang('ADMIN_CLIENT_LIST')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('client_log/index')}">
+        {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time" value="{$request['start_time']|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$request['end_time']|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('client_log/index')}">{:lang('EMPTY')}</a>
+
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th width="50">ID</th>
+            <th>{:lang('USER')}（ID）</th>
+            <th>{:lang('ADMIN_CLIENT_ADDRESS')}</th>
+            <th>{:lang('ADMIN_VIDEO_TIME')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="list" item="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.user_nickname}({$vo.uid})</td>
+                <td>
+                    <a class="client-a" onclick="downLoad('{$vo.url}')">{:lang('DOWNLOAD')}</a>|
+                    <a class="client-a btn-main" data-url="{$vo.url}">{:lang('COPY_DOWNLOAD_ADDRESS')}</a>
+                </td>
+                <td>{:date('Y-m-d H:i:s',$vo['addtime'])} </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/clipboard.min.js" type="text/javascript"></script>
+</body>
+</html>
+<script>
+    function downLoad(url){
+        let newurl = url + "&";
+        let fileName = url.slice(url.lastIndexOf("/") + 1, url.indexOf("?"));
+        let result = '';
+        $.ajax({
+            url: "{:url('client_log/get_info')}",
+            type: 'post',
+            dataType: 'json',
+            data: {url: url},
+            success: function (data) {
+                //console.log(data);return;
+                var datastr = `data:text/json;charset=utf-8,${data}`;
+                var downloadAnchorNode = document.createElement("a");
+                downloadAnchorNode.setAttribute("href", datastr);
+                downloadAnchorNode.setAttribute("download", fileName + ".json");
+                downloadAnchorNode.click();
+                downloadAnchorNode.remove();
+            }
+        });
+        //后面加上‘&’，防止请求时，url后面添加问号会影响原来的url参数值
+        /*
+        */
+        /*fetchGet(newurl, {}, { credentials: "include" }).then(response => {
+            result = JSON.stringify(response);
+            var datastr = `data:text/json;charset=utf-8,${result}`;
+            var downloadAnchorNode = document.createElement("a");
+            downloadAnchorNode.setAttribute("href", datastr);
+            downloadAnchorNode.setAttribute("download", fileName + ".json");
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        });*/
+    }
+
+    var url = '';
+    $('.btn-main').click(function(){
+        url = $(this).attr('data-url');
+    })
+    var clipboard = new ClipboardJS('.btn-main', {
+        // 点击copy按钮，直接通过text直接返回复印的内容
+        text: function() {
+            return url;
+        }
+    });
+
+    clipboard.on('success', function(e) {
+        console.log(e);
+        layer.msg('复制成功');
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+</script>

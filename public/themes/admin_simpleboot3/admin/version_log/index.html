@@ -1,0 +1,151 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .gift-in input {
+        width: 25px;
+    }
+
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('版本列表')}</a></li>
+
+        <li><a href="{:url('VersionLog/add')}">{:lang('添加版本')}</a></li>
+
+    </ul>
+
+    <form class="js-ajax-form" action="{:url('VersionLog/upd')}" method="post">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('平台')}</th>
+                <th>{:lang('版本号')}</th>
+                <th>{:lang("包名")}</th>
+                <th>{:lang('强制更新')}</th>
+                <th>{:lang('当前发布版本')}</th>
+                <th>{:lang('发布内容')}</th>
+                <th>{:lang('下载地址')}</th>
+                <th>{:lang('ADD_TIME')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>
+                        <if condition="$vo.type eq 1">
+                            ios
+                            <else/>
+                            Android
+                        </if>
+                    </td>
+                    <td>{$vo.version_number}</td>
+                    <td>{$vo.package_name}</td>
+                    <td>
+                        <if condition="$vo.is_update eq 1">
+                            {:lang('YES')}
+                            <else/>
+                            {:lang('NO')}
+                        </if>
+                    </td>
+                    <td>
+                        <if condition="$vo.is_release eq 1">
+                            {:lang('YES')}
+                            <else/>
+                            {:lang('NO')}
+                        </if>
+                    </td>
+                    <td>{$vo.content}</td>
+                    <td>{$vo.url}</td>
+                    <td>{$vo.create_time | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <a href="{:url('VersionLog/add',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+
+    <!--<button id="bt_add_content" type="button" class="btn btn-success" style="margin-top:20px;">{:lang('增加话术')}</button>-->
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('VersionLog/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == 1) {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function () {
+        $(".js-ajax-form").submit();
+    })
+
+    $('#bt_add_content').click(function () {
+        layer.open({
+            type: 0,
+            title: "{:lang('添加话术')}",
+            area: ['300px', '200px'],   //宽高
+            shade: 0.4,   //遮罩透明度
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"], //按钮组,
+            content: '<div class="layui-form"><label class="layui-form-label">{:lang('话术内容')}</label><input  type="text" id="verbal_trick" class="form-control" value="" ></div>',
+            yes:function(index){   //点击确定回调
+
+                layer.close(index);
+                $.ajax({
+                    url: "{:url('auto_talking/add_talking_post')}",
+                    type: 'get',
+                    dataType: 'json',
+                    data: {id: 0,msg:$('#verbal_trick').val()},
+                    success: function (data) {
+                        if(data == 1){
+                            layer.msg("{:lang('ADD_SUCCESS')}",{time: 2000, icon:1},function(){
+                                window.location.reload();
+                            });
+                        }else{
+                            layer.msg("{:lang('ADD_FAILED')}");
+                        }
+                    }
+                });
+            }
+        });
+    })
+</script>
+</body>
+</html>

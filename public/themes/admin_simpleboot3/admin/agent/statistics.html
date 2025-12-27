@@ -1,0 +1,76 @@
+<include file="public@header" />
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:void(0)">{:lang('渠道统计列表')}</a></li>
+        <li><a href="{:url('agent/staff',array('uid'=>$data['uid']))}">{:lang('agent_level2')}统计列表</a></li>
+        <li><a href="{:url('agent/extension',array('uid'=>$data['uid']))}">{:lang('agent_level3')}统计列表</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" name="form1" method="post" action="{:url('agent/statistics')}">
+       {:lang('渠道ID')}:
+        <input type="text" class="form-control" name="uid" style="width: 120px;" value="{$data.uid |default=''}" placeholder="{:lang('请输入渠道ID')}">
+        {:lang('日期类型')}:
+        <select class="form-control" name="date" id="input-target">
+            <option value="day" <if condition="$data['date'] eq 'day'"> selected  </if>>{:lang('按日统计')}</option>
+            <option value="month" <if condition="$data['date'] eq 'month'"> selected  </if>>{:lang('按月统计')}</option>
+        </select>
+       {:lang('时间')}:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time" value="{$data['start_time']|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$data['end_time']|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="{:lang('搜索')}" onclick='form1.action="{:url('agent/statistics')}";form1.submit();'/>
+        <a class="btn btn-danger" href="{:url('agent/statistics')}">{:lang('清空')}</a>
+        <input type="button" class="btn btn-primary from_export" style="background-color: #1dccaa;" value="{:lang('导出')}" onclick='form1.action="{:url('agent/export_statistics')}";form1.submit();'>
+
+        <div style="margin-top: 15px;">{:lang('当日报表会在第二天凌晨系统入账,现仅能查询入账的报表。')}</div>
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>{:lang('日期')}</th>
+            <th>{:lang('渠道')}</th>
+            <th>{:lang('当前渠道注册新增')}</th>
+            <th>{:lang('当前渠道充值数')}</th>
+            <th>{:lang('下级渠道注册新增')}</th>
+            <th>{:lang('下级渠道充值数')}</th>
+            <th>{:lang('虚拟币总收益')}</th>
+            <th>{:lang('消费总数')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr style="background: #f3f3f3;">
+            <td>{:lang('合计：')}</td>
+            <td>{:lang('agent_level1')}</td>
+            <td>{$agent_money['register_sum']}</td>
+
+            <td>{:floatval($agent_money.money)}</td>
+            <td>{:floatval($agent_money.invitation_register_sum)}</td>
+
+            <td>{:floatval($agent_money.invitation_money)}</td>
+
+            <td>{:floatval($agent_money.agent_money)}</td>
+            <td>{:floatval($agent_money.consumption)}</td>
+        </tr>
+        <foreach name="users" item="vo">
+            <tr>
+                <td>{$data['date'] == 'month' ? $vo.month_time : $vo.date_time}</td>
+                <td>{$vo['agent_login']}({$vo.uid})</td>
+                <td>{$vo.register_sum| default='0'}</td>
+
+                <td>{$vo.money| default='0'}</td>
+
+                <td>{$vo.invitation_register_sum| default='0'}</td>
+
+                <td>{$vo.invitation_money| default='0'}</td>
+
+                <td>{$vo.agent_money| default='0'}</td>
+                <td>{$vo.consumption| default='0'}</td>
+            </tr>
+        </foreach>
+
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>

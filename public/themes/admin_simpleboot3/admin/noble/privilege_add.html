@@ -1,0 +1,146 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('noble/privilege')}">{:lang('ADMIN_PRIVILEGE_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_PRIVILEGE_ADD')}</a></li>
+
+    </ul>
+    <form action="{:url('noble/privilege_addPost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_PRIVILEGE_NAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <foreach name="$data.lang_name" item="v">
+                                {$v['name']} :
+                                <input class="form-control" type="text" name="lang_name[{$v['name']}]"
+                                       value="{$v['value'] |default=''}" placeholder="{:lang('请输入特权名称')}"/>
+                            </foreach>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[orderno]" style="width:100px;"
+                                   required value="{$data.orderno |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*{:lang('仅是显示隐藏对实际功能无影响')}</span></th>
+                        <td>
+                            <select name="post[status]" id="gift">
+                                <option value="1">{:lang('OPEN')}</option>
+                                <option value="0">{:lang('CLOSE')}</option>
+
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_PRIVILEGE_ICON')}<span class="form-required">*160*160</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[privilege_img]" id="thumbnail" value="{$data['privilege_img'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <empty name="$data['privilege_img']">
+
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+
+                                        <img src="{$data['privilege_img']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </empty>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_PRIVILEGE_ICON_NO')}<span class="form-required">*160*160</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[no_img]" id="thumbnailno" value="{$data['no_img'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnailno');">
+                                    <empty name="$data['no_img']">
+
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnailno-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+
+                                        <img src="{$data['no_img']}"
+                                             id="thumbnailno-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </empty>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!--<tr>
+                        <th>{:lang('说明 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <textarea class="form-control" name="post[privilege_info]" id="content" cols="30" rows="10">{$data.privilege_info|default=''}</textarea>
+                        </td>
+                    </tr>-->
+                </table>
+                <input type="hidden" name="id" value="{$data.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('noble/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    var status = {$data['noble_status'] | default = 1};
+    var types = {$data['type'] | default = 1};
+    $('#gift').val(status);
+    $('#types').val(types);
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+         $('.btn-cancel-svga').click(function () {
+            $('#svga-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#svga').val('');
+        });
+
+    });
+</script>
+
+</body>
+</html>

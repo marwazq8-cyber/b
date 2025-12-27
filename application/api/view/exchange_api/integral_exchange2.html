@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>{:lang('收益兑换详情')}</title>
+	<script type="text/javascript" src="__STATIC__/js/jquery.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/js/num-alignment.js"></script>
+	<link rel="stylesheet" href="__STATIC__/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="__STATIC__/css/common.css" />
+	<link rel="stylesheet" href="__STATIC__/css/Integral.css" />
+	<script src="__STATIC__/layer/mobile/layer.js" rel="stylesheet"></script>
+	<script type="text/javascript">
+		document.addEventListener('plusready', function(){
+			//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+		});
+	</script>
+</head>
+<body>
+<div id="box">
+	<div class="Integral">
+		<!--页面背景颜色-->
+		<div class="Integral_bagcolor"></div>
+		<!--页面顶部收益兑换详情-->
+		<div class="Integral_return ">
+			<a href="Integral.html" class="fl">{:lang('兑换')} {$coin_name}</a>
+			<a href="#"> </a>
+		</div>
+		<!--我的积分 -->
+		<div class="my_Integral">
+			<article class="exchanges_one">
+				<header class="exchanges_header">{:lang('消耗收益')}：<em>{$list['earnings']}</em></header>
+				<aside class="exchanges_money">
+					<p class="fl"><img src="__STATIC__/img/jinbi.png"></p>
+					<p class="flss">{:lang('到账ID')}:{$user_id}</p>
+					<p class="fls">{:lang('兑换')} {$earnings_name}：<span>{$list['coin']}{$earnings_name}</span></p>
+				</aside>
+			</article>
+			<div class="exchanges_button">
+				<button data-uid="{$uid}" data-id="{$list['id']}" data-earnings="{$list['earnings']}" data-touid="{$user_id}" class="exchange_btn">{:lang('确认兑换')}</button>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+<script>
+	let isClick = true;
+	const lang="{$lang}";
+	$(".exchange_btn").click(function(){
+		var id=$(this).attr("data-id");
+		var touid=$(this).attr("data-touid");
+		var uid=$(this).attr("data-uid");
+		var earnings=$(this).attr("data-earnings");
+		if(id == undefined && (earnings == '' || parseInt(earnings)==0)){
+			layer.open({
+				content: "{:lang('请选择兑换类型')}"
+				,skin: 'msg'
+				,time: 2 //2秒后自动关闭
+			});
+			return false;
+		}
+		if(!uid){
+			layer.open({
+				content: "{:lang('login_timeout')}"
+				,skin: 'msg'
+				,time: 2 //2秒后自动关闭
+			});
+			return false;
+		}
+		if (isClick) {
+			isClick = false;
+			$.ajax({
+				type: 'POST',
+				url: "{:url('exchange_api/exchange_post')}?lang="+lang,
+				data: {'uid': uid, 'psd': '', 'touid': touid, 'id': id, earnings: earnings, 'lang':lang},
+				dataType: 'json',
+				success: function (data) {
+					layer.open({
+						content: data.msg
+						, skin: 'msg'
+						, time: 2 //2秒后自动关闭
+					});
+					if (data.code == 1) {
+						layer.open({
+							content: data.msg
+							, skin: 'msg'
+							, time: 2 //2秒后自动关闭
+							, end: function () {
+								var url = "{:url('exchange_api/integral')}?uid=" + uid+"&lang="+lang;
+								window.location.href = url;
+							}
+						});
+					} else {
+						layer.open({
+							content: data.msg
+							, skin: 'msg'
+							, time: 2 //2秒后自动关闭
+						});
+					}
+				}
+			});
+			//定时器
+			setTimeout(function() {
+				isClick = true;
+			}, 2000);//2秒内不能重复点击
+		}
+		// layer.open({
+		// 	title: [
+		// 		'输入密码',
+		// 		'background-color:#a91bec; color:#fff;'
+		// 	]
+		// 	,anim: 'up'
+		// 	,content: '<input type="text" id="labelmess" style="winth:80%;margin:2em auto;height:2.5em;line-height:2.5em;padding-left:0.5em;" placeholder="输入密码"><div><p class="exchange_login_upd"><span>修改密码或设置密码 请直接 <a href="{:url('exchange_api/exchange_password2')}?uid='+uid+'">设置</a></span></p></div>'
+		// 		,btn: ['确认', '取消']
+		// 		,yes: function(index){
+		// 	var psd=$('#labelmess').val();
+		// 	$.ajax({
+		// 		type: 'POST',
+		// 		url: "{:url('exchange_api/exchange_post')}",
+		// 		data: {'uid': uid,'psd':psd,'touid':touid,'id':id,earnings:earnings},
+		// 		dataType: 'json',
+		// 		success: function (data) {
+		// 			layer.open({
+		// 				content: data.msg
+		// 				,skin: 'msg'
+		// 				,time: 2 //2秒后自动关闭
+		// 			});
+		// 			if(data.code == 1){
+		// 				layer.open({
+		// 					content: data.msg
+		// 					,skin: 'msg'
+		// 					,time: 2 //2秒后自动关闭
+		// 					,end:function () {
+		// 						var url="{:url('exchange_api/integral')}?uid="+uid;
+		// 						window.location.href=url;
+		// 					}
+		// 				});
+		// 			}else{
+		// 				layer.open({
+		// 					content: data.msg
+		// 					,skin: 'msg'
+		// 					,time: 2 //2秒后自动关闭
+		// 				});
+		// 			}
+		// 		}
+		// 	});
+		// 	layer.close(index);
+		// }
+		//});
+	})
+</script>
+</html>

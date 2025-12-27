@@ -1,0 +1,192 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <title>{:lang('ADMIN_ANCHOR_LIST')}</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content="">
+    <include file="public@head"/>
+</head>
+
+<body class="body-white" style="padding-top:0px;">
+    <div class="tab-content">
+        <div class="tab-pane active" id="one">
+             <form class="well form-inline" method="post" action="{:url('union/comment/index')}" style="margin-top:20px;">
+                 {:lang('ADMIN_ANCHOR_ID')}:
+                <input type="text" class="form-control" name="id" style="width: 140px;" value="{$id|default=''}" placeholder="请输入主播ID">
+                 {:lang('STATUS')}：
+                <select name="status" style="width:100px;height: 38px;">
+                    <option value="-1">{:lang('ALL')}</option>
+                    <option value="0"  <if condition="$status eq '0'"> selected="selected" </if>>{:lang('CHECK_LOADING')}</option>
+                    <option value="1" <if condition="$status eq '1'"> selected="selected" </if>>{:lang('PASS_THROUGH')}</option>
+                    <option value="2" <if condition="$status eq '2'"> selected="selected" </if>>{:lang('REFUSE')}</option>
+                </select>
+                <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+                <a class="btn btn-danger" href="{:url('union/comment/index')}">{:lang('EMPTY')}</a>
+            </form>
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>{:lang('ADMIN_ANCHOR')}(ID)</th>
+                    <th>{:lang('AVATAR')}</th>
+
+                    <th>礼物价值</th>
+                    <th>私聊收益</th>
+                    <th>语音通话收益</th>
+                    <th>视频通话收益</th>
+                    <th>{:lang('ADMIN_PLAYER_INCOME')}</th>
+
+                    <th>{:lang('ADMIN_GUILD_TOTAL_INCOME')}</th>
+
+                    <th>{:lang('STATUS')}</th>
+                    <th width="150">{:lang('ADMIN_CHECK_TIME')}</th>
+                    <th width="150">{:lang('ACTIONS')}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <foreach name="list" item="vo">
+                    <tr>
+                        <td>{$vo.user_nickname}({$vo.user_id})</td>
+                        <td><img width="50" src="{$vo.avatar}"></td>
+
+                        <td><a href="{:url('union/comment/gift',array('to_user_id'=>$vo['user_id']))}">{$vo.gift_coin}</a></td>
+                        <td><a href="{:url('union/comment/chat',array('to_user_id'=>$vo['user_id']))}">{$vo.pr_coin}</a></td>
+                        <td><a href="{:url('union/comment/call',array('to_user_id'=>$vo['user_id'],'type'=>1))}">{$vo.audio_call_coin}</a></td>
+                        <td><a href="{:url('union/comment/call',array('to_user_id'=>$vo['user_id']))}">{$vo.video_call_coin}</a></td>
+                        <td><a href="{:url('union/comment/play',array('to_user_id'=>$vo['user_id']))}">{$vo.play_coin}</a></td>
+                        <td>{$vo.guild_earnings|default='0'}</td>
+                        <td>
+                            <if condition="$vo['status'] eq '0'">
+                                {:lang('UNREVIEWED')}
+                                <elseif condition="$vo['status'] eq '1'"/>
+                                {:lang('USER_STATUS_ACTIVATED')}
+                                <else/>
+                                {:lang('REFUSE')}
+                            </if>
+                        </td>
+                        <td>{$vo.create_time | date="Y-m-d H:i:s",###}</td>
+                         <td>
+                            <if condition="$vo['status'] eq '0'">
+                                <a href="javescript:;" class="host_status" data-id="{$vo.id}" data-status="1">{:lang('PASS_THROUGH')}</a>|
+                                <a href="javescript:;" class="host_status" data-id="{$vo.id}" data-status="2">{:lang('REFUSE')}</a>
+                                <else/>
+                                 <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                            </if>
+                        </td>
+                    </tr>
+                </foreach>
+                </tbody>
+            </table>
+        </div>
+
+        <ul class="pagination">{$page}</ul>
+    </div>
+</body>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+
+    $(".upd_video").click(function(){
+        var coin=$(this).attr("data-coin");
+        var id=$(this).attr("data-id");
+
+        $.ajax({
+            url: "{:url('union/comment/sel_video_coin')}",
+            type: 'POST',
+            dataType: 'json',
+            data: {id:id,coin:coin},
+            success: function (data) {
+              if(data.code == 0){
+                 layer.msg("无权限修改",{time: 2000, icon:2});
+              }else{
+                upd_video_list(data.list,id,coin);
+              }
+            }
+        });
+    })
+    /*$list 数组*/
+    function upd_video_list(list,id,coins){
+        var html='<select id="num" style="width:230px;height:35px;">';
+
+        for (var i = 0; i < list.length; i++) {
+            html+= '<option value ="'+list[i].id+'"';
+            if(coins == list[i].coin){
+                 html+= 'selected="selected"';
+            }
+            html+= '>'+list[i].coin+' __ '+list[i].name+'</option>';
+        }
+         html+='</select>';
+         layer.open({
+                title: '修改视频收费价格'
+                ,content: html
+                ,area: ['300px', '200px']
+                ,btn:['确认','取消']
+                ,yes: function(index, layero){
+                    var num=$('#num').val();
+                    $.ajax({
+                        url: "{:url('union/comment/upd_video')}",
+                        type: 'post',
+                        dataType: 'json',
+                        data: {id:id,coin:num},
+                        success: function (data) {
+                            if(data =='1'){
+                                layer.msg("修改成功",{time: 2000, icon:1},function(){
+                                    window.location.reload();
+                                });
+                            }else{
+                                layer.msg("修改失败",{time: 2000, icon:2});
+                            }
+                        }
+                    });
+                }
+            });
+    }
+    $(".del").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm('确定删除？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('union/comment/host_del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("{:lang('DELETE_SUCCESS')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('DELETE_FAILED')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+     $(".host_status").click(function(){
+        var id=$(this).attr('data-id');
+         var status=$(this).attr('data-status');
+
+        layer.confirm('确定修改状态？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('union/comment/host_status')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id,status:status},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("修改成功",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("修改失败",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+
+</script>
+</html>

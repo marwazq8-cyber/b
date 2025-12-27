@@ -1,0 +1,340 @@
+<include file="public@header"/>
+<style>
+    .btn-info:hover,.btn-info:click{
+        outline:0!important;
+        color:#2a6496!important;
+        background: #ecf0f1!important;
+        border-color: #ecf0f1!important;
+
+    }
+    .btn-info:focus{
+        outline:0!important;
+        box-shadow:none;
+    }
+
+    tr:hover .btn-info{
+        color:#2a6496!important;
+        background: #ecf0f1!important;
+        border-color: #ecf0f1!important;
+    }
+
+    .btn-info{
+        color:#2a6496!important;
+        background: #fff!important;
+        border-color: #fff!important;
+    }
+    #ul{
+        font-size: 12px;
+        list-style:none;
+        width:120px;
+        border:1px solid #c1c1c1;
+        display:none;
+        padding-left:0px;
+        position: absolute;
+        right:60px;
+        background-color: #ffffff
+    }
+    .ipt{
+        /*margin:1px 0 0 0px;*/
+        /*border:0px solid;*/
+    }
+    #ul li a{
+        display:inline-block;
+        float:left;
+        width:100%;
+        height:30px;
+        line-height: 30px;
+        text-decoration:none;
+
+        color: #333;
+    }
+    #ul li{
+        margin-left: 0;
+        padding-left: 0;
+        width:100%;height: 30px;
+        padding-left:15px;
+
+    }
+
+    #ul li:hover{
+        background-color:#f5f5f5;
+    }
+    #ul li a:hover{
+        color:#333;
+    }
+    .ipt::-ms-input-placeholder {
+        text-align: center;
+    }
+
+    .ipt::-webkit-input-placeholder {
+        text-align: center;
+
+    }
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .gift-img{width:120px;height:40px;}
+     .gift-img img{height:100%};
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('订单列表')}</a></li>
+       <!-- <li><a href="{:url('level/add')}">{:lang('添加等级分类')}</a></li>-->
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('player_order/index')}">
+        {:lang('USER_ID')}:
+        <input type="text" class="form-control" name="uid" style="width: 120px;" value="{$data.uid|default=''}" placeholder="{:lang('USER_ID')}">
+        {:lang('USERNAME')}:
+        <input type="text" class="form-control" name="name" style="width: 120px;" value="{$data.name|default=''}" placeholder="{:lang('请输入用户名')}">
+        {:lang('ADMIN_GAME')}：
+        <select class="form-control" name="game_id" style="width: 140px;">
+            <option value="0">{:lang('ALL')}</option>
+            <foreach name="game" id="val">
+                <option value="{$val.id}" <if condition="$data.game_id eq $val.id"> selected='selected' </if>>{$val.name}</option>
+            </foreach>
+        </select>
+
+        {:lang('STATUS')}：
+        <select class="form-control" name="status" style="width: 140px;">
+            <option value="-1" >{:lang('全部')}</option>
+            <option value="0" <if condition="$data.status eq 0"> selected='selected' </if>>{:lang('待付款')}</option>
+            <option value="1" <if condition="$data.status eq 1"> selected='selected' </if>>{:lang('待接单')}</option>
+            <option value="2" <if condition="$data.status eq 2"> selected='selected' </if>>{:lang('待服务')}</option>
+            <option value="3" <if condition="$data.status eq 3"> selected='selected' </if>>{:lang('服务中')}</option>
+            <option value="4" <if condition="$data.status eq 4"> selected='selected' </if>>{:lang('陪玩完成服务')}</option>
+            <option value="5" <if condition="$data.status eq 5"> selected='selected' </if>>{:lang('用户已确定服务')}</option>
+            <option value="6" <if condition="$data.status eq 6"> selected='selected' </if>>{:lang('完成订单')}</option>
+            <option value="7" <if condition="$data.status eq 7"> selected='selected' </if>>{:lang('陪玩拒绝接单')}</option>
+            <option value="8" <if condition="$data.status eq 8"> selected='selected' </if>>{:lang('用户取消订单')}</option>
+            <option value="9" <if condition="$data.status eq 9"> selected='selected' </if>>{:lang('用户申请退款中')}</option>
+            <option value="10" <if condition="$data.status eq 10"> selected='selected' </if>>{:lang('陪玩同意退款')}</option>
+            <option value="11" <if condition="$data.status eq 11"> selected='selected' </if>>{:lang('陪玩不同意退款')}</option>
+            <option value="19" <if condition="$data.status eq 19"> selected='selected' </if>>{:lang('平台同意退款')}</option>
+
+        </select>
+        {:lang('SERVICE_TIME')}:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_ordertime" value="{$data.start_ordertime|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_ordertime" value="{$data.end_ordertime|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+        {:lang('ORDER_TIME')}:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time" value="{$data.start_time|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time" value="{$data.end_time|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('player_order/index')}">{:lang('EMPTY')}</a>
+    </form>
+    <php>
+        //1待接单2已接单-待服务3服务中-待确认4完成服务-商户 5确认-待评价，6结束-评价完成 7拒绝 8取消 9退款 10同意 11不同意
+        $status=array('0'=>lang('待付款'),"1"=>lang('待接单'),"2" => lang('待服务'),"3" => lang('服务中'),"4" => lang('陪玩完成服务'),"5" => lang('用户已确定服务'),"6" => lang('完成订单'),"7" => lang('陪玩拒绝接单'),"8" => lang('用户取消订单'),"9" => lang('用户申请退款中'),"10" => lang('陪玩同意退款'),"11" => lang('陪玩不同意退款'),"19" => lang('平台同意退款'));
+
+    </php>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('USERNAME')}(ID)</th>
+                <th>{:lang('ADMIN_PLAYER_USER')}(ID)</th>
+                <th>{:lang('ADMIN_GAME_NAME')}</th>
+                <th>{:lang('ADMIN_PRICE')}x{:lang('ADMIN_NUMBER')}</th>
+                <th>{:lang('ADMIN_PRICE_ALL')}</th>
+                <th>{:lang('ADMIN_PRICE_TYPE')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('SERVICE_TIME')}</th>
+                <th>{:lang('ORDER_TIME')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+                <php>
+                    $type=array('1'=>lang('YES'),'0'=>lang('NO'));
+                </php>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.user_nickname}({$vo.uid})</td>
+                    <td>{$vo.toname}({$vo.touid})</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.coin} x {$vo.num}</td>
+                    <td>{$vo.total_coin}</td>
+                    <td>{$vo.calc_method}</td>
+                    <td>{$status[$vo.status]}</td>
+
+                    <td>{$vo.ordertime| date="Y-m-d H:i:s",###}</td>
+                    <td>{$vo.addtime| date="Y-m-d H:i:s",###}</td>
+
+
+                    <td>
+
+                       <!--  <a url="{:url('player/start_recommend',array('id'=>$vo.id))}" class="details" data-id="{$vo.id}">{:lang('推荐')}</a> -->
+                        <button class="ipt btn btn-info" type="button">{:lang('ACTIONS')} <strong>+</strong></button>
+                        <ul id="ul">
+                            <if condition="$vo['status'] egt 9 && $vo['status'] neq 19 && $vo['status'] neq 10">
+                                <li>
+                                    <a href="javescript:;" class="refund" data-id="{$vo.id}">{:lang('ADMIN_REFUND')}</a>
+                                </li>
+                            </if>
+
+                            <li>
+                                <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                            </li>
+                        </ul>
+
+
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('player_order/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id,type:4},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".refund").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm('确定退款？', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('player_order/refund')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id,type:4},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('退款成功')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg({:lang('Refund_failed')}, {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+
+    $(".out_details").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm('确定取消推荐？', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('player/start_recommend')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id,type:2},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('Recommendation_cancelled_successfully')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('取消推荐失败')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+
+    $(".details").click(function () {
+        var id = $(this).attr('data-id');
+        var lists = {$label};
+
+        var html = '';
+        for(var i=0;i<lists.length;i++){
+
+            html += "<option value='"+lists[i].id+"'>"+lists[i].label_name+"</option>";
+        }
+        //自定页
+        layer.open({
+            title: '选择推荐标签',
+            type: 1,
+            skin: 'layui-layer-demo', //样式类名
+            closeBtn: 0, //不显示关闭按钮
+            btn: ["{:lang('OK')}", '关闭'],
+            area: '250px;',
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: "<select style='width:80%;margin-left: 10%;margin-top: 30px;' class='sel' name=''>"+html+"<select/>",
+            success: function(layero){
+                var btn = layero.find('.layui-layer-btn');
+
+                btn.find('.layui-layer-btn0').click(function () {
+                    var a = $(".sel").val();
+                    $.ajax({
+                        url: "{:url('player/start_recommend')}",
+                        type: 'post',
+                        dataType: 'json',
+                        data: {id: id,recommend_label:a,type:1},
+                        success: function (data) {
+                            if (data == '1') {
+                                layer.msg("{:lang('Recommended_successfully')}", {time: 2000, icon: 1}, function () {
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg("{:lang('推荐失败')}", {time: 2000, icon: 2});
+                            }
+                        }
+                    });
+                });
+
+            }
+        });
+    })
+
+    flag = true;
+    $(".ipt").click(function(){
+
+        if(flag){
+            $(this).children('strong').html(' -');
+            $(this).next('ul').css('display','block');
+            flag = false;
+        }else{
+            flag = true;
+            var self = $(this);
+            setTimeout(function(){
+                self.children('strong').html(' +');
+                self.next('ul').css('display','none');
+            },200)
+        }
+
+
+    });
+
+    $(".ipt").blur(function(){
+        flag = true;
+        var self = $(this);
+        setTimeout(function(){
+            self.children('strong').html('+');
+            self.next('ul').css('display','none');
+        },200)
+    });
+</script>
+</body>
+</html>

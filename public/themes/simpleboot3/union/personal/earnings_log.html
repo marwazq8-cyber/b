@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> 修改资料</title>
+<meta name="keywords" content=""/>
+<meta name="description" content="">
+<include file="public@head"/>
+<style type="text/css">
+  .account_btn{cursor: pointer;}
+</style>
+</head>
+<body class="body-white" id="top" style="padding-top: 20px">
+
+    <div class="container tc-main" style="width: 100%;">
+       <div class="tabs">
+           <ul class="nav nav-tabs">
+               <li class="active"><a href="javascript:;" > {:lang('ADMIN_GUILD_INCOME_LOG')}</a></li>
+           </ul>
+
+           <form class="well form-inline" method="post" action="{:url('union/personal/earnings_log')}" style="margin-top:20px;">
+
+               {:lang('ADMIN_ANCHOR_ID')}:
+                <input type="text" class="form-control" name="hid" style="width: 120px;" value="{$result['hid']|default=''}" placeholder="请输入主播ID">
+               {:lang('USER_ID')}:
+                <input type="text" class="form-control" name="uid" style="width: 120px;" value="{$result['uid']|default=''}" placeholder="{:lang('USER_ID')}">
+
+               {:lang('TIME')}:
+                <input type="text" class="form-control js-bootstrap-date" name="start_time" value="{$result['start_time']|default=''}" style="width: 140px;" autocomplete="off">-
+                <input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$result['end_time']|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+                <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+                <a class="btn btn-danger" href="{:url('union/personal/earnings_log')}">{:lang('EMPTY')}</a>
+            </form>
+
+           <div class="tab-content" style="margin-top: 60px;">
+                <div class="tab-pane active" id="one">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>{:lang('ADMIN_CONSUME_USER')}(ID)</th>
+                        <th>{:lang('ADMIN_ANCHOR')}(ID)</th>
+                        <th>{:lang('ADMIN_COMMISSION_COIN')}</th>
+                        <th>{:lang('ADMIN_ANCHOR_INCOME')}</th>
+                        <th>{:lang('ADMIN_GUILD_INCOME')}</th>
+                        <th>{:lang('ADMIN_COMMISSION_INFO')}</th>
+                        <th>{:lang('TIME')}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                       <foreach name="list" item="vo">
+                        <tr>
+                            <td>{$vo.uname}({$vo.uid})</td>
+                            <td>{$vo.hname}({$vo.user_id})</td>
+                            <td>{$vo.ucoin}</td>
+                            <td>{$vo.host_earnings}</td>
+                            <td>{$vo.guild_earnings}</td>
+                            <td>{$vo.content}</td>
+                            <td>{$vo.addtime | date="Y-m-d H:i",###}</td>
+                        </tr>
+                      </foreach>
+                    </tbody>
+                </table>
+            </div>
+           </div>             
+       </div>
+              <ul class="pagination">{$page}</ul>
+    </div>
+  <include file="public@scripts" />
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+
+</html>

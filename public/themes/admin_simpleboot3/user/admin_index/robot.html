@@ -1,0 +1,142 @@
+<include file="public@header"/>
+<style>
+
+    #sex,#is_online,#reference,.user_status,#order,#is_exchange{
+        width: 80px;
+        height: 32px;
+        border-color: #dce4ec;
+        color: #aeb5bb;}
+
+    .gift-in input{width:25px;}
+    .user_details_type{float:left;width:50%;text-align: left;}
+
+    .btn-info:hover,.btn-info:click{
+        outline:0!important;
+        color:#2a6496!important;
+        background: #ecf0f1!important;
+        border-color: #ecf0f1!important;
+
+    }
+    .btn-info:focus{
+        outline:0!important;
+        box-shadow:none;
+    }
+
+    tr:hover .btn-info{
+        color:#2a6496!important;
+        background: #ecf0f1!important;
+        border-color: #ecf0f1!important;
+    }
+
+    .btn-info{
+        color:#2a6496!important;
+        background: #fff!important;
+        border-color: #fff!important;
+    }
+    #ul{
+        font-size: 12px;
+        list-style:none;
+        min-width:120px;
+        border:1px solid #c1c1c1;
+        display:none;
+        padding-left:0px;
+        position: absolute;
+        right:60px;
+        background-color: #ffffff
+    }
+    .ipt{
+        /*margin:1px 0 0 0px;*/
+        /*border:0px solid;*/
+    }
+    #ul li a{
+        display:inline-block;
+        float:left;
+        width:100%;
+        height:30px;
+        line-height: 30px;
+        text-decoration:none;
+
+        color: #333;
+    }
+    #ul li{
+        margin-left: 0;
+        padding-right: 15px;
+        width:100%;height: 30px;
+        padding-left:15px;
+
+    }
+
+    #ul li:hover{
+        background-color:#f5f5f5;
+    }
+    #ul li a:hover{
+        color:#333;
+    }
+    .ipt::-ms-input-placeholder {
+        text-align: center;
+    }
+
+    .ipt::-webkit-input-placeholder {
+        text-align: center;
+
+    }
+
+
+</style>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a>{:lang('robot')}</a></li>
+        <li ><a href="{:url('user/AdminIndex/edit_robot')}">{:lang("add_robot")}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" name="form1" method="post">
+        {:lang('USER_ID')}：
+        <input class="form-control" type="text" name="uid" style="width: 100px;" value="{:input('request.uid')}"
+               placeholder="{:lang('USER_ID')}">
+        {:lang('ADMIN_KEYWORDS')}：
+        <input class="form-control" type="text" name="keyword" style="width: 120px;" value="{:input('request.keyword')}"
+               placeholder="{:lang('用户名/昵称/邮箱/手机号')}">
+        {:lang('GENDER')}：
+        <select name="sex" id="sex">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="1" <if condition="$request.sex == 1"> selected="selected" </if>>{:lang('MALE')}</option>
+            <option value="2" <if condition="$request.sex == 2"> selected="selected" </if>>{:lang('FEMALE')}</option>
+        </select>
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" onclick='form1.action="{:url('user/adminIndex/robot')}";form1.submit();'/>
+        <a class="btn btn-danger" href="{:url('user/adminIndex/robot')}">{:lang('EMPTY')}</a>
+    </form>
+    <form method="post" action="{:url('adminIndex/upd')}" class="js-ajax-form1">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('NICENAME')}</th>
+                <th>{:lang('GENDER')}</th>
+                <th>{:lang('AVATAR')}</th>
+                <th align="center">{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <php>
+                $reference=array('0'=>lang('否'),"1"=>lang('是'));
+            </php>
+            <foreach name="list" item="vo">
+                <td>{$vo.id}</td>
+                <td>{$vo['user_nickname']?$vo['user_nickname']:lang('NOT_FILLED')}</td>
+                <td>{$vo['sex'] == 2 ? lang('女') : lang('男') }</td>
+                <td class="head_img" data-img='<img  src="{:url('user/public/avatar',array('id'=>$vo['id']))}" style="max-width:100%;max-height:700px;"/>'><img width="25" height="25" src="{:url('user/public/avatar',array('id'=>$vo['id']))}"/></td>
+
+                <td>
+                    <a style="text-decoration:none;"  href="{:url('admin_index/edit_robot',array('id'=>$vo['id']))}">{:lang("编辑资料")}</a>
+                </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+    .select{width: 150px;height: 30px;}
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('GameBox/continuous_number')}">{:lang('ADMIN_OPEN_GAME_BOX_NUM_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_CONTINUOUS_FREQUENCY_UPD')}</a></li>
+    </ul>
+    <form action="{:url('GameBox/add_continuous_number_post')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_CONTINUOUS_FREQUENCY')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sum]"
+                                   id="title" required value="{$list.sum |default=''}" placeholder="{:lang('请输入连续次数')}"/>
+                        </td>
+                    </tr>
+                     <tr>
+                        <th>{:lang('ADMIN_BOX_TYPE')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[type]" class="select">
+                                <foreach name="game_box_type" item="vo">
+                                    <option value="{$vo.id}" <if condition="$list['type'] eq $vo.id"> selected = "selected" </if>>{$vo.name}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('是否开启')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[status]" class="select">
+                               <option value="1" <if condition="$list['status'] eq 1"> selected = "selected" </if>>{:lang('OPEN')}</option>
+                                <option value="0" <if condition="$list['status'] eq 0"> selected = "selected" </if>>{:lang('CLOSE')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[orderno]" style="width:100px;"
+                                   required value="{$list.orderno |default='0'}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('GameBox/continuous_number')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+
+</body>
+</html>

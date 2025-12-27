@@ -1,0 +1,159 @@
+<include file="public@header"/>
+<style>
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    select {
+        width: 100px;
+        height: 35px;
+        line-height: 35px;
+    }
+    .gift-img{width:120px;height:40px;}
+    .gift-img img{height:100%};
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('用户装饰列表')}</a></li>
+        <li><a href="#" onclick="vipset();">{:lang('添加装饰')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" name="form1" method="post">
+        {:lang('USER_ID')}：
+        <input class="form-control" type="text" name="uid" style="width: 100px;" value="{:input('request.uid')}"
+               placeholder="{:lang('Please_enter_user_ID')}">
+
+        {:lang('装饰类型')}:
+        <select name="type" id="user_status">
+            <option value="-1">{:lang('全部')}</option>
+            <option value="1" <if condition="$request.type == '1'"> selected="selected" </if>>{:lang('勋章')}</option>
+            <option value="2" <if condition="$request.type == 2"> selected="selected" </if>>{:lang('主页特效')}</option>
+            <option value="3" <if condition="$request.type == 3"> selected="selected" </if>>{:lang('头像框')}</option>
+            <option value="4" <if condition="$request.type == 4"> selected="selected" </if>>{:lang('聊天气泡')}</option>
+            <option value="5" <if condition="$request.type == 5"> selected="selected" </if>>{:lang('聊天背景')}</option>
+            <option value="7" <if condition="$request.type == 7"> selected="selected" </if>>{:lang('进场动画')}</option>
+            <option value="11" <if condition="$request.type == 11"> selected="selected" </if>>{:lang('座驾')}</option>
+        </select>
+        &nbsp; &nbsp;
+        <input type="submit" class="btn btn-primary" value="{:lang('提交')}" onclick='form1.action="{:url('Dress_up/user_dress')}";form1.submit();'/>
+        <a class="btn btn-danger" href="{:url('Dress_up/user_dress')}">{:lang('EMPTY')}</a>
+
+    </form>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{:lang('USER_NAME')}(ID)</th>
+            <th>{:lang('装饰类型')}</th>
+            <th>{:lang('装饰名称(ID)')}</th>
+            <th>{:lang('到期时间')}</th>
+<!--            <th>{:lang('时长(天)')}</th>-->
+            <th>{:lang('添加时间')}</th>
+<!--            <th>{:lang('排序')}</th>-->
+            <th>{:lang('操作')}</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <php>
+            $type=array('1'=>lang('勋章'),'2'=>lang('主页特效'),'3'=>lang('头像框'),'4'=>lang('聊天气泡'),'5'=>lang('聊天背景'),'6'=>lang('徽章'),'7'=>lang('进场动画'),'8'=>lang('麦克风'),'9'=>lang('昵称铭牌'),'10'=>lang('定制名片'),'11'=>lang('座驾'));
+        </php>
+        <foreach name="list" id="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.user_nickname}({$vo.uid})</td>
+                <td>
+                    {$type[$vo.type]}
+                </td>
+                <td>{$vo.name}({$vo.dress_id})</td>
+
+                <td>{$vo.endtime| date="Y-m-d H:i:s",###}</td>
+                <td>{$vo.addtime| date="Y-m-d H:i:s",###}</td>
+                <td>
+
+                    <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                </td>
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('确定删除？')}", {
+            btn: ["{:lang('确定')}", "{:lang('取消')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('dress_up/user_dress_del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id,type:1},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('删除成功')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('删除失败')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    function vipset(id,time_end) {
+        /*if(time_end.length<=1){
+            var time_end = '';
+        }*/
+        const currentLanguage = navigator.language || navigator.userLanguage;
+        console.log(currentLanguage);
+        time_end = '{$time}';
+        layer.open({
+            type: 0,
+            title: "{:lang('装饰设置')}",
+            area: ['400px', '300px'],   //宽高
+            shade: 0.4,   //遮罩透明度
+            btn: ["{:lang('确定')}", "{:lang('取消')}"], //按钮
+            content: '<div class="layui-form"><label class="layui-form-label">{:lang(\'USER_ID\')}</label><input  type="text" id="uid" class="form-control"><label class="layui-form-label">{:lang('装饰ID')}</label><input  type="text" id="dress_id" class="form-control" name="dress_id"><label class="layui-form-label">{:lang('结束时间')}</label><input  type="text" id="vip_end_time" class="form-control" name="vip_end_time" value="'+time_end+'" style="width: 140px;" autocomplete="off" oninput = "value=value.replace(/[^\\d]/g,\'\')"></div>',
+            success:function(){
+                Wind.css('bootstrapDatetimePicker');
+                Wind.use('bootstrapDatetimePicker', function () {
+                    $("#vip_end_time").datetimepicker({
+                        language: currentLanguage,
+                        format: 'yyyy-mm-dd hh:ii',
+                        todayBtn: 1,
+                        autoclose: true
+                    });
+                });
+            },
+            yes:function(index){   //点击确定回调
+                //alert($('#vip_end_time').val());
+                layer.close(index);
+                var time = $('#vip_end_time').val();
+                var dress_id = $('#dress_id').val();
+                var uid = $('#uid').val();
+
+                $.ajax({
+                    url: "{:url('DressUp/dress_set')}",
+                    type: 'get',
+                    dataType: 'json',
+                    data: {id: id,time:time,dress_id:dress_id,uid:uid},
+                    success: function (data) {
+                        if(data['code'] == 1){
+                            layer.msg(data['msg'],{time: 2000, icon:1},function(){
+                                window.location.reload();
+                            });
+                        }else{
+                            layer.msg(data['msg'],{time: 2000, icon:2});
+                        }
+                    }
+                });
+            }
+        });
+    }
+</script>
+</body>
+</html>

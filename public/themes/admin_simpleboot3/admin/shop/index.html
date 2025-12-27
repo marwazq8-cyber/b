@@ -1,0 +1,97 @@
+
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('商城列表')}</a></li>
+        <li><a href="{:url('shop/add')}">{:lang('添加商城')}</a></li>
+    </ul>
+
+  
+    <form class="well form-inline margin-top-20" method="post" action="{:url('shop/index')}">
+        {:lang('TYPE')}:
+        <select class="form-control" name="type" style="width: 140px;">
+            <option value="1" <if condition="$data.type eq 1">{:lang('座驾')}</option>
+            <option value="2" <if condition="$data.type eq 2"> selected='selected' </if>>{:lang('头饰')}</option>
+            <option value="3" <if condition="$data.type eq 3"> selected='selected' </if>>{:lang('聊天气泡')}</option>
+        </select>
+        {:lang('STATUS')}：
+        <select class="form-control" name="status" style="width: 140px;">
+            <option value="-1"> {:lang('ALL')}</option>
+            <option value="0" <if condition="$data.status eq '0'"> selected='selected' </if>> {:lang('CLOSE')}</option>
+            <option value="1" <if condition="$data.status eq 1"> selected='selected' </if>>{:lang('OPEN')}</option>
+        </select>
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}"/>
+        <a class="btn btn-danger" href="{:url('shop/index')}">{:lang('EMPTY')}</a>
+
+    </form>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{:lang('ADMIN_NAME')}</th>
+            <th>{:lang('ADMIN_IMG')}</th>
+            <th>{:lang('TYPE')}</th>
+            <th>{:lang('STATUS')}</th>
+            <th>{:lang('是否vip特权')}</th>
+            <th>{:lang('TIME')}</th>
+            <th>{:lang('SORT')}</th>
+            <th>{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tfoot>
+            <php> 
+                $type=array(1=>'座驾',2=>'头饰',3=>'聊天气泡'); 
+                $status=array(0=>lang('CLOSE'),1=>lang('OPEN'));
+                $is_vip=array('1'=>lang('YES'),'0'=>lang('NO'));
+            </php>
+        <foreach name="list" id="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.name}</td>
+                <td><img src="{$vo.img}" style="width:50px;height:50px;"/></td>
+                <td>{$type[$vo.type]}</td>
+                <td>{$is_vip[$vo.is_vip]}</td>
+                <td>{$status[$vo.status]}</td>
+                <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                <td>{$vo.sort}</td>
+                <td>
+                    <a href="{:url('shop/add',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                    <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                </td>
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+    <div class="pagination">{$page}</div>    
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('shop/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("{:lang('DELETE_SUCCESS')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('DELETE_FAILED')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+</script>
+</body>
+</html>

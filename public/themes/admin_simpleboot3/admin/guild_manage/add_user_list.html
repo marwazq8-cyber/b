@@ -1,0 +1,64 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+   <ul class="nav nav-tabs">
+        <li><a href="{:url('guild_manage/user_list',array('id'=>$guild_id))}">{:lang('ADMIN_ANCHOR_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_ANCHOR_ADD')}</a></li>
+    </ul>
+    <form action="{:url('guild_manage/addUserPost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('USER_ID')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[user_id]"
+                                   id="title" required value="{$list.user_id |default=''}" placeholder="{:lang('请输入公会登录账号')}"/>
+                        </td>
+                    </tr>
+                    <input type="hidden" name="guild_id" value="{$guild_id}">
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[status]" id="gift">
+                                <option value="1">{:lang('OPEN')}</option>
+                                <option value="0" <if condition="$list['status'] eq '0'"> selected="selected" </if> >{:lang('CLOSE')}</option>
+
+                            </select>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('guild_manage/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

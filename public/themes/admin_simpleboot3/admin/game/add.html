@@ -1,0 +1,203 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+    .select{width:130px;height:35px;line-height: 35px;border: 1px solid #dce4ec;}
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+     <ul class="nav nav-tabs">
+        <li><a href="{:url('game/index')}">{:lang('ADMIN_GAME_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_GAME_ADD')}</a></li>
+    </ul>
+    <form action="{:url('game/addPost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th> {:lang('ADMIN_GAME_NAME')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[name]"
+                                   id="title" required value="{$list.name |default=''}" placeholder="{:lang('Please_enter_name')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_GAME_TYPE')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[type]" class="select">
+                                <foreach name="game_type" id="v">
+                                    <option value="{$v.id}" <if condition="$list['type'] eq $v['id']"> selected = "selected" </if>>{$v.name}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                     <tr>
+                        <th>{:lang('ADMIN_GAME_ICON')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[img]" id="thumbnail" value="{$list['img'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <if condition="$list['img']">
+                                        <img src="{$list['img']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_ICON')}<span class="form-required">{:lang('游戏虚拟币图标')}</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[game_coin_picture]" id="thumbnail1" value="{$list['game_coin_picture'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail1');">
+                                    <if condition="$list['game_coin_picture']">
+                                        <img src="{$list['game_coin_picture']}"
+                                             id="thumbnail1-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail1-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail1" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('图片')}<span class="form-required">{:lang('部分游戏图片')}</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[game_title]" id="thumbnail2" value="{$list['game_title'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail2');">
+                                    <if condition="$list['game_title']">
+                                        <img src="{$list['game_title']}"
+                                             id="thumbnail2-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail2-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail2" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('背景图片')}<span class="form-required">{:lang('部分游戏背景图片')}</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[game_bg]" id="thumbnail3" value="{$list['game_bg'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail3');">
+                                    <if condition="$list['game_bg']">
+                                        <img src="{$list['game_bg']}"
+                                             id="thumbnail3-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail3-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail3" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_CONTENT')}</th>
+                        <td>
+                            <script type="text/plain" id="content" name="post[rule]">{$list.rule}</script>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                   required value="{$list.sort |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[status]" id="gift">
+                                <option value="1">{:lang('OPEN')}</option>
+                                <option value="0" <if condition="$list['status'] eq '0'"> selected="selected" </if> >{:lang('CLOSE')}</option>
+
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('game/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    //编辑器路径定义
+    var editorURL = GV.WEB_ROOT;
+</script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        editorcontent = new baidu.editor.ui.Editor();
+        editorcontent.render('content');
+        try {
+            editorcontent.sync();
+        } catch (err) {
+        }
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+        $('.btn-cancel-thumbnail1').click(function () {
+            $('#thumbnail1-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail1').val('');
+        });
+        $('.btn-cancel-thumbnail2').click(function () {
+            $('#thumbnail2-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail2').val('');
+        });
+        $('.btn-cancel-thumbnail3').click(function () {
+            $('#thumbnail3-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail3').val('');
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>已邀请用户</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="__STATIC__/css/invited_share.css" rel="stylesheet">
+
+    <script src="__STATIC__/js/jquery-1.10.2.min.js"></script>
+
+</head>
+<body>
+  <div class="invited_share_user">
+       {volist name="data" id="v" key="i"}
+        <div class="invited_share_user_type">
+            <div class="invited_share_user_type_img"><img src="{$v.avatar}"></div>
+            <div class="invited_share_user_type_title">
+                  <div class="invited_share_user_type_name">
+                    <div class="invited_share_user_type_name_1">{$v.user_nickname} </div>
+                     <div class="invited_share_user_type_name_img"> 
+                      <img src="{$v.level_icon}">
+                      <div class="invited_share_user_type_name_img_level">{$v.level}</div>
+                    </div>
+                   </div>
+                  <div class="invited_share_user_type_number">账号ID ：{$v.id}</div>
+            </div>
+            <div class="invited_share_user_type_right">{$v.income_total}</div>
+        </div>
+      {/volist}
+  </div>
+
+</body>
+</html>

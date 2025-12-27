@@ -1,0 +1,124 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('dress_up/home_page')}">{:lang('ADMIN_HOME_PAGE_LIST')}</a></li>
+        <li><a href="{:url('dress_up/noble_home_page')}">{:lang('ADMIN_NOBLE')} {:lang('ADMIN_HOME_PAGE_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_HOME_PAGE_ADD')}</a></li>
+    </ul>
+    <form action="{:url('dress_up/addPost')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_NAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[name]"
+                                   id="title" required value="{$list.name |default=''}" placeholder="{:lang('Please_enter_name')}"/>
+                        </td>
+                    </tr>
+                    <input type="hidden" name="post[type]" value="2">
+                    <tr>
+                        <th>{:lang('ADMIN_ICON')}<span class="form-required">298*304</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[icon]" id="thumbnail" value="{$data['icon'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <empty name="$data['icon']">
+
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+
+                                        <img src="{$data['icon']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </empty>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_SVGA')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[img_bg]" id="thumbnailbg" value="{$data['img_bg'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnailbg');">
+                                    <empty name="$data['img_bg']">
+
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnailbg-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+
+                                        <img src="{$data['img_bg']}"
+                                             id="thumbnailbg-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </empty>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnailbg" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('天')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[days]"
+                                   id="title" required value="{$list.days |default=''}" placeholder="{:lang('天')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('价格')}({$currency_name}) <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[coin]"
+                                   id="title" required value="{$list.coin |default=''}" placeholder="{:lang('请输入数量')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')} <span class="form-required"></span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[orderno]"
+                                   id="title" required value="{$list.orderno |default='50'}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('dress_up/home_page')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    function ColorGetFn(dom){
+        document.getElementById('colors').value = dom.value;
+    }
+ $('.btn-level-thumbnail').click(function () {
+            $('#level-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#level').val('');
+        });
+  $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+</script>
+</body>
+</html>

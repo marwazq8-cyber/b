@@ -1,0 +1,92 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="javascript:;">{:lang('监控')}</a></li>
+	</ul>
+	<script src="//imgcache.qq.com/open/qcloud/video/vcplayer/TcPlayer-2.3.0.js" charset="utf-8"></script>
+	<form class="js-ajax-form" action="{:url('refill/upd')}" method="post">
+
+		<table class="table table-hover table-bordered table-list">
+			<thead>
+			<tr>
+				<th>ID</th>
+				<th>{:lang('ADMIN_ANCHOR_NICKNAME')}(ID)</th>
+				<th>{:lang('频道ID')}</th>
+				<th>{:lang('视频')}</th>
+				<th>{:lang('开播视频')}</th>
+				<th>{:lang('ACTIONS')}</th>
+			</tr>
+			</thead>
+			<tfoot>
+			<foreach name="list" id="vo">
+				<tr>
+					<td>{$vo.lid}</td>
+					<td>{$vo['user_info']['user_nickname']}({$vo.user_id})</td>
+					<td>{$vo.user_id}</td>
+					<td>
+						<div id="id_test_video" style="width:100%; height:auto;"></div>
+						<script type="text/javascript">
+							var player =  new TcPlayer('id_test_video', {
+								"flv": "{$vo.play_flv}", //增加了一个flv的播放地址，用于PC平台的播放 请替换成实际可用的播放地址
+								"autoplay" : true,      //iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
+								"coverpic" : "http://www.test.com/myimage.jpg",
+								"width" :  '480',//视频的显示宽度，请尽量使用视频分辨率宽度
+								"height" : '320'//视频的显示高度，请尽量使用视频分辨率高度
+							});
+						</script>
+					</td>
+					<td>{$vo.create_time | date="Y-m-d H:i:s",###}</td>
+					<td>
+						<a href="{:url('video_call_list/close',array('lid'=>$vo.lid))}">{:lang('CLOSE')}</a>
+					</td>
+				</tr>
+			</foreach>
+			</tfoot>
+		</table>
+
+	</form>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+
+    function liveInfo(id){
+        layer.open({
+            type: 2,
+            title: "{:lang('查看直播')}",
+            shadeClose: true,
+            shade: 0.8,
+            area: ['80%', '80%'],
+            content: '/admin/public/admin/live/liveInfo/id/' + id //iframe的url
+        });
+    }
+    $(".del").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}","{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('refill/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("{:lang('DELETE_SUCCESS')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('DELETE_FAILED')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function(){
+        $(".js-ajax-form").submit();
+    })
+</script>
+</body>
+</html>

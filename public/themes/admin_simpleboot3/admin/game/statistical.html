@@ -1,0 +1,129 @@
+<include file="public@header"/>
+<style>
+    .gift-img{width:50px;height:50px}
+    .gift-img img{width:100%;height:100%;}
+    .gift-in input{width:25px;}
+    .js-ajax-form{margin-top:30px;}
+    .select{height:35px;line-height: 35px;width:100px;}
+
+    .game_list{width: 100%;padding:10px 50px;height: 170px;}
+    .game_list_type{width:20%;margin:15px 2.5%;height: 140px; border-radius: 10px;float:left;}
+    .cheng{background: url("__STATIC__/images/cheng.png");}
+    .hong{background: url("__STATIC__/images/hong.png");}
+    .lan{background: url("__STATIC__/images/lan.png");}
+    .zi{background: url("__STATIC__/images/zi.png");}
+    .game_list_type_div{width:100%;height: 40px;padding:5px;margin-top: 15px;}
+    .game_list_type_div img{height: 100%;margin-left:30px;}
+    .game_list_type_div_sum{width:100%;height: 30px;line-height: 30px;color:#fff;padding-left:35px;font-size: 16px;margin-top:10px;}
+    .game_list_type_div_count{width: 100%;height: 30px;line-height: 30px;color:#fff;padding-left:35px;font-size: 23px;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+         <li ><a href="{:url('game/index')}">{:lang('ADMIN_GAME_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_GAME_INCOME')}</a></li>
+    </ul>
+    <div class="game_list">
+        <div class="game_list_type cheng">
+            <div class="game_list_type_div"><img src="__STATIC__/images/qianbao.png"/></div>
+            <div class="game_list_type_div_sum">{:lang('ADMIN_TOTAL_CONSUMPTION')}</div>
+            <div class="game_list_type_div_count">{$list['coin'] |default='0'}</div>
+        </div>
+        <!--<div class="game_list_type hong">
+            <div class="game_list_type_div"><img src="__STATIC__/images/mofabang.png"/></div>
+            <div class="game_list_type_div_sum">{:lang('消费魔法棒总数')}</div>
+            <div class="game_list_type_div_count">{$list['magic_sum']|default='0'}</div>
+        </div>-->
+        <div class="game_list_type lan">
+            <div class="game_list_type_div"><img src="__STATIC__/images/liwu.png"/></div>
+            <div class="game_list_type_div_sum">{:lang('ADMIN_TOTAL_NUMBER_OF_WINNING_GIFTS')}</div>
+            <div class="game_list_type_div_count">{$list['gift_sum']|default='0'}</div>
+        </div>
+        <div class="game_list_type zi">
+            <div class="game_list_type_div"><img src="__STATIC__/images/jine.png"/></div>
+            <div class="game_list_type_div_sum">{:lang('ADMIN_GIFT_PRICE_ALL')}</div>
+            <div class="game_list_type_div_count">{$list['gift_coin']|default='0'}</div>
+        </div>
+    </div>
+
+     <form class="well form-inline margin-top-20" method="post" action="{:url('game/statistical')}">
+         {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time"
+               value="{$request.start_time|default=''}"
+               style="width: 200px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time"
+               value="{$request.end_time|default=''}"
+               style="width: 200px;" autocomplete="off"> &nbsp; &nbsp;
+        {:lang('ADMIN_USER_TYPE')}:
+        <select class="select" name="type">
+            <option val="0">{:lang('ALL')}</option>
+            <option value="1" <if condition="$request['type'] eq 1"> selected = "selected" </if>>{:lang('ADMIN_GENERAL_USER')}</option>
+            <option value="2" <if condition="$request['type'] eq 2"> selected = "selected" </if>>{:lang('ADMIN_DESIGNATED_USER')}</option>
+        </select>      
+        <input type="hidden" name="id" value="{$request.id}">
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('game/statistical')}">{:lang('EMPTY')}</a>
+    </form>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>{:lang('ADMIN_DATE')}</th>
+            <th>{:lang('ADMIN_USER_TYPE')}</th>
+            <th>{:lang('ADMIN_CONSUME_NUM')}</th>
+            <!--<th>{:lang('消费魔法棒总数')}</th>-->
+            <th>{:lang('ADMIN_TOTAL_NUMBER_OF_WINNING_GIFTS')}</th>
+            <th>{:lang('ADMIN_GIFT_PRICE_ALL')}</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <foreach name="data" id="vo">
+           <tr>
+                <td>{$vo.date}</td>
+                <td>
+                    <if condition="$vo.type eq 1">
+                        {:lang('ADMIN_GENERAL_USER')}
+                    <else/>
+                        {:lang('ADMIN_DESIGNATED_USER')}
+                    </if>
+                </td>
+                <td>{$vo.coin}</td>
+                <!--<td>{$vo.magic_sum}</td>-->
+                <td>{$vo.gift_sum}</td>
+                <td>{$vo.gift_coin}</td>
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+  <ul class="pagination">{$page}</ul>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $(".del").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('game/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("{:lang('DELETE_SUCCESS')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('DELETE_FAILED')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+
+</script>
+</body>
+</html>

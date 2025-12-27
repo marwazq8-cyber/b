@@ -1,0 +1,26 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:87:"/www/wwwroot/admin.xivolive.com/TomChat-PHP/public/../application/index/view/index.html";i:1730282264;}*/ ?>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BogoChat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 引入 layui.css -->
+    <link href="//unpkg.com/layui@2.9.11/dist/css/layui.css" rel="stylesheet">
+    <!-- 引入 layui.js -->
+    <script src="//unpkg.com/layui@2.9.11/dist/layui.js"></script>
+</head>
+<body>
+
+<div class="layui-container" style="margin-top: 20px">
+    <h1>欢迎使用由·中国 山东布谷鸟网络科技有限公司（BogoChat）开发的海外语聊产品</h1> <br>
+    <span style="color: red">使用请购买正版，使用盗版可能会对您追究法律责任，造成的一切后果都将由您承担</span>  <br>
+    <span style="color: red">请勿使用此产品进行任何违法行为，否则后果自负</span>
+    </br>
+    <br>
+    <h1>Welcome to use the overseas voice chat product developed by Shandong Cuckoo Network Technology Co., Ltd. (BogoChat) in China</h1> <br>
+    <span style="color: red">Please purchase the genuine product. If you use pirated products, you may be held legally responsible and you will bear all the consequences</span> <br>
+    <span style="color: red">Please do not use this product to conduct any illegal activities, otherwise you will be responsible for the consequences</span>
+</div>
+</body>
+</html>

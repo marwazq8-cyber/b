@@ -1,0 +1,60 @@
+<include file="public@header"/>
+</head>
+<style>
+    .select{width:120px;height:35px;line-height: 35px;}
+</style>
+<body>
+<div class="wrap js-check-wrap">
+      <ul class="nav nav-tabs">
+        <li><a href="{:url('cash_card/index')}">{:lang('ADMIN_BANK_NAME_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_ADD_BANK_NAME')}</a></li>
+    </ul>
+    <form action="{:url('cash_card/add_post')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered" style="margin-top:100px;">
+                  
+                    <tr>
+                        <th>{:lang('ADMIN_BANK_NAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[name]"
+                                   id="title" required value="{$list.name |default=''}" placeholder="{:lang('银行卡名称')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[status]" class="select">
+                               <option value="0" <if condition="$list['status'] eq 0"> selected = "selected" </if>>{:lang('CLOSE')}</option>
+                               <option value="1" <if condition="$list['status'] eq 1"> selected = "selected" </if>>{:lang('OPEN')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                   required value="{$list.sort |default='0'}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-12">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('cash_card/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+
+</script>
+
+</body>
+</html>

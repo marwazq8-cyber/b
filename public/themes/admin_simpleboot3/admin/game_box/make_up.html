@@ -1,0 +1,117 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .gift-in input {
+        width: 20px;
+    }
+
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_REWARD_COMPENSATION_LIST')}</a></li>
+        <li><a href="{:url('GameBox/add_make_up')}">{:lang('ADMIN_REWARD_COMPENSATION_ADD')}</a></li>
+
+    </ul>
+
+    <form class="js-ajax-form" action="{:url('GameBox/pool_upd')}" method="post">
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <!--<th>{:lang('排序')}</th>-->
+                <th>ID</th>
+                <th>{:lang('USER_NAME')}(ID)</th>
+                <th>{:lang('ADMIN_GIFT_NAME')}</th>
+                <th>{:lang('ADMIN_NUMBER')}</th>
+                <th>{:lang('TYPE')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('ADD_TIME')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+
+            <foreach name="data" id="vo">
+                <tr>
+
+                    <td>{$vo.id}</td>
+                    <td>{$vo.user_nickname}({$vo.uid})</td>
+                    <td>{$vo.gift_name}</td>
+                    <td>{$vo.num}</td>
+                    <td>
+                        <if condition="$vo.type eq 1">
+                            {:lang('ADMIN_PRIZE_POOL_N')}
+                            <else/>
+                            {:lang('ADMIN_PRIZE_POOL_W')}
+                        </if>
+                    </td>
+                    <td>
+                        <if condition="$vo.status eq 1">
+                            {:lang('ADMIN_RECEIVED')}
+                            <else/>
+                            {:lang('ADMIN_UN_RECEIVED')}
+                        </if>
+                    </td>
+
+                    <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <if condition="$vo.status eq 0">
+                            <a href="{:url('GameBox/add_make_up',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                        </if>
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <!-- <button type="button" class="btn btn-primary" style="margin-top:20px;margin-right:20px;float: left;">{:lang('排 序')}</button>-->
+        <div class="pagination">{$page}</div>
+    </form>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm('确定删除,将删除奖池下所有泡泡？', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('GameBox/make_del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id,type:1},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function () {
+        $(".js-ajax-form").submit();
+    })
+
+</script>
+</body>
+</html>

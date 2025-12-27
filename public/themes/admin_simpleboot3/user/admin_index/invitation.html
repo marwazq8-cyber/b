@@ -1,0 +1,84 @@
+<include file="public@header"/>
+<style>
+    #reference{    width: 100px;
+        height: 32px;
+        border-color: #dce4ec;
+        color: #aeb5bb;}
+
+    #user_status{    width: 100px;
+        height: 32px;
+        border-color: #dce4ec;
+        color: #aeb5bb;}
+    #sex{
+        width: 100px;
+        height: 32px;
+        border-color: #dce4ec;
+        color: #aeb5bb;}
+
+    #order{
+        width: 100px;
+        height: 32px;
+        border-color: #dce4ec;
+        color: #aeb5bb;}
+</style>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class=""><a href="{:url('admin_index/index')}">{:lang("本站用户")}</a></li>
+        <li class="active"><a>{:lang('ADMIN_INVITE_USER')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('user/adminIndex/invitation')}">
+
+        {:lang('GENDER')}：
+        <select name="sex" id="sex">
+            <option value="0">{:lang('ALL')}</option>
+            <option value="1">{:lang('MALE')}</option>
+            <option value="2">{:lang('FEMALE')}</option>
+        </select>
+        <input type="hidden" name="id" value="{$uid}">
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}"/>
+    </form>
+
+    <div style="margin:20px 0; float: left;">{:lang("邀请总收益：")}${$nummoney}</div>
+    <div style="margin:20px 0;float: left;margin-left: 20px;">{:lang("邀请人数量：")}{$numpeo}</div>
+    <div style="margin:20px 0;float: left;margin-left: 20px;">{:lang("邀请男性数量：")}{$mnum}</div>
+    <div style="margin:20px 0;float: left;margin-left: 20px;">{:lang("邀请女性数量：")}{$wnum}</div>
+    <form method="post" class="js-ajax-form">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <!-- <th>{:lang('USERNAME')}</th> -->
+                <th>{:lang('NICENAME')}</th>
+                <th>{:lang('GENDER')}</th>
+                <th>{:lang("邀请收益（现金）")}</th>
+                
+            </tr>
+            </thead>
+            <tbody>
+            
+            <foreach name="invite" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+
+                    <td>{$vo['user_nickname']?$vo['user_nickname']:lang('NOT_FILLED')}</td>
+                    <td>{$vo['sex'] == 1 ? lang('男') : lang('女') }</td>
+                    <td>${$vo['count']}</td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination"></div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script type="text/javascript">
+    
+   
+
+
+</script>
+</body>
+</html>

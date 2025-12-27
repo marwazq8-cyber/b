@@ -1,0 +1,107 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+  .eggs_name{
+    width: 100%;height: 30px;line-height: 30px;color:#fb7373;margin-left: 20px;  }
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+    .select{width: 150px;height:30px;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('独立奖池用户列表')}</a></li>
+    </ul>
+     <form class="well form-inline margin-top-20" method="post" action="{:url('bubble/named_user')}">
+         {:lang('USER_ID')}:
+            <input type="text" class="form-control" name="uid" style="width: 140px;" value="{:input('request.uid')}" placeholder="{:lang('USER_ID')}">
+      
+            <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+            <a class="btn btn-danger" href="{:url('bubble/named_user')}">{:lang('EMPTY')}</a>
+        </form>
+        
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>{:lang('USER')}(ID)</th>
+                <th>{:lang('余额')}</th>
+                <th>{:lang('魔法棒')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.user_nickname}({$vo.id})</td>
+                    <td>{$vo.coin}</td>
+                    <td>{$vo.magic_wand_sum}</td>
+                    <td>
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('解除指定用户')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <button type="button" class="btn btn-primary add_named_user" style="margin-top:20px;"> {:lang('ADD')}</button>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".add_named_user").click(function(){
+        layer.prompt({title: '输入用户id', formType: 3}, function(uid, index){
+             $.ajax({
+                url: "{:url('bubble/upd_named_user')}",
+                type: 'post',
+                dataType: 'json',
+                data: {'uid': uid,'type':1},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('指定成功')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('指定失败')}", {time: 2000, icon: 2});
+                        layer.close(index);
+                    }
+                }
+            });
+        });
+    })
+    $(".del").click(function () {
+        var uid = $(this).attr('data-id');
+        layer.confirm('确定解除？', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('bubble/upd_named_user')}",
+                type: 'post',
+                dataType: 'json',
+                data: {uid: uid,type:0},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('操作成功')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('操作失败')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function () {
+        $(".js-ajax-form").submit();
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+      .select {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('shop/price')}">{:lang('商城价格列表')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('添加商城价格')}</a></li>
+    </ul>
+    <form action="{:url('shop/add_price_post')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('TYPE')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[shop_id]" class="select">
+                                <foreach name="shop" item="v">
+                                    <option value="{$v.id}" <if condition="$data['shop_id'] eq $v.id"> selected = "selected" </if>>{$v.name}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('消费的价格 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[coin]"
+                                   id="title" required value="{$data.coin |default=''}" placeholder="{:lang('请输入消费的价格')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('购买的时间(月) ')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[month]"
+                                   id="title" required value="{$data.month |default=''}" placeholder="{:lang('请输入购买的时间(月)')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('OPEN_STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[status]" class="select">
+                                <option value="0" <if condition="$data['status'] eq '0'"> selected = "selected" </if>>{:lang('CLOSE')}</option>
+                                <option value="1" <if condition="$data['status'] eq '1'"> selected = "selected" </if>>{:lang('OPEN')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                   required value="{$data.sort |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$data.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('shop/price')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+
+
+</body>
+</html>

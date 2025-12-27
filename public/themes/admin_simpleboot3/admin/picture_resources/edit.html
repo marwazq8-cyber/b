@@ -1,0 +1,104 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+    .select {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('picture_resources/index')}">{:lang('图片资源库')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('编辑资源')}</a></li>
+    </ul>
+    <form action="{:url('picture_resources/editPost')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('图片标题')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[title]"
+                                   id="title" required value="{$data.title |default=''}" placeholder="{:lang('图片标题')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('分组')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[grouping]"
+                                   id="title" required value="{$data.grouping |default=''}" placeholder="{:lang('分组')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('标识符')}<span class="form-required">*</span></th>
+                        <td>
+                            <if condition="$data['identifier']">
+                                <input class="form-control" type="text"
+                                       id="title" required value="{$data.identifier |default=''}" readonly="readonly"/>
+                                <else/>
+                                <input class="form-control" type="text" name="post[identifier]"
+                                       id="title" required value="{$data.identifier |default=''}" placeholder="{:lang('标识符')}"/>
+                            </if>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_IMG')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[img]" id="thumbnail" value="{$data['img'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <if condition="$data['img']">
+                                        <img src="{$data['img']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                   required value="{$data.sort |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$data.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('picture_resources/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+    });
+</script>
+
+</body>
+</html>

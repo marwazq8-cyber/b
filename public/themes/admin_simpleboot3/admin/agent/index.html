@@ -1,0 +1,134 @@
+<include file="public@header"/>
+<body>
+<style>
+    .table-box{
+        overflow-x:scroll;
+    }
+    #table{
+        min-width: 100%;
+    }
+    #table tr th{
+        white-space:nowrap;
+    }
+</style>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('agent/index')}">{:lang('渠道列表')}</a></li>
+        <li><a href="{:url('agent/edit')}">{:lang('添加账号')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('agent/index')}">
+       {:lang('渠道账号')}:
+        <input type="text" class="form-control" name="agent_login" style="width: 120px;"
+               value="{$data.agent_login|default=''}" placeholder="{:lang('账号或昵称')}">
+       {:lang('渠道id')}:
+        <input type="text" class="form-control" name="agent_id" style="width: 120px;"
+               value="{$data.agent_id|default=''}" placeholder="{:lang('推广id')}">
+        {:lang('状态')}:
+        <select class="form-control" name="status" style="width: 140px;">
+            <option value="-1">{:lang('全部')}</option>
+            <option value="0" <if condition="$data.status eq '0'"> selected='selected' </if>>{:lang('封号')}</option>
+            <option value="1" <if condition="$data.status eq 1"> selected='selected' </if>>{:lang('正常')}</option>
+        </select>
+
+        <input type="submit" class="btn btn-primary" value="{:lang('搜索')}"/>
+        <a class="btn btn-danger" href="{:url('agent/index')}">{:lang('清空')}</a>
+
+    </form>
+
+    <div class="table-box">
+    <table class="table table-hover table-bordered" id="table">
+        <thead>
+        <tr>
+            <th>{:lang('渠道ID')}</th>
+            <th>{:lang('渠道账号')}</th>
+            <th>{:lang('账号昵称')}</th>
+            <th>{:lang('账户余额')}</th>
+            <th>{:lang('账户总收益')}</th>
+            <th>{:lang('充值分成')}</th>
+            <th>{:lang('agent_level2')}</th>
+            <th>{:lang('推广人')}</th>
+            <th>{:lang('推广码')}</th>
+            <th>{:lang('备注')}</th>
+            <th>{:lang('STATUS')}</th>
+            <th width="250">{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <php>$user_statuses=array("0"=>lang('账号已封'),"1"=>lang('正常'));</php>
+        <foreach name="users" item="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.agent_login}</td>
+                <td>{$vo.login_name}</td>
+                <td>{:floatval($vo.income)}</td>
+                <td>{:floatval($vo.income_total)}</td>
+                <td>{:floatval($vo['commission'])}</td>
+                <td>{$vo.staff}</td>
+                <td>{$vo.promoter}</td>
+                <td>{$vo['channel']}</td>
+                <td>
+                    {$vo['remarks']}
+                    <if condition="$vo.is_empty_user neq 0">
+                        --- {$vo.empty_endtime| date="Y-m-d H:i:s",###}
+                        <if condition="$vo.is_empty_user eq 1">
+                            清空当前绑定用户
+                            <else/>
+                            清空所有绑定用户
+                        </if>
+                    </if>
+                </td>
+                <td>{$user_statuses[$vo['status']]}</td>
+                <td>
+                    <a href='{:url("agent/edit",array("id"=>$vo["id"]))}'>{:lang('编辑')}</a> |
+                    <a href='{:url("agent/registered",array("agent_company"=>$vo["id"]))}'>{:lang('注册')}</a> |
+                    <a href='{:url("agent/earnings",array("agent_company"=>$vo["id"]))}'>{:lang('充值')}</a> |
+                    <a href='{:url("agent/promoter",array("agent_company"=>$vo["id"]))}'>{:lang('推广')}</a> |
+                    <a href='{:url("agent/statistics",array("uid"=>$vo["id"]))}'>{:lang('统计')}</a>
+                    <if condition="$vo.status eq '0' && $vo.is_ban_all eq 1 && $vo.is_empty_user neq 1">
+                        |
+                        <a href='javascript:void(0)' class="empty_user" data-id="{$vo['id']}" data-status="1">{:lang('清空当前绑定')}</a>
+                    </if>
+                    <if condition="$vo.status eq '0' && $vo.is_ban_all eq 2 && $vo.is_empty_user neq 2">
+                        |
+                        <a href='javascript:void(0)' class="empty_user" data-id="{$vo['id']}" data-uid="2">{:lang('清空所有绑定')}</a>
+                    </if>
+
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    </div>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    $(".empty_user").click(function () {
+        const id = $(this).attr("data-id");
+        const status = $(this).attr("data-status");
+        const name = status == 1 ? "{:lang('清空当前绑定')}" : "{:lang('清空所有绑定')}";
+        //询问框
+        layer.confirm(name + '?', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('agent/clear_empty_user')}",
+                type: 'get',
+                data: {id: id,status: status},
+                dataType: 'json',
+                success: function (data) {
+                    if(data.code =='1'){
+                        layer.msg(data.msg,{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg(data.msg,{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+</script>
+</body>

@@ -1,0 +1,120 @@
+<include file="public@header"/>
+<body>
+<style>
+    .table-box{
+        overflow-x:scroll;
+    }
+    #table{
+        min-width: 100%;
+    }
+    #table tr th{
+        white-space:nowrap;
+    }
+</style>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('agency/index')}">{:lang('充值后台账号')}</a></li>
+        <li><a href="{:url('agency/edit')}">{:lang('添加账号')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('agency/index')}">
+       {:lang('账号id')}:
+        <input type="text" class="form-control" name="id" style="width: 120px;"
+               value="{$data.id|default=''}">
+       {:lang('账号')}:
+        <input type="text" class="form-control" name="name" style="width: 120px;"
+               value="{$data.name|default=''}" placeholder="{:lang('账号或昵称')}">
+        {:lang('状态')}:
+        <select class="form-control" name="status" style="width: 140px;">
+            <option value="-1">{:lang('全部')}</option>
+            <option value="1" <if condition="$data.status eq 1"> selected='selected' </if>>{:lang('正常')}</option>
+            <option value="2" <if condition="$data.status eq 2"> selected='selected' </if>>{:lang('关闭')}</option>
+        </select>
+       {:lang('时间')}:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time" value="{$data['start_time']|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$data['end_time']|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="{:lang('搜索')}"/>
+        <a class="btn btn-danger" href="{:url('agency/index')}">{:lang('清空')}</a>
+
+    </form>
+
+    <div class="table-box">
+    <table class="table table-hover table-bordered" id="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{:lang('账号')}</th>
+            <th>{:lang('昵称')}</th>
+            <th>{:lang('手机号')}</th>
+            <th>{:lang('余额')}</th>
+            <th>{:lang('总金额')}</th>
+            <th>{:lang('售出')}</th>
+            <th>{:lang('STATUS')}</th>
+            <th width="250">{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <php>$status=array("1"=>lang('正常'),"2"=>lang('关闭'));</php>
+        <foreach name="users" item="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.login}</td>
+                <td>{$vo.name}</td>
+                <td>{$vo.tel}</td>
+                <td>{:floatval($vo.coin)}</td>
+                <td>{:floatval($vo.coin_total)}</td>
+                <td>{:floatval($vo['consumption_coin'])}</td>
+                <td>{$status[$vo['status']]}</td>
+                <td>
+                    <a style="text-decoration:none;" href='{:url("agency/edit",array("id"=>$vo["id"]))}'>{:lang('编辑')}</a> |
+                    <a style="text-decoration:none;"  href="javascript:void(0);"  onclick="addCoin({$vo['id']})">{:lang('充值')}</a>|
+                    <a style="text-decoration:none;" href='{:url("agency/recharge_agency_log")}?agency_id={$vo["id"]}'>{:lang('充值记录')}</a> |
+                    <a style="text-decoration:none;" href='{:url("agency/recharge_user_log")}?operator_id={$vo["id"]}'>{:lang('售出记录')}</a> |
+                    <a style="text-decoration:none;" href="#" class="del" data-id="{$vo.id}">{:lang('删除')}</a>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    </div>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    $(".del").click(function () {
+        const id = $(this).attr('data-id');
+        layer.confirm('确定删除？', {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('agency/delete')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data.code =='1'){
+                        layer.msg(data.msg,{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg(data.msg,{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+
+    function addCoin(id) {
+        layer.open({
+            type: 2,
+            title: "{:lang('手动充值')}",
+            shadeClose: true,
+            area: ['80%', '80%'],   //宽高
+            shade: 0.4,   //遮罩透明度
+            content:  "{:url('admin/agency/recharge')}?id=" + id
+        });
+    }
+</script>
+</body>

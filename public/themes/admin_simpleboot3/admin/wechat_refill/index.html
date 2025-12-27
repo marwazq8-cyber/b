@@ -1,0 +1,102 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('充值列表')}</a></li>
+        <li><a href="{:url('WechatRefill/add')}">{:lang('添加充值分类')}</a></li>
+    </ul>
+
+<!--     <form class="well form-inline margin-top-20" method="post" action="{:url('Refill/index')}">
+
+        {:lang('充值金额')}:
+        <select name="num" id="sex" style="width:200px;height:30px;margin-right:10px;">
+            <option value="0">{:lang('ALL')}</option>
+            <foreach name="lists" id="vo">
+                <option value="{$vo.id}">{$vo.money}</option>
+            </foreach>
+        </select>
+
+        <input type="submit" class="btn btn-primary" value="{:lang('搜索')}"/>
+    </form>
+    <if condition="$nummoney eq 0">
+    <else/>
+        <div style="margin-bottom:10px;">{:lang('充值总金额：￥{$nummoney}')}</div>
+    </if> -->
+
+    <form class="js-ajax-form" action="{:url('WechatRefill/upd')}" method="post">
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>{:lang('SORT')}</th>
+                <th>ID</th>
+                <th>{:lang('充值金额(元)')}</th>
+<!--                <th>PayPal充值金额(美元 USD)</th>-->
+                <th>{:lang('金币数')}</th>
+                <th>{:lang('赠送金币数')}</th>
+                <th>{:lang('ADMIN_NAME')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('ADD_TIME')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td style="width:100px;"><input type="text" name="listorders[{$vo.id}]" value="{$vo.orderno}" style="width:30px;"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.money}</td>
+<!--                    <td>{$vo.pay_pal_money}</td>-->
+                    <td>{$vo.coin}</td>
+                    <td>{$vo.give}</td>
+                    <td>{$vo.name}</td>
+                    <if condition="$vo['type'] eq 0">
+                            <td>{:lang('CLOSE')}</td>
+                        <else/>
+                            <td>{:lang('OPEN')}</td>
+                    </if>
+                    <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <a href="{:url('WechatRefill/add',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+
+        <button type="button" class="btn btn-primary" style="margin-top:20px;"> {:lang('SORT')} </button>
+    </form>
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function(){
+        var id=$(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function(){
+            $.ajax({
+                url: "{:url('WechatRefill/del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if(data =='1'){
+                        layer.msg("{:lang('DELETE_SUCCESS')}",{time: 2000, icon:1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg("{:lang('DELETE_FAILED')}",{time: 2000, icon:2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function(){
+        $(".js-ajax-form").submit();
+    })
+</script>
+</body>
+</html>

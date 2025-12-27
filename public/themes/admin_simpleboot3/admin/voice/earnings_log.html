@@ -1,0 +1,67 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('voice/earnings_log')}">{:lang('语音收益列表')}</a></li>
+		
+		</ul>
+        <form class="well form-inline margin-top-20" method="post" action="{:url('Voice/earnings_log')}">
+            {:lang('ADMIN_CONSUME_USER')}ID:
+            <input type="text" class="form-control" name="user_id" style="width: 120px;" value="{:input('request.user_id/s','')}" placeholder="{:lang('USER_ID')}">
+             {:lang('ADMIN_INCOME_USER')}ID:
+            <input type="text" class="form-control" name="to_user_id" style="width: 120px;" value="{:input('request.to_user_id/s','')}" placeholder="{:lang('请输入收益用户ID')}">
+           {:lang('房间用户ID')}:
+            <input type="text" class="form-control" name="voice_id" style="width: 120px;" value="{:input('request.voice_id/s','')}" placeholder="{:lang('请输入房间用户ID')}">
+			{:lang('TIME')}:
+            <input type="text" class="form-control js-bootstrap-datetime" name="start_time" value="{:input('request.start_time/s','')}" style="width: 140px;" autocomplete="off">-
+            <input type="text" class="form-control js-bootstrap-datetime" name="end_time" value="{:input('request.end_time/s','')}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+            <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+            <a class="btn btn-danger" href="{:url('Voice/earnings_log')}">{:lang('EMPTY')}</a>
+            <div style="margin-top:15px;color:#fe6565;">
+            	<span>{:lang('礼物总消费数')}: {$sum['gift_coin'] | default='0'} </span>
+	            <span style="margin-left:10px;"> {:lang('房间总收益数')}: {$sum['voice_profit'] | default='0'} </span>
+	            <span style="margin-left:10px;"> {:lang('用户总收益数')}: {$sum['profit'] | default='0'}</span>
+            </div>
+          
+        </form>
+    
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th>{:lang('ADMIN_CONSUME_USER')}(ID)</th>
+						<th>{:lang('ADMIN_INCOME_USER')}(ID)</th>
+						<th>{:lang('房间ID')}</th>
+						<th>{:lang('房间收益人(ID)')}</th>
+						<th>{:lang('ADMIN_GIFT')}</th>
+						<th>{:lang('ADMIN_GIFT_NUM')}</th>
+						<th>{:lang('ADMIN_GIFT_PRICE_ALL')}</th>
+						<th>{:lang('ADMIN_ANCHOR_INCOME')}</th>
+						<th>{:lang('房间收益')}</th>
+						<th>{:lang('TIME')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="list" item="vo">
+					<tr>
+						<td>{$vo['sname']}({$vo.user_id})</td>
+						<td>{$vo['tname']}({$vo.to_user_id})</td>
+						<td>{$vo.voice_id}</td>
+						<td>{$vo['uname']}({$vo.voice_user_id})</td>
+						<td>{$vo['gift_name']}</td>
+						<td>{$vo['gift_count']}</td>
+						<td>{$vo['gift_coin']}</td>
+						<td>{$vo['profit']}</td>
+						<td>{$vo['voice_profit']}</td>
+						<td>{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			
+		<div class="pagination">{$page}</div>
+	</div>
+</body>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</html>
+

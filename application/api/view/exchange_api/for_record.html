@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>{:lang('兑换密码登录')}</title>
+    <script type="text/javascript" src="__STATIC__/js/jquery.min.js"></script>    
+    <script type="text/javascript" src="__STATIC__/js/num-alignment.js"></script>
+    <link rel="stylesheet" href="__STATIC__/css/bootstrap.min.css" />   
+    <link rel="stylesheet" href="__STATIC__/css/common.css" /> 
+    <link rel="stylesheet" href="__STATIC__/css/Integral.css" />
+    <script type="text/javascript">
+    	
+   		document.addEventListener('plusready', function(){
+   			//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+   		});
+   		
+    </script>
+</head>
+<body>
+	<div id="box">
+		<div class="Integral">
+			<!--页面背景颜色-->
+			<!--收益记录 -->
+			<div class="Earnings_record">
+				 <!--收到的礼物-->
+				 <article class="E_my_gift">
+				 	{volist name="list" id="v"}
+				 	<aside>
+				 		<p class="fl">
+				 			<span class="people_gift">
+				 				{if condition="$uid eq $v['touid']"}
+				 				{:lang('兑换了')}
+				 				{else/}
+				 					{:lang('兑换给')}：{$v['user_nickname']}
+				 				{/if}
+				 		</span>
+				 		<span style="color: #5b5757;">{:lang('ADMIN_INCOME')}: <i style="color: #f6a327;"> - {$v.earnings}</i></span>
+				 		</p>
+				 		<p class="fr">
+				 			<span> 
+				 				{if condition="$uid eq $v['touid']"}
+				 					{$v['coin']} {$coin_name}
+				 				{else/}
+				 					{$v['coin']} {$coin_name}
+				 				{/if}
+				 			</span>
+				 			<span class="gift_time">{$v.addtime |date="Y-m-d H:i",###}</span>
+				 		</p>
+				 	</aside>
+			 		{/volist}
+				 </article>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

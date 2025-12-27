@@ -1,0 +1,101 @@
+
+.lanren {
+	width: 16em;
+	height: 16em;
+	margin: auto;
+	border-radius: 50%;
+	animation: a 200s linear;
+	-webkit-animation: a 200s linear;
+}
+
+.agg {
+	width:100%;
+	max-width:400px ;
+	height: 100%;
+	max-height: 400px;
+	background:url(../img/paopao.png) no-repeat center;
+	background-size: cover;
+	margin: auto;
+	border-radius: 100%;
+}
+
+/*.agg {
+	
+	animation: b 1000s linear, zindex 10000ms 0ms infinite linear;
+	-webkit-animation: b 1000s linear, zindex 10000ms 0ms infinite linear;
+}
+*/
+.hammer {
+	position: absolute;
+	z-index: 10;
+	left:70%;
+	top:6%;
+	width: 3rem;
+	display: block;
+	max-width: none;
+	-webkit-animation: hammer 0.1s alternate;
+	animation: hammer 0.1s alternate;
+	transform-origin: bottom left;
+	-webkit-transform-origin: bottom left;
+}
+.agg-puo {
+	width: 5rem;
+	display: block;
+	max-width: none;
+}
+
+@keyframes hammer {
+	10% {
+		transform: rotate(40deg);
+	}
+}
+
+@-webkit-keyframes hammer {
+	10% {
+		-webkit-transform: rotate(40deg);
+	}
+}
+
+
+@keyframes myfirst
+{
+from {top:0px;left: calc(50% - 5rem);}
+to {top:700px;left:500px;}
+}
+
+@-moz-keyframes myfirst /* Firefox */
+{
+from {top:0px;left: calc(50% - 5rem);}
+to {top:700px;left:500px;}
+}
+
+@-webkit-keyframes myfirst /* Safari 和 Chrome */
+{
+from {top:0px;left: calc(50% - 5rem);}
+to {top:700px;left:500px;}
+}
+
+@-o-keyframes myfirst /* Opera */
+{
+from {top:0px;left: calc(50% - 5rem);}
+to {top:700px;left:500px;}
+}
+
+#myimg{
+position:absolute;
+left:calc(50% - 3rem);
+top:15%;
+animation: myfirst 1s;
+-moz-animation: myfirst 1s;	/* Firefox */
+-webkit-animation: myfirst 1s;	/* Safari 和 Chrome */
+-o-animation: myfirst 1s;	/* Opera */
+-webkit-animation-iteration-count:1;//运行两次
+-webkit-animation-fill-mode:forwards;//运行后停留在最后的地方
+
+}
+
+
+
+
+
+

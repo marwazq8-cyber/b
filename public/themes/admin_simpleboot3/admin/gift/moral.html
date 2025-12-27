@@ -1,0 +1,97 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .gift-in input {
+        width: 20px;
+    }
+
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('gift/index')}">{:lang('ADMIN_GIFT_LIST')}</a></li>
+        <li><a href="{:url('gift/add')}">{:lang('ADMIN_GIFT_ADD')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_GIFT_IMPLICATION')}</a></li>
+        <li><a href="{:url('gift/add_moral')}">{:lang('ADMIN_GIFT_IMPLICATION_ADD')}</a></li>
+<!--        <li><a href="{:url('gift/gift_animation')}">{:lang('ADMIN_SVGA')}</a></li>-->
+<!--        <li><a href="{:url('gift/add_gift_animation')}">{:lang('ADMIN_HOME_PAGE_ADD')}</a></li>-->
+        <li><a href="{:url('gift/gift_type')}">{:lang('ADMIN_GIFT_TYPE')}</a></li>
+    </ul>
+
+    <form class="js-ajax-form" action="{:url('gift/upd_moral')}" method="post">
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>{:lang('SORT')}</th>
+                <th>ID</th>
+                <th>{:lang('ADMIN_GIFT_IMPLICATION_NAME')}</th>
+                <th>{:lang('ADMIN_NUMBER')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="gift" id="vo">
+                <tr>
+                    <td class="gift-in">
+                        <input  type="text" name="listorders[{$vo.id}]" value="{$vo.sort}">
+                    </td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.sum}</td>
+                    <td>
+                        <a href="{:url('gift/add_moral',array('id'=>$vo.id))}">{:lang('EDIT')}</a> |
+                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <button type="button" class="btn btn-primary" style="margin-top:20px;"> {:lang('SORT')}</button>
+    </form>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('gift/del_moral')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function () {
+        $(".js-ajax-form").submit();
+    })
+</script>
+</body>
+</html>

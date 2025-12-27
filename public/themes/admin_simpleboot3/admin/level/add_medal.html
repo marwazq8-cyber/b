@@ -1,0 +1,79 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+       <li><a href="{:url('level/medal')}">{:lang('ADMIN_MEAL_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('添加勋章分类')}</a></li>
+    </ul>
+    <form action="{:url('level/addPost_medal')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+
+                    <tr>
+                        <th>{:lang('ADMIN_MEAL_NAME')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[name]" id="source" value="{$list.name |default=''}"
+                                   placeholder="{:lang('请输入勋章名称')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('需要的金币数 ')}<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[coin]" id="source" value="{$list.coin |default=''}"
+                                   placeholder="{:lang('请输入金币数')}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('购买的天数 ')}<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[time]" id="income" value="{$list.time |default=''}"
+                                   placeholder="{:lang('需要购买的天数')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('勋章图标')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[icon]" id="level" value="{$list['icon'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#level');">
+                                    <if condition="$list['icon']">
+                                        <img src="{$list['icon']}"
+                                             id="level-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="level-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                   <tr>
+                        <th>{:lang('SORT')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[sort]" id="income" value="{$list.sort |default='0'}"
+                                   placeholder="{:lang('SORT')}"></td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('level/medal')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+
+
+</body>
+</html>

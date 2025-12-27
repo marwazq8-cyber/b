@@ -1,0 +1,148 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('game_box/game_box_type')}">{:lang('ADMIN_GAME_BOX_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_GAME_BOX_UPD')}</a></li>
+
+    </ul>
+    <form action="{:url('game_box/add_game_box_type_post')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('ADMIN_GAME_BOX_NAME')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[name]"
+                                   id="title" required value="{$gift.name |default=''}" placeholder="{:lang('请输入宝箱名称')}"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[orderno]" style="width:100px;"
+                                   required value="{$gift.orderno |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_GAME_BOX_PRICE')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[money]" id="source"
+                                   value="{$gift.money |default=''}"
+                                   placeholder="{:lang('请输入钻石数')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('触发大奖金额')}</th>
+                        <td><input class="form-control" type="text" name="post[grand_prize_amount]" id="source"
+                                   value="{$gift.grand_prize_amount |default=''}" ></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_GAME_BOX_IMG')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[img]" id="thumbnail" value="{$gift['img'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <if condition="$gift['img']">
+                                        <img src="{$gift['img']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_GAME_BOX_OPEN_IMG')}<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[open_img]" id="thumbnail2" value="{$gift['open_img'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail2');">
+                                    <if condition="$gift['open_img']">
+                                        <img src="{$gift['open_img']}"
+                                             id="thumbnail2-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail2-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail2" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[status]" id="status">
+                                <option value="0" <if condition="$gift['status'] eq '0'"> selected = "selected" </if>>{:lang('CLOSE')}</option>
+                                <option value="1" <if condition="$gift['status'] eq '1'"> selected = "selected" </if>>{:lang('OPEN')}</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="hidden" name="id" value="{$gift.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('game_box/game_box_type')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+        $('.btn-cancel-thumbnail1').click(function () {
+            $('#thumbnail-preview1').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail1').val('');
+        });
+        $('.btn-cancel-thumbnail2').click(function () {
+            $('#thumbnail2-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail2').val('');
+        });
+        $('.btn-cancel-svga').click(function () {
+            $('#svga-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#svga').val('');
+        });
+
+    });
+</script>
+
+</body>
+</html>

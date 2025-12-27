@@ -1,0 +1,112 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('voice/type')}">{:lang('语音频道列表')}</a></li>
+        <li  class="active"><a>{:lang('添加频道类型')}</a></li>
+    </ul>
+    <form action="{:url('voice/addPost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('语音频道名称')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="name"
+                                   required  placeholder="{:lang('请输入语音频道名称')}" value="{$list['name']|default=''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('背景')}<span class="form-required">*80px*34px</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="img" id="thumbnail" value="{$list['img'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <if condition="$list['img']">
+                                        <img src="{$list['img']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('SORT')} <span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="sort" placeholder="{:lang('SORT')}" value="{$list['sort']|default='0'}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="status" id="is_all_notify">
+                                <option value="1" <if condition="$list['status'] eq '1'"> selected = "selected" </if>>{:lang('OPEN')}</option>
+                                <option value="2" <if condition="$list['status'] eq '2'"> selected = "selected" </if>>{:lang('CLOSE')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <!--<tr>
+                        <th>{:lang('直播类型')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="type" id="is_all_notify">
+                                <option value="1" <if condition="$list['type'] eq '1'"> selected = "selected" </if>>{:lang('单人直播')}</option>
+                                <option value="2" <if condition="$list['type'] eq 2"> selected = "selected" </if>>{:lang('多人直播')}</option>
+                            </select>
+                        </td>
+                    </tr>-->
+                     <input class="form-control" type="hidden" name="id"  value="{$list['id']|default=''}" />
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('voice/type')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+        $('.btn-cancel-svga').click(function () {
+            $('#svga-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#svga').val('');
+            $('#svga-path').val('');
+        });
+
+    });
+</script>
+
+</body>
+</html>

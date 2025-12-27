@@ -1,0 +1,79 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+    .select{width:130px;height:35px;line-height: 35px;border: 1px solid #dce4ec;}
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('single/game')}">{:lang('约单功能列表')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('添加约单功能')}</a></li>
+    </ul>
+    <form action="{:url('single/add_game_post')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('约单类型名称 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[name]"
+                                   id="title" required value="{$list.name |default=''}" placeholder="{:lang('请输入约单分类名称')}"/>
+                        </td>
+                    </tr>
+                     <tr>
+                        <th>{:lang('约单类型')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[genre_id]" class="select">
+                                <foreach name="genre" item="v">
+                                    <option value="{$v['id']}" <if condition="$v.id eq $list.genre_id"> selected="selected" </if> >{$v['name']}</option>
+                                </foreach>
+                            </select>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('STATUS')} <span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[status]" class="select">
+                                <option value="1" <if condition="$list.status eq 1"> selected="selected" </if> >{:lang('OPEN')}</option>
+                                <option value="2" <if condition="$list.status eq 2"> selected="selected" </if> >{:lang('CLOSE')}</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                    value="{$list.sort |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('single/game')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+
+    });
+</script>
+</body>
+</html>

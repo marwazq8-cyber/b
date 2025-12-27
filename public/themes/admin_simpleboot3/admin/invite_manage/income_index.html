@@ -1,0 +1,106 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('邀请收益明细')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" name="form1" method="post" action="">
+
+        {:lang('ADMIN_INVITE_USER_ID')}:
+        <input type="text" class="form-control" name="user_id" style="width: 200px;"
+               value="{$request.user_id|default=''}" placeholder="{:lang('Please_enter_invitee_ID')}">
+        {:lang('ADMIN_BE_INVITE_USER_ID')}:
+        <input type="text" class="form-control" name="invite_user_id" style="width: 200px;"
+               value="{$request.invite_user_id|default=''}" placeholder="{:lang('Please_enter_invitee_ID')}">
+        {:lang('ADMIN_INVITE_CODE')}:
+        <input type="text" class="form-control" name="invite_code" style="width: 200px;"
+               value="{$request.invite_code|default=''}" placeholder="{:lang('请输入邀请码...')}">
+        {:lang('领取状态')}：
+        <select class="form-control" name="status" style="width: 140px;">
+            <option value="-1">{:lang('ALL')}</option>
+            <option value="0" <if condition="$request.status eq '0'"> selected='selected' </if> >{:lang('未领取')}</option>
+            <option value="1" <if condition="$request.status eq '1'"> selected='selected' </if> >{:lang('已领取')}</option>
+        </select>
+        {:lang('ADMIN_CONSUME_ID')}:
+        <input type="text" class="form-control" name="c_id" style="width: 200px;"
+               value="{$request.c_id|default=''}" placeholder="{:lang('请输入消费记录ID')}">
+        <div style="margin-top:20px;">
+            {:lang('TIME')}:
+            <input type="text" class="form-control js-bootstrap-datetime" name="start_time" value="{$request.start_time|default=''}" style="width: 140px;" autocomplete="off">-
+            <input type="text" class="form-control js-bootstrap-datetime" name="end_time" value="{$request.end_time|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+            <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" onclick='form1.action="{:url('InviteManage/income_index')}";form1.submit();'/>
+
+            <input type="button" class="btn btn-primary from_export" style="background-color: #1dccaa;" value="{:lang('导出')}" onclick='form1.action="{:url('InviteManage/export')}";form1.submit();'>
+            <span>{:lang('领取总奖励')}：{$income_count} {$currency_name}</span>
+        </div>
+    </form>
+<!--    <font color="red">
+        1.邀请的女性收益先按照后台收益比例计算出对应收益积分， 再将积分按照后台的邀请收益兑换比例计算成人民币，而邀请男性是直接将充值总额进行比例计算所得。
+    </font>
+    <br/>
+    <font color="red">
+        2.当收益记录是男性充值时"收益积分数量"为0。
+    </font>
+    <br/>
+    <font color="red">
+        3."总收益或充值"字段意思，当收益是女性用户带来，改字段显示的是女性的总收入积分，当为男性带来的时，显示的是本次男性的充值总额。
+    </font>-->
+    <form class="js-ajax-form" action="" method="post">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('ADMIN_INVITE_USER')}（ID）</th>
+                <th>{:lang('ADMIN_BE_INVITE_USER')}（ID）</th>
+                <th>{:lang('ADMIN_RECHARGE_OR_INCOME')}</th>
+                <th>{$currency_name}</th>
+<!--                <th>{:lang('收益人民币')}</th>-->
+                <th>{:lang('ADMIN_RECHARGE_ORDER')}（ID）</th>
+                <th>{:lang('ADMIN_CONSUME')}（ID）</th>
+                <th>{:lang('ADMIN_RECEIVE_STATUS')}</th>
+                <th>{:lang('ADMIN_INCOME_TIME')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.user_nickname}({$vo.user_id})</td>
+                    <td>{$vo.invite_user_nickname}({$vo.invite_user_id})</td>
+                    <td>{$vo.total_coin}
+                        (
+                        <if condition="$vo['type'] eq '1'">
+                            {:lang('Income_reward')}
+                            <elseif condition="$vo['type'] eq '2'"/>
+                            {:lang('Recharge_reward')}
+                            <else/>
+                            {:lang('其他')}
+                        </if>
+                        )
+                    </td>
+                    <td>{$vo.income}</td>
+<!--                    <td>{$vo.money}</td>-->
+                    <td>{$vo.order_id}</td>
+                    <td>{$vo.c_id}</td>
+                    <td>
+                        <if condition="$vo['status'] eq '1'">
+                            {:lang('已领取')}
+                            <else/>
+                            {:lang('未领取')}
+                        </if>
+                    </td>
+                    <td>{$vo.create_time | date="Y-m-d H:i:s",###}</td>
+
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+
+</body>
+</html>

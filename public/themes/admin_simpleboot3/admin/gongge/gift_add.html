@@ -1,0 +1,155 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('gongge/gongge_gift')}">{:lang('ADMIN_GAMEBOX_INDEX_RATE')}</a></li>
+        <li class="active"><a href="javascript:void(0)">{:lang('ADMIN_ACTIVITY_ADD')}</a></li>
+    </ul>
+    <form action="{:url('gongge/addgiftPost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('宫格类型')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[gongge_id]" class="form-control">
+                                <foreach name="gongge_list" item="v">
+                                    <option value="{$v.id}" <if condition="$list.gongge_id == $v.id"> selected="selected" </if>>{$v.title}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_GIFT')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[gift_id]" class="form-control">
+                                <option value="0">{:lang('未中奖')}</option>
+                                <foreach name="gift_list" item="v">
+                                    <option value="{$v.id}" <if condition="$list.gift_id == $v.id"> selected="selected" </if>>{$v.name}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('未中奖名称')}</th>
+                        <td>
+                            <input class="form-control" type="text" name="post[gift_name]" style="width:100px;"
+                                   value="{$list.gift_name |default=''}" placeholder="{:lang('未中奖名称')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('未中奖图片')}<span class="form-required">*110px*110px</span></th>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="post[gift_img]" id="thumbnail" value="{$list['gift_img'] |default=''}">
+                                <a href="javascript:uploadOneImage('{:lang("图片上传")}','#thumbnail');">
+                                    <if condition="$list['gift_img']">
+                                        <img src="{$list['gift_img']}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="{:lang('取消图片')}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('中奖概率')}<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[odds]"
+                                   value="{$list.odds |default=''}"
+                                   placeholder="{:lang('中奖概率')}"></td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_WHETHER_THE_SYSTEM_PUSH')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[is_system_push]" class="form-control">
+                                <option value="2" <if condition="$list['is_system_push'] eq '2'"> selected = "selected" </if>>{:lang('NO')}</option>
+                                <option value="1" <if condition="$list['is_system_push'] eq '1'"> selected = "selected" </if>>{:lang('YES')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_WHETHER_TO_PUSH_IN_FULL_SCREEN')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[is_male_screen]" class="form-control">
+                                <option value="2" <if condition="$list['is_male_screen'] eq '2'"> selected = "selected" </if>>{:lang('NO')}</option>
+                                <option value="1" <if condition="$list['is_male_screen'] eq '1'"> selected = "selected" </if>>{:lang('YES')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_FLOATING_SCREEN')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[is_all_notify]" class="form-control">
+                                <option value="2" <if condition="$list['is_all_notify'] eq '2'"> selected = "selected" </if>>{:lang('NO')}</option>
+                                <option value="1" <if condition="$list['is_all_notify'] eq '1'"> selected = "selected" </if>>{:lang('YES')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('是否大奖')}<span class="form-required">*(注意：大奖在幸运时刻时概率翻倍)</span></th>
+                        <td>
+                            <select name="post[is_double]" class="form-control">
+                                <option value="2" <if condition="$list['is_double'] eq '2'"> selected = "selected" </if>>{:lang('YES')}</option>
+                                <option value="1" <if condition="$list['is_double'] eq '1'"> selected = "selected" </if>>{:lang('NO')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                    value="{$list.sort |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+
+
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('gongge/gongge_gift')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+    });
+</script>
+
+</body>
+</html>

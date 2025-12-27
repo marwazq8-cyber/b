@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link href="__STATIC__/css/wallet.css" rel="stylesheet">
+    <link href="__STATIC__/css/bootstrap.min.css" rel="stylesheet">
+    <title>钱包</title>
+</head>
+<body>
+	<div class="userinfo_wallet">
+		<div class="userinfo_wallet_myname">我的{$coin_name}</div>
+		<div class="userinfo_wallet_mycoin">{$user_info['coin']}</div>
+	</div>
+	<div class="userinfo_wallet_name">{$coin_name}充值</div>
+   	<div class="userinfo_wallet_ul">
+   		<ul>
+   			{volist name="list" id="vo" key="k"}
+   			<li>
+   				<div class="userinfo_wallet_ul_img"><img src="__STATIC__/image/coin.png"/></div>
+   				<div class="userinfo_wallet_ul_coin">{$vo['coin']}</div>
+   				<div class="userinfo_wallet_ul_btn" data-coin="{$vo['coin']}" data-id="{$vo['id']}" data-money="{$vo['money']}">
+   					${$vo['money']}
+   				</div>
+   			</li>
+   			{/volist}
+   		</ul>
+  </div>
+  <div class="user_info_wallet_pay">
+      <div class="user_info_wallet_pay_title">
+          <div class="user_info_wallet_pay_coin">购买钻石<span id="coin">1000</span>支付$<span id="money">1000</span></div>
+          <div class="user_info_wallet_pay_top">
+            {volist name="pay_list" id="vo" key="k"}
+            <div class="user_info_wallet_pay_icon">
+                <div class="user_info_wallet_pay_icon_img"><img src="{$vo['icon']}"/></div>
+                <div class="user_info_wallet_pay_icon_name">{$vo['pay_name']}</div>
+                <div class="user_info_wallet_pay_icon_radio"><input type="radio" class="radio" name="pay_type"  value="{$vo['id']}"/></div>
+            </div>
+            {/volist}
+          </div>
+          <div class="user_info_wallet_pay_botton">
+              <div class="user_info_wallet_pay_botton_btn user_info_wallet_pay_botton_bor" data-id="" data-type="1">确定</div>
+               <div class="user_info_wallet_pay_botton_btn " data-type="2">取消</div>
+          </div>
+      </div>
+
+  </div>
+
+</body>
+<script src="__STATIC__/js/jquery-1.10.2.min.js"></script>
+<script src="__STATIC__/layer/mobile/layer.js" rel="stylesheet"></script>
+<script type="text/javascript">
+
+    var __DATA = {uid:"{$uid}",token:"{$token}"};
+  
+    $(".userinfo_wallet_ul_btn").click(function(){
+      var coin=$(this).attr("data-coin");
+      var money=$(this).attr("data-money");
+      var id=$(this).attr("data-id");
+      $("#coin").html(coin);
+      $("#money").html(money);
+      $(".user_info_wallet_pay_botton_btn").attr("data-id",id);
+      $(".user_info_wallet_pay").show();
+
+    })
+    $(".user_info_wallet_pay_botton_btn").click(function(){
+      var type=$(this).attr("data-type");
+      if(type == 2){
+          $(".user_info_wallet_pay").hide();
+      }else{
+        var id=$(this).attr("data-id");
+        var  radio=$('input:radio[name="pay_type"]:checked').val();
+          if(radio == null){
+              layer.open({
+                content: '请选择支付方式'
+                ,skin: 'msg'
+                ,time: 2 //2秒后自动关闭
+              });
+          }else{
+            window.location.href="wallet://open_native?id="+id+"&pay_type="+radio; 
+          }
+      }
+    })
+
+</script>
+</html>

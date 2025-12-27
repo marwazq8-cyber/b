@@ -1,0 +1,142 @@
+<include file="public@header"/>
+<style>
+    .gift-img {
+        width: 50px;
+        height: 50px
+    }
+
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .gift-in input {
+        width: 30px;
+    }
+
+    .js-ajax-form {
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_GAME_BOX_LIST')}</a></li>
+        <!--        <li><a href="{:url('gift/add')}">{:lang('添加礼物')}</a></li>-->
+
+    </ul>
+
+    <form class="js-ajax-form" action="{:url('game_box/game_box_type_upd')}" method="post">
+
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>{:lang('SORT')}</th>
+                <th>ID</th>
+                <th>{:lang('ADMIN_GAME_BOX_NAME')}</th>
+                <th>{:lang('ADMIN_GAME_BOX_IMG')}</th>
+                <th>{:lang('ADMIN_GAME_BOX_PRICE')}</th>
+                <th>{:lang('触发大奖金额')}</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('UPDATE_TIME')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td class="gift-in"><input type="text" name="listorders[{$vo.id}]" value="{$vo.orderno}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+
+                    <td class="gift-img"><img src="{$vo.img}" alt=""></td>
+                    <td>{$vo.money}</td>
+                    <td>{$vo.grand_prize_amount}</td>
+                    <td>
+                        <if condition="$vo.status eq 1">
+                            <span style="cursor: pointer;" onclick="statusAction({$vo.id},{$vo.status})">{:lang('OPEN')}</span>
+                            <else/>
+                            <span style="cursor: pointer;" onclick="statusAction({$vo.id},{$vo.status})">{:lang('CLOSE')}</span>
+                        </if>
+
+                    </td>
+                    <td>{$vo.addtime | date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <a href="{:url('game_box/add_game_box_type',array('id'=>$vo.id))}">{:lang('EDIT')}</a>
+                        <a href="javescript:;" class="clear" data-id="{$vo.id}">{:lang('清空当前奖池')}</a>
+                        <!--                        <a href="javescript:;" class="del" data-id="{$vo.id}">{:lang('DELETE')}</a>-->
+                    </td>
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <button type="button" class="btn btn-primary" style="margin-top:20px;"> {:lang('SORT')}</button>
+    </form>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".clear").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('Clearing_prize_data_tree_watering_game')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('game_box/game_box_type_next')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    layer.msg("{:lang('清除成功')}", {time: 2000, icon: 1});
+                }
+            });
+        });
+    })
+    $(".del").click(function () {
+        var id = $(this).attr('data-id');
+        layer.confirm("{:lang('DELETE_CONFIRM_MESSAGE')}", {
+            btn: ["{:lang('OK')}", "{:lang('OFF')}"] //按钮
+        }, function () {
+            $.ajax({
+                url: "{:url('game_box/game_box_type_del')}",
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data == '1') {
+                        layer.msg("{:lang('DELETE_SUCCESS')}", {time: 2000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg("{:lang('DELETE_FAILED')}", {time: 2000, icon: 2});
+                    }
+                }
+            });
+
+        });
+    })
+    $(".btn-primary").click(function () {
+        $(".js-ajax-form").submit();
+    })
+
+    function statusAction(id,status){
+        $.ajax({
+            url: "{:url('gift/statusGemPost')}",
+            type: 'post',
+            dataType: 'json',
+            data: {id: id,status:status},
+            success: function (data) {
+                if (data == '1') {
+                    //layer.msg("{:lang('成功')}", {time: 2000, icon: 1}, function () {
+                    window.location.reload();
+                    //});
+                } else {
+                    layer.msg("{:lang('operation_failed')}", {time: 2000, icon: 2});
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

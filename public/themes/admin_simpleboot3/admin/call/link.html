@@ -1,0 +1,61 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('agent/link')}">{:lang('ADMIN_SPONSORED_LINKS')}</a></li>
+        <li><a href="{:url('agent/addlink')}">{:lang('ADMIN_ADD_CHANNEL')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('agent/link')}">
+
+        {:lang('ADMIN_AGENT_ID')}:
+        <input type="text" class="form-control" name="agent_id" style="width: 120px;" value="{$data.agent_id|default=''}" placeholder="{:lang('请输入代理id')}">
+        {:lang('ADMIN_CHANNEL_NUMBER')}:
+        <input type="text" class="form-control" name="channel" style="width: 120px;" value="{$data.channel|default=''}" placeholder="">
+        {:lang('STATUS')}：
+        <select class="form-control" name="status" style="width: 140px;">
+            <option value="0">{:lang('封号')}</option>
+            <option value="1" <if condition="$data.status eq 1"> selected='selected' </if>>{:lang('USER_STATUS_ACTIVATED')}</option>
+        </select>
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('agent/link')}">{:lang('EMPTY')}</a>
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th width="50">ID</th>
+            <th>{:lang('ADMIN_CHANNEL_NUMBER')}:</th>
+            <th>{:lang('ADMIN_DOWNLOAD_LINKS')}</th>
+            <th>{:lang('ADMIN_AGENT_LOGIN_NAME')} (ID)</th>
+            <th>{:lang('ADMIN_SHARE_RATIO')}（%）</th>
+            <th>{:lang('STATUS')}</th>
+            <th>{:lang('ADMIN_AGENT_TOP')}（ID）</th>
+            <th width="130">{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <php>$user_statuses=array("0"=>lang('账号已封'),"1"=>lang('正常'));</php>
+        <foreach name="users" item="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.channel}</td>
+                <td>{$vo.link}</td>
+                <td>{$vo.agent_login}({$vo['agent_id1']})</td>
+                <td>{$vo['divide_into1'] |default='0'} </td>
+                <td>{$user_statuses[$vo['status']]}</td>
+                <td>{$vo['agent_user']} ({$vo['agent_id']})</td>
+                <td>
+                    <a href='{:url("agent/addlink",array("id"=>$vo["id"]))}'>{:lang('EDIT')}</a>
+                    <a class="js-ajax-delete" href="{:url('agent/deletelink',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>
+                    <a  href="{:url('agent/index',array('superior_id'=>$vo['id']))}">{:lang('ADMIN_AGENT_BOTTOM_INFO')}</a>
+
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>{:lang('收益详情')}</title>
+    <script type="text/javascript" src="__STATIC__/js/jquery.min.js"></script>    
+    <script type="text/javascript" src="__STATIC__/js/num-alignment.js"></script>
+    <link rel="stylesheet" href="__STATIC__/css/bootstrap.min.css" />   
+    <link rel="stylesheet" href="__STATIC__/css/common.css" /> 
+    <link rel="stylesheet" href="__STATIC__/css/Integral.css" />
+     <script src="__STATIC__/js/jquery-1.10.2.min.js"></script>
+      <script src="__STATIC__/js/iscroll.js"></script>
+    <script type="text/javascript">
+   		document.addEventListener('plusready', function(){
+   			//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+   		});	
+    </script>
+</head>
+<body>
+	<div id="box">
+		<div class="Integral">
+			<!--页面背景颜色-->
+			
+			<!--页面顶部积分兑换详情-->
+			<!--收益记录 -->
+			<div class="Earnings_record">
+				<!--我的收益-->
+				 <!--收到的礼物-->
+				 <article class="E_my_gift" id="wrapper" style="height: 100%!important;">
+				 	{if condition="$list"}
+				 		<div class="scroller">
+						 	{volist name="list" id="v"}
+							 	<aside>
+							 		<p class="fl">
+							 			<span>{:lang('收到的礼物')}-{$v.gift_name}</span>
+							 			<span class="people_gift">{:lang('赠送人')}：{$v.user_nickname}</span>
+							 		</p>
+							 		<p class="fr">
+							 			<span> + {$v.profit}</span>
+							 			<span class="gift_time">{$v.create_time |date="Y-m-d H:i",###}</span>
+							 		</p>
+							 	</aside>
+						 	{/volist}
+						 	 <div class="more"><i class="pull_icon"></i><span>{:lang('上拉加载')}...</span></div>
+						 </div>
+						
+					 {else/}
+					 	<div style="width: 100%;height: 3em;line-height: 3em;text-align: center;margin-top: 2em;font-weight: bold;">{:lang('No_data')}</div>
+					 {/if}
+				 </article>
+			</div>
+			
+			
+		</div>
+	</div>
+</body>
+<script>
+    var uid="{$uid}";
+	const lang="{$lang}";
+    var myscroll = new iScroll("wrapper",{
+        onScrollMove:function(){
+            if (this.y<(this.maxScrollY)) {
+                $('.pull_icon').addClass('flip');
+                $('.pull_icon').removeClass('loading');
+                $('.more span').text("{:lang('释放加载')}");
+            }else{
+
+                $('.pull_icon').removeClass('flip loading');
+                $('.more span').text("{:lang('上拉加载')}")
+            }
+            if (this.y>(this.minScrollY)) {
+
+            }
+        },
+        onScrollEnd:function(){
+            if ($('.pull_icon').hasClass('flip')) {
+                $('.pull_icon').addClass('loading');
+                $('.more span').text("{:lang('加载中')}");
+                pullUpAction();
+            }
+        },
+        onRefresh:function(){
+            $('.more').removeClass('flip');
+            $('.more span').text("{:lang('上拉加载')}");
+        }
+
+    });
+    var page="2";
+    function pullUpAction(){
+        setTimeout(function(){
+            $.ajax({
+                url:"{:url('exchange_api/earnings_record_page')}?lang="+lang,
+                type:'get',
+                data:{uid:uid,page:page},
+                dataType:'json',
+                success:function(data){
+                    var html='';
+                    if(data.length >0){
+                        for (var i = 0; i < data.length; i++) {
+                            html+='<aside><p class="fl"><span>{:lang("收到的礼物")}-'+data[i]['gift_name']+'</span><span class="people_gift">{:lang("赠送人")}：'+data[i]['user_nickname']+'</span></p><p class="fr"><span> + '+data[i]['profit']+'</span><span class="gift_time">'+getMyDate(data[i]['create_time'])+'</span></p></aside>';
+                        }
+                        $('.scroller ul').append(html);
+                        myscroll.refresh();
+                    }else{
+                        $('.more span').text("{:lang('No_data')}");
+                    }
+                    page++;
+                },
+            })
+            myscroll.refresh();
+        }, 1000)
+    }
+    if ($('.scroller').height()<$('#wrapper').height()) {
+        $('.more').hide();
+        myscroll.destroy();
+    }
+    //jq转换时间
+    function getMyDate(str){
+        var oDate = new Date(str),
+            oYear = oDate.getFullYear(),
+            oMonth = oDate.getMonth()+1,
+            oDay = oDate.getDate(),
+            oHour = oDate.getHours(),
+            oMin = oDate.getMinutes(),
+            oSen = oDate.getSeconds(),
+            oTime = oYear +'-'+ getzf(oMonth) +'-'+ getzf(oDay) +' '+ getzf(oHour) +':'+ getzf(oMin);//最后拼接时间
+        return oTime;
+    };
+    //补0操作
+    function getzf(num){
+        if(parseInt(num) < 10){
+            num = '0'+num;
+        }
+        return num;
+    }
+</script>
+</html>

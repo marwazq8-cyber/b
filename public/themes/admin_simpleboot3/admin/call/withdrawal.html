@@ -1,0 +1,50 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('agent/index')}">{:lang('渠道代理提现记录')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('agent/withdrawal')}">
+
+        {:lang('ADMIN_AGENT_ID')}:
+        <input type="text" class="form-control" name="agent_id" style="width: 120px;" value="{$data.agent_id|default=''}" placeholder="{:lang('请输入代理id')}">
+        {:lang('ADMIN_CHANNEL_NUMBER')}:
+        <input type="text" class="form-control" name="channel" style="width: 120px;" value="{$data.channel|default=''}" placeholder="{:lang('请输入渠道号')}">
+        &nbsp;&nbsp;
+        {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time" value="{$data.start_time|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$data.end_time|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('agent/withdrawal')}">{:lang('EMPTY')}</a>
+
+        <div style="margin-top:20px;">{:lang('提现的总金额')} :  {$sum} {:lang('元')}</div>
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>{:lang('SETTLEMENT_TIME')}</th>
+            <th>{:lang('USERNAME')}(ID)</th>
+            <th>{:lang('ADMIN_CHANNEL_NUMBER')}</th>
+            <th>{:lang('结算金额')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <php>$user_statuses=array("0"=>lang('审核中'),"1"=>lang('已提现'),'2'=> lang('Refuse_to_withdraw'));</php>
+        <foreach name="list" item="vo">
+            <tr>
+                 <td>{$vo['addtime'] |date='Y-m-d',###}</td>
+                <td>{$vo.agent_login}({$vo['agent_id']})</td>
+                <td>{$vo['channel']}</td>
+                <td>{$vo['money'] |default='0'} {:lang('元')}</td>
+
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

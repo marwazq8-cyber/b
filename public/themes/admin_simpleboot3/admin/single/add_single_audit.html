@@ -1,0 +1,124 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+    .select{width:130px;height:35px;line-height: 35px;border: 1px solid #dce4ec;}
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('single/single_audit')}">{:lang('约单审核列表')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('添加约单审核')}</a></li>
+    </ul>
+    <form action="{:url('single/add_single_audit_post')}" method="post" >
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('约单审核用户id ')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[uid]"
+                                   id="title" required value="{$list.uid |default=''}" placeholder="{:lang('请输入约单审核用户id')}"/>
+                        </td>
+                    </tr>
+                
+                    <tr>
+                        <th>{:lang('消费价格 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[coin]"
+                                id="title" required value="{$list.coin |default=''}" placeholder="{:lang('Please_enter_single_price')}"/>
+                        </td>
+                    </tr>
+                     <tr>
+                        <th>{:lang('约单游戏功能')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[game_id]" class="select" id="game_id">
+                                <foreach name="game" item="v">
+                                    <option value="{$v['id']}" <if condition="$v.id eq $list.game_id"> selected="selected" </if> >{$v['name']}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('约单单位')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[unit]" class="select" id="unit">
+                              
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_CHECK_STATUS')} <span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[status]" class="select">
+                                <option value="0" <if condition="$list.status eq '0'"> selected="selected" </if> >{:lang('CHECK_LOADING')}</option>
+                                <option value="1" <if condition="$list.status eq 1"> selected="selected" </if> >{:lang('AUDIT_BY')}</option>
+                                <option value="2" <if condition="$list.status eq 2"> selected="selected" </if> >{:lang('审核失败')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('用户开启状态 ')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[is_open]" class="select">
+                                <option value="0" <if condition="$list.is_open eq '0'"> selected="selected" </if> >{:lang('CLOSE')}</option>
+                                <option value="1" <if condition="$list.is_open eq 1"> selected="selected" </if> >{:lang('OPEN')}</option>
+                                <option value="2" <if condition="$list.is_open eq 2"> selected="selected" </if> >{:lang('禁用')}</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                    value="{$list.sort |default=''}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('single/single_audit')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+        var unit_list='{$unit_list}';
+        var count='{$count}';
+        var list='{(object) $list}';
+
+        var game_id=$("#game_id").val();
+        selece_list(game_id);
+        $("#game_id").change(function(){
+            var game_id=$("#game_id").val();
+            selece_list(game_id);
+        });
+        function selece_list(id){
+            unit_lists= JSON.parse( unit_list );
+            var html='';
+            for(var i=0;i<= count;i++){
+                if(unit_lists[i].single_genre_id == id){
+                    html+='<option value="'+unit_lists[i].id+'"';
+                    if(list.unit == unit_lists[i].id){
+                         html+='selected="selected"';
+                    }
+                    html+=' >'+unit_lists[i].name+'</option>';
+                }
+            }
+            $('#unit').html(html);
+        }
+    });
+</script>
+</body>
+</html>

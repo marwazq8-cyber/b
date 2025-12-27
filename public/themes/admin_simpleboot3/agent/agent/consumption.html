@@ -1,0 +1,74 @@
+<include file="public@header" />
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a >消费明细</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" name="form1" method="post" action="{:url('agent/consumption')}">
+        用户id:
+        <input type="text" class="form-control" name="uid" style="width: 120px;" value="{$data.uid|default=''}" placeholder="充值用户id">
+        <if condition="$agent['agent_level'] < 3">
+            推广人ID:
+            <input type="text" class="form-control" name="agent_id" style="width: 120px;" value="{$data.agent_id |default=''}" placeholder="推广人ID">
+        </if>
+        <if condition="$agent['agent_level'] == 1">
+            {:lang('agent_level2')}ID:
+            <input type="text" class="form-control" name="agent_staff" style="width: 120px;" value="{$data.agent_staff |default=''}" placeholder="{:lang('agent_level2')}ID">
+        </if>
+        日期范围:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time"
+               value="{$data.start_time|default=''}"
+               style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time"
+               value="{$data.end_time|default=''}"
+               style="width: 140px;" autocomplete="off">
+        <input type="submit" class="btn btn-primary" onclick='form1.action="{:url('agent/consumption')}";form1.submit();' value="搜索" />
+        <a class="btn btn-danger" href="{:url('agent/consumption')}">清空</a>
+        <input type="submit" class="btn btn-info" style="background-color: #1dccaa;" value="导出" onclick='form1.action="{:url('agent/export_consumption')}";form1.submit();'>
+        <div style="height:20px;line-height:20px;margin-top:10px;">
+            消费总数 ：{$money} {$currency_name}
+        </div>
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>消费用户(ID)</th>
+            <if condition="$agent['agent_level'] < 3">
+                <th>推广(ID)</th>
+            </if>
+            <if condition="$agent['agent_level'] == 1">
+                <th>{:lang('agent_level2')}</th>
+            </if>
+            <th>消费物品</th>
+            <th>消费金额</th>
+            <th>收礼物账号</th>
+            <th>房间号</th>
+            <th>消费时间</th>
+            <th>注册时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="users" item="vo">
+            <tr>
+
+                <td>{$vo.user_nickname}({$vo.uid})</td>
+                <if condition="$agent['agent_level'] < 3">
+                    <td>{$vo.login_name}({$vo.agent_id})</td>
+                </if>
+                <if condition="$agent['agent_level'] == 1">
+                    <td>{$vo.sname}({$vo.agent_staff})</td>
+                </if>
+                <td> {$vo.content}  </td>
+                <td>{$vo.coin} {$currency_name}</td>
+                <td>{$vo.tname}({$vo.to_user_id})</td>
+                <td>{$vo.classification == 1 ? $vo.classification_id : ''}</td>
+                <td>{:date('Y-m-d H:i',$vo['create_time'])}</td>
+                <td>{:date('Y-m-d H:i',$vo['utime'])}</td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>

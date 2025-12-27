@@ -1,0 +1,48 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a>{:lang("用户操作管理")}</a></li>
+        <li><a href="{:url('AdminUserAction/sync')}">{:lang("同步用户操作")}</a></li>
+    </ul>
+    <form method="post" class="js-ajax-form margin-top-20">
+        <php>$cycle_types=['0'=>lang('不限'),'1'=>lang('天'),'2'=>lang('小时'),'3'=>lang('永久')]</php>
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>{:lang('ACTIONS')}</th>
+                <th>{:lang("积分更改")}</th>
+                <th>{:lang("金币更改")}</th>
+                <th>{:lang("奖励周期")}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="actions" item="vo">
+                <php></php>
+                <tr>
+                    <td>{$vo.name} {$vo.action}</td>
+                    <td>{$vo.score}</td>
+                    <td>{$vo.coin}</td>
+                    <th>
+                        <eq name="vo.cycle_type" value="0">
+                            不限
+                            <else/>
+                            {$vo.reward_number}次/{$vo.cycle_time}{$cycle_types[$vo['cycle_type']]}
+                        </eq>
+
+                    </th>
+                    <td>
+                        <a href="{:url('AdminUserAction/edit')}?id={$vo.id}">{:lang('EDIT')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

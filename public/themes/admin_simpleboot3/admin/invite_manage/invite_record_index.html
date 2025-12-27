@@ -1,0 +1,69 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_INVITE_LOG')}</a></li>
+    </ul>
+    <form id="form" class="well form-inline margin-top-20" method="post" action="">
+        {:lang('ADMIN_INVITE_USER_ID')}:
+        <input type="text" class="form-control" name="user_id" style="width: 200px;"
+               value="{$request.user_id|default=''}" placeholder="{:lang('Please_enter_invitee_ID')}">
+        {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time"
+               value="{$request.start_time|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time"
+               value="{$request.end_time|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" onclick='form.action="{:url('InviteManage/invite_record_index')}";form.submit();'/>
+    </form>
+    <form class="js-ajax-form" action="" method="post">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{:lang('ADMIN_INVITE_USER')}（ID）</th>
+                <th>{:lang('GENDER')}</th>
+<!--                <th>{:lang('已提现（元）')}</th>-->
+                <th>{:lang('ADMIN_ALL_INCOME')}({:lang('元')})</th>
+<!--                <th>{:lang('剩余收益（元）')}</th>-->
+                <th>{:lang('ADMIN_INVITE_USER_NUMBER')}</th>
+                <th>{:lang('ADMIN_MAN_USER_NUMBER')}</th>
+                <th>{:lang('ADMIN_WOMAN_USER_NUMBER')}</th>
+                <th>{:lang('ADMIN_TOTAL_PAYMENT_NUM')}</th>
+                <th>{:lang('ADMIN_TOTAL_PAYMENT_AMOUNT')}</th>
+                <th>ARPU</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <foreach name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.user_nickname}({$vo.user_id})</td>
+                    <td>
+                        <if condition="$vo.sex eq 1">
+                            {:lang('MALE')}
+                            <elseif condition="$vo.sex eq 2"/>
+                            {:lang('FEMALE')}
+                        </if>
+                    </td>
+<!--                    <td>{$vo.cash_total}</td>-->
+                    <td>{$vo.invite_total_income}</td>
+<!--                    <td>{$vo.invitation_coin}</td>-->
+                    <td>{$vo.invite_count}</td>
+                    <td>{$vo.invite_male_count}</td>
+                    <td>{$vo.invite_female_count}</td>
+                    <td>{$vo.total_pay_count}</td>
+                    <td>{$vo.total_pay_money}</td>
+                    <td>{$vo.arpu}</td>
+
+                </tr>
+            </foreach>
+            </tfoot>
+        </table>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+
+</body>
+</html>

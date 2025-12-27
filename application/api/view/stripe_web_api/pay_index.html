@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>STRIPE WEB</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+
+    <link rel="stylesheet" type="text/css" href="__STATIC__/paihang/css/weui.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/paihang/css/example.css" />
+    <script src="__STATIC__/js/iscroll.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        #stripe-button-container {
+            width: 90%;
+            margin: 10vh auto;
+        }
+        #payment-form {
+            width: 100%;
+        }
+        #card-element {
+            margin-bottom: 24px;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+        #submit-button {
+            background: #5469d4;
+            color: #ffffff;
+            border-radius: 4px;
+            border: 0;
+            padding: 12px 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="stripe-button-container">
+        <form id="payment-form">
+            <div id="card-element"></div>
+            <button id="submit-button">Pay Now</button>
+        </form>
+    </div>
+
+    <script type="text/javascript" src="__STATIC__/paihang/js/jweixin-1.0.0.js"></script>
+    <script src="__STATIC__/paihang/js/zepto.min.js"></script>
+    <script src="__STATIC__/paihang/js/weui.min.js"></script>
+    <script src="__STATIC__/layer/mobile/layer.js"></script>
+    
+    <script>
+        let token = "{$token}";
+        let Loading_desperately = "{$Loading_desperately}";
+        let got_it = "{$got_it}";
+        
+        // Initialize Stripe with publishable key
+        const stripe = Stripe('{$publishable_key}'); // 使用 publishable key
+        const elements = stripe.elements();
+
+        // Create card Element
+        const cardElement = elements.create('card');
+        cardElement.mount('#card-element');
+
+        // Handle form submission
+        const form = document.getElementById('payment-form');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            
+            // Show loading
+            document.getElementById('submit-button').disabled = true;
+            layer.open({
+                type: 2,
+                content: Loading_desperately
+            });
+
+            // Create payment method
+            const {paymentMethod, error} = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+            });
+
+            if (error) {
+                layer.open({
+                    content: error.message,
+                    skin: 'msg',
+                    time: 2
+                });
+                document.getElementById('submit-button').disabled = false;
+                return;
+            }
+
+            // Payment successful
+            order_success(paymentMethod.id);
+        });
+
+        // Handle successful payment
+        function order_success(payment_id) {
+            layer.open({
+                type: 2,
+                content: Loading_desperately
+            });
+            
+            $.ajax({
+                type: "post",
+                url: '{:url("api/stripe_web_api/payment_successful")}',
+                dataType: "json",
+                data: {
+                    token: token,
+                    payment_id: payment_id,
+                    orderid: "{$order.order_id}"
+                },
+                success: function(data) {
+                    console.log(data);
+                    if (data.status == '1') {
+                        layer.open({
+                            content: data.error,
+                            btn: got_it,
+                            shadeClose: false,
+                            yes: function() {
+                                window.location.href = "wx517616f10f0b4165://pay";
+                            }
+                        });
+                    } else {
+                        layer.open({
+                            content: data.error,
+                            skin: 'msg',
+                            time: 2
+                        });
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

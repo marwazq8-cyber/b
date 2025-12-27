@@ -1,0 +1,136 @@
+<include file="public@header"/>
+<style>
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_TREE_GAME_TREE_LOG')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('tree_game/tree_log')}" id="myForm">
+        {:lang('USER_ID')}:
+        <input type="text" name="uid" value="{$request['uid']}" class="form-control" placeholder="{:lang('USER_ID')}">
+        {:lang('ADMIN_GIFT')}:
+        <select class="form-control" name="gift_id">
+            <option val="0">{:lang('ALL')}</option>
+            <foreach name="gift" item="vo">
+                <option value="{$vo['id']}" <if condition="$request['gift_id'] eq $vo['id']"> selected = "selected" </if>>{$vo['name']}</option>
+            </foreach>
+        </select>
+        {:lang('ADMIN_CONTINUOUS_FREQUENCY')}:
+        <input type="text" name="coin_id" value="{$request['coin_id']}" class="form-control" placeholder="{:lang('ADMIN_CONTINUOUS_FREQUENCY')}">
+       {:lang('开奖标识')}:
+        <input type="text" name="only" value="{$request['only']}" class="form-control">
+        {:lang('奖励列表轮回次数')}:
+        <input type="text" class="form-control" name="cycles" style="width: 120px;" value="{$request['cycles']|default=''}" placeholder="{:lang('请输入轮回次数')}">
+
+        {:lang('TIME')}:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time" value="{$request['start_time']|default=''}" style="width: 130px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time" value="{$request['end_time']|default=''}" style="width: 130px;" autocomplete="off">
+
+        <a class="btn btn-success" onclick="editAndSubmitForm('day')">{:lang('今日')}</a>
+        <a class="btn btn-info" onclick="editAndSubmitForm('yesterday')">{:lang('昨日')}</a>
+        <a class="btn btn-warning" onclick="editAndSubmitForm('week')">{:lang('本周')}</a>
+        <a class="btn btn-danger" onclick="editAndSubmitForm('last_week')">{:lang('上周')}</a>
+        <input type="submit" class="btn btn-primary" value="{:lang('SEARCH')}" />
+        <a class="btn btn-danger" href="{:url('tree_game/tree_log')}">{:lang('EMPTY')}</a>
+        <div style="margin-top:10px;">
+            <span>{:lang('ADMIN_COMMISSION_COIN')}: {$statistics.coin_money}</span>
+            <span>{:lang('总奖励金额')}: {$statistics.gift_money}</span>
+            <span>{:lang('统计：')}</span>
+            <foreach name="Statistics_gift" id="v">
+                <span style="margin-left:5px;color: #ff5c5c;">{$v['gift_name']}({$v['sum']})</span>
+            </foreach>
+        </div>
+
+    </form>
+
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>{:lang('USER')}</th>
+            <th>{:lang('ADMIN_GIFT')}</th>
+<!--            <th>{:lang('ADMIN_GAME_BOX_PRICE')}</th>-->
+            <th>{:lang('ADMIN_NUMBER')}</th>
+<!--            <th>{:lang('ADMIN_CONTINUOUS_FREQUENCY')}</th>-->
+<!--            <th>{:lang('当前记录消费数')}</th>-->
+<!--            <th>{:lang('本轮消费数')}</th>-->
+<!--            <th>{:lang('房主(房间ID/房主ID)')}</th>-->
+            <th>{:lang('奖励轮回次数')}</th>
+
+            <th>{:lang('开奖标识')}</th>
+
+            <th>{:lang('备注')}</th>
+            <th>{:lang('ADD_TIME')}</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <php>
+            $status=array('1'=>lang('YES'),'2'=>lang('NO'));
+            $tree_game_coin=lang('开奖前剩余金额');// 本次开奖前剩余总金额
+            $tree_game_new_coin= lang('结束奖池剩余');// 本次开奖后剩余总金额
+            $prize_coin=lang('中奖礼物价值');// 中奖总金币
+            $Current_record_consumption_count=lang('当前记录消费数');// 当前记录消费数
+            $Current_round_consumption_count=lang('本轮消费数');// 本轮消费数
+        </php>
+        <foreach name="list" id="vo">
+            <tr>
+                <td>{$vo.user_name}({$vo.uid})</td>
+                <td>{$vo.gift_name}({$vo.gift_id})</td>
+<!--                <td>{$vo.gift_coin}</td>-->
+                <td>{$vo.sum}</td>
+<!--                <td>{$vo.coin_explain}({$vo.coin_id})</td>-->
+<!--                <td>{$vo.coin_sum * $vo.coin_sum_money}</td>-->
+<!--                <td>{$vo.coin_money}</td>-->
+<!--                <td>-->
+<!--                    <if condition="$vo.voice_id">-->
+<!--                        {$vo.aname}({$vo.voice_id} / {$vo.voice_user_id})-->
+<!--                    </if>-->
+<!--                </td>-->
+                <td>{$vo.cycles}</td>
+
+                <td>{$vo.only}</td>
+
+                <td>
+                    <if condition="$vo.pool_json">
+                        <div>{$tree_game_coin}: {$vo['pool_json']['tree_game_coin']}</div>
+                        <div>{$tree_game_new_coin}: {$vo['pool_json']['tree_game_new_coin']}</div>
+                        <div>{$prize_coin}: {$vo['pool_json']['prize_coin']}</div>
+                    </if>
+                    <div>{$Current_record_consumption_count}: {$vo.coin_sum * $vo.coin_sum_money}</div>
+                    <div>{$Current_round_consumption_count}: {$vo.coin_money}</div>
+                    <div>{:lang('ADMIN_CONTINUOUS_FREQUENCY')}: {$vo.coin_explain}({$vo.coin_id})</div>
+                </td>
+                <td>
+                    {$vo.create_time | date="Y-m-d H:i:s",###}
+                </td>
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+<script>
+    $(".btn-primary").click(function () {
+        $(".js-ajax-form").submit();
+    })
+    function editAndSubmitForm(val) {
+        // 获取表单的引用
+        const form = document.getElementById('myForm');
+        const inputElement = document.createElement("input");
+        inputElement.type = "text";
+        inputElement.name = "date_type";
+        inputElement.value = val;
+        form.append(inputElement); // 将新的input元素添加到fieldset中
+        // 提交表单
+        form.submit();
+    }
+</script>
+</body>
+</html>

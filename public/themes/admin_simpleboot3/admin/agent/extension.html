@@ -1,0 +1,84 @@
+<include file="public@header" />
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('agent/statistics',array('uid'=>$data['uid']))}">{:lang('agent_level1')}统计列表</a></li>
+        <li><a href="{:url('agent/staff',array('uid'=>$data['uid']))}">{:lang('agent_level2')}统计列表</a></li>
+        <li class="active"><a href="javascript:void(0)">{:lang('agent_level3')}统计列表</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('agent/extension')}">
+        {:lang('agent_level3')}ID:
+        <input type="text" class="form-control" name="uid" style="width: 120px;" value="{$data.uid |default=''}" placeholder="{:lang('请输入推广员ID')}">
+        {:lang('agent_level2')}ID:
+        <input type="text" class="form-control" name="agent_staff" style="width: 120px;" value="{$data.agent_staff |default=''}" placeholder="{:lang('请输入公会ID')}">
+        {:lang('agent_level1')}ID:
+        <input type="text" class="form-control" name="agent_company" style="width: 120px;" value="{$data.agent_company |default=''}" placeholder="{:lang('请输入公司ID')}">
+        {:lang('日期类型')}:
+        <select class="form-control" name="date" id="input-target">
+            <option value="day" <if condition="$data['date'] eq 'day'"> selected  </if>>{:lang('按日统计')}</option>
+            <option value="month" <if condition="$data['date'] eq 'month'"> selected  </if>>{:lang('按月统计')}</option>
+        </select>
+       {:lang('时间')}:
+        <input type="text" class="form-control js-bootstrap-date" name="start_time" value="{$data['start_time']|default=''}" style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$data['end_time']|default=''}" style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="{:lang('搜索')}" />
+        <a class="btn btn-danger" href="{:url('agent/extension')}">{:lang('清空')}</a>
+        <div style="margin-top: 15px;">{:lang('当日报表会在第二天凌晨系统入账,现仅能查询入账的报表。')}</div>
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>{:lang('日期')}</th>
+            <th>{:lang('渠道')}</th>
+            <th>{:lang('渠道')}</th>
+            <th>{:lang('渠道')}</th>
+            <th>{:lang('当前渠道注册新增')}</th>
+            <th>{:lang('当前渠道充值数')}</th>
+            <th>{:lang('下级渠道注册新增')}</th>
+            <th>{:lang('下级渠道充值数')}</th>
+            <th>{:lang('虚拟币总收益')}</th>
+            <th>{:lang('消费总数')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr style="background: #f3f3f3;">
+            <td>{:lang('合计：')}</td>
+            <td>{:lang('agent_level3')}</td>
+            <td>{:lang('agent_level2')}</td>
+            <td>{:lang('agent_level1')}</td>
+            <td>{:intval($agent_money['register_sum'])}</td>
+
+            <td>{:intval($agent_money.money)}</td>
+            <td>{:intval($agent_money.invitation_register_sum)}</td>
+
+            <td>{:intval($agent_money.invitation_money)}</td>
+
+            <td>{:intval($agent_money.agent_money)}</td>
+            <td>{:intval($agent_money.consumption)}</td>
+        </tr>
+        <foreach name="users" item="vo">
+            <tr>
+                <td>{$data['date'] == 'month' ? $vo.month_time : $vo.date_time}</td>
+                <td>{$vo['agent_login']}({$vo.uid})</td>
+                <td>{$vo['glogin']}({$vo.agent_staff})</td>
+                <td>{$vo['elogin']}({$vo.agent_company})</td>
+                <td>{$vo.register_sum| default='0'}</td>
+
+                <td>{:floatval($vo.money)}</td>
+
+                <td>{:floatval($vo.invitation_register_sum)}</td>
+
+                <td>{:floatval($vo.invitation_money)}</td>
+
+                <td>{:floatval($vo.agent_money)}</td>
+                <td>{:floatval($vo.consumption)}</td>
+            </tr>
+        </foreach>
+
+        </tbody>
+    </table>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>

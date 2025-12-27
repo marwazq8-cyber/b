@@ -1,0 +1,161 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+
+    .gift {
+        margin-top: 40px;
+    }
+    .select{width: 150px;height: 30px;}
+    #gift {
+        width: 30%;
+        height: 35px;
+        border-color: #dce4ec;
+        color: #a5b6c6;
+    }
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+         <li><a href="{:url('bubble/index')}">{:lang('ADMIN_GIFT_LIST')}</a></li>
+        <li class="active"><a href="javascript:;">{:lang('添加奖池奖品')}</a></li>
+    </ul>
+    <form action="{:url('bubble/addPost')}" method="post">
+        <div class="row gift">
+            <div class="col-md-8  col-md-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{:lang('使用类型')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[type]" class="select">
+                               <option value="1" <if condition="$list['type'] eq 1"> selected = "selected" </if>>{:lang('ADMIN_PUBLIC')}</option>
+                               <option value="2" <if condition="$list['type'] eq 2"> selected = "selected" </if>>{:lang('ADMIN_INDEPENDENCE')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_PRIZE_POOL')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[pool_id]" class="select">
+                                <foreach name="pool" item="v">
+                                <option value="{$v.id}" <if condition="$list['pool_id'] eq $v.id"> selected = "selected" </if>>{$v.name}</option>
+                                </foreach>
+
+                            </select>
+                        </td>
+                    </tr>
+                     <tr>
+                        <th>{:lang('ADMIN_GIFT')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[gift_id]" class="select">
+                                <foreach name="gift" item="vo">
+                                    <option value="{$vo['id']}" <if condition="$list['gift_id'] eq $vo['id']"> selected = "selected" </if>>{$vo['name']}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                     <tr>
+                        <th>{:lang('打泡泡连续次数')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[continuous_id]" class="select">
+                                <foreach name="bubble_type" item="vo">
+                                    <option value="{$vo['id']}" <if condition="$list['continuous_id'] eq $vo['id']"> selected = "selected" </if>>{$vo['sum']}次</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_NUMBER_OF_WINS')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[odds]"
+                                   id="title" required value="{$list.odds |default=''}" placeholder="{:lang('ADMIN_NUMBER_OF_WINS')}"/>
+                        </td>
+                    </tr>
+
+                       <input class="form-control" type="hidden" name="post[room_divide_info]"
+                                   id="title" required value="{$list.room_divide_info |default='0'}" placeholder="{:lang('输入0-1之间的数值')}"/>
+                    <tr>
+                        <th>{:lang('ADMIN_NUMBER_OF_GIFTS_WON')} <span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sum]"
+                                   id="title" required value="{$list.sum |default=''}" placeholder="{:lang('请输入礼物中奖数量')}"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>{:lang('ADMIN_WHETHER_THE_SYSTEM_PUSH')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[is_system_push]" class="select">
+
+                                <option value="1" <if condition="$list['is_system_push'] eq 1"> selected = "selected" </if>>{:lang('YES')}</option>
+                                <option value="2" <if condition="$list['is_system_push'] eq 2"> selected = "selected" </if>>{:lang('否')}</option>
+
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_WHETHER_TO_PUSH_IN_FULL_SCREEN')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[is_male_screen]" class="select">
+                                <option value="1" <if condition="$list['is_male_screen'] eq 1"> selected = "selected" </if>>{:lang('YES')}</option>
+                                <option value="2" <if condition="$list['is_male_screen'] eq 2"> selected = "selected" </if>>{:lang('否')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('是否飘屏')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[is_all_notify]" class="select">
+                               <option value="1" <if condition="$list['is_all_notify'] eq 1"> selected = "selected" </if>>{:lang('YES')}</option>
+                                <option value="2" <if condition="$list['is_all_notify'] eq 2"> selected = "selected" </if>>{:lang('否')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('ADMIN_WHETHER_THE_LUCK_LIST_SHOWS')}<span class="form-required">*</span></th>
+                        <td>
+                            <select name="post[is_rank]" class="select">
+                                <option value="1" <if condition="$list['is_rank'] eq 1"> selected = "selected" </if>>{:lang('YES')}</option>
+                                <option value="2" <if condition="$list['is_rank'] eq 2"> selected = "selected" </if>>{:lang('否')}</option>
+                            </select>
+                        </td>
+                    </tr>
+                     <tr>
+                        <th>{:lang('ADMIN_COLORS')}</th>
+                        <td>
+                            <input class="form-control" type="text" name="post[colors]" id="colors" style="width:100px;"
+                                   required value="{$list.colors |default='#000000'}" placeholder="{:lang('颜色值默认#000000')}"/>
+                                   <input type="color" id="colorGet" onchange="ColorGetFn(this)">&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{:lang('SORT')}<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[sort]" style="width:100px;"
+                                   required value="{$list.sort |default='0'}" placeholder="{:lang('SORT')}"/>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="id" value="{$list.id |default=''}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="{:url('bubble/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    function ColorGetFn(dom){
+        document.getElementById('colors').value = dom.value;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$system_name}下载</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="__STATIC__/css/voice_download.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="voice_download">
+        <div class="voice_download_img">
+            <img src="{$user_info['avatar']}">
+        </div>
+        <div class="voice_download_name">{$user_info['name']}</div>
+        <div class="voice_download_type">邀请你进入：{$user_info['name']}直播间</div>
+        <div class="voice_download_id">房间ID：{$user_info['uid']}</div>
+        <div class="voice_download_btn href" data-id="{$user_info['id']}" id="downloadButton">立即下载</div>
+      <!--   <div class="voice_download_href">
+            <div class="voice_download_href_img">
+                <img src="{$download_log}">
+            </div>
+            <div class="voice_download_href_btn href"  id="downloadButton">下载</div>
+         </div> -->
+</div>
+
+<script src="__STATIC__/js/jquery-1.10.2.min.js"></script>
+
+
+<script type="text/javascript">
+    const download_url = "{$download_url}";
+
+    $(".voice_download_btn").click(function(){
+        console.log("下载地址：" + download_url);
+        window.location.href= download_url;
+    })
+</script>
+</body>
+</html>

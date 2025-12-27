@@ -1,0 +1,47 @@
+<include file="public@header"/>
+<style>
+    .gift-img img {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">{:lang('ADMIN_OPEN_GAME_BOX_NUM_LIST')}</a></li>
+<!--        <li><a href="{:url('tree_game/add_tree_coin')}">{:lang('ADMIN_CONTINUOUS_FREQUENCY_ADD')}</a></li>-->
+    </ul>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{:lang('ADMIN_NAME')}</th>
+            <th>{:lang('ADMIN_CONTINUOUS_FREQUENCY')}</th>
+            <th>{:lang('ADMIN_PRICE')}</th>
+            <th>{:lang('ADMIN_CONSUME_CONTENT')}</th>
+            <th>{:lang('SORT')}</th>
+            <th>{:lang('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <foreach name="list" id="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.sum_name}</td>
+                <td>{$vo.sum}</td>
+                <td>{$vo.coin}</td>
+                <td>{$vo.coin_name}</td>
+                <td>{$vo.sort}</td>
+                <td>
+                    <a href="{:url('tree_game/add_tree_coin',array('id'=>$vo.id))}">{:lang('EDIT')}</a>
+                </td>
+            </tr>
+        </foreach>
+        </tfoot>
+    </table>
+
+</div>
+<script src="__STATIC__/js/layer/layer.js" rel="stylesheet"></script>
+</body>
+</html>

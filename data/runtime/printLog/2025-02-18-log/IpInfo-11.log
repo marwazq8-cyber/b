@@ -1,0 +1,36 @@
+----------------------------------------
+2025-02-18 11:13:47-log
+{
+  "ip": "74.125.212.168",
+  "hostname": "google-proxy-74-125-212-168.google.com",
+  "city": "Council Bluffs",
+  "region": "Iowa",
+  "country": "US",
+  "loc": "41.2619,-95.8608",
+  "org": "AS15169 Google LLC",
+  "postal": "51502",
+  "timezone": "America/Chicago"
+}
+
+[REQUEST]:LoginApi/google_login
+[URL_PARAM]:{"os":"Android","sdk_version":"30","app_version":"2024103001","app_name":"1.1","google_token":"eyJhbGciOiJSUzI1NiIsImtpZCI6IjVkMTJhYjc4MmNiNjA5NjI4NWY2OWU0OGFlYTk5MDc5YmI1OWNiODYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI4NDc3MzI1MDk4NzUtcWljZzUzbTBqNTFrMXRoYzZ0ZjRzcWlncGkzcG9taTkuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI4NDc3MzI1MDk4NzUtcnNxYTNmdWdyZXNhYTh2dms2bXFtZHQ1ZWM5bTEwM3MuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDIwMzYwOTI0NTIxNTk1ODAwNTQiLCJlbWFpbCI6ImFuZHJlbHVuYS40OTE2NEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkFuZHJlIEx1bmEiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jTDJOUXg0THVOeWtqbnJxWDZLdGtRbWNkR1VVRXMyMFFGZGFQNDNNUlRfV193ek5nPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IkFuZHJlIiwiZmFtaWx5X25hbWUiOiJMdW5hIiwiaWF0IjoxNzM5ODQ4NDI1LCJleHAiOjE3Mzk4NTIwMjV9.dqFlqena-kcX36HeoRe97k31-QvAmg2RKMEj_Mgk9TjCpC5jZId77iXFfGw2bpVwizTNFE-np4P35fPM8uuL1XwW1HfMCeUXee89XhIIT9leeKgv9HjbncYzWHepCdyuy0hMcNvnq4GBE6DT0_rfbd3kKqkOCz1TOYKUIysrBN56aePiOe9S8JLyBGWGAD5BVBrC950113BY_eK1IpKMoNJCvlMKqsm6rVdd0qFEy-MPY_d7Ntvd6bE2cDp3vs8MXNl9-o5-EBMIFSWZp5GNpmNxtbOlCdlRZz_CiSJNwuoVeEac0BV2CZstLlrnPRvR_r1q6cHgHWeRdfRm00TrCw","invite_code":"","agent":"","uuid":"2d9a8767c600d3560b0de9847162de3f2"}
+[CONTENT]:"os=Android&sdk_version=30&app_version=2024103001&app_name=1.1&google_token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjVkMTJhYjc4MmNiNjA5NjI4NWY2OWU0OGFlYTk5MDc5YmI1OWNiODYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI4NDc3MzI1MDk4NzUtcWljZzUzbTBqNTFrMXRoYzZ0ZjRzcWlncGkzcG9taTkuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI4NDc3MzI1MDk4NzUtcnNxYTNmdWdyZXNhYTh2dms2bXFtZHQ1ZWM5bTEwM3MuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDIwMzYwOTI0NTIxNTk1ODAwNTQiLCJlbWFpbCI6ImFuZHJlbHVuYS40OTE2NEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkFuZHJlIEx1bmEiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jTDJOUXg0THVOeWtqbnJxWDZLdGtRbWNkR1VVRXMyMFFGZGFQNDNNUlRfV193ek5nPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IkFuZHJlIiwiZmFtaWx5X25hbWUiOiJMdW5hIiwiaWF0IjoxNzM5ODQ4NDI1LCJleHAiOjE3Mzk4NTIwMjV9.dqFlqena-kcX36HeoRe97k31-QvAmg2RKMEj_Mgk9TjCpC5jZId77iXFfGw2bpVwizTNFE-np4P35fPM8uuL1XwW1HfMCeUXee89XhIIT9leeKgv9HjbncYzWHepCdyuy0hMcNvnq4GBE6DT0_rfbd3kKqkOCz1TOYKUIysrBN56aePiOe9S8JLyBGWGAD5BVBrC950113BY_eK1IpKMoNJCvlMKqsm6rVdd0qFEy-MPY_d7Ntvd6bE2cDp3vs8MXNl9-o5-EBMIFSWZp5GNpmNxtbOlCdlRZz_CiSJNwuoVeEac0BV2CZstLlrnPRvR_r1q6cHgHWeRdfRm00TrCw&invite_code=&agent=&uuid=2d9a8767c600d3560b0de9847162de3f2"
+[DEVICE_INFO]:{"content-length":"1236","cdn-loop":"cloudflare; loops=1","cf-connecting-ip":"74.125.212.168","connection":"Keep-Alive","user-agent":"Mozilla\/5.0 (Linux; U; Android 11; en; OnePlus8Pro Build\/QKR1.191246.002) AppleWebKit\/533.1 (KHTML, like Gecko) Version\/5.0 Mobile Safari\/533.1","cf-visitor":"{\"scheme\":\"http\"}","lang":"en","accept-language":"en","x-forwarded-proto":"http","content-type":"application\/x-www-form-urlencoded","accept-encoding":"gzip","cf-ipcountry":"US","host":"admin.xivolive.com","x-forwarded-for":"74.125.212.168","cf-ray":"913ad7dcbc4910cc-ORD"}
+----------------------------------------
+2025-02-18 11:17:22-log
+{
+  "ip": "66.249.88.104",
+  "hostname": "google-proxy-66-249-88-104.google.com",
+  "city": "Atlanta",
+  "region": "Georgia",
+  "country": "US",
+  "loc": "33.7490,-84.3880",
+  "org": "AS15169 Google LLC",
+  "postal": "30302",
+  "timezone": "America/New_York"
+}
+
+[REQUEST]:LoginApi/google_login
+[URL_PARAM]:{"os":"Android","sdk_version":"30","app_version":"2024103001","app_name":"1.1","google_token":"eyJhbGciOiJSUzI1NiIsImtpZCI6IjVkMTJhYjc4MmNiNjA5NjI4NWY2OWU0OGFlYTk5MDc5YmI1OWNiODYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI4NDc3MzI1MDk4NzUtcWljZzUzbTBqNTFrMXRoYzZ0ZjRzcWlncGkzcG9taTkuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI4NDc3MzI1MDk4NzUtcnNxYTNmdWdyZXNhYTh2dms2bXFtZHQ1ZWM5bTEwM3MuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQzNTIyNTc1Mzk1NDkyMjUxMzciLCJlbWFpbCI6ImplZmZmbG93ZXJzLjkzMTYzQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiSmVmZiBGbG93ZXJzIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0x3Q25lSTItaV94cmpQWmZpN3ctOHljanVxTXpYMnA5Qmh6S2F5aURDNE5zV0Frdz1zOTYtYyIsImdpdmVuX25hbWUiOiJKZWZmIiwiZmFtaWx5X25hbWUiOiJGbG93ZXJzIiwiaWF0IjoxNzM5ODQ4NjM5LCJleHAiOjE3Mzk4NTIyMzl9.YhpuZh51NwhwM8gRuFDmvMee0s4vOl9wdKtX3eFv_235vEuQI-HKzdrasPZzHJ7jMFl6rZLSci0OKACLdZgiUkD_rAJIHobCgtVfo2wAI0QtYQSx3mMzgXR5qRtO-CDpKlElfk5eNyqxJY6bv9JJTnTDejGQkNfTmWq3XxrK7OlmL5n5kCpT7sQXXUJQKUuEYSPnhqYRmU5vXk3f_6IwD8BLWdaVzHgEHbIhATPTxuERmwdJYJrE9XbEjwoaT77_WBDh0dnwuqEqsCm3jcdKd8pMkSI_igPldvjLXICm07Edz_3lmIsi4slzmklrYJQQtBHfjpilyCXINpmsIxQNEg","invite_code":"","agent":"","uuid":"2d9a8767c600d3560b0de9847162de3f2"}
+[CONTENT]:"os=Android&sdk_version=30&app_version=2024103001&app_name=1.1&google_token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjVkMTJhYjc4MmNiNjA5NjI4NWY2OWU0OGFlYTk5MDc5YmI1OWNiODYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI4NDc3MzI1MDk4NzUtcWljZzUzbTBqNTFrMXRoYzZ0ZjRzcWlncGkzcG9taTkuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI4NDc3MzI1MDk4NzUtcnNxYTNmdWdyZXNhYTh2dms2bXFtZHQ1ZWM5bTEwM3MuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQzNTIyNTc1Mzk1NDkyMjUxMzciLCJlbWFpbCI6ImplZmZmbG93ZXJzLjkzMTYzQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiSmVmZiBGbG93ZXJzIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0x3Q25lSTItaV94cmpQWmZpN3ctOHljanVxTXpYMnA5Qmh6S2F5aURDNE5zV0Frdz1zOTYtYyIsImdpdmVuX25hbWUiOiJKZWZmIiwiZmFtaWx5X25hbWUiOiJGbG93ZXJzIiwiaWF0IjoxNzM5ODQ4NjM5LCJleHAiOjE3Mzk4NTIyMzl9.YhpuZh51NwhwM8gRuFDmvMee0s4vOl9wdKtX3eFv_235vEuQI-HKzdrasPZzHJ7jMFl6rZLSci0OKACLdZgiUkD_rAJIHobCgtVfo2wAI0QtYQSx3mMzgXR5qRtO-CDpKlElfk5eNyqxJY6bv9JJTnTDejGQkNfTmWq3XxrK7OlmL5n5kCpT7sQXXUJQKUuEYSPnhqYRmU5vXk3f_6IwD8BLWdaVzHgEHbIhATPTxuERmwdJYJrE9XbEjwoaT77_WBDh0dnwuqEqsCm3jcdKd8pMkSI_igPldvjLXICm07Edz_3lmIsi4slzmklrYJQQtBHfjpilyCXINpmsIxQNEg&invite_code=&agent=&uuid=2d9a8767c600d3560b0de9847162de3f2"
+[DEVICE_INFO]:{"content-length":"1244","cdn-loop":"cloudflare; loops=1","cf-connecting-ip":"66.249.88.104","connection":"Keep-Alive","user-agent":"Mozilla\/5.0 (Linux; U; Android 11; en; OnePlus8Pro Build\/QKR1.191246.002) AppleWebKit\/533.1 (KHTML, like Gecko) Version\/5.0 Mobile Safari\/533.1","cf-visitor":"{\"scheme\":\"http\"}","lang":"en","accept-language":"en","x-forwarded-proto":"http","content-type":"application\/x-www-form-urlencoded","accept-encoding":"gzip","cf-ipcountry":"US","host":"admin.xivolive.com","x-forwarded-for":"66.249.88.104","cf-ray":"913add185e46678a-ATL"}
